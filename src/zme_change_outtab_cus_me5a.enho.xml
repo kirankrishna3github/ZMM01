@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>BADI_IMPL</TOOL>
+   <SHORTTEXT>Addition of Actual Release date field in ME5A</SHORTTEXT>
+   <SPOT_NAME>ES_BADI_ME_REPORTING</SPOT_NAME>
+   <IMPL>
+    <ENH_BADI_IMPL_DATA>
+     <SPOT_NAME>ES_BADI_ME_REPORTING</SPOT_NAME>
+     <BADI_NAME>ME_CHANGE_OUTTAB_CUS</BADI_NAME>
+     <IMPL_NAME>ME_CHANGE_OUTTAB_CUS</IMPL_NAME>
+     <IMPL_CLASS>ZCL_ME_CHANGE_OUTTAB_CUS_ME5A</IMPL_CLASS>
+     <ACTIVE>X</ACTIVE>
+     <IMPL_SHORTTEXT>Actual release date field addition in ME5A</IMPL_SHORTTEXT>
+     <IMPL_SHORTTEXT_ID>0050569B796C1ED9A0B96778FA347237</IMPL_SHORTTEXT_ID>
+    </ENH_BADI_IMPL_DATA>
+   </IMPL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

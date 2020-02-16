@@ -1,0 +1,2470 @@
+*&--------------------------------------------------------------------------------------------------------------------------------------*
+*&--------------------------------------------------------------------------------------------------------------------------------------*
+*& Report  ZTRANSPORT_MODULE_REPORT
+*&
+*&**************************************************************************************************************************************&*
+*& OBJECT NAME          : ZATR_CREATE_EMP_INQUIRY                                                                                       &*
+*& TECHNICAL CONSULTANT : PRADEEP KODINAGULA                                                                                            &*
+*& MODULE NAME          : SD                                                                                                            &*
+*& PROGRAM TYPE         : ALV Report                                                                                                    &*
+*& CREATE DATE          : 06.02.2015                                                                                                    &*
+*& TRANSPORT NO         : IRDK918232                                                                                                    &*
+*& DESCRIPTION          : Transport Module Report                                                                                       &*
+*&                        This will display details Outbound Delivery, Billing, Excise Invoice, Shipment, Shipment Cost, Transporter,   &*
+*&                        Frieght, GR and Finance Details of a Stock Transfer Order between two plants.                                 &*
+*&                                                                                                                                      &*
+*&                        This report will display the output in ALV GRID, ALV LIST, HIERARCHICAL ALV and also in formated Excel.       &*
+*&                        This report uses the tool called XLSX Workbench to desing the formated excel.                                 &*
+*&                                                                                                                                      &*
+* REVISION HISTORY-----------------------------------------------------------------------------------------------------------------------*
+*   CHANGED BY:                                                                                                                          *
+*   CHANGE ON:                                                                                                                           *
+*   REASON FOR CHANGE:                                                                                                                   *
+*                                                                                                                                        *
+* REVISION HISTORY-----------------------------------------------------------------------------------------------------------------------*
+*{   INSERT         SBXK900028                                        1
+*--------------------------------------------------------------------*
+*---<< S/4HANA >>---*
+*--------------------------------------------------------------------*
+* Changed On - Sunday, October 07, 2018 23:39:51
+* Changed By - 6010859 - SaurabhK
+* Purpose    - Simplification list - 2267308 - konv replaced by prcd_elements
+* Solution   - konv replaced by prcd_elements
+* TR         - SBXK900028       6010859      S4H: S_K: Simplification List: 03.10.2018
+*--------------------------------------------------------------------*
+*}   INSERT
+
+REPORT  ZTRANSPORT_MODULE_REPORT.
+
+INCLUDE ZZTMP_DD. " DATA DECLARATIONS
+
+*&*********************************************************************&*
+*&                   SELECTION SCREEN                                  &*
+*&*********************************************************************&*
+
+SELECTION-SCREEN BEGIN OF BLOCK A WITH FRAME TITLE TEXT-000.
+
+SELECTION-SCREEN SKIP.
+SELECTION-SCREEN BEGIN OF BLOCK SELECTION WITH FRAME.
+SELECT-OPTIONS : SO_AEDAT  FOR EKKO-AEDAT OBLIGATORY,                   " DATE
+                 SO_EBELN  FOR EKKO-EBELN,                              " STO NUMBER
+                 SO_EXNUM  FOR J_1IEXCDTL-EXNUM,                        " EXCISE NUMBER
+                 SO_TDLNR  FOR VTTK-TDLNR,                              " TRANSPORTER NUMBER
+                 SO_ROUTE  FOR VTTK-ROUTE,                              " ROUTE
+                 SO_VSART  FOR VTTK-VSART.                              " VEHICLE TYPE
+SELECTION-SCREEN SKIP.
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(25) TEXT-015.
+SELECTION-SCREEN POSITION 28.
+SELECT-OPTIONS PR_FPLAN FOR LIKP-VSTEL NO-EXTENSION NO INTERVALS.
+
+SELECTION-SCREEN COMMENT 50(15) TEXT-016.
+SELECTION-SCREEN POSITION 70.
+SELECT-OPTIONS PR_TPLAN FOR LIKP-WERKS NO-EXTENSION NO INTERVALS.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN SKIP.
+SELECTION-SCREEN END OF BLOCK SELECTION.
+
+SELECTION-SCREEN BEGIN OF BLOCK OUTPUT WITH FRAME TITLE TEXT-001.
+
+SELECTION-SCREEN BEGIN OF LINE.                                         " RAIDO BUTTON FOR ALV GRID DISPLAY
+SELECTION-SCREEN COMMENT 1(20) TEXT-002.
+SELECTION-SCREEN POSITION 30.
+PARAMETER : A RADIOBUTTON GROUP G1 USER-COMMAND aaa DEFAULT 'X'.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN BEGIN OF LINE.                                          " RADIO BUTTON FOR ALV LIST DISPLAY
+SELECTION-SCREEN COMMENT 1(20) TEXT-003.
+SELECTION-SCREEN POSITION 30.
+PARAMETERS B RADIOBUTTON GROUP G1.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN BEGIN OF LINE.                                          " RADIO BUTTON FOR HIERARCHICAL ALV
+SELECTION-SCREEN COMMENT 1(20) TEXT-007.
+SELECTION-SCREEN POSITION 30.
+PARAMETERS C RADIOBUTTON GROUP G1.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN BEGIN OF LINE.                                         " RADIO BUTTON FOR FORMATED EXCEL SHEET
+SELECTION-SCREEN COMMENT 1(20) TEXT-008.
+SELECTION-SCREEN POSITION 30.
+PARAMETERS D RADIOBUTTON GROUP G1.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN END OF BLOCK OUTPUT.
+
+SELECTION-SCREEN BEGIN OF BLOCK VARIANT WITH FRAME TITLE TEXT-005.      " VARIANT SELECTION
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(20) TEXT-006 MODIF ID XX.
+SELECTION-SCREEN POSITION 30.
+PARAMETERS : P_VAR TYPE DISVARIANT-VARIANT MODIF ID XX.
+SELECTION-SCREEN END OF LINE.
+SELECTION-SCREEN END OF BLOCK VARIANT.
+
+
+SELECTION-SCREEN BEGIN OF BLOCK WARNING WITH FRAME TITLE TEXT-009.     " DYNAMIC WARNING MESSAGE TO REQUEST USERS TO CLOSE ALREADY OPEN EXCEL SHEETS
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(29) TEXT-010 MODIF ID YY.
+SELECTION-SCREEN POSITION 30.
+SELECTION-SCREEN END OF LINE.
+
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT 1(75) TEXT-011 MODIF ID YY.
+SELECTION-SCREEN POSITION 30.
+SELECTION-SCREEN END OF LINE.
+
+
+SELECTION-SCREEN END OF BLOCK WARNING.
+
+SELECTION-SCREEN END OF BLOCK A.
+
+
+INITIALIZATION.
+*------------------------------------------------" INITIALIZATION
+PERFORM GET_DEFAULT_VARIANT.                     " GETTING DEFAULT VARIANT SAVED
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR P_VAR.
+*------------------------------------------------" AT SELECTION SCREEN
+PERFORM VARIANT_F4_SELECTION.                    " F4 HELP FOR VARIANT ON SELECTION SCREEN
+
+AT SELECTION-SCREEN OUTPUT.
+*------------------------------------------------" AT SELECTION SCREEN OUTPUT
+PERFORM DISABLE_P_VAR.                           " DISABLE LAYOUT SELECTION PARAMETER
+
+START-OF-SELECTION.
+*------------------------------------------------" START OF SELECTION
+
+ PERFORM FETCH_DATA.                             " FETCHING DATA
+ PERFORM SORT_CRITERIA.                          " SORT CRITERIA FOR OUTPUT DISPLAY
+ PERFORM FIELD_CAT.                              " FILLING FIELDCATALOG
+ PERFORM DISP_OUTPUT.                            " OUTPUT DISPLAY.
+
+
+
+FORM FETCH_DATA.
+
+*&*********************************************************************&*
+*&                    START-OF-SELECTION                               &*
+*&*********************************************************************&*
+
+SELECT EBELN AEDAT FROM EKKO INTO TABLE GT_EKKO
+       WHERE EBELN IN SO_EBELN
+       AND   AEDAT IN SO_AEDAT
+       AND   BSART EQ 'ZSTO'.
+
+IF GT_EKKO IS NOT INITIAL.
+
+    SELECT EBELN EBELP TXZ01 MATNR BRGEW FROM EKPO INTO TABLE GT_EKPO
+    FOR ALL ENTRIES IN GT_EKKO
+    WHERE EBELN EQ GT_EKKO-EBELN.
+
+ IF GT_EKPO IS NOT INITIAL.
+
+    SELECT EBELN EBELP VGABE BELNR BUDAT MENGE
+    FROM EKBE INTO TABLE GT_EKBE
+    FOR ALL ENTRIES IN GT_EKPO
+    WHERE EBELN EQ GT_EKPO-EBELN
+    AND VGABE = '8'
+    AND EBELP EQ GT_EKPO-EBELP
+    AND MENGE NE '0'.
+
+    SELECT EBELN EBELP VGABE BELNR BUDAT MENGE
+    FROM EKBE INTO TABLE GT_EKBE1
+    FOR ALL ENTRIES IN GT_EKPO
+    WHERE EBELN EQ GT_EKPO-EBELN
+    AND VGABE = '1'
+    AND EBELP EQ GT_EKPO-EBELP.
+
+    IF GT_EKBE1 IS NOT INITIAL.
+
+    SELECT MBLNR REDAT FROM Z6MMA_GT_ENT_HD
+    INTO TABLE GT_Z6MMA
+    FOR ALL ENTRIES IN GT_EKBE1
+    WHERE MBLNR EQ GT_EKBE1-BELNR.
+    ENDIF.
+
+    IF GT_EKBE IS NOT INITIAL.
+
+     SELECT VBELN ERDAT VSTEL BTGEW WERKS
+     FROM LIKP INTO TABLE GT_LIKP
+     FOR ALL ENTRIES IN GT_EKBE
+     WHERE VBELN EQ GT_EKBE-BELNR
+     AND   VSTEL IN PR_FPLAN
+     AND   WERKS IN PR_TPLAN.
+
+      IF GT_LIKP IS NOT INITIAL.
+
+       SELECT WERKS NAME1 FROM T001W
+       INTO TABLE GT_T001W
+       FOR ALL ENTRIES IN GT_LIKP
+       WHERE WERKS EQ GT_LIKP-VSTEL.
+
+       SELECT WERKS NAME1 FROM T001W
+       INTO TABLE GT_T0011W
+       FOR ALL ENTRIES IN GT_LIKP
+       WHERE WERKS EQ GT_LIKP-WERKS.
+
+       SELECT VBELV VBELN VBTYP_N ERDAT
+       FROM VBFA INTO TABLE GT_VBFA
+       FOR ALL ENTRIES IN GT_LIKP
+       WHERE VBELV EQ GT_LIKP-VBELN
+       AND   VBTYP_N EQ 'U'.
+
+       SELECT TKNUM VBELN ERDAT
+       FROM VTTP INTO TABLE GT_VTTP
+       FOR ALL ENTRIES IN GT_LIKP
+       WHERE VBELN EQ GT_LIKP-VBELN.
+
+       SELECT EXNUM EXDAT MATNR MAKTX MENGE MEINS RDOC1 RDOC2 RDOC3
+       FROM J_1IEXCDTL
+       INTO TABLE GT_EXC FOR ALL ENTRIES IN GT_LIKP
+       WHERE  RDOC1 EQ GT_LIKP-VBELN AND
+       EXNUM IN SO_EXNUM.
+
+       ENDIF.
+
+      IF GT_VBFA IS NOT INITIAL.
+
+      SELECT VBELN FKDAT KNUMV
+      FROM VBRK INTO TABLE GT_VBRK
+      FOR ALL ENTRIES IN GT_VBFA
+      WHERE VBELN EQ GT_VBFA-VBELN.
+
+      IF GT_VTTP IS NOT INITIAL.
+
+       SELECT TKNUM VSART ROUTE SIGNI EXTI2 TDLNR GESZTD
+       FROM VTTK INTO TABLE GT_VTTK
+       FOR ALL ENTRIES IN GT_VTTP
+       WHERE TKNUM EQ GT_VTTP-TKNUM
+       AND   TDLNR IN SO_TDLNR
+       AND   ROUTE IN SO_ROUTE
+       AND   VSART IN SO_VSART.
+
+       IF GT_VTTK IS NOT INITIAL.
+
+       SELECT TKNUM ROUTE VSART KNOTA VSTEL KNOTZ VSTEZ TDLNR
+       FROM VTTS INTO TABLE GT_VTTS
+       FOR ALL ENTRIES IN GT_VTTK
+       WHERE TKNUM EQ GT_VTTK-TKNUM.
+
+       SELECT LIFNR NAME1 FROM LFA1
+       INTO TABLE GT_LFA1 FOR ALL ENTRIES IN GT_VTTK
+       WHERE LIFNR EQ GT_VTTK-TDLNR.
+
+       SELECT FKNUM MWSBP BUDAT EXTI1 EXTI2 VSART KNUMV EBELN TDLNR REBEL
+       FROM VFKP INTO TABLE GT_VFKP
+       FOR ALL ENTRIES IN GT_VTTK
+       WHERE REBEL EQ GT_VTTK-TKNUM.
+
+       IF GT_VFKP IS NOT INITIAL.
+
+       SELECT FKNUM BUDAT EXTI1 EXTI2
+       FROM VFKK INTO TABLE GT_VFKK
+       FOR ALL ENTRIES IN GT_VFKP
+       WHERE FKNUM EQ GT_VFKP-FKNUM.
+
+       SELECT KNUMV KSCHL KBETR KNUMH KWERT
+*{   REPLACE        SBXK900028                                        1
+*\       FROM KONV INTO TABLE GT_KONV
+       FROM prcd_elements INTO TABLE GT_KONV
+*}   REPLACE
+                for all ENTRIES in GT_VFKP
+       WHERE KNUMV EQ GT_VFKP-KNUMV.
+
+       SELECT BELNR GJAHR EBELN EBELP XBLNR
+       FROM RSEG INTO TABLE GT_RSEG
+       FOR ALL ENTRIES IN GT_VFKP
+       WHERE EBELN EQ GT_VFKP-EBELN.
+
+       CLEAR GS_RSEG.
+
+       IF GT_KONV IS NOT INITIAL.
+       SELECT KNUMH KSCHL KBETR KONWA
+       FROM KONP INTO TABLE GT_KONP
+       FOR ALL ENTRIES IN GT_KONV
+       WHERE KNUMH EQ GT_KONV-KNUMH.
+
+ENDIF.
+ENDIF.
+ENDIF.
+ENDIF.
+ENDIF.
+ENDIF.
+ELSE.
+MESSAGE E000(ZERRORS) with 'STO not found'.
+ENDIF.
+
+ELSE.
+MESSAGE E000(ZERRORS) with 'STO not found'.
+ENDIF.
+
+*&*********************************************************************&*
+*&                    FILL _FINAL_TABLE                                &*
+*&*********************************************************************&*
+SORT GT_EKBE BY EBELN EBELP BELNR.
+DELETE ADJACENT DUPLICATES FROM GT_EKBE COMPARING EBELN EBELP BELNR.
+LOOP AT GT_EKBE INTO GS_EKBE.
+
+           GS_FINAL1-EBELN       = GS_EKBE-EBELN.                                                           " STO NUMBER
+           GS_FINAL1-EBELP       = GS_EKBE-EBELP.                                                           " ITEM NUMBER
+           GS_FINAL1-DELV_NO     = GS_EKBE-BELNR.                                                           " DELIVERY NUMBER
+           GS_FINAL1-DELV_DATE   = GS_EKBE-BUDAT.                                                           " DELIVERY DATE
+
+READ TABLE GT_EKPO INTO GS_EKPO WITH KEY EBELN = GS_EKBE-EBELN
+                                         EBELP = GS_EKBE-EBELP.
+           IF SY-SUBRC = 0.
+           GS_FINAL1-MAKTX       = GS_EKPO-TXZ01.                                                   " MATERIAL DESCRIPTION
+           GS_FINAL1-MATNR       = GS_EKPO-MATNR.                                                   " MATERIAL NUMBER
+           ENDIF.
+
+READ TABLE GT_EKBE1 INTO GS_EKBE1 WITH KEY EBELN = GS_EKBE-EBELN
+                                           EBELP = GS_EKBE-EBELP.
+
+           IF SY-SUBRC = 0.
+           GS_FINAL1-GR_NO     = GS_EKBE1-BELNR.                                                    " GR NUMBER
+           GS_FINAL1-GR_DATE   = GS_EKBE1-BUDAT.                                                    " GR DATE
+           GRDATE              = GS_EKBE1-BUDAT.
+           ENDIF.
+
+SELECT MBLNR MATNR MENGE FROM MSEG INTO TABLE GT_MSEG WHERE MBLNR EQ GS_FINAL1-GR_NO
+                                                      AND   MATNR EQ GS_FINAL1-MATNR.
+
+           IF GT_MSEG IS NOT INITIAL.
+           LOOP AT GT_MSEG INTO GS_MSEG.
+           GS_FINAL1-GR_QUA   = GS_FINAL1-GR_QUA + GS_MSEG-MENGE.                                   " GR QUANTITY
+           ENDLOOP.
+           ENDIF.
+
+READ TABLE GT_Z6MMA INTO GS_Z6MMA WITH KEY MBLNR = GS_EKBE1-BELNR.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-REP_DATE = GS_Z6MMA-REDAT.                                                            " GR REPORTING DATE
+    ENDIF.
+
+READ TABLE GT_LIKP INTO GS_LIKP WITH KEY VBELN = GS_EKBE-BELNR.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-SPLANT      = GS_LIKP-VSTEL.                                                          " SUPLPYING PLANT
+    GS_FINAL1-RPLANT      = GS_LIKP-WERKS.                                                          " RECEIVING PLANT
+    GS_FINAL1-BTGEW       = GS_LIKP-BTGEW.                                                          " GROSS WEIGHT
+    ENDIF.
+
+READ TABLE GT_VTTP INTO GS_VTTP WITH KEY VBELN = GS_LIKP-VBELN.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-SHIP_NO   = GS_VTTP-TKNUM.                                                            " SHIPPING NUMBER
+    GS_FINAL1-SHIP_DATE = GS_VTTP-ERDAT.                                                            " SHIPPING DATE
+    ENDIF.
+
+    READ TABLE GT_VTTK INTO GS_VTTK WITH KEY TKNUM = GS_VTTP-TKNUM.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-ROUTE      = GS_VTTK-ROUTE.                                                           " ROUTE
+    GS_FINAL1-TRS_CODE   = GS_VTTK-TDLNR.                                                           " TRANSPORTER NUMNBER
+    GS_FINAL1-VEH_TYPE   = GS_VTTK-VSART.                                                           " VEHICLE TYPE
+    IF GS_VTTK-VSART NE 'PT'.
+    GS_FINAL1-PLANNED_TT = GS_VTTK-GESZTD.                                                          " PLANNED TRANSIT DAYS
+
+    CALL FUNCTION 'CONVERSION_EXIT_TSTRG_OUTPUT'                                                    " CONVERT NUMERIC STRING TO DAYS
+      EXPORTING
+        input         = GS_FINAL1-PLANNED_TT                                                        " PLANNED TRANSIST DAYS FOR FULL LAOD
+     IMPORTING
+       OUTPUT         = GS_FINAL1-PLANNED_TT.
+    ELSE.
+    DATA TRA TYPE ZROUTE_PST-ZPSTT.
+    SELECT SINGLE ZPSTT FROM ZROUTE_PST INTO TRA
+    WHERE ROUTE EQ GS_VTTK-ROUTE.
+
+    GS_FINAL1-PLANNED_TT  = TRA.                                                                    " PLANNED TRANSIT FOR PART LOAD
+    SHIFT GS_FINAL1-PLANNED_TT LEFT DELETING LEADING ''.
+    ENDIF.
+
+    GS_FINAL1-TRS_VEH    = GS_VTTK-SIGNI.                                                           " TRANSPORTER VEHICLE NUM
+    GS_FINAL1-LR_NUM     = GS_VTTK-EXTI2.                                                           " LR NUMBER
+
+    ENDIF.
+
+
+
+    READ TABLE GT_LFA1 INTO GS_LFA1 WITH KEY LIFNR = GS_VTTK-TDLNR.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-TRS_NAME = GS_LFA1-NAME1.                                                             " TRANSPORTER NAME
+    ENDIF.
+
+    READ TABLE GT_T001W INTO GS_T001W WITH KEY WERKS = GS_LIKP-VSTEL.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-SPLANT_NAME = GS_T001W-NAME1.                                                         " SUPPLYING PLANT NAME
+    ENDIF.
+    CLEAR GS_T001W.
+
+    READ TABLE GT_T0011W INTO GS_T001W WITH KEY WERKS = GS_LIKP-WERKS.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-RPLANT_NAME = GS_T001W-NAME1.                                                         " RECEIVING PLANT NAME
+    ENDIF.
+
+
+    READ TABLE GT_VFKP INTO GS_VFKP WITH KEY EXTI1 = GS_VTTP-TKNUM
+                                             REBEL = GS_VTTP-TKNUM
+                                             TDLNR = GS_VTTK-TDLNR.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-SHIP_CNUM  = GS_VFKP-FKNUM.                                                           " SHIPPING COST DOC NUMBER
+    GS_FINAL1-SHIP_CDATE = GS_VFKP-BUDAT.                                                           " SHIPPING COST DOC DATE
+    GS_FINAL1-MWSBP      = GS_VFKP-MWSBP.                                                           "
+    ENDIF.
+
+    READ TABLE GT_VFKK INTO GS_VFKK WITH KEY FKNUM = GS_VFKP-FKNUM.
+
+    IF SY-SUBRC = 0.
+    GS_FINAL1-TRSP_NO    = GS_VFKK-EXTI1.                                                           " TRANSPORTER BILL NUMBER
+    GS_FINAL1-TRSP_DATE  = GS_VFKK-EXTI2.                                                           " TRANSPORTER BILL DATE
+    GS_FINAL1-TRSP_SDATE = GS_VFKK-BUDAT.                                                           " TRANSPORTER BILL SUBMIT DATE
+    ENDIF.
+
+    READ TABLE GT_VBFA INTO GS_VBFA WITH KEY VBELV = GS_LIKP-VBELN.
+
+    IF SY-SUBRC = 0.
+    READ TABLE GT_VBRK INTO GS_VBRK WITH KEY VBELN = GS_VBFA-VBELN.
+    IF SY-SUBRC EQ 0.
+    GS_FINAL1-BILL_NO   = GS_VBRK-VBELN.                                                           " BILLING NUMBER
+    GS_FINAL1-BILL_DATE = GS_VBRK-FKDAT.                                                           " BILLING DATE
+    ENDIF.
+    ENDIF.
+
+     READ TABLE GT_EXC INTO GS_EXC WITH KEY RDOC1 = GS_LIKP-VBELN
+                                            RDOC2 = GS_VBRK-VBELN.
+           IF SY-SUBRC EQ 0.
+           GS_FINAL1-EXNUM   = GS_EXC-EXNUM.                                                          " EXCISE NUMBER
+           GS_FINAL1-EXDAT   = GS_EXC-EXDAT.                                                          " EXCISE DATE
+           EXCDAT            = GS_EXC-EXDAT.
+           GS_FINAL1-EXC_UOM = GS_EXC-MEINS.                                                          " EXCISE UOM
+           ENDIF.
+
+       SELECT EXNUM MATNR MENGE FROM J_1IEXCDTL
+       INTO TABLE GT_EXC1
+       WHERE  EXNUM EQ GS_FINAL1-EXNUM
+       AND    MATNR EQ GS_FINAL1-MATNR
+       AND    RDOC1 EQ GS_FINAL1-DELV_NO.
+
+       LOOP AT GT_EXC1 INTO GS_EXC1.
+       GS_FINAL1-EXC_QUA = GS_FINAL1-EXC_QUA + GS_EXC1-MENGE.                                         " EXCISE QUANTITY
+       ENDLOOP.
+
+      GS_FINAL1-QUA_DIFF   = GS_FINAL1-EXC_QUA - GS_FINAL1-GR_QUA.                                    " QUANTITY DIFFERENCE
+      IF GS_FINAL1-GR_DATE IS NOT INITIAL.
+*      GS_FINAL1-ACTUAL_TT  = GS_FINAL1-GR_DATE - GS_FINAL1-EXDAT.
+
+      IF GRDATE IS NOT INITIAL.
+      CALL FUNCTION 'FIMA_DAYS_AND_MONTHS_AND_YEARS'                                                  " ACTUAL TOTAL DAYS TAKEN FOR TRANSPORT
+        EXPORTING
+          i_date_from          = EXCDAT
+          i_date_to            = GRDATE
+        IMPORTING
+          E_DAYS               =  GS_FINAL1-ACTUAL_TT .
+      ELSE.
+       CALL FUNCTION 'FIMA_DAYS_AND_MONTHS_AND_YEARS'                                                  " ACTUAL TOTAL DAYS TAKEN FOR TRANSPORT
+        EXPORTING
+          i_date_from          = EXCDAT
+          i_date_to            = SY-DATUM
+        IMPORTING
+          E_DAYS               =  GS_FINAL1-ACTUAL_TT .
+       ENDIF.
+
+
+      ENDIF.
+      GS_FINAL1-VOL_WEIGHT = GS_EKPO-BRGEW * GS_FINAL1-EXC_QUA.                                       " VOLUMETRIC WEIGHT
+
+*      IF GS_FINAL1-BTGEW NE 0.
+*      GS_FINAL1-FRIEGHT_KG_N = ( GS_FINAL1-VOL_WEIGHT * GS_FINAL1-FRIEGHT_KG_V ) / GS_FINAL1-BTGEW.   " FRIEHGT AT ITEM LEVEL
+*      ENDIF.
+
+      DATA PT TYPE I.
+      PT = GS_FINAL1-PLANNED_TT.
+      GS_FINAL1-DELAY     = GS_FINAL1-ACTUAL_TT - PT.                                                  " DELAY IN DAYS
+      IF GS_FINAL1-DELAY LE '0'.
+      GS_FINAL1-DELAY = '0'.
+      ENDIF.
+
+      READ TABLE GT_RSEG INTO GS_RSEG WITH KEY EBELN = GS_VFKP-EBELN.
+
+      IF SY-SUBRC = 0.
+      GS_FINAL1-PUR_DOC_NO = GS_RSEG-BELNR.                                                           " FI - PURCHASE DOC NUMBER
+      CONCATENATE GS_FINAL1-PUR_DOC_NO GS_RSEG-GJAHR INTO REFKEY.
+      ENDIF.
+
+      SELECT SINGLE BELNR GJAHR BUDAT XBLNR AWKEY FROM BKPF INTO GS_BKPF WHERE AWKEY = REFKEY.
+
+      IF SY-SUBRC = 0.
+
+        GS_FINAL1-FI_NO      = GS_BKPF-BELNR.                                                         " FI NUMBER
+        GS_FINAL1-INV_REF_NO = GS_BKPF-XBLNR.                                                         " INVOICE REFERENCE NUMBER
+        GS_FINAL1-POST_DATE  = GS_BKPF-BUDAT.                                                         " POSTING DATE
+
+      ENDIF.
+
+      SELECT SINGLE BELNR GJAHR AUGDT AUGBL LIFNR FROM BSEG INTO GS_BSEG
+      WHERE BELNR EQ GS_BKPF-BELNR
+      AND   GJAHR EQ GS_BKPF-GJAHR
+      AND   LIFNR EQ GS_VTTK-TDLNR.
+
+      IF SY-SUBRC = 0.
+
+      GS_FINAL1-PAY_NO = GS_BSEG-AUGBL.                                                                 " PAYMENT NUMBER
+      GS_FINAL1-PAY_POST_DATE = GS_BSEG-AUGDT.                                                          " PAY POSTING DATE
+
+      ENDIF.
+
+   READ TABLE GT_VTTS INTO GS_VTTS WITH KEY TKNUM = GS_VTTK-TKNUM.
+
+   IF SY-SUBRC EQ 0.
+   IF GS_VTTK-VSART = 'PT'.
+   SELECT DATBI KNUMH
+   FROM A703 INTO TABLE GT_A703
+   WHERE KSCHL EQ 'ZPB0'
+   AND   TDLNR EQ GS_VTTK-TDLNR
+   AND   KNOTA EQ GS_VTTS-KNOTA
+   AND   KNOTZ EQ GS_VTTS-KNOTZ
+   AND   VSART EQ 'PT'.
+
+   IF GT_A703 IS NOT INITIAL.
+     SORT GT_A703 DESCENDING BY DATBI.
+     READ TABLE GT_A703 INTO G_A703 INDEX 1.
+
+     SELECT KSTBM KBETR FROM KONM INTO TABLE GT_KONM
+     WHERE KNUMH EQ G_A703-KNUMH.
+
+     LOOP AT GT_KONM INTO GS_KONM.
+       IF GS_FINAL1-EXC_QUA  GE GS_KONM-KSTBM.
+       CLEAR GS_FINAL1-EXP_FRE.
+       GS_FINAL1-EXP_FRE = GS_LIKP-BTGEW * GS_KONM-KBETR.
+       ENDIF.
+       CLEAR GS_KONM.
+     ENDLOOP.
+
+   ENDIF.
+   ELSEIF GS_VTTK-VSART = '9T'
+      OR  GS_VTTK-VSART = '3T'
+      OR  GS_VTTK-VSART = '5T'
+      OR  GS_VTTK-VSART = '7T'
+      OR  GS_VTTK-VSART = '14'
+      OR  GS_VTTK-VSART = '16'
+      OR  GS_VTTK-VSART = '20'
+      OR  GS_VTTK-VSART = '21'.
+
+   SELECT DATBI KNUMH
+   FROM A703 INTO TABLE GT_A703
+   WHERE KSCHL EQ 'ZFB0'
+   AND   TDLNR EQ GS_VTTK-TDLNR
+   AND   KNOTA EQ GS_VTTS-KNOTA
+   AND   KNOTZ EQ GS_VTTS-KNOTZ
+   AND   VSART EQ GS_VTTK-VSART.
+
+   IF GT_A703 IS NOT INITIAL.
+     SORT GT_A703 DESCENDING BY DATBI.
+     READ TABLE GT_A703 INTO G_A703 INDEX 1.
+
+     SELECT SINGLE KBETR FROM KONP
+     INTO GS_FINAL1-EXP_FRE WHERE KNUMH EQ G_A703-KNUMH               " EXPECTED FRIEGHT FULL TRUCK LOAD.
+                            AND   KSCHL EQ 'ZFB0'.
+  ENDIF.
+
+  ENDIF.
+ENDIF.
+
+
+   READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZLOC'.
+   IF SY-SUBRC = 0.
+   GS_FINAL1-LCHARG      = GS_KONV-KWERT.                                                            " LOADING CAHRGES
+   ENDIF.
+
+
+   READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                               KSCHL = 'ZUNC'.
+     IF SY-SUBRC = 0.
+     GS_FINAL1-ULCHARG      = GS_KONV-KWERT.                                                          " UNLOADING CHARGES
+     ENDIF.
+
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZCOC'.
+     IF SY-SUBRC = 0.
+     GS_FINAL1-CCHARG      = GS_KONV-KWERT.                                                          " COLLECTION CHARGES
+     ENDIF.
+
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZDDC'.
+     IF SY-SUBRC = 0.
+     GS_FINAL1-DDCHARG      = GS_KONV-KWERT.                                                        " DOOR DELIVERY CHARGES
+     ENDIF.
+
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZDOC'.
+     IF SY-SUBRC = 0.
+     GS_FINAL1-DCCHARG      = GS_KONV-KWERT.                                                       " DOCUMENTATION CHARGES
+     ENDIF.
+
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZDTC'.
+
+     IF SY-SUBRC = 0.
+     GS_FINAL1-DECHARG      = GS_KONV-KWERT.                                                       " DETENTION CHARGES
+     ENDIF.
+
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZDSR'.
+
+     IF SY-SUBRC = 0.
+     GS_FINAL1-SHTRECEIPT      = GS_KONV-KWERT.                                                    " SHORT RECEIPTS
+     ENDIF.
+
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZDSD'.
+
+     IF SY-SUBRC = 0.
+     GS_FINAL1-DAMAGES     = GS_KONV-KWERT.                                                        " DAMAGES/LEAKAGES
+     ENDIF.
+
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'OTHE'.
+
+     IF SY-SUBRC = 0.
+     GS_FINAL1-DEDUCT     = GS_KONV-KWERT.                                                        " OTHER CHARGES
+     ENDIF.
+
+     IF GS_VTTK-VSART = 'PT'.
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZPB0'.
+     IF SY-SUBRC = 0.
+     GS_FINAL1-NETWR      = GS_KONV-KWERT.
+     ENDIF.
+
+
+     GS_FINAL1-EXP_FRE    = ( GS_FINAL1-EXP_FRE ) + ( GS_FINAL1-DAMAGES + GS_FINAL1-DEDUCT  + GS_FINAL1-SHTRECEIPT ) +
+                            ( GS_FINAL1-MWSBP + GS_FINAL1-CCHARG  + GS_FINAL1-DDCHARG   + GS_FINAL1-DCCHARG +
+                             GS_FINAL1-LCHARG + GS_FINAL1-ULCHARG + GS_FINAL1-DECHARG ).
+
+     ELSE.
+
+
+     READ TABLE GT_KONV INTO GS_KONV WITH KEY KNUMV = GS_VFKP-KNUMV
+                                              KSCHL = 'ZFB0'.
+     IF SY-SUBRC = 0.
+     GS_FINAL1-NETWR      = GS_KONV-KWERT.
+     ENDIF.
+
+     ENDIF.
+
+
+     GS_FINAL1-TFRIEG     = ( GS_FINAL1-NETWR + GS_FINAL1-MWSBP + GS_FINAL1-CCHARG + GS_FINAL1-DDCHARG + GS_FINAL1-DCCHARG
+                            + GS_FINAL1-LCHARG + GS_FINAL1-ULCHARG + GS_FINAL1-DECHARG )
+                            + ( GS_FINAL1-DAMAGES + GS_FINAL1-DEDUCT +  GS_FINAL1-SHTRECEIPT ).         " TOTAL FRIEGHT
+
+     IF GS_FINAL1-BTGEW NE 0.
+     GS_FINAL1-FRIEGHT_KG_V  = GS_FINAL1-TFRIEG / GS_FINAL1-BTGEW.                                      " TOTAL FRIGHT AT HEADER LEVEL
+     ENDIF.
+
+     IF GS_FINAL1-BTGEW NE 0.
+      GS_FINAL1-FRIEGHT_KG_N = ( GS_FINAL1-VOL_WEIGHT * GS_FINAL1-FRIEGHT_KG_V ) / GS_FINAL1-BTGEW.   " FRIEHGT AT ITEM LEVEL
+     ENDIF.
+
+
+    APPEND GS_FINAL1 TO GT_FINAL1.
+    CLEAR : GS_FINAL1, GS_EKPO, GS_EKBE, GS_EKBE1, GS_MSEG, GS_Z6MMA,
+            GS_LIKP, GS_VTTP, GS_VTTK, GS_LFA1, GS_T001W, GS_VFKP, GS_VFKK,
+            GS_KONV, GS_KONP, GS_VBFA, GS_VBRK, GS_EXC, GS_EXC1, GS_RSEG,
+            GS_BKPF, GS_BSEG, REFKEY.
+
+  ENDLOOP.
+
+  DELETE GT_FINAL1 WHERE EXNUM = ''.
+  SORT GT_FINAL1 BY EBELN DELV_NO SHIP_NO BILL_NO EXNUM.
+  DELETE ADJACENT DUPLICATES FROM GT_FINAL1 COMPARING ALL FIELDS.
+
+*************************** CONVERT DATE TO DD.MM.YYYY FORMAT **********************
+
+  LOOP AT GT_FINAL1 INTO GS_FINAL1 WHERE EXNUM    IN SO_EXNUM
+                                   AND   ROUTE    IN SO_ROUTE
+                                   AND   TRS_CODE IN SO_TDLNR
+                                   AND   VEH_TYPE IN SO_VSART.
+
+  CONCATENATE GS_FINAL1-DELV_DATE+6(2)     '.'  GS_FINAL1-DELV_DATE+4(2)     '.'  GS_FINAL1-DELV_DATE+0(4)     INTO GS_FINAL1-DELV_DATE.
+  CONCATENATE GS_FINAL1-SHIP_DATE+6(2)     '.'  GS_FINAL1-SHIP_DATE+4(2)     '.'  GS_FINAL1-SHIP_DATE+0(4)     INTO GS_FINAL1-SHIP_DATE.
+  CONCATENATE GS_FINAL1-SHIP_CDATE+6(2)    '.'  GS_FINAL1-SHIP_CDATE+4(2)    '.'  GS_FINAL1-SHIP_CDATE+0(4)    INTO GS_FINAL1-SHIP_CDATE.
+  CONCATENATE GS_FINAL1-POST_DATE+6(2)     '.'  GS_FINAL1-POST_DATE+4(2)     '.'  GS_FINAL1-POST_DATE+0(4)     INTO GS_FINAL1-POST_DATE.
+  CONCATENATE GS_FINAL1-PAY_POST_DATE+6(2) '.'  GS_FINAL1-PAY_POST_DATE+4(2) '.'  GS_FINAL1-PAY_POST_DATE+0(4) INTO GS_FINAL1-PAY_POST_DATE.
+  CONCATENATE GS_FINAL1-TRSP_SDATE+6(2)    '.'  GS_FINAL1-TRSP_SDATE+4(2)    '.'  GS_FINAL1-TRSP_SDATE+0(4)    INTO GS_FINAL1-TRSP_SDATE.
+  CONCATENATE GS_FINAL1-GR_DATE+6(2)       '.'  GS_FINAL1-GR_DATE+4(2)       '.'  GS_FINAL1-GR_DATE+0(4)       INTO GS_FINAL1-GR_DATE.
+  CONCATENATE GS_FINAL1-REP_DATE+6(2)      '.'  GS_FINAL1-REP_DATE+4(2)      '.'  GS_FINAL1-REP_DATE+0(4)      INTO GS_FINAL1-REP_DATE.
+  CONCATENATE GS_FINAL1-BILL_DATE+6(2)     '.'  GS_FINAL1-BILL_DATE+4(2)     '.'  GS_FINAL1-BILL_DATE+0(4)     INTO GS_FINAL1-BILL_DATE.
+  CONCATENATE GS_FINAL1-EXDAT+6(2)         '.'  GS_FINAL1-EXDAT+4(2)         '.'  GS_FINAL1-EXDAT+0(4)         INTO GS_FINAL1-EXDAT.
+
+MODIFY GT_FINAL1 FROM GS_FINAL1 INDEX SY-TABIX TRANSPORTING DELV_DATE SHIP_DATE SHIP_CDATE POST_DATE PAY_POST_DATE
+                                               TRSP_SDATE GR_DATE REP_DATE BILL_DATE EXDAT.
+
+APPEND GS_FINAL1 TO GT_FINAL2.
+CLEAR GS_FINAL1.
+
+ENDLOOP.
+
+
+ENDFORM.
+
+FORM SORT_CRITERIA.
+
+*&*********************************************************************&*
+*&                 SORT CRITERIA                                       &*
+*&*********************************************************************&*
+
+    WA_SORT-SPOS = 1.
+    WA_SORT-FIELDNAME = 'EBELN'.
+    WA_SORT-SUBTOT = ''.
+    APPEND WA_SORT TO IT_SORT.
+    CLEAR WA_SORT.
+
+ENDFORM.
+
+
+FORM FIELD_CAT.
+
+*&*********************************************************************&*
+*&                   FILL FIELDCATALOG                                 &*
+*&*********************************************************************&*
+
+WA_FIELD_CAT-COL_POS   = 1.
+WA_FIELD_CAT-FIELDNAME = 'EBELN'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'STO NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C210'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO   = 'X'.
+WA_FIELD_CAT-KEY       = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 2.
+WA_FIELD_CAT-FIELDNAME = 'EBELP'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'ITEM'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '5'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 3.
+WA_FIELD_CAT-FIELDNAME = 'VGABE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'VGABE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '5'.
+WA_FIELD_CAT-NO_OUT     = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 4.
+WA_FIELD_CAT-FIELDNAME = 'MATNR'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'MATERIAL NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 5.
+WA_FIELD_CAT-FIELDNAME = 'MAKTX'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'MATERIAL NAME'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 6.
+WA_FIELD_CAT-FIELDNAME = 'SPLANT'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'SUPPLYING PLANT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '6'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 7.
+WA_FIELD_CAT-FIELDNAME = 'SPLANT_NAME'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'SUPPLYING PLANT NAME'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 8.
+WA_FIELD_CAT-FIELDNAME = 'RPLANT'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'RECEIVING PLANT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '6'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 9.
+WA_FIELD_CAT-FIELDNAME = 'RPLANT_NAME'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'RECEIVEING PLANT NAME'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 10.
+WA_FIELD_CAT-FIELDNAME = 'DELV_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'DELIVERY NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+WA_FIELD_CAT-NO_ZERO   = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 11.
+WA_FIELD_CAT-FIELDNAME = 'DELV_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'DELIVERY DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 12.
+WA_FIELD_CAT-FIELDNAME = 'BTGEW'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'GROSS WEIGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 13.
+WA_FIELD_CAT-FIELDNAME = 'SHIP_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'SHIPPING NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 14.
+WA_FIELD_CAT-FIELDNAME = 'SHIP_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'SHIPPING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 15.
+WA_FIELD_CAT-FIELDNAME = 'SHIP_CNUM'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'SHIPPING COST DOC NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 16.
+WA_FIELD_CAT-FIELDNAME = 'SHIP_CDATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'SHIPPING COST DOC DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 17.
+WA_FIELD_CAT-FIELDNAME = 'BILL_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'BILLING NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 18.
+WA_FIELD_CAT-FIELDNAME = 'BILL_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'BILLING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 19.
+WA_FIELD_CAT-FIELDNAME = 'EXNUM'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'EXCISE NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 20.
+WA_FIELD_CAT-FIELDNAME = 'EXDAT'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'EXCISE DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 21.
+WA_FIELD_CAT-FIELDNAME = 'EXC_QUA'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'EXCISE QUANTITY'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 22.
+WA_FIELD_CAT-FIELDNAME = 'EXC_UOM'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'UNIT OF MEASURE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '5'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 23.
+WA_FIELD_CAT-FIELDNAME = 'TRS_CODE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORT VENDOR CODE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 24.
+WA_FIELD_CAT-FIELDNAME = 'TRS_NAME'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER NAME'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 25.
+WA_FIELD_CAT-FIELDNAME = 'TRS_VEH'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER VEHICLE NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 26.
+WA_FIELD_CAT-FIELDNAME = 'VEH_TYPE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'VEHICLE TYPE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 27.
+WA_FIELD_CAT-FIELDNAME = 'LR_NUM'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'LR NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 28.
+WA_FIELD_CAT-FIELDNAME = 'ROUTE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'ROUTE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '10'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 29.
+WA_FIELD_CAT-FIELDNAME = 'TRSP_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER BILL NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 30.
+WA_FIELD_CAT-FIELDNAME = 'TRSP_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER BILL DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 31.
+WA_FIELD_CAT-FIELDNAME = 'TRSP_SDATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER BILL SUBMIT DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 32.
+WA_FIELD_CAT-FIELDNAME = 'EXP_FRE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'AGREED FRIEGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 33.
+WA_FIELD_CAT-FIELDNAME = 'NETWR'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'BASIC FRIEGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 34.
+WA_FIELD_CAT-FIELDNAME = 'CCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'COLLECTION CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 35.
+WA_FIELD_CAT-FIELDNAME = 'DDCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'DOOR DELIVERY CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 36.
+WA_FIELD_CAT-FIELDNAME = 'DCCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'DOCUMENTATION CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 37.
+WA_FIELD_CAT-FIELDNAME = 'LCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'LOADING CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 38.
+WA_FIELD_CAT-FIELDNAME = 'ULCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_F'.
+WA_FIELD_CAT-SELTEXT_M = 'UNLOADING CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 39.
+WA_FIELD_CAT-FIELDNAME = 'DECHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'DETENTION CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 40.
+WA_FIELD_CAT-FIELDNAME = 'SHTRECEIPT'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'SHORT RECEIPT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 41.
+WA_FIELD_CAT-FIELDNAME = 'DAMAGES'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'DAMAGES/LEKAGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 42.
+WA_FIELD_CAT-FIELDNAME = 'DEDUCT'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'DEDUCTIONS'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '13'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 43.
+WA_FIELD_CAT-FIELDNAME = 'MWSBP'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'SERVICE TAX'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '13'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 44.
+WA_FIELD_CAT-FIELDNAME = 'TFRIEG'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'ACTUAL FRIEGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 45.
+WA_FIELD_CAT-FIELDNAME = 'FRIEGHT_KG_V'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'FRIEGHT PER KG(V)'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 46.
+WA_FIELD_CAT-FIELDNAME = 'GR_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'GR NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 47.
+WA_FIELD_CAT-FIELDNAME = 'GR_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'GR DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 48.
+WA_FIELD_CAT-FIELDNAME = 'GR_QUA'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'GR QUA'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 49.
+WA_FIELD_CAT-FIELDNAME = 'VOL_WEIGHT'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'VOLUMETRIC WEIGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 50.
+WA_FIELD_CAT-FIELDNAME = 'PLANNED_TT'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'PLANNED TRANSIT DAYS'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '18'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 51.
+WA_FIELD_CAT-FIELDNAME = 'ACTUAL_TT'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'ACTUAL TRANSIT DAYS'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '8'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 52.
+WA_FIELD_CAT-FIELDNAME = 'REP_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'REPORTING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 53.
+WA_FIELD_CAT-FIELDNAME = 'DELAY'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'DELAY'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 54.
+WA_FIELD_CAT-FIELDNAME = 'FRIEGHT_KG_N'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'FRIEGHT PER KG(N)'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 55.
+WA_FIELD_CAT-FIELDNAME = 'QUA_DIFF'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'QUNATITY DIFFERENCE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 56.
+WA_FIELD_CAT-FIELDNAME = 'PUR_DOC_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'PURC DOC NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 57.
+WA_FIELD_CAT-FIELDNAME = 'FI_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'FI NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 58.
+WA_FIELD_CAT-FIELDNAME = 'POST_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'POSTING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 59.
+WA_FIELD_CAT-FIELDNAME = 'INV_REF_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'REFERENCE (INVOICE NO)'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '30'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 60.
+WA_FIELD_CAT-FIELDNAME = 'PAY_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'PAYMENT DOCUMENT NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 61.
+WA_FIELD_CAT-FIELDNAME = 'PAY_POST_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_FINAL1'.
+WA_FIELD_CAT-SELTEXT_M = 'PAYMENT POSTING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+ENDFORM.
+
+
+FORM DISP_OUTPUT.
+
+*&*********************************************************************&*
+*&                    DISPLAY OUTPUT                                   &*
+*&*********************************************************************&*
+
+IF A = 'X'.
+
+ DATA I_GRID_TITLE TYPE  LVC_TITLE.
+ I_GRID_TITLE = SY-UNAME.
+
+CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'                                                  " ALV GRID DISPLAY.
+  EXPORTING
+     I_CALLBACK_PROGRAM                = SY-REPID
+     I_GRID_TITLE                      = I_GRID_TITLE
+     IT_FIELDCAT                       = IT_FIELD_CAT
+     IT_SORT                           = IT_SORT
+     I_SAVE                            = 'X'
+     IS_VARIANT                        =  GX_VARIANT
+ TABLES
+     T_OUTTAB                          = GT_FINAL2
+
+          .
+ELSEIF B = 'X'.
+
+
+  CALL FUNCTION 'REUSE_ALV_LIST_DISPLAY'                                                                " ALV LIST DISPLAY
+   EXPORTING
+      I_CALLBACK_PROGRAM             = SY-REPID
+      IT_FIELDCAT                    = IT_FIELD_CAT
+      I_SAVE                         = 'X '
+      IS_VARIANT                     = GX_VARIANT
+    TABLES
+      T_OUTTAB                       = GT_FINAL2.
+
+ELSEIF C = 'X'.
+
+  INCLUDE ZZTMP_DD_2.                                                    " DATA DECLARATIONS FOR  HEADER AND ITEM WISE DISPLAY
+  CLEAR GS_FINAL1.
+
+  LOOP AT GT_FINAL2 INTO GS_FINAL2.
+   MOVE-CORRESPONDING GS_FINAL2 TO GS_HEADER.
+   APPEND GS_HEADER TO IT_HEADER.
+   CLEAR GS_HEADER.
+
+   MOVE-CORRESPONDING GS_FINAL2 TO GS_ITEM.
+   APPEND GS_ITEM TO IT_ITEM.
+   CLEAR GS_ITEM.
+
+  CLEAR GS_FINAL2.
+  ENDLOOP.
+
+SORT IT_HEADER BY EBELN DELV_NO SHIP_NO BILL_NO EXNUM.
+DELETE ADJACENT DUPLICATES FROM IT_HEADER COMPARING ALL FIELDS.
+CLEAR IT_FIELD_CAT.
+
+LOOP AT IT_HEADER INTO GS_HEADER.
+GS_HEADER-COL = 'C300'.
+MODIFY IT_HEADER FROM GS_HEADER TRANSPORTING COL WHERE EBELN EQ GS_HEADER-EBELN.
+ENDLOOP.
+
+WA_LAYOUT-INFO_FIELDNAME    = 'COL'.
+WA_LAYOUT-EXPAND_FIELDNAME  = 'EXPAND'.
+WA_LAYOUT-LIGHTS_TABNAME    = 'IT_ITEM'.
+*WA_LAYOUT-COLWIDTH_OPTIMIZE = 'X'.
+
+PERFORM FIELD_CAT_1.
+
+
+*KEY INFOMATION FOR THE HEADER AND ITEM TABLE
+  KEY-HEADER01 = 'EBELN'.
+  KEY-ITEM01   = 'EBELN'.
+
+  KEY-HEADER02 = 'DELV_NO'.
+  KEY-ITEM02   = 'DELV_NO'.
+
+  KEY-HEADER03 = 'SHIP_NO'.
+  KEY-ITEM03   = 'SHIP_NO'.
+
+  KEY-HEADER04 = 'BILL_NO'.
+  KEY-ITEM04   = 'BILL_NO'.
+
+  KEY-HEADER05 = 'EXNUM'.
+  KEY-ITEM05   = 'EXNUM'.
+
+
+  CALL FUNCTION 'REUSE_ALV_HIERSEQ_LIST_DISPLAY'
+    EXPORTING
+      I_CALLBACK_PROGRAM = SY-CPROG
+      IS_LAYOUT          = WA_LAYOUT
+      IT_FIELDCAT        = IT_FIELD_CAT
+      I_TABNAME_HEADER   = 'IT_HEADER'
+      I_TABNAME_ITEM     = 'IT_ITEM'
+      IS_KEYINFO         = KEY
+      I_SAVE             = 'X'
+      IS_VARIANT         = GX_VARIANT
+    TABLES
+      T_OUTTAB_HEADER    = IT_HEADER
+      T_OUTTAB_ITEM      = IT_ITEM.
+
+
+ELSEIF D = 'X'.
+
+DATA : IT_HEADER1 TYPE TABLE OF ZTRANSPORT_MODULE_HEADER.
+DATA : STO  TYPE EKPO-EBELN,
+       DELV TYPE LIKP-VBELN.
+FIELD-SYMBOLS:
+  <rowset>            TYPE ZTRANSPORT_MODULE_REPORT,
+  <level_1>           TYPE ZTRANSPORT_MODULE_HEADER ,
+  <level_2>           TYPE ZTRANSPORT_MODULE_ITEMS.
+
+CLEAR GS_FINAL1.
+
+LOOP AT GT_FINAL2 ASSIGNING <ROWSET>.
+
+IF STO NE <ROWSET>-EBELN OR DELV NE <ROWSET>-DELV_NO.
+
+ APPEND INITIAL LINE TO IT_HEADER1 ASSIGNING <LEVEL_1>.
+<LEVEL_1>-EBELN           = <ROWSET>-EBELN.
+<LEVEL_1>-SPLANT          = <ROWSET>-SPLANT.
+<LEVEL_1>-SPLANT_NAME     = <ROWSET>-SPLANT_NAME.
+<LEVEL_1>-RPLANT          = <ROWSET>-RPLANT   .
+<LEVEL_1>-RPLANT_NAME     = <ROWSET>-RPLANT_NAME  .
+<LEVEL_1>-DELV_NO         = <ROWSET>-DELV_NO .
+<LEVEL_1>-DELV_DATE       = <ROWSET>-DELV_DATE.
+<LEVEL_1>-BTGEW           = <ROWSET>-BTGEW.
+<LEVEL_1>-SHIP_NO         = <ROWSET>-SHIP_NO.
+<LEVEL_1>-SHIP_DATE       = <ROWSET>-SHIP_DATE  .
+<LEVEL_1>-SHIP_CNUM       = <ROWSET>-SHIP_CNUM .
+<LEVEL_1>-SHIP_CDATE      = <ROWSET>-SHIP_CDATE .
+<LEVEL_1>-TRSP_NO         = <ROWSET>-TRSP_NO .
+<LEVEL_1>-TRSP_DATE       = <ROWSET>-TRSP_DATE .
+<LEVEL_1>-TRSP_SDATE      = <ROWSET>-TRSP_SDATE.
+<LEVEL_1>-EXP_FRE         = <ROWSET>-EXP_FRE  .
+<LEVEL_1>-NETWR           = <ROWSET>-NETWR.
+<LEVEL_1>-MWSBP           = <ROWSET>-MWSBP.
+<LEVEL_1>-LCHARG          = <ROWSET>-LCHARG.
+<LEVEL_1>-ULCHARG         = <ROWSET>-ULCHARG.
+<LEVEL_1>-CCHARG          = <ROWSET>-CCHARG.
+<LEVEL_1>-DDCHARG         = <ROWSET>-DDCHARG.
+<LEVEL_1>-DCCHARG         = <ROWSET>-DCCHARG.
+<LEVEL_1>-DECHARG         = <ROWSET>-DECHARG.
+<LEVEL_1>-SHTRECEIPT      = <ROWSET>-SHTRECEIPT.
+<LEVEL_1>-DAMAGES         = <ROWSET>-DAMAGES.
+<LEVEL_1>-DEDUCT          = <ROWSET>-DEDUCT.
+<LEVEL_1>-TFRIEG          = <ROWSET>-TFRIEG.
+<LEVEL_1>-FRIEGHT_KG_V    = <ROWSET>-FRIEGHT_KG_V.
+<LEVEL_1>-TRS_CODE        = <ROWSET>-TRS_CODE.
+<LEVEL_1>-TRS_NAME        = <ROWSET>-TRS_NAME.
+<LEVEL_1>-TRS_VEH         = <ROWSET>-TRS_VEH.
+<LEVEL_1>-VEH_TYPE        = <ROWSET>-VEH_TYPE.
+<LEVEL_1>-ROUTE           = <ROWSET>-ROUTE.
+<LEVEL_1>-LR_NUM          = <ROWSET>-LR_NUM.
+<LEVEL_1>-BILL_NO         = <ROWSET>-BILL_NO.
+<LEVEL_1>-BILL_DATE       = <ROWSET>-BILL_DATE.
+<LEVEL_1>-EXNUM           = <ROWSET>-EXNUM .
+<LEVEL_1>-EXDAT           = <ROWSET>-EXDAT.
+<LEVEL_1>-GR_NO           = <ROWSET>-GR_NO.
+<LEVEL_1>-GR_DATE         = <ROWSET>-GR_DATE.
+<LEVEL_1>-PLANNED_TT      = <ROWSET>-PLANNED_TT.
+<LEVEL_1>-ACTUAL_TT       = <ROWSET>-ACTUAL_TT.
+<LEVEL_1>-REP_DATE        = <ROWSET>-REP_DATE.
+<LEVEL_1>-DELAY           = <ROWSET>-DELAY.
+<LEVEL_1>-PUR_DOC_NO      = <ROWSET>-PUR_DOC_NO.
+<LEVEL_1>-FI_NO           = <ROWSET>-FI_NO.
+<LEVEL_1>-POST_DATE       = <ROWSET>-POST_DATE.
+<LEVEL_1>-INV_REF_NO      = <ROWSET>-INV_REF_NO.
+<LEVEL_1>-PAY_NO          = <ROWSET>-PAY_NO.
+<LEVEL_1>-PAY_POST_DATE   = <ROWSET>-PAY_POST_DATE.
+ENDIF.
+
+STO   = <ROWSET>-EBELN.
+DELV  = <ROWSET>-DELV_NO.
+
+APPEND INITIAL LINE TO <LEVEL_1>-LEVEL_2 ASSIGNING <LEVEL_2> .
+
+<LEVEL_2>-EBELP        = <ROWSET>-EBELP .
+<LEVEL_2>-MATNR        = <ROWSET>-MATNR .
+<LEVEL_2>-MAKTX        = <ROWSET>-MAKTX .
+<LEVEL_2>-EXC_QUA      = <ROWSET>-EXC_QUA .
+<LEVEL_2>-EXC_UOM      = <ROWSET>-EXC_UOM .
+<LEVEL_2>-GR_QUA       = <ROWSET>-GR_QUA .
+<LEVEL_2>-VOL_WEIGHT   = <ROWSET>-VOL_WEIGHT .
+<LEVEL_2>-FRIEGHT_KG_N = <ROWSET>-FRIEGHT_KG_N .
+<LEVEL_2>-QUA_DIFF     = <ROWSET>-QUA_DIFF.
+
+
+ENDLOOP.
+
+DELETE ADJACENT DUPLICATES FROM IT_HEADER1 COMPARING ALL FIELDS.
+
+ DATA : RAW_DATA1 TYPE MIME_DATA.                                                                                         " EXCEL OUTPUT
+
+ CALL FUNCTION 'ZXLWB_CALLFORM'
+        EXPORTING
+          IV_FORMNAME                   = 'ZTRANSPORT_MODULE_HEADER_ITEMS'
+          IV_CONTEXT_REF                = IT_HEADER1
+*         IV_VIEWER_TITLE               = SY-TITLE
+*         IV_VIEWER_CALLBACK_PROG       = SY-CPROG
+*         IV_VIEWER_CALLBACK_FORM       =
+*         IV_VIEWER_SUPPRESS            =
+*         IV_PROTECT                    =
+*         IV_SAVE_AS                    =
+*         IT_DOCPROPERTIES              =
+       IMPORTING
+          EV_DOCUMENT_RAWDATA           = RAW_DATA1
+*      EXCEPTIONS
+*         PROCESS_TERMINATED            = 1
+*         OTHERS                        = 2
+.
+
+
+ENDIF.
+
+ENDFORM.
+
+FORM GET_DEFAULT_VARIANT.
+
+  CLEAR GX_VARIANT.
+  GX_VARIANT-REPORT = SY-REPID.
+
+  CALL FUNCTION 'REUSE_ALV_VARIANT_DEFAULT_GET'
+    EXPORTING
+      I_SAVE     = 'A'
+    CHANGING
+      CS_VARIANT = GX_VARIANT
+    EXCEPTIONS
+      NOT_FOUND  = 2.
+
+  IF SY-SUBRC = 0.
+    P_VAR = GX_VARIANT-VARIANT.
+  ENDIF.
+
+ ENDFORM.
+
+ FORM VARIANT_F4_SELECTION.
+
+CALL FUNCTION 'REUSE_ALV_VARIANT_F4'
+  EXPORTING
+      IS_VARIANT = GX_VARIANT
+      I_SAVE     = 'A'
+  IMPORTING
+      E_EXIT     = G_EXIT
+      ES_VARIANT = GX_VARIANT
+  EXCEPTIONS
+      NOT_FOUND  = 2.
+
+  IF SY-SUBRC = 2.
+   MESSAGE ID SY-MSGID TYPE 'S' NUMBER SY-MSGNO WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+  ELSE.
+
+    IF G_EXIT = SPACE.
+    P_VAR = GX_VARIANT-VARIANT.
+    ENDIF.
+
+  ENDIF.
+
+ ENDFORM.
+
+* FORM TOP-OF-PAGE.
+**ALV HEADER DECLARATIONS
+*  DATA: IT_HEADER TYPE SLIS_T_LISTHEADER,
+*        WA_HEADER TYPE SLIS_LISTHEADER,
+*        T_LINE LIKE WA_HEADER-INFO,
+*        LD_LINES TYPE I,
+*        LD_LINESC(10) TYPE C.
+*
+** TITLE
+*  WA_HEADER-TYP  = 'H'.
+*  WA_HEADER-INFO = 'TRANSPORT MODULE REPORT'.
+*  APPEND WA_HEADER TO IT_HEADER.
+*  CLEAR WA_HEADER.
+*
+** DATE
+*  WA_HEADER-TYP  = 'S'.
+*  WA_HEADER-KEY = 'DATE: '.
+*  CONCATENATE  SY-DATUM+6(2) '.'
+*               SY-DATUM+4(2) '.'
+*               SY-DATUM(4) INTO WA_HEADER-INFO.   "TODAYS DATE
+*  APPEND WA_HEADER TO IT_HEADER.
+*  CLEAR: WA_HEADER.
+*
+** TOTAL NO. OF RECORDS SELECTED
+*  DESCRIBE TABLE IT_FINAL1 LINES LD_LINES.
+*  LD_LINESC = LD_LINES.
+*
+*  WA_HEADER-TYP  = 'S'.
+*  WA_HEADER-KEY = 'RECORDS SELECTED :'.
+*  WA_HEADER-INFO = LD_LINESC.
+*  APPEND WA_HEADER TO IT_HEADER.
+*  CLEAR: WA_HEADER, T_LINE.
+*
+*  CALL FUNCTION 'REUSE_ALV_COMMENTARY_WRITE'
+*    EXPORTING
+*      IT_LIST_COMMENTARY = IT_HEADER
+*      I_LOGO             = 'INDOFIL_LOGO'.
+*ENDFORM.                    "TOP-OF-PAGE
+
+
+FORM DISABLE_P_VAR.
+ IF D = 'X'.
+ LOOP AT SCREEN.
+       IF SCREEN-NAME EQ 'P_VAR'.
+          SCREEN-INVISIBLE = '0'.
+          SCREEN-INPUT     = '0'.
+        MODIFY SCREEN.
+       ENDIF.
+
+       IF SCREEN-GROUP1 EQ 'YY'.
+          SCREEN-INVISIBLE = '0'.
+          MODIFY SCREEN.
+       ENDIF.
+
+ ENDLOOP.
+
+ELSE.
+   LOOP AT SCREEN.
+
+       IF SCREEN-NAME EQ 'P_VAR'.
+          SCREEN-INVISIBLE = '0'.
+          SCREEN-INPUT     = '1'.
+        MODIFY SCREEN.
+       ENDIF.
+       IF SCREEN-GROUP1 EQ 'YY'.
+          SCREEN-INVISIBLE = '1'.
+          MODIFY SCREEN.
+       ENDIF.
+ ENDLOOP.
+ENDIF.
+
+ENDFORM.
+
+FORM FIELD_CAT_1.
+
+WA_FIELD_CAT-COL_POS   = 1.
+WA_FIELD_CAT-FIELDNAME = 'EBELN'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'STO NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C210'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO   = 'X'.
+WA_FIELD_CAT-KEY       = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 2.
+WA_FIELD_CAT-FIELDNAME = 'EBELP'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'ITEM'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '5'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+*WA_FIELD_CAT-COL_POS   = 3.
+*WA_FIELD_CAT-FIELDNAME = 'VGABE'.
+*WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+*WA_FIELD_CAT-SELTEXT_M = 'VGABE'.
+*WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+*WA_FIELD_CAT-OUTPUTLEN = '5'.
+*WA_FIELD_CAT-NO_OUT     = 'X'.
+*
+*APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+*CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 4.
+WA_FIELD_CAT-FIELDNAME = 'MATNR'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'MATERIAL NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 5.
+WA_FIELD_CAT-FIELDNAME = 'MAKTX'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'MATERIAL NAME'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 6.
+WA_FIELD_CAT-FIELDNAME = 'SPLANT'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'SUPPLYING PLANT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '16'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 7.
+WA_FIELD_CAT-FIELDNAME = 'SPLANT_NAME'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'SUPPLYING PLANT NAME'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 8.
+WA_FIELD_CAT-FIELDNAME = 'RPLANT'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'RECEIVING PLANT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '16'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 9.
+WA_FIELD_CAT-FIELDNAME = 'RPLANT_NAME'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'RECEIVEING PLANT NAME'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '27'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 10.
+WA_FIELD_CAT-FIELDNAME = 'DELV_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'DELIVERY NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+WA_FIELD_CAT-NO_ZERO   = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 11.
+WA_FIELD_CAT-FIELDNAME = 'DELV_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'DELIVERY DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 12.
+WA_FIELD_CAT-FIELDNAME = 'BTGEW'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'GROSS WEIGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 13.
+WA_FIELD_CAT-FIELDNAME = 'SHIP_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'SHIPPING NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 14.
+WA_FIELD_CAT-FIELDNAME = 'SHIP_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'SHIPPING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C600'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 15.
+WA_FIELD_CAT-FIELDNAME = 'SHIP_CNUM'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'SHIPPING COST DOCUMENT NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '30'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 16.
+WA_FIELD_CAT-FIELDNAME = 'SHIP_CDATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'SHIPPING COST DOCUMENT DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '28'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 17.
+WA_FIELD_CAT-FIELDNAME = 'BILL_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'BILLING NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 18.
+WA_FIELD_CAT-FIELDNAME = 'BILL_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'BILLING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 19.
+WA_FIELD_CAT-FIELDNAME = 'EXNUM'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'EXCISE NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 20.
+WA_FIELD_CAT-FIELDNAME = 'EXDAT'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'EXCISE DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 21.
+WA_FIELD_CAT-FIELDNAME = 'EXC_QUA'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'EXCISE QUANTITY'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 22.
+WA_FIELD_CAT-FIELDNAME = 'EXC_UOM'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'UOM'.
+WA_FIELD_CAT-SELTEXT_L = 'UNIT OF MEASURE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 23.
+WA_FIELD_CAT-FIELDNAME = 'TRS_CODE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORT VENDOR CODE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 24.
+WA_FIELD_CAT-FIELDNAME = 'TRS_NAME'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER NAME'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 25.
+WA_FIELD_CAT-FIELDNAME = 'TRS_VEH'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER VEHICLE NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 26.
+WA_FIELD_CAT-FIELDNAME = 'VEH_TYPE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'VEHICLE TYPE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '18'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 27.
+WA_FIELD_CAT-FIELDNAME = 'LR_NUM'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'LR NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 28.
+WA_FIELD_CAT-FIELDNAME = 'ROUTE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'ROUTE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '10'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 29.
+WA_FIELD_CAT-FIELDNAME = 'TRSP_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER BILL NUMBER'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 30.
+WA_FIELD_CAT-FIELDNAME = 'TRSP_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER BILL DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 31.
+WA_FIELD_CAT-FIELDNAME = 'TRSP_SDATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'TRANSPORTER BILL SUBMIT DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 32.
+WA_FIELD_CAT-FIELDNAME = 'EXP_FRE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'AGREED FRIEGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 33.
+WA_FIELD_CAT-FIELDNAME = 'NETWR'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'BASIC FRIEGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 34.
+WA_FIELD_CAT-FIELDNAME = 'CCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'COLLECTION CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 35.
+WA_FIELD_CAT-FIELDNAME = 'DDCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'DOOR DELIVERY CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 36.
+WA_FIELD_CAT-FIELDNAME = 'DCCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'DOCUMENTATION CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 37.
+WA_FIELD_CAT-FIELDNAME = 'LCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'LOADING CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 38.
+WA_FIELD_CAT-FIELDNAME = 'ULCHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'UNLOADING CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 39.
+WA_FIELD_CAT-FIELDNAME = 'DECHARG'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'DETENTION CHARGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 40.
+WA_FIELD_CAT-FIELDNAME = 'SHTRECEIPT'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'SHORT RECEIPT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 41.
+WA_FIELD_CAT-FIELDNAME = 'DAMAGES'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'DAMAGES/LEKAGES'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 42.
+WA_FIELD_CAT-FIELDNAME = 'DEDUCT'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'DEDUCTIONS'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 43.
+WA_FIELD_CAT-FIELDNAME = 'MWSBP'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'SERVICE TAX'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 44.
+WA_FIELD_CAT-FIELDNAME = 'TFRIEG'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'ACTUAL FRIEGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 45.
+WA_FIELD_CAT-FIELDNAME = 'FRIEGHT_KG_V'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'FRIEGHT PER KG (V)'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+*WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 46.
+WA_FIELD_CAT-FIELDNAME = 'GR_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'GR NUM'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+WA_FIELD_CAT-NO_ZERO    = 'X'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 47.
+WA_FIELD_CAT-FIELDNAME = 'GR_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'GR DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 48.
+WA_FIELD_CAT-FIELDNAME = 'GR_QUA'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'GR QUANTITY'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 49.
+WA_FIELD_CAT-FIELDNAME = 'VOL_WEIGHT'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'VOLUMETRIC WEIGHT'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '25'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 50.
+WA_FIELD_CAT-FIELDNAME = 'PLANNED_TT'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'PLANNED TRANSIT DAYS'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 51.
+WA_FIELD_CAT-FIELDNAME = 'ACTUAL_TT'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'ACTUAL TRANSIT DAYS'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 52.
+WA_FIELD_CAT-FIELDNAME = 'REP_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'REPORTING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '18'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 53.
+WA_FIELD_CAT-FIELDNAME = 'DELAY'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'DELAY'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 54.
+WA_FIELD_CAT-FIELDNAME = 'FRIEGHT_KG_N'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'FRIEGHT PER KG'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 55.
+WA_FIELD_CAT-FIELDNAME = 'QUA_DIFF'.
+WA_FIELD_CAT-TABNAME   = 'IT_ITEM'.
+WA_FIELD_CAT-SELTEXT_M = 'QUNATITY DIFFERENCE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 56.
+WA_FIELD_CAT-FIELDNAME = 'PUR_DOC_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'PURC DOC NUM'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'R'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+
+WA_FIELD_CAT-COL_POS   = 57.
+WA_FIELD_CAT-FIELDNAME = 'FI_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'FI NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 58.
+WA_FIELD_CAT-FIELDNAME = 'POST_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'POSTING DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 59.
+WA_FIELD_CAT-FIELDNAME = 'INV_REF_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'REFERENCE NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '20'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 60.
+WA_FIELD_CAT-FIELDNAME = 'PAY_NO'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'PAYMENT DOC NO'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '15'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+WA_FIELD_CAT-COL_POS   = 61.
+WA_FIELD_CAT-FIELDNAME = 'PAY_POST_DATE'.
+WA_FIELD_CAT-TABNAME   = 'IT_HEADER'.
+WA_FIELD_CAT-SELTEXT_M = 'PAYMENT POST DATE'.
+WA_FIELD_CAT-EMPHASIZE = 'C200'.
+WA_FIELD_CAT-JUST      = 'L'.
+WA_FIELD_CAT-OUTPUTLEN = '10'.
+
+APPEND WA_FIELD_CAT TO IT_FIELD_CAT.
+CLEAR WA_FIELD_CAT.
+
+ENDFORM.

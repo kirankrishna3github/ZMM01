@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZPP</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>You Can Not Use Material &amp; for Proposal,Business Plan Price is &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>New Proposal is Created With No : &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>You can not use Same Vendor &amp;  for Same Material &amp; Code</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Material &amp; is not available under group &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Attachment uploaded successfully for Proposal No &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Your Document opened Please check windows Sessions</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>No attachment available for this Proposal &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Vendor &amp; is not available under Plant &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Please attach Document for Proposal &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>You can not select same material code &amp; multiple times for best proposal</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Changes has been done in Proposal No : &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Attachment is not available for selected Line item no &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>New Basic Price &amp; should be less than New Landed Price &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>You are not authorized person -  &amp; to ceate an attachment?</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Maintain line-text for Material No  &amp; Other Vendor New Basic Price is les</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Please enter Quantity for Material No &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Please enter New Basic Price for Material No &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Please enter New Landed Price for Material No &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZPP</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Select tax code to  Material no &amp;</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZVEN_MAST</TABNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>Vendor Master Creation</DDTEXT>
+    <EXCLASS>3</EXCLASS>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <TABNAME>ZVEN_MAST</TABNAME>
+     <FIELDNAME>LIFNR</FIELDNAME>
+     <POSITION>0001</POSITION>
+     <ROLLNAME>LIFNR</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <SHLPORIGIN>D</SHLPORIGIN>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <TABNAME>ZVEN_MAST</TABNAME>
+     <FIELDNAME>NAME1</FIELDNAME>
+     <POSITION>0002</POSITION>
+     <ROLLNAME>NAME1_GP</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <TABNAME>ZVEN_MAST</TABNAME>
+     <FIELDNAME>STCD3</FIELDNAME>
+     <POSITION>0003</POSITION>
+     <ROLLNAME>STCD3</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <TABNAME>ZVEN_MAST</TABNAME>
+     <FIELDNAME>REMARK</FIELDNAME>
+     <POSITION>0004</POSITION>
+     <ROLLNAME>ZREMARKS</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

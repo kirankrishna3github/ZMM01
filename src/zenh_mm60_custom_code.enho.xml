@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Custom code in MM60</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>PROG</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>RMMVRZ00</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>PROG</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>RMMVRZ00</ORG_MAIN_NAME>
+    <PROGRAMNAME>RMMVRZ00</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>RMMVRZ00</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:RMMVRZ00\TY:LISTWA_TYPE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>types prctr type marc-prctr.  &quot; IHDK900416; add profit center</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>RMMVRZ00</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RMMVRZ00\FO:ALV_LIST_FIELDCAT_CREATE\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>&quot; IHDK900416; add profit center</item>
+      <item>clear ls_fieldcat.</item>
+      <item>ls_fieldcat-fieldname   = &apos;PRCTR&apos;.</item>
+      <item>ls_fieldcat-ref_tabname = &apos;MARC&apos;.</item>
+      <item>append ls_fieldcat TO et_fieldcat.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>RMMVRZ00</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RMMVRZ00\FO:ALV_LIST_OUTPUT\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>&quot; IHDK900416; add profit center</item>
+      <item>if gt_list is not initial.</item>
+      <item>select matnr, werks, prctr</item>
+      <item>from marc</item>
+      <item>into table @data(lt_marc)</item>
+      <item>for all entries in @gt_list</item>
+      <item>where matnr = @gt_list-matnr</item>
+      <item>and   werks = @gt_list-werks.</item>
+      <item/>
+      <item>if lt_marc is not initial.</item>
+      <item>loop at gt_list assigning field-symbol(&lt;ls_list&gt;).</item>
+      <item>try .</item>
+      <item>&lt;ls_list&gt;-prctr = lt_marc[ matnr = &lt;ls_list&gt;-matnr werks = &lt;ls_list&gt;-werks ]-prctr.</item>
+      <item>catch cx_sy_itab_line_not_found.</item>
+      <item/>
+      <item>endtry.</item>
+      <item>endloop.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SPACES>
+    <item>
+     <FULL_NAME>\PR:RMMVRZ00\TY:LISTWA_TYPE\SE:END\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RMMVRZ00\FO:ALV_LIST_FIELDCAT_CREATE\SE:END\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RMMVRZ00\FO:ALV_LIST_OUTPUT\SE:BEGIN\EI</FULL_NAME>
+     <SPACES>
+      <item>2</item>
+      <item>2</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>6</item>
+      <item>8</item>
+      <item>10</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>6</item>
+      <item>4</item>
+      <item>2</item>
+     </SPACES>
+    </item>
+   </SPACES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>BADI_IMPL</TOOL>
+   <SHORTTEXT>Purchase Order Enhancements</SHORTTEXT>
+   <SPOT_NAME>ME_PROCESS_PO_CUST</SPOT_NAME>
+   <IMPL>
+    <ENH_BADI_IMPL_DATA>
+     <SPOT_NAME>ME_PROCESS_PO_CUST</SPOT_NAME>
+     <BADI_NAME>ME_PROCESS_PO_CUST</BADI_NAME>
+     <IMPL_NAME>Z6MMB_PO_VALIDATIONS</IMPL_NAME>
+     <IMPL_CLASS>ZCL_IM_6MMB_PO_VALIDATIONS</IMPL_CLASS>
+     <ACTIVE>X</ACTIVE>
+     <IMPL_SHORTTEXT>Purchase Order - Enhancements</IMPL_SHORTTEXT>
+     <IMPL_SHORTTEXT_ID>52CA8F00F8156D08E1000000C0A80A1D</IMPL_SHORTTEXT_ID>
+     <MIG_BADI_IMPL>Z6MMB_PO_VALIDATIONS</MIG_BADI_IMPL>
+    </ENH_BADI_IMPL_DATA>
+   </IMPL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

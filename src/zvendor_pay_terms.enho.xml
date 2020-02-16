@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>vendor master payment terms</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>MEPO</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>MEPO</ORG_MAIN_NAME>
+    <PROGRAMNAME>SAPLMEPO</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLMEPO</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:SAPLMEPO\FO:GET_HEADER\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA: zterm type lfb1-zterm , wa_A017 TYPE A017 , ztag1 TYPE t052-ztag1 , zebelp TYPE ekpo-ebelp , ztag2 TYPE t052-ztag1 .</item>
+      <item>DATA: s_zterm TYPE lfb1-zterm.</item>
+      <item>data: zmtart type mara-mtart.</item>
+      <item>*DATA: gv_plant TYPE  zmm_vendor_tag-werks .</item>
+      <item>*SELECT SINGLE zterm FROM lfb1 INTO zterm</item>
+      <item>*  WHERE lifnr =  ekko-LIFNR</item>
+      <item>*  AND bukrs = ekko-bukrs.</item>
+      <item>if sy-TCODE = &apos;ME21N&apos;.</item>
+      <item/>
+      <item>IF EKKO-BSART EQ &apos;YDOM&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;YIMP&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;YSED&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;YSEI&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;ZDOM&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;ZIMP&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;ZSED&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;ZSEI&apos; .</item>
+      <item/>
+      <item>*  IMPORT GV_PLANT FROM MEMORY ID &apos;PLA&apos;.</item>
+      <item>*</item>
+      <item>*  if GV_PLANT is NOT INITIAL.</item>
+      <item>*    ekko-ZZVENDORPLANT = GV_PLANT.</item>
+      <item>*  endif .</item>
+      <item/>
+      <item>if EKPO-MATNR is NOT INITIAL .</item>
+      <item>clear: zmtart.</item>
+      <item>select single mtart from mara into zmtart where matnr = EKPO-MATNR .</item>
+      <item>if zmtart = &apos;ZPKG&apos; or zmtart = &apos;ZRAW&apos;.</item>
+      <item>if ekpo-ebelp = &apos;0010&apos;.</item>
+      <item>if ekpo-loekz = &apos;D&apos;.</item>
+      <item>zebelp = ekpo-ebelp + 10.</item>
+      <item>export zebelp to MEMORY id &apos;ZEBELP&apos;.</item>
+      <item>ELSE.</item>
+      <item>zebelp = &apos;0010&apos;.&quot;ekpo-ebelp.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>IMPORT s_zterm FROM MEMORY ID &apos;ZTERM_ME21N&apos;.</item>
+      <item>import zebelp FROM MEMORY ID &apos;ZEBELP&apos;.</item>
+      <item>if ekpo-ebelp = zebelp.&quot;&apos;00010&apos; AND ekpo-loekz &lt;&gt; &apos;D&apos;.</item>
+      <item/>
+      <item>SELECT SINGLE *</item>
+      <item>FROM A017</item>
+      <item>INTO wa_A017</item>
+      <item>WHERE matnr = ekpo-matnr  &quot; inforecords zterm</item>
+      <item>AND lifnr = ekko-lifnr</item>
+      <item>AND werks = ekpo-werks</item>
+      <item>AND ekorg = ekko-ekorg</item>
+      <item>AND DATBI = &apos;99991231&apos;.</item>
+      <item/>
+      <item>if sy-subrc = 0 .</item>
+      <item>SELECT SINGLE zterm FROM konp INTO zterm</item>
+      <item>WHERE knumh =  wa_A017-knumh.</item>
+      <item>if sy-subrc = 0.</item>
+      <item>IF ekko-zterm  &lt;&gt; zterm.</item>
+      <item/>
+      <item>SELECT SINGLE ztag1 FROM t052 INTO ztag1</item>
+      <item>WHERE zterm = zterm.</item>
+      <item/>
+      <item>SELECT SINGLE ztag1 FROM t052 INTO ztag2</item>
+      <item>WHERE zterm = ekko-zterm.</item>
+      <item>*     if ztag2 &lt; ztag1.</item>
+      <item/>
+      <item>*     else.</item>
+      <item>if s_zterm is INITIAL.</item>
+      <item>ekko-zterm = zterm.</item>
+      <item>ekko-ZBD1T = ztag1.</item>
+      <item>endif.</item>
+      <item>*      ENDIF.</item>
+      <item/>
+      <item>*       IMPORT s_zterm FROM MEMORY ID &apos;ZTERM_ME21N&apos;.</item>
+      <item>*       if sy-subrc = 0 .</item>
+      <item>if s_zterm is INITIAL.</item>
+      <item>export s_zterm from ekko-zterm to MEMORY id &apos;ZTERM_ME21N&apos;.</item>
+      <item>endif.</item>
+      <item>*       endif .</item>
+      <item/>
+      <item>*     endif.</item>
+      <item>ENDIF.</item>
+      <item>*   ELSE.</item>
+      <item>*     CLEAR: wa_A018 , zterm.</item>
+      <item>*     SELECT SINGLE *</item>
+      <item>*    FROM A018</item>
+      <item>*    INTO wa_A018</item>
+      <item>*    WHERE matnr = ekpo-matnr</item>
+      <item>*     AND lifnr = ekko-lifnr</item>
+      <item>*    AND ekorg = ekko-ekorg.</item>
+      <item>*   if sy-subrc = 0 .</item>
+      <item>*</item>
+      <item>*     SELECT SINGLE zterm FROM konp INTO zterm</item>
+      <item>*     WHERE knumh =  wa_A018-knumh.</item>
+      <item>*      if zterm &lt;&gt;  ekko-zterm.</item>
+      <item>*        MESSAGE &apos;All Products must have same Payment terms.&apos; TYPE &apos;E&apos;.</item>
+      <item>*        exit.</item>
+      <item>*      endif.</item>
+      <item>*   endif.</item>
+      <item/>
+      <item/>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>ENDIF.</item>
+      <item>ENDIF.</item>
+      <item>endif.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>*DATA: zterm type lfb1-zterm , wa_A017 TYPE A017 , ztag1 TYPE t052-ztag1 , zebelp TYPE ekpo-ebelp , ztag2 TYPE t052-ztag1 .</item>
+      <item>*DATA: s_zterm TYPE lfb1-zterm.</item>
+      <item>*data: zmtart type mara-mtart.</item>
+      <item>*DATA: gv_plant TYPE  zmm_vendor_tag-werks .</item>
+      <item>*SELECT SINGLE zterm FROM lfb1 INTO zterm</item>
+      <item>*  WHERE lifnr =  ekko-LIFNR</item>
+      <item>*  AND bukrs = ekko-bukrs.</item>
+      <item>if sy-TCODE = &apos;ME21N&apos;.</item>
+      <item/>
+      <item>IF EKKO-BSART EQ &apos;YDOM&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;YIMP&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;YSED&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;YSEI&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;ZDOM&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;ZIMP&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;ZSED&apos; OR</item>
+      <item>EKKO-BSART EQ &apos;ZSEI&apos; .</item>
+      <item/>
+      <item>*  IMPORT GV_PLANT FROM MEMORY ID &apos;PLA&apos;.</item>
+      <item>*</item>
+      <item>*  if GV_PLANT is NOT INITIAL.</item>
+      <item>*    ekko-ZZVENDORPLANT = GV_PLANT.</item>
+      <item>*  endif .</item>
+      <item/>
+      <item>if EKPO-MATNR is NOT INITIAL .</item>
+      <item>clear: zmtart.</item>
+      <item>select single mtart from mara into zmtart where matnr = EKPO-MATNR .</item>
+      <item>if zmtart = &apos;ZPKG&apos; or zmtart = &apos;ZRAW&apos;.</item>
+      <item>if ekpo-ebelp = &apos;0010&apos;.</item>
+      <item>if ekpo-loekz = &apos;D&apos;.</item>
+      <item>zebelp = ekpo-ebelp + 10.</item>
+      <item>export zebelp to MEMORY id &apos;ZEBELP&apos;.</item>
+      <item>ELSE.</item>
+      <item>zebelp = &apos;0010&apos;.&quot;ekpo-ebelp.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>IMPORT s_zterm FROM MEMORY ID &apos;ZTERM_ME21N&apos;.</item>
+      <item>import zebelp FROM MEMORY ID &apos;ZEBELP&apos;.</item>
+      <item>if ekpo-ebelp = zebelp.&quot;&apos;00010&apos; AND ekpo-loekz &lt;&gt; &apos;D&apos;.</item>
+      <item/>
+      <item>SELECT SINGLE *</item>
+      <item>FROM A017</item>
+      <item>INTO wa_A017</item>
+      <item>WHERE matnr = ekpo-matnr  &quot; inforecords zterm</item>
+      <item>AND lifnr = ekko-lifnr</item>
+      <item>AND werks = ekpo-werks</item>
+      <item>AND ekorg = ekko-ekorg</item>
+      <item>AND DATBI = &apos;99991231&apos;.</item>
+      <item/>
+      <item>if sy-subrc = 0 .</item>
+      <item>SELECT SINGLE zterm FROM konp INTO zterm</item>
+      <item>WHERE knumh =  wa_A017-knumh.</item>
+      <item>if sy-subrc = 0.</item>
+      <item>IF ekko-zterm  &lt;&gt; zterm.</item>
+      <item/>
+      <item>SELECT SINGLE ztag1 FROM t052 INTO ztag1</item>
+      <item>WHERE zterm = zterm.</item>
+      <item/>
+      <item>SELECT SINGLE ztag1 FROM t052 INTO ztag2</item>
+      <item>WHERE zterm = ekko-zterm.</item>
+      <item>*     if ztag2 &lt; ztag1.</item>
+      <item/>
+      <item>*     else.</item>
+      <item>if s_zterm is INITIAL.</item>
+      <item>ekko-zterm = zterm.</item>
+      <item>ekko-ZBD1T = ztag1.</item>
+      <item>endif.</item>
+      <item>*      ENDIF.</item>
+      <item/>
+      <item>*       IMPORT s_zterm FROM MEMORY ID &apos;ZTERM_ME21N&apos;.</item>
+      <item>*       if sy-subrc = 0 .</item>
+      <item>if s_zterm is INITIAL.</item>
+      <item>export s_zterm from ekko-zterm to MEMORY id &apos;ZTERM_ME21N&apos;.</item>
+      <item>endif.</item>
+      <item>*       endif .</item>
+      <item/>
+      <item>*     endif.</item>
+      <item>ENDIF.</item>
+      <item>*   ELSE.</item>
+      <item>*     CLEAR: wa_A018 , zterm.</item>
+      <item>*     SELECT SINGLE *</item>
+      <item>*    FROM A018</item>
+      <item>*    INTO wa_A018</item>
+      <item>*    WHERE matnr = ekpo-matnr</item>
+      <item>*     AND lifnr = ekko-lifnr</item>
+      <item>*    AND ekorg = ekko-ekorg.</item>
+      <item>*   if sy-subrc = 0 .</item>
+      <item>*</item>
+      <item>*     SELECT SINGLE zterm FROM konp INTO zterm</item>
+      <item>*     WHERE knumh =  wa_A018-knumh.</item>
+      <item>*      if zterm &lt;&gt;  ekko-zterm.</item>
+      <item>*        MESSAGE &apos;All Products must have same Payment terms.&apos; TYPE &apos;E&apos;.</item>
+      <item>*        exit.</item>
+      <item>*      endif.</item>
+      <item>*   endif.</item>
+      <item/>
+      <item/>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>ENDIF.</item>
+      <item>ENDIF.</item>
+      <item>endif.</item>
+      <item>ENDIF.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SPACES>
+    <item>
+     <FULL_NAME>\PR:SAPLMEPO\FO:GET_HEADER\SE:BEGIN\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>1</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>2</item>
+      <item>4</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>5</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>0</item>
+      <item>3</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>0</item>
+      <item>5</item>
+      <item>5</item>
+      <item>0</item>
+      <item>5</item>
+      <item>7</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>6</item>
+      <item>8</item>
+      <item>8</item>
+      <item>6</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>7</item>
+      <item>9</item>
+      <item>7</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>6</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>1</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>3</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>2</item>
+      <item>4</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>5</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>0</item>
+      <item>3</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>0</item>
+      <item>5</item>
+      <item>5</item>
+      <item>0</item>
+      <item>5</item>
+      <item>7</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>6</item>
+      <item>8</item>
+      <item>8</item>
+      <item>6</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>7</item>
+      <item>9</item>
+      <item>7</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>6</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+   </SPACES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

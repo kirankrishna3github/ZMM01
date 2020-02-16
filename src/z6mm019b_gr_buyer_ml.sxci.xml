@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SXCI" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SXCI>
+    <IMPLEMENTATION_DATA>
+     <IMP_NAME>Z6MM019B_GR_BUYER_ML</IMP_NAME>
+     <TEXT>Sending Mail to Buyer on Receipt of GR from Vendor</TEXT>
+     <IMP_CLASS>ZCL_IM_6MM019B_GR_BUYER_ML</IMP_CLASS>
+     <EXIT_NAME>MB_DOCUMENT_BADI</EXIT_NAME>
+     <INTER_NAME>IF_EX_MB_DOCUMENT_BADI</INTER_NAME>
+    </IMPLEMENTATION_DATA>
+   </SXCI>
+  </asx:values>
+ </asx:abap>
+</abapGit>

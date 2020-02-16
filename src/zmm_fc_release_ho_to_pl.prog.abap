@@ -1,0 +1,98 @@
+*&---------------------------------------------------------------------*
+*& Report  ZMM_FC_RELEASE_HO_TO_PL
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  ZMM_FC_RELEASE_HO_TO_PL.
+
+
+DATA : A TYPE ZMIS_SALES_DATA-VKORG,
+       B TYPE ZMIS_SALES_DATA-VTWEG,
+       C TYPE ZMIS_SALES_DATA-SPART,
+       D TYPE ZMIS_SALES_DATA-WERKS,
+       E TYPE ZMIS_SALES_DATA-ZMONTH,
+       F TYPE ZMIS_SALES_DATA-ZYEAR.
+
+DATA : IT LIKE TABLE OF ZSD_RELEASE_FC,
+       WA LIKE LINE OF IT.
+
+
+DATA : WA_FINAL TYPE ZSD_PL_SALE_FC,
+       IT_FINAL LIKE TABLE OF WA_FINAL,
+
+       WA_FINAL1 TYPE ZSD_HO_SALE_FC,
+       IT_FINAL1 LIKE TABLE OF WA_FINAL1.
+
+
+*&*******************************************************************************************&
+*&                             SELECTION SCREEN                                              &
+*&*******************************************************************************************&
+
+SELECTION-SCREEN BEGIN OF BLOCK A WITH FRAME TITLE TEXT-001.
+
+SELECT-OPTIONS : SO_WERKS FOR D.
+PARAMETERS     : P_ZMONT  TYPE ZMIS_SALES_DATA-ZMONTH DEFAULT SY-DATUM+4(2) OBLIGATORY,       " MONTH
+                 P_ZYEAR  TYPE ZMIS_SALES_DATA-ZYEAR  DEFAULT SY-DATUM+0(4) OBLIGATORY.       " YEAR
+SELECTION-SCREEN END OF BLOCK A.
+
+DATA  : BEGIN OF WA_FINAL2 ,
+        WERKS TYPE ZSD_HO_SALE_FC-WERKS,
+        END OF WA_FINAL2.
+
+DATA IT_FINAL2 LIKE TABLE OF WA_FINAL2.
+
+*-------------------------PROCESS DATA
+START-OF-SELECTION.
+
+SELECT * FROM ZSD_HO_SALE_FC INTO TABLE IT_FINAL1 WHERE   ZMONTH EQ P_ZMONT
+                                                   AND    ZYEAR  EQ P_ZYEAR
+                                                   AND    WERKS IN SO_WERKS.
+
+
+SELECT WERKS FROM ZSD_HO_SALE_FC INTO TABLE IT_FINAL2 WHERE WERKS IN SO_WERKS.
+SORT IT_FINAL2 BY WERKS.
+DELETE ADJACENT DUPLICATES FROM IT_FINAL2.
+
+LOOP AT IT_FINAL2 INTO WA_FINAL2.
+
+WA-ZMONTH              = P_ZMONT.
+WA-ZYEAR               = P_ZYEAR.
+WA-WERKS               = WA_FINAL2-WERKS.
+WA-RELEASE_KEY         = 'H'.
+WA-RELEASED_DATE       = SY-DATUM.
+WA-RELEASED_BY         = SY-UNAME.
+WA-RELEASED_TIME       = SY-UZEIT.
+
+APPEND WA TO IT.
+CLEAR : WA, WA_FINAL2.
+ENDLOOP.
+
+IF IT IS NOT INITIAL.
+MODIFY ZSD_RELEASE_FC FROM TABLE IT.
+IF SY-SUBRC = 0 .
+MESSAGE 'Released' TYPE 'S'.
+ENDIF.
+
+
+LOOP AT IT_FINAL1 INTO WA_FINAL1.
+
+MOVE-CORRESPONDING WA_FINAL1 TO WA_FINAL.
+COLLECT WA_FINAL INTO IT_FINAL.
+CLEAR : WA_FINAL, WA_FINAL1.
+
+ENDLOOP.
+
+
+IF IT_FINAL IS NOT INITIAL.
+
+MODIFY ZSD_PL_SALE_FC FROM TABLE IT_FINAL.
+COMMIT WORK.
+
+MESSAGE 'Released to planner' TYPE 'S'.
+
+ENDIF.
+
+ENDIF.

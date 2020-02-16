@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZST_MIGO_GATE_ENTRY_ITEM</TABNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <LANGDEP>X</LANGDEP>
+    <DDTEXT>MIGO BADI: Transfer Structure to/from External Screen</DDTEXT>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <TABNAME>ZST_MIGO_GATE_ENTRY_ITEM</TABNAME>
+     <FIELDNAME>LINE_ID</FIELDNAME>
+     <POSITION>0001</POSITION>
+     <ROLLNAME>MB_LINE_ID</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <TABNAME>ZST_MIGO_GATE_ENTRY_ITEM</TABNAME>
+     <FIELDNAME>.INCLUDE</FIELDNAME>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <POSITION>0002</POSITION>
+     <ADMINFIELD>0</ADMINFIELD>
+     <PRECFIELD>Z6MMA_GT_ENT_DT</PRECFIELD>
+     <MASK>      S</MASK>
+     <DDTEXT>Gate Entry Header Details</DDTEXT>
+     <COMPTYPE>S</COMPTYPE>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

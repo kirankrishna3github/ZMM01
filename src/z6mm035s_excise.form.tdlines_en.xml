@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<abapGit version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TDLINES>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>ADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Manufacturer and Subcontractor address</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ADDRESSEE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>Name and address of the manufacturer,,  &amp;T001W-NAME1&amp; &amp;T001W-NAME2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>,,&amp;T001W-STRAS&amp; &amp;T001W-ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>,,&amp;T001W-PFACH&amp; &amp;T001W-PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>,,&amp;T001W-LAND1&amp; &amp;T001W-REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>Factory Place of Process/Manufact,,  &amp;LFA1-NAME1&amp; &amp;LFA1-NAME2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>,,&amp;LFA1-STRAS&amp; &amp;LFA1-ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>,,&amp;LFA1-PFACH&amp; &amp;LFA1-PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>,,&amp;LFA1-LAND1&amp; &amp;LFA1-REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I4</TDFORMAT>
+     <TDLINE>Date and time of Issue,,,,&amp;J_1IEXCHDR-EXDAT&amp; &amp;J_1IEXCHDR-CPUTM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>FOOTER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CS</TDFORMAT>
+     <TDLINE>Part II</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SM</TDFORMAT>
+     <TDLINE>1. Date and time of despatch of finished goods to parent</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>factory/another manufacturer and entry no. and date of</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>receipt in the account in the processing factory</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>2. Quantity despatched (Nos / Weight / Litre / Metre) and</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>entered in account</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>3. Nature of processing / manufacturing done,,   &amp;j_1iregset-j_1irgdesc&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>4. Quantity of waste material returned to the parent factory</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>   or cleared for home consumption invoice no. and date</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>   Quantum of duty paid (Both figure and words).     ,,,,,, Signature of</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>processor name of the factory / address</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Place:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Date:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CS</TDFORMAT>
+     <TDLINE>PART III</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SM</TDFORMAT>
+     <TDLINE>To be filled by manufacturers after receipt of processed goods.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>1. Details of Qty. not received within 180 days,,,,:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>2. Value of such quantity,,,,:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>3. Details of amount debited,,,,:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>4. Details of Qty. subsequently received,,,,:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>5. Details of credit restored,,,,:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>6. Duty payment details for Waste &amp; Scrap not received,,,,:,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>Signature of Manufacturer / authorised signatory</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Plant address</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ADDRESS PARAGRAPH AS PARAGRAPH CS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  TITLE    &amp;T001W-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  NAME     &amp;T001W-NAME1&amp;, &amp;T001W-NAME2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  STREET   &amp;T001W-STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  POBOX    &amp;T001W-PFACH&amp;  CODE &amp;T001W-PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  CITY     &amp;T001W-ORT01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  POSTCODE &amp;T001W-PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  COUNTRY  &amp;T001W-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  REGION   &amp;T001W-REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>SET DATE MASK = &apos;DD MMMM YYYY&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CS</TDFORMAT>
+     <TDLINE>PART I</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>INFO</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Excise invoice related header information</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>HEADER_DATA</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>R1</TDFORMAT>
+     <TDLINE>Challan no,,&amp;J_1IEXCHDR-EXNUM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>R1</TDFORMAT>
+     <TDLINE>Challan Date,,&amp;J_1IEXCHDR-EXDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>R1</TDFORMAT>
+     <TDLINE>Trans Post no,,&amp;J_1IEXCHDR-RDOC&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>R1</TDFORMAT>
+     <TDLINE>Trans Posting yr,,&amp;J_1IEXCHDR-RYEAR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>R1</TDFORMAT>
+     <TDLINE>Internal doc no,,&amp;J_1IEXCHDR-DOCNO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>R1</TDFORMAT>
+     <TDLINE>Internal doc year,,&amp;J_1IEXCHDR-DOCYR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>R1</TDFORMAT>
+     <TDLINE>Currency,,&amp;J_1IEXCDTL-EXCUR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>MAIN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>DASH_LINE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;ULINE(108)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I1</TDFORMAT>
+     <TDLINE>,,SrNo,,Material Code,,Quantity,,Unit,,Identification marks,,Est.Value,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>Reversal rate</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,Description of goods,,Chapter Id,,Nature of Processing</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_VALUES</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I1</TDFORMAT>
+     <TDLINE>,,&amp;J_1IEXCDTL-ZEILE&amp;,,&amp;J_1IEXCDTL-MATNR&amp;,,&amp;J_1IEXCDTL-MENGE&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;J_1IEXCDTL-MEINS&amp;,,&amp;J_1IEXCDTL-ADDLDATA1&amp;,,&amp;J_1IEXCDTL-EXBAS(16.2R)&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;J_1IASSVAL-J_1IVALNDP(5.2R)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&amp;J_1IEXCDTL-MAKTX(25)&amp;,,&amp;J_1IEXCDTL-CHAPID(22)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>RETURN_DATE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I3</TDFORMAT>
+     <TDLINE>Expected Duration of Processing / Manufacturing,,,,&amp;J_1IEXCHDR-RTDAT&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>SERIAL_NO_HDR</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I3</TDFORMAT>
+     <TDLINE>Serial Number of Debit entry in PLA / RG23A and Date,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;J_1IEXCDTL-RGPLASER&amp;/,,&amp;J_1IEXCDTL-RG23ASER&amp;/,,&amp;J_1IEXCHDR-EXDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>REVERSAL_AMOUNT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I3</TDFORMAT>
+     <TDLINE>Total Amount of Reversal,,,,&amp;J_1IEXCHDR-EXBED(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SM</TDFORMAT>
+     <TDLINE>,,,,,,Signature of Manufacturer / authorised signatory</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>write include text object statement as the sample given below and give</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>the id of the text element which should be printed</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Text printed before the items are printed</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>NUM_LINE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>123456789#123456789#123456789#123456789#123456789#123456789#123456789#12</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>3456789#123456789#123456789#123456789#123456789#12</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>REGS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Excise regesteration information of the plant</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SM</TDFORMAT>
+     <TDLINE>Code No.,,&amp;J_1IREGSET-J_1IEXCCD&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SM</TDFORMAT>
+     <TDLINE>Reg. No.,,&amp;J_1IREGSET-J_1IEXCRN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SM</TDFORMAT>
+     <TDLINE>Range,,&amp;J_1IREGSET-J_1IEXCRG&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SM</TDFORMAT>
+     <TDLINE>Division,,&amp;J_1IREGSET-J_1IEXCDI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SM</TDFORMAT>
+     <TDLINE>Collectorate,,&amp;J_1IREGSET-J_1IEXCCO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>TITLE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>DOC_TITLE_T</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TI</TDFORMAT>
+     <TDLINE>CHALLAN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>DOC_TITLE_EXC_INFO</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>For movement of inputs or partially</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>processed goods under rule 57F(3)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>from one factory to another for</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>further processing.</TDLINE>
+    </TLINE>
+   </TDLINES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

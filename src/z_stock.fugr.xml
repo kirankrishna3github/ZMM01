@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Stock Related FG-FM</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZ_STOCKTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZ_STOCK</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZGET_OPENING_STOCK</FUNCNAME>
+     <SHORT_TEXT>Excise: Get Opening stock of Materials (MB5B)</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>WRK_MATNR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>MSEG-MATNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>WRK_WERKS</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>MSEG-WERKS</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>WRK_DATE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>MKPF-BUDAT</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>WRK_LGBST</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <REFERENCE>X</REFERENCE>
+       <TYP>AM07M-LGBST</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>WRK_BWBST</PARAMETER>
+       <DEFAULT>&apos; &apos;</DEFAULT>
+       <REFERENCE>X</REFERENCE>
+       <TYP>AM07M-BWBST</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>WA_LGORT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>MSEG-LGORT</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ANFMENGE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>P</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>ENDMENGE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>P</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>SOLL</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>P</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>HABEN</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>P</TYP>
+      </RSEXP>
+     </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>MANDATORY</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>WRK_MATNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Material Number</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>WRK_WERKS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Plant</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>WRK_DATE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Posting Date in the Document</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>WRK_LGBST</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Storage loc./batch stock</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>WRK_BWBST</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Valuated stock</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>WA_LGORT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Storage Location</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ANFMENGE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ENDMENGE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>SOLL</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>HABEN</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>MANDATORY</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>SELECTION CRITERIA MISSING</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

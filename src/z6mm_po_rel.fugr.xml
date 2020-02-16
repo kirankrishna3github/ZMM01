@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Function Group - Purchase Order Related</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZ6MM_PO_RELTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZ6MM_PO_REL</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z6MM_PO_CAL_TAX</FUNCNAME>
+     <SHORT_TEXT>Calculation of Purchase Order Tax Conditions</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_EBELN</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>EBELN</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EBELP</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>EBELP</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>TT_KOMV</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>KOMV_ITAB</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_EBELN</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Purchasing Document Number</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EBELP</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Item Number of Purchasing Document</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>TT_KOMV</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Pricing Communications-Condition Record</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

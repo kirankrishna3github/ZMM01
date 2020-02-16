@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>ML81NCheck before save</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>MLSR</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>MLSR</ORG_MAIN_NAME>
+    <PROGRAMNAME>SAPLMLSR</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLMLSR</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:SAPLMLSR\FO:SAVE\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA:BEGIN OF wa_ekko,</item>
+      <item>ebeln TYPE ekko-ebeln ,</item>
+      <item>lifnr TYPE ekko-lifnr ,</item>
+      <item>END OF wa_ekko,</item>
+      <item>it_ekko like TABLE OF wa_ekko.</item>
+      <item/>
+      <item>IF XESSR-XBLNR IS INITIAL AND XESSR-LOEKZ IS INITIAL.</item>
+      <item>MESSAGE &apos;Please maintain Referance !&apos; TYPE &apos;E&apos;.</item>
+      <item>ELSEIF XESSR-XBLNR IS NOT INITIAL.</item>
+      <item>CONDENSE XESSR-XBLNR.</item>
+      <item/>
+      <item>select LBLNI , EBELN ,EBELP ,XBLNR</item>
+      <item>FROM ESSR into TABLE @data(it_ESSR)</item>
+      <item>WHERE xblnr = @XESSR-XBLNR.&quot; chk if any record exist with same referance invoice</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>SELECT ebeln lifnr</item>
+      <item>FROM EKKO</item>
+      <item>INTO CORRESPONDING FIELDS OF TABLE it_ekko</item>
+      <item>FOR ALL ENTRIES IN it_essr</item>
+      <item>WHERE ebeln = it_essr-ebeln.</item>
+      <item/>
+      <item>IF sy-subrc = 0.</item>
+      <item>LOOP AT it_ekko INTO wa_ekko WHERE lifnr = xekko-lifnr.</item>
+      <item>MESSAGE &apos;Please maintain unique Referance number !&apos; TYPE &apos;E&apos;.</item>
+      <item>ENDLOOP.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>data(ztxtlen) = strlen( xESSr-bktxt ).</item>
+      <item>IF ztxtlen &gt; 14.</item>
+      <item>MESSAGE &apos;Doc. Text length Exceeds, Please check !&apos; TYPE &apos;E&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>if xESSr-bktxt ca &apos;$&quot;:,&amp;^+~`!|{}?\;&lt;&gt;@#%*&apos;.</item>
+      <item>MESSAGE &apos;Special Characters not allowed in Doc. Text !&apos; TYPE &apos;E&apos;.</item>
+      <item>endif.</item>
+      <item/>
+      <item>DATA:  htype LIKE  dd01v-datatype.</item>
+      <item/>
+      <item>call function &apos;NUMERIC_CHECK&apos;</item>
+      <item>exporting</item>
+      <item>string_in        = xESSr-bktxt</item>
+      <item>IMPORTING</item>
+      <item>*   STRING_OUT       =</item>
+      <item>HTYPE            = htype</item>
+      <item>.</item>
+      <item/>
+      <item>if htype &lt;&gt; &apos;NUMC&apos;.</item>
+      <item>MESSAGE &apos;Characters not allowed in Doc. Text !&apos; TYPE &apos;E&apos;.</item>
+      <item>endif.</item>
+      <item/>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SPACES>
+    <item>
+     <FULL_NAME>\PR:SAPLMLSR\FO:SAVE\SE:BEGIN\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>6</item>
+      <item>6</item>
+      <item>5</item>
+      <item>5</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>2</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>6</item>
+      <item>8</item>
+      <item>10</item>
+      <item>8</item>
+      <item>6</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>1</item>
+      <item>0</item>
+      <item>3</item>
+      <item>10</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+   </SPACES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

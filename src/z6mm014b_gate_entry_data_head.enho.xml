@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>BADI_IMPL</TOOL>
+   <SHORTTEXT>Gate Entry Details - Additional Header &amp; Item - MIGO</SHORTTEXT>
+   <SPOT_NAME>MB_MIGO_BADI</SPOT_NAME>
+   <IMPL>
+    <ENH_BADI_IMPL_DATA>
+     <SPOT_NAME>MB_MIGO_BADI</SPOT_NAME>
+     <BADI_NAME>MB_MIGO_BADI</BADI_NAME>
+     <IMPL_NAME>Z6MM014B_GATE_ENT_DT</IMPL_NAME>
+     <IMPL_CLASS>ZCL_IM_6MM014B_GATE_ENT_DT</IMPL_CLASS>
+     <ACTIVE>X</ACTIVE>
+     <IMPL_SHORTTEXT>Gate Entry Details - Additional Header Screen - MIGO</IMPL_SHORTTEXT>
+     <IMPL_SHORTTEXT_ID>560ACF9B7FBB2EAAE1000000C0A80A1D</IMPL_SHORTTEXT_ID>
+     <MIG_BADI_IMPL>Z6MM014B_GATE_ENT_DT</MIG_BADI_IMPL>
+    </ENH_BADI_IMPL_DATA>
+   </IMPL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

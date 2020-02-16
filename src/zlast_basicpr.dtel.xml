@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZLAST_BASICPR</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>WERT11</DOMNAME>
+    <HEADLEN>25</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>19</SCRLEN2>
+    <SCRLEN3>25</SCRLEN3>
+    <DDTEXT>Last Purchase basic Price(PO)</DDTEXT>
+    <REPTEXT>Last Purchase basic Price</REPTEXT>
+    <SCRTEXT_S>Last Purch</SCRTEXT_S>
+    <SCRTEXT_M>Last Purchase basic</SCRTEXT_M>
+    <SCRTEXT_L>Last Purchase basic Price</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

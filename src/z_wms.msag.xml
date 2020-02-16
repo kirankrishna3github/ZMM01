@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>Z_WMS</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Message class for SAPMZMM_WMS_INTEGRATION</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp;&amp;&amp;&amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>&amp;: Material data already up-to-date.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>No valid materials found. Check your input.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Connection could not be established to remote WMS database - &amp;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Connection established to remote WMS database - &amp;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>No authorisation for plant &amp;, storage location &amp;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>No WMS compatible materials found.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>No transactions/material documents found.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>&amp;: &amp; - &amp; pushed to WMS system.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>&amp;: &amp; - &amp; could not be pushed.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>&amp;: Material &amp; pushed to WMS system.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>&amp;: Material &amp; could not be pushed.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>&amp;: Container &amp; pushed to WMS system.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>&amp;: Container &amp; could not be pushed.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>WMS module not yet enabled for plant &amp;, stor. location &amp;.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Please enter all the mandatory inputs to enable WMS specific functions.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Correct the input or clear the input to access master updation function.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>Z_WMS</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>No data found/Data already pushed to WMS.</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

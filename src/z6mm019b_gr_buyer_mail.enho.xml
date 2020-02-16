@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>BADI_IMPL</TOOL>
+   <SHORTTEXT>Sending Mail to Buyer on  Receipt of GR From Vendor</SHORTTEXT>
+   <SPOT_NAME>MB_GOODSMOVEMENT</SPOT_NAME>
+   <IMPL>
+    <ENH_BADI_IMPL_DATA>
+     <SPOT_NAME>MB_GOODSMOVEMENT</SPOT_NAME>
+     <BADI_NAME>MB_DOCUMENT_BADI</BADI_NAME>
+     <IMPL_NAME>Z6MM019B_GR_BUYER_ML</IMPL_NAME>
+     <IMPL_CLASS>ZCL_IM_6MM019B_GR_BUYER_ML</IMPL_CLASS>
+     <ACTIVE>X</ACTIVE>
+     <IMPL_SHORTTEXT>Sending Mail to Buyer on Receipt of GR from Vendor</IMPL_SHORTTEXT>
+     <IMPL_SHORTTEXT_ID>4C614738CDF63A24E1000000C0A80A1D</IMPL_SHORTTEXT_ID>
+     <MIG_BADI_IMPL>Z6MM019B_GR_BUYER_ML</MIG_BADI_IMPL>
+    </ENH_BADI_IMPL_DATA>
+   </IMPL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

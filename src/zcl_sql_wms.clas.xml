@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>NativeSQL for WMS integation</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>ADD_MESSAGE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Add a message to messages</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>CHECK_AUTHORITY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check user authority for DB connection</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>CHECK_STRUCT_INDENTICALITY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check DB struct and ABAP struct are identical</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>CHECK_WMS_TRANS_STATUS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Check and update proc status of transaction pushed to WMS</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>CLEANUP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Perform cleanup after execution</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>CLEAR_GLOBALS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Initialise global variables</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>CONVERT_DATE_TO_ORACLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Convert yyyymmdd to DD-MON-YY</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>CONVERT_DATE_TO_WMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Convert yyyymmdd to DD-MM-YYYY</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>DELETE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Delete a record in db using primary key</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Trigger native SQL commands on WMS database(ORA)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>FORMAT_METADATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Format column metadata from res set to be abap compatible</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GC_OPERATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SQL Statement Operation Codes</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GC_WMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Connection/SQL Constants</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GENERATE_METADATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Genrate metadata for use in execution</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GENERATE_STRUCTS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Generate data structures from result data dynamically</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_COLUMNS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Column/Structural info of DB table</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_CONNECTION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Connects to the remote DB &amp; sets the connection instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_FIELD_LIST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Generate a comma separated list of fields for use in sql stm</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_MESSAGES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Return messages to user</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_METADATA_REF</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Gets DB metadata for current connection</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_NEXT_SEQUENCE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Fetch next sequence number from oracle</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_PARAM_MARKERS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Generate sufficient placeholders for query parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_PRIMARY_KEYS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Primary key info of DB table</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_STRUCT_REF</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Create and return ref to structure created from metadata</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GET_TABLE_DESCRIPTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Get descriptor for DB table</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GO_CON</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Database Connection</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GO_KEY_STRUCT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Key structure reference</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GO_META</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Method to Describe DB Objects</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GO_NON_KEY_STRUCT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Non Key structure reference</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GO_STRUCT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Data structure reference</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GO_TABLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Data table reference</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GS_MESSAGE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GS_TABLE_DESCR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table Descriptor</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GS_WMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Connection/SQL Global Vars</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_COLUMN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DB Table Column Metadata</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_COL_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DB Table Column Names</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_KEY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DB Table Primary Keys Metadata</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_KEY_COL_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DB Table Primary Key Column Names</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_KEY_METADATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Result Table Metadata - Key data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_MESSAGES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message table</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_METADATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Result Table Metadata</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_NON_KEY_COL_NAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DB Table Non Key Column Names</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GT_NON_KEY_METADATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Result Table Metadata - Non Key data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GV_DB_RELEASE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DB release version</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>GV_DB_TABNAME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DB Table Name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>HANDLE_EXCEPTION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Generate meaningful messages from exceptions</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>INSERT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Insert a record in db tab</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>MOVE_CORRESPONDING</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Move corresponding with error handling</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>SELECT_ALL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Selects all rows from current db_tab</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>SELECT_WHERE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Select rows satisfying table key</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_SQL_WMS</CLSNAME>
+     <CMPNAME>UPDATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Update single row using key data</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

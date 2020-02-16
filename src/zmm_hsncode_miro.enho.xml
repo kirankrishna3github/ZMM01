@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Enhancements for HSN Code in MIRO</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>MRMD</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>MRMD</ORG_MAIN_NAME>
+    <PROGRAMNAME>SAPLMRMD</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLMRMD</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:SAPLMRMD\FO:T_DRSEG_AUFBAUEN_PRUEFEN_1\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>break 6010859.  &quot; IRDK931359</item>
+      <item/>
+      <item>*BREAK indo_basis.</item>
+      <item/>
+      <item>if sy-tcode eq &apos;MIRO&apos;.  &quot; code on tcode? do we need post. date as well?</item>
+      <item>data: w_drseg   like line of t_drseg,</item>
+      <item>it_poview type table of wb2_v_ekko_ekpo2,</item>
+      <item>wa_poview like line of it_poview,</item>
+      <item>msg       type string,</item>
+      <item>budat     type rbkp-budat,</item>
+      <item>v_sac     type zgst_vsac-hsn_sac. &quot; IRDK931342</item>
+      <item/>
+      <item>data: begin of sac,</item>
+      <item>sac type zgst_vsac-hsn_sac,</item>
+      <item>end of sac,</item>
+      <item>sac_tab like standard table of sac.</item>
+      <item/>
+      <item>data: t_spopli type standard table of spopli,</item>
+      <item>w_spopli type spopli,</item>
+      <item/>
+      <item>answer type c.</item>
+      <item/>
+      <item>field-symbols: &lt;budat&gt; type rbkp-budat.</item>
+      <item/>
+      <item>clear: budat.</item>
+      <item/>
+      <item>unassign: &lt;budat&gt;.</item>
+      <item>assign (&apos;(SAPLMR1M)RBKPV-BUDAT&apos;) to &lt;budat&gt; .</item>
+      <item/>
+      <item>if &lt;budat&gt; is assigned.</item>
+      <item>budat   = &lt;budat&gt;.</item>
+      <item>if budat gt &apos;20170630&apos;.</item>
+      <item>refresh: it_poview[].</item>
+      <item>if t_drseg[] is not initial.</item>
+      <item>select *</item>
+      <item>from wb2_v_ekko_ekpo2</item>
+      <item>into table it_poview</item>
+      <item>for all entries in t_drseg[]</item>
+      <item>where ebeln_i = t_drseg-ebeln</item>
+      <item>and   ebelp_i = t_drseg-ebelp.</item>
+      <item/>
+      <item>loop at t_drseg into w_drseg.</item>
+      <item>read table it_poview into wa_poview with key ebeln_i = w_drseg-ebeln ebelp_i = w_drseg-ebelp.</item>
+      <item>if sy-subrc = 0.</item>
+      <item>&quot; IRDK931441: sac code for both service po and subcontracting po will be fetched from zgst_vsac irrespective of po sac code</item>
+      <item>if wa_poview-pstyp_i eq &apos;9&apos; &quot; =&gt; this is a service po, txz01 is description of service</item>
+      <item>or wa_poview-pstyp_i = &apos;3&apos;. &quot; sub-contracting item. &quot; =&gt; this is a material po, txz01 is description of material</item>
+      <item>&quot; begin IRDK931122, IRDK931242: mm: s_k: miro: lmrmdf0h: zmm_hsncode_miro: fetch sac from zgst_vsac for subcontracting item</item>
+      <item>refresh sac_tab.</item>
+      <item>select hsn_sac from zgst_vsac into table sac_tab</item>
+      <item>where lifnr = wa_poview-lifnr</item>
+      <item>and   regio = ( select regio from lfa1 where lifnr = wa_poview-lifnr ).</item>
+      <item>if sy-subrc &lt;&gt; 0. &quot; IRDK931338, if master is not maintained for vendor - sac code in zgst_vsac table</item>
+      <item>clear msg.</item>
+      <item>concatenate w_drseg-ebeln w_drseg-ebelp &apos;: SAC code not mantained for vendor&apos; wa_poview-lifnr into msg separated by space.</item>
+      <item>set cursor field &apos;DRSEG-HSN_SAC&apos; line sy-stepl.</item>
+      <item>message msg type &apos;E&apos;.</item>
+      <item>else.</item>
+      <item>if w_drseg-hsn_sac is initial.  &quot; This is not required since this form triggers only during initial load of any PO in miro</item>
+      <item>&quot; and hence the following option popup will also display only once for each po loaded</item>
+      <item>&quot; But this kept for safety check, just in case</item>
+      <item>if lines( sac_tab ) &gt; 1.  &quot; Provide option for user to select the sac code from a list of vendor supplies multiple services</item>
+      <item>clear: v_sac, answer, w_spopli, sac.</item>
+      <item>refresh t_spopli.</item>
+      <item>loop at sac_tab into sac.</item>
+      <item>w_spopli-varoption = sac-sac.</item>
+      <item>append w_spopli to t_spopli.</item>
+      <item>clear w_spopli.</item>
+      <item>endloop.</item>
+      <item>call function &apos;POPUP_TO_DECIDE_LIST&apos;</item>
+      <item>exporting</item>
+      <item>textline1                = |{ w_drseg-ebeln } { w_drseg-ebelp } : Choose correct SAC code for vendor { wa_poview-lifnr }|</item>
+      <item>titel                    = |Choose SAC code|</item>
+      <item>importing</item>
+      <item>answer                   = answer</item>
+      <item>tables</item>
+      <item>t_spopli                 = t_spopli</item>
+      <item>exceptions</item>
+      <item>not_enough_answers       = 1</item>
+      <item>too_much_answers         = 2</item>
+      <item>too_much_marks           = 3</item>
+      <item>others                   = 4.</item>
+      <item>if sy-subrc &lt;&gt; 0.</item>
+      <item>*     Implement suitable error handling here</item>
+      <item>elseif answer is not initial and answer ne &apos;A&apos;.</item>
+      <item>read table t_spopli into w_spopli index answer. &quot; Fill the sac code as per user selection</item>
+      <item>if sy-subrc = 0 and w_spopli-selflag eq abap_true.</item>
+      <item>v_sac = w_spopli-varoption.</item>
+      <item>w_drseg-hsn_sac = v_sac.</item>
+      <item>endif.</item>
+      <item>elseif answer eq &apos;A&apos;. &quot; If user cancels the selection screen, pre-fill first entry from sac table</item>
+      <item>read table sac_tab into sac index 1.</item>
+      <item>if sy-subrc = 0.</item>
+      <item>v_sac = sac-sac.</item>
+      <item>w_drseg-hsn_sac = v_sac.  &quot; IRDK931340</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>else. &quot; If vendor supplies only 1 service, pre-fill that sac in all lines</item>
+      <item>clear: v_sac, sac.</item>
+      <item>read table sac_tab into sac index 1.</item>
+      <item>if sy-subrc = 0.</item>
+      <item>v_sac = sac-sac.</item>
+      <item>w_drseg-hsn_sac = v_sac.  &quot; IRDK931340</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>else. &quot; this part will not trigger here, since this form does not trigger on change only during initial load of PO</item>
+      <item>clear sac.  &quot; this could have been useful when user does not select the sac code and enters some value manually</item>
+      <item>&quot; or selects some value and then manually changes it. This will ensure that the changed value is from the</item>
+      <item>&quot; list of valid values from sac table. But this form does not trigger on change, so this re-done in CMOD</item>
+      <item>&quot; Enhancement MIRO_EN which triggers on save</item>
+      <item>read table sac_tab into sac with key sac = w_drseg-hsn_sac.</item>
+      <item>if sy-subrc &lt;&gt; 0.</item>
+      <item>set cursor field &apos;DRSEG-HSN_SAC&apos; line sy-stepl.</item>
+      <item>message |{ w_drseg-ebeln } { w_drseg-ebelp } : Please select appropriate SAC code using ZFI079| type &apos;E&apos;.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>else.  &quot; other material po&apos;s =&gt; same as control code(india tab) in po which is hsn code of material</item>
+      <item>w_drseg-hsn_sac = wa_poview-j_1bnbm_i.</item>
+      <item>endif.</item>
+      <item>&quot; end IRDK931122</item>
+      <item>endif.</item>
+      <item>modify t_drseg from w_drseg transporting hsn_sac.</item>
+      <item>clear: w_drseg, wa_poview.</item>
+      <item>endloop.</item>
+      <item>endif.</item>
+      <item/>
+      <item>if sy-ucomm eq &apos;PB&apos; or sy-ucomm eq &apos;BU&apos;.</item>
+      <item>if t_drseg[] is not initial.</item>
+      <item>loop at t_drseg into w_drseg where ebeln is not initial and hsn_sac is initial.</item>
+      <item>clear msg.</item>
+      <item>concatenate w_drseg-ebeln w_drseg-ebelp &apos;: HSN/SAC code is mandatory&apos; into msg separated by space.</item>
+      <item>set cursor field &apos;DRSEG-HSN_SAC&apos; line sy-stepl.</item>
+      <item>message msg type &apos;E&apos;.</item>
+      <item>endloop.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SPACES>
+    <item>
+     <FULL_NAME>\PR:SAPLMRMD\FO:T_DRSEG_AUFBAUEN_PRUEFEN_1\SE:END\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>2</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>2</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>12</item>
+      <item>12</item>
+      <item>14</item>
+      <item>14</item>
+      <item>14</item>
+      <item>14</item>
+      <item>16</item>
+      <item>16</item>
+      <item>14</item>
+      <item>16</item>
+      <item>16</item>
+      <item>16</item>
+      <item>16</item>
+      <item>14</item>
+      <item>16</item>
+      <item>48</item>
+      <item>48</item>
+      <item>18</item>
+      <item>20</item>
+      <item>20</item>
+      <item>20</item>
+      <item>22</item>
+      <item>22</item>
+      <item>22</item>
+      <item>20</item>
+      <item>20</item>
+      <item>22</item>
+      <item>24</item>
+      <item>24</item>
+      <item>22</item>
+      <item>24</item>
+      <item>22</item>
+      <item>24</item>
+      <item>22</item>
+      <item>24</item>
+      <item>24</item>
+      <item>24</item>
+      <item>24</item>
+      <item>20</item>
+      <item>0</item>
+      <item>20</item>
+      <item>22</item>
+      <item>22</item>
+      <item>24</item>
+      <item>24</item>
+      <item>22</item>
+      <item>20</item>
+      <item>22</item>
+      <item>22</item>
+      <item>24</item>
+      <item>24</item>
+      <item>22</item>
+      <item>20</item>
+      <item>18</item>
+      <item>20</item>
+      <item>20</item>
+      <item>20</item>
+      <item>22</item>
+      <item>22</item>
+      <item>20</item>
+      <item>18</item>
+      <item>16</item>
+      <item>18</item>
+      <item>30</item>
+      <item>30</item>
+      <item>30</item>
+      <item>18</item>
+      <item>18</item>
+      <item>20</item>
+      <item>20</item>
+      <item>18</item>
+      <item>16</item>
+      <item>14</item>
+      <item>12</item>
+      <item>14</item>
+      <item>12</item>
+      <item>14</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>6</item>
+      <item>0</item>
+      <item>6</item>
+      <item>8</item>
+      <item>10</item>
+      <item>12</item>
+      <item>12</item>
+      <item>12</item>
+      <item>12</item>
+      <item>10</item>
+      <item>8</item>
+      <item>6</item>
+      <item>4</item>
+      <item>2</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+   </SPACES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

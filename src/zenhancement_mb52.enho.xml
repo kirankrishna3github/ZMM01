@@ -1,0 +1,2319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>MB52 Enhancements</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>PROG</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>RM07MLBS</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>PROG</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>RM07MLBS</ORG_MAIN_NAME>
+    <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_04\EI</FULL_NAME>
+     <SOURCE>
+      <item>BREAK 10106.</item>
+      <item>DATA: VALUE_DISPLAY(10).</item>
+      <item>*below code written to control Show/hide values in MB52 std tcode</item>
+      <item>* but later on we decided to call std program from Z tcodes hence no need of below code</item>
+      <item>* as we have already given authorisation of ZMB52 and ZMB52_VAL to resp users .</item>
+      <item/>
+      <item/>
+      <item>*DATA: Zparameter TYPE usr05-parva.</item>
+      <item/>
+      <item>* SELECT SINGLE parva</item>
+      <item>*    FROM usr05</item>
+      <item>*    INTO Zparameter</item>
+      <item>*    WHERE bname = sy-uname</item>
+      <item>*      AND parid = &apos;ZMB52_VALUE&apos;</item>
+      <item>*      AND parva = &apos;X&apos;.</item>
+      <item>*  IF Zparameter IS INITIAL .</item>
+      <item>*    LOOP AT SCREEN.</item>
+      <item>*    IF screen-name = &apos;NOVALUES&apos;.</item>
+      <item>*     NOVALUES = &apos;X&apos;.</item>
+      <item>*     screen-input = &apos;0&apos;.</item>
+      <item>*     screen-INVISIBLE = &apos;1&apos;.</item>
+      <item>*     MODIFY SCREEN.</item>
+      <item>*    ENDIF.</item>
+      <item>*  ENDLOOP.</item>
+      <item>*       NOVALUES = &apos;X&apos;.</item>
+      <item>*  ENDIF.</item>
+      <item>IMPORT VALUE_DISPLAY FROM MEMORY id &apos;VALUE_DISPLAY&apos;.</item>
+      <item/>
+      <item>IF VALUE_DISPLAY = &apos;ZMB52&apos;.</item>
+      <item>LOOP AT SCREEN.</item>
+      <item>IF screen-name = &apos;NOVALUES&apos;.</item>
+      <item>NOVALUES = &apos;X&apos;.</item>
+      <item>screen-input = &apos;0&apos;.</item>
+      <item>screen-INVISIBLE = &apos;1&apos;.</item>
+      <item>MODIFY SCREEN.</item>
+      <item>ENDIF.</item>
+      <item>ENDLOOP.</item>
+      <item>NOVALUES = &apos;X&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_05\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>BREAK 010106.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_07\EI</FULL_NAME>
+     <SOURCE>
+      <item>BREAK 10106.</item>
+      <item>*DATA: VALUE_DISPLAY2(10).</item>
+      <item>*** based on authorisation display/ hide values in MB52 ,</item>
+      <item>***if in SU01,  parameter ZMB52_VALUE maintained with value &apos;X&apos; , display value related columns in Report MB52</item>
+      <item/>
+      <item>*below code written to control Show/hide values in MB52 std tcode</item>
+      <item>* but later on we decided to call std program from Z tcodes hence no need of below code</item>
+      <item>* as we have already given authorisation of ZMB52 and ZMB52_VAL to resp users . 18.12.2018</item>
+      <item/>
+      <item/>
+      <item>*DATA: Zparameter2 TYPE usr05-parva.</item>
+      <item>*BREAK 10106.</item>
+      <item>* SELECT SINGLE parva</item>
+      <item>*    FROM usr05</item>
+      <item>*    INTO Zparameter2</item>
+      <item>*    WHERE bname = sy-uname</item>
+      <item>*      AND parid = &apos;ZMB52_VALUE&apos;</item>
+      <item>*      AND parva = &apos;X&apos;.</item>
+      <item>*  IF Zparameter2 IS INITIAL .</item>
+      <item>*    LOOP AT SCREEN.</item>
+      <item>*    IF screen-name = &apos;NOVALUES&apos;.</item>
+      <item>*     NOVALUES = &apos;X&apos;.</item>
+      <item>*     screen-input = &apos;0&apos;.</item>
+      <item>*     screen-INVISIBLE = &apos;1&apos;.</item>
+      <item>*     MODIFY SCREEN.</item>
+      <item>*    ENDIF.</item>
+      <item>*  ENDLOOP.</item>
+      <item>*  NOVALUES = &apos;X&apos;.</item>
+      <item>*  ENDIF.</item>
+      <item/>
+      <item>IMPORT VALUE_DISPLAY FROM MEMORY id &apos;VALUE_DISPLAY&apos;.</item>
+      <item/>
+      <item>IF VALUE_DISPLAY = &apos;ZMB52&apos;.</item>
+      <item>LOOP AT SCREEN.</item>
+      <item>IF screen-name = &apos;NOVALUES&apos;.</item>
+      <item>NOVALUES = &apos;X&apos;.</item>
+      <item>screen-input = &apos;0&apos;.</item>
+      <item>screen-INVISIBLE = &apos;1&apos;.</item>
+      <item>MODIFY SCREEN.</item>
+      <item>ENDIF.</item>
+      <item>ENDLOOP.</item>
+      <item>NOVALUES = &apos;X&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item/>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_03\EI</FULL_NAME>
+     <SOURCE>
+      <item>DATA:   hsdat       TYPE mch1-hsdat, &quot; Date of Manufacture                  &quot;PUNAM</item>
+      <item>vfdat       TYPE mch1-vfdat, &quot;Shelf Life Exp. Date                  &quot;PUNAM</item>
+      <item>ktx         TYPE t247-ktx,   &quot;&quot;&quot;month name                          &quot;&quot;sachin</item>
+      <item>zdate1(08)  TYPE c,     &quot;&quot;month name year                      &quot;&quot;sachin</item>
+      <item>cuobj_bm    TYPE mch1-cuobj_bm,</item>
+      <item>atwrt       TYPE auspc_v1-atwrt, &quot;Old Batch number                      &quot;PUNAM</item>
+      <item>spart       LIKE mara-spart, &quot; DIVISION                      &quot;PUNAM</item>
+      <item>vtext       LIKE tspat-vtext, &quot; DIVISION DESCRIPTION                &quot;PUNAM</item>
+      <item>sl_days     TYPE i, &quot;Shelf Life-Days</item>
+      <item>status(50),</item>
+      <item>cityc       LIKE t001w-cityc,</item>
+      <item>extwg       LIKE mara-extwg,</item>
+      <item>bezei       LIKE t005h-bezei,</item>
+      <item/>
+      <item>konda       TYPE t188-konda, &quot; Price group (customer)</item>
+      <item>kbetr       TYPE konp-kbetr,   &quot; Rate (condition amount or percentage) where no scale exists</item>
+      <item>konda_txt   TYPE t188t-vtext,   &quot; Condition type</item>
+      <item>atwrt_pg    TYPE ausp-atwrt, &quot; Price group (customer) updated in msc2n for existing batches</item>
+      <item>atwrt_txt   TYPE t188t-vtext,   &quot; PRICE GRP TXT  updated in msc2n for existing batches</item>
+      <item>other_kbetr TYPE konp-kbetr,   &quot; Rate (condition amount or percentage) for MSC2n/COR2 PG</item>
+      <item>mvgr5       TYPE mvke-mvgr5, &quot;  material group 5 , indicator for bulk branded product</item>
+      <item>mvgr5_txt   TYPE tvm5t-bezei,</item>
+      <item>lgpbe       TYPE mard-lgpbe, &quot;storage bin added pravin 25/9/15</item>
+      <item>zfkimg      TYPE z6sd038t_depo-zfkimg,</item>
+      <item/>
+      <item>ersda TYPE mchb-ersda, &quot; Loc Received Date - Added by CS on 30.12.2015</item>
+      <item>laeda TYPE  mchb-laeda. &quot; Last movement Date - Added by CS on 30.12.2015</item>
+      <item/>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_01\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>DATA:   hsdat     TYPE mch1-hsdat, &quot; Date of Manufacture                  &quot;PUNAM</item>
+      <item>vfdat     TYPE mch1-vfdat, &quot;Shelf Life Exp. Date                  &quot;PUNAM</item>
+      <item>zdate(08) TYPE c,      &quot;&quot;&quot;expiry date                         &quot;sachin</item>
+      <item>atwrt     TYPE auspc_v1-atwrt, &quot;Old Batch number                  &quot;PUNAM</item>
+      <item>spart     LIKE mara-spart, &quot; DIVISION                             &quot;PUNAM</item>
+      <item>vtext     LIKE tspat-vtext, &quot; DIVISION DESCRIPTION                &quot;PUNAM</item>
+      <item>* END BY PUNAM</item>
+      <item>cityc     LIKE t001w-cityc,</item>
+      <item>bezei     LIKE t005h-bezei,</item>
+      <item/>
+      <item>konda     TYPE t188-konda, &quot; Price group (customer)</item>
+      <item>kbetr     TYPE konp-kbetr,   &quot; Rate (condition amount or percentage) where no scale exists</item>
+      <item>konda_txt TYPE t188t-vtext,   &quot; PRICE GRP TXT</item>
+      <item>atwrt_pg  TYPE ausp-atwrt, &quot; Price group (customer) updated in msc2n for existing batches</item>
+      <item>atwrt_txt TYPE t188t-vtext,   &quot; PRICE GRP TXT  updated in msc2n for existing batches</item>
+      <item>mvgr5     TYPE mvke-mvgr5, &quot;  material group 5 , indicator for bulk branded product</item>
+      <item>mvgr5_txt TYPE tvm5t-bezei,</item>
+      <item>**       ZMB52_VAL fields</item>
+      <item>ersda TYPE mchb-ersda, &quot; Loc Received Date - Added by CS on 30.12.2015</item>
+      <item>laeda TYPE  mchb-laeda. &quot; Last movement Date - Added by CS on 30.12.2015</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_02\EI</FULL_NAME>
+     <SOURCE>
+      <item>DATA: spart     LIKE mara-spart, &quot; DIVISION  &quot;PUNAM</item>
+      <item>vtext     LIKE tspat-vtext, &quot; DIVISION DESCRIPTION                &quot;PUNAM</item>
+      <item>cityc     LIKE t001w-cityc, &quot; sales district &quot;Punam</item>
+      <item>extwg     LIKE mara-extwg, &quot; external material grp</item>
+      <item>bezei     LIKE t005h-bezei,</item>
+      <item/>
+      <item>konda     TYPE t188-konda, &quot; Price group (customer)</item>
+      <item>kbetr     TYPE konp-kbetr,   &quot; Rate (condition amount or percentage) where no scale exists</item>
+      <item>konda_txt TYPE t188t-vtext,   &quot;</item>
+      <item>atwrt_pg  TYPE ausp-atwrt, &quot; Price group (customer) updated in msc2n for existing batches</item>
+      <item>atwrt_txt TYPE t188t-vtext,   &quot; PRICE GRP TXT  updated in msc2n for existing batches</item>
+      <item>mvgr5     TYPE mvke-mvgr5, &quot;  material group 5 , indicator for bulk branded product</item>
+      <item>mvgr5_txt TYPE tvm5t-bezei,</item>
+      <item>lgpbe     TYPE mard-lgpbe,   &quot;storage bin added by pravin date - 25/09/15</item>
+      <item>zfkimg    TYPE z6sd038t_depo-zfkimg.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\FO:DATA_SELECTION_NEW\SE:END\EI</FULL_NAME>
+     <SOURCE>
+      <item>BREAK 10106.</item>
+      <item>IF bestand[] IS NOT INITIAL.</item>
+      <item/>
+      <item>DATA: it_a605 TYPE TABLE OF a605,</item>
+      <item>wa_a605 TYPE a605.</item>
+      <item>DATA :BEGIN OF wa_mard,</item>
+      <item>matnr TYPE mard-matnr,</item>
+      <item>werks TYPE mard-werks,</item>
+      <item>lgort TYPE mard-lgort,</item>
+      <item>lgpbe TYPE mard-lgpbe,</item>
+      <item>END OF wa_mard,</item>
+      <item>it_mard LIKE STANDARD TABLE OF wa_mard,</item>
+      <item/>
+      <item>BEGIN OF wa_mch1,</item>
+      <item>hsdat    TYPE mch1-hsdat,</item>
+      <item>vfdat    TYPE mch1-vfdat,</item>
+      <item>cuobj_bm TYPE mch1-cuobj_bm,</item>
+      <item>matnr    TYPE mch1-matnr,</item>
+      <item>charg    TYPE mch1-charg,</item>
+      <item>END OF wa_mch1,</item>
+      <item>it_mch1 LIKE STANDARD TABLE OF wa_mch1,</item>
+      <item/>
+      <item>BEGIN OF wa_csize,</item>
+      <item>matnr  TYPE z6sd038t_depo-matnr,</item>
+      <item>zfkimg TYPE z6sd038t_depo-zfkimg,</item>
+      <item>END OF wa_csize,</item>
+      <item>it_csize LIKE STANDARD TABLE OF wa_csize,</item>
+      <item/>
+      <item>BEGIN OF wa_div_desc,</item>
+      <item>matnr TYPE mara-matnr,</item>
+      <item>spart TYPE tspat-spart,</item>
+      <item>vtext TYPE tspat-vtext,</item>
+      <item>END OF wa_div_desc,</item>
+      <item>it_div_desc LIKE STANDARD TABLE OF wa_div_desc,</item>
+      <item/>
+      <item>BEGIN OF wa_ausp_objek,</item>
+      <item>objek TYPE ausp-objek,</item>
+      <item>END OF wa_ausp_objek,</item>
+      <item>it_ausp_objek LIKE STANDARD TABLE OF wa_ausp_objek,</item>
+      <item/>
+      <item>BEGIN OF wa_inob_objek,</item>
+      <item>objek TYPE inob-objek,</item>
+      <item>END OF wa_inob_objek,</item>
+      <item>it_inob_objek LIKE STANDARD TABLE OF wa_inob_objek,</item>
+      <item/>
+      <item>BEGIN OF wa_ausp,</item>
+      <item>atwrt TYPE ausp-atwrt,</item>
+      <item>objek TYPE ausp-objek,</item>
+      <item>atinn TYPE ausp-atinn,</item>
+      <item>END OF wa_ausp,</item>
+      <item>it_ausp  LIKE STANDARD TABLE OF wa_ausp,</item>
+      <item>it_ausp2 LIKE STANDARD TABLE OF wa_ausp,</item>
+      <item/>
+      <item>BEGIN OF wa_plant,</item>
+      <item>werks TYPE t001w-werks,</item>
+      <item>regio TYPE t001w-regio,</item>
+      <item>cityc TYPE t001w-cityc,</item>
+      <item>vkorg TYPE t001w-vkorg,</item>
+      <item>END OF wa_plant,</item>
+      <item>it_plant LIKE STANDARD TABLE OF wa_plant,</item>
+      <item/>
+      <item>BEGIN OF wa_t005h,</item>
+      <item>bezei TYPE t005h-bezei,</item>
+      <item>cityc TYPE t005h-cityc,</item>
+      <item>END OF wa_t005h,</item>
+      <item>it_t005h LIKE STANDARD TABLE OF wa_t005h,</item>
+      <item/>
+      <item>BEGIN OF wa_b_mrp,</item>
+      <item>konda TYPE zsd_batch_mrp-konda,</item>
+      <item>spart TYPE zsd_batch_mrp-spart,</item>
+      <item>matnr TYPE zsd_batch_mrp-matnr,</item>
+      <item>charg TYPE zsd_batch_mrp-charg,</item>
+      <item>END OF wa_b_mrp,</item>
+      <item>it_b_mrp LIKE STANDARD TABLE OF wa_b_mrp,</item>
+      <item/>
+      <item>BEGIN OF wa_konp,</item>
+      <item>kbetr TYPE konp-kbetr,</item>
+      <item>knumh TYPE konp-knumh,</item>
+      <item>END OF wa_konp,</item>
+      <item>it_konp  LIKE STANDARD TABLE OF wa_konp,</item>
+      <item/>
+      <item>wa_t188t TYPE t188t,</item>
+      <item>it_t188t LIKE STANDARD TABLE OF wa_t188t,</item>
+      <item/>
+      <item>BEGIN OF wa_inob,</item>
+      <item>cuobj TYPE inob-cuobj,</item>
+      <item>objek TYPE inob-objek,</item>
+      <item>END OF wa_inob,</item>
+      <item>it_inob LIKE STANDARD TABLE OF wa_inob,</item>
+      <item/>
+      <item>BEGIN OF wa_mvke,</item>
+      <item>matnr TYPE mvke-matnr,</item>
+      <item>vkorg TYPE mvke-vkorg,</item>
+      <item>mvgr5 TYPE mvke-mvgr5,</item>
+      <item>END OF wa_mvke,</item>
+      <item>it_mvke LIKE STANDARD TABLE OF wa_mvke,</item>
+      <item/>
+      <item>BEGIN OF wa_tvm5t,</item>
+      <item>bezei TYPE tvm5t-bezei,</item>
+      <item>mvgr5 TYPE tvm5t-mvgr5,</item>
+      <item>END OF wa_tvm5t,</item>
+      <item>it_tvm5t LIKE STANDARD TABLE OF wa_tvm5t,</item>
+      <item/>
+      <item>BEGIN OF wa_mchb,</item>
+      <item>matnr TYPE mchb-matnr,</item>
+      <item>werks TYPE mchb-werks,</item>
+      <item>lgort TYPE mchb-werks,</item>
+      <item>charg TYPE mchb-charg,</item>
+      <item>ersda TYPE mchb-ersda, &quot; Loc Received Date - Added by CS on 30.12.2015</item>
+      <item>laeda TYPE  mchb-laeda, &quot; Last movement Date - Added by CS on 30.12.2015</item>
+      <item>END OF wa_mchb,</item>
+      <item>it_mchb LIKE STANDARD TABLE OF wa_mchb.</item>
+      <item/>
+      <item>DATA : zyear(4)        TYPE c.</item>
+      <item>*****************************************************************************************************</item>
+      <item/>
+      <item>REFRESH it_mard[].</item>
+      <item>SELECT matnr werks lgort lgpbe</item>
+      <item>FROM mard</item>
+      <item>INTO TABLE it_mard</item>
+      <item>FOR ALL ENTRIES IN bestand</item>
+      <item>WHERE matnr = bestand-matnr</item>
+      <item>AND werks = bestand-werks</item>
+      <item>AND lgort = bestand-lgort.</item>
+      <item/>
+      <item>REFRESH it_mch1[].</item>
+      <item>SELECT hsdat    &quot; Date of Manufacture</item>
+      <item>vfdat    &quot; Shelf Life Exp. Date</item>
+      <item>cuobj_bm matnr charg</item>
+      <item>FROM mch1</item>
+      <item>INTO TABLE it_mch1</item>
+      <item>FOR ALL ENTRIES IN bestand</item>
+      <item>WHERE matnr = bestand-matnr</item>
+      <item>AND charg = bestand-charg.</item>
+      <item/>
+      <item>REFRESH it_csize[].</item>
+      <item>SELECT matnr zfkimg</item>
+      <item>FROM z6sd038t_depo</item>
+      <item>INTO TABLE it_csize</item>
+      <item>FOR ALL ENTRIES IN bestand</item>
+      <item>WHERE matnr = bestand-matnr.</item>
+      <item/>
+      <item>REFRESH it_div_desc[].</item>
+      <item>SELECT a~matnr a~spart b~vtext</item>
+      <item>FROM mara AS a</item>
+      <item>JOIN tspat AS b</item>
+      <item>ON a~spart = b~spart</item>
+      <item>INTO TABLE it_div_desc</item>
+      <item>FOR ALL ENTRIES IN bestand</item>
+      <item>WHERE matnr =  bestand-matnr</item>
+      <item>AND spras = &apos;EN&apos;.</item>
+      <item/>
+      <item/>
+      <item>IF it_mch1 IS NOT INITIAL.</item>
+      <item>REFRESH it_ausp_objek[].</item>
+      <item>LOOP AT it_mch1 INTO wa_mch1.</item>
+      <item>MOVE wa_mch1-cuobj_bm TO wa_ausp_objek-objek.</item>
+      <item>APPEND wa_ausp_objek TO it_ausp_objek.</item>
+      <item>CLEAR: wa_ausp_objek, wa_mch1.</item>
+      <item>ENDLOOP.</item>
+      <item>ENDIF.</item>
+      <item>DATA:  lv_space(22) TYPE C.</item>
+      <item>REFRESH it_inob_objek[].</item>
+      <item/>
+      <item>SORT : it_div_desc BY matnr.</item>
+      <item>LOOP AT bestand.</item>
+      <item>CONCATENATE  bestand-matnr bestand-charg INTO wa_inob_objek-objek SEPARATED BY  lv_space.</item>
+      <item>APPEND wa_inob_objek TO it_inob_objek.</item>
+      <item>READ TABLE it_div_desc INTO wa_div_desc</item>
+      <item>WITH KEY matnr = bestand-matnr</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-spart = wa_div_desc-spart.</item>
+      <item>bestand-vtext = wa_div_desc-vtext.</item>
+      <item>ENDIF.</item>
+      <item>MODIFY bestand.</item>
+      <item>CLEAR: bestand, wa_inob_objek.</item>
+      <item>ENDLOOP.</item>
+      <item/>
+      <item>IF it_ausp_objek IS NOT INITIAL.</item>
+      <item>REFRESH it_ausp.</item>
+      <item>SELECT atwrt objek atinn</item>
+      <item>FROM ausp</item>
+      <item>INTO TABLE it_ausp</item>
+      <item>FOR ALL ENTRIES IN it_ausp_objek</item>
+      <item>WHERE objek = it_ausp_objek-objek</item>
+      <item>AND atinn = &apos;0000000810&apos;. &quot;&apos;0000000837&apos;.&quot;</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>REFRESH it_plant.</item>
+      <item>SELECT werks regio cityc vkorg</item>
+      <item>FROM t001w</item>
+      <item>INTO TABLE it_plant</item>
+      <item>WHERE cityc IN cityc.</item>
+      <item/>
+      <item>IF it_plant IS NOT INITIAL.</item>
+      <item>REFRESH it_t005h.</item>
+      <item>SELECT bezei cityc</item>
+      <item>FROM t005h</item>
+      <item>INTO TABLE it_t005h</item>
+      <item>FOR ALL ENTRIES IN it_plant</item>
+      <item>WHERE cityc = it_plant-cityc</item>
+      <item>AND land1 EQ &apos;IN&apos;</item>
+      <item>AND spras EQ &apos;E&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>REFRESH it_b_mrp.</item>
+      <item>SELECT konda spart matnr charg</item>
+      <item>FROM zsd_batch_mrp</item>
+      <item>INTO TABLE it_b_mrp</item>
+      <item>FOR ALL ENTRIES IN bestand</item>
+      <item>WHERE spart = bestand-spart</item>
+      <item>AND matnr = bestand-matnr</item>
+      <item>AND charg = bestand-charg</item>
+      <item>AND konda &lt;&gt; &apos;&apos;.</item>
+      <item/>
+      <item>REFRESH it_a605.</item>
+      <item>SELECT * FROM a605</item>
+      <item>INTO TABLE it_a605</item>
+      <item>*    FOR ALL ENTRIES IN bestand &quot; Commented since this slows the query, select all with read is much faster</item>
+      <item>WHERE kappl = &apos;V&apos;</item>
+      <item>AND kschl = &apos;ZMRP&apos;</item>
+      <item>*    AND spart = bestand-spart</item>
+      <item>AND kdgrp = &apos;02&apos;</item>
+      <item>*    AND matnr = bestand-matnr</item>
+      <item>*    AND konda = bestand-konda</item>
+      <item>AND datab &lt;= sy-datum</item>
+      <item>AND datbi &gt;= sy-datum.</item>
+      <item/>
+      <item>IF it_a605 IS NOT INITIAL.</item>
+      <item>REFRESH it_konp.</item>
+      <item>SELECT kbetr knumh</item>
+      <item>FROM konp</item>
+      <item>INTO TABLE it_konp</item>
+      <item>FOR ALL ENTRIES IN it_a605</item>
+      <item>WHERE knumh = it_a605-knumh</item>
+      <item>AND kschl = &apos;ZMRP&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>REFRESH it_t188t.</item>
+      <item>SELECT *</item>
+      <item>FROM t188t</item>
+      <item>INTO TABLE it_t188t</item>
+      <item>WHERE spras EQ &apos;E&apos;.</item>
+      <item/>
+      <item>IF it_inob_objek IS NOT INITIAL.</item>
+      <item>REFRESH it_inob.</item>
+      <item>SELECT cuobj objek</item>
+      <item>FROM inob</item>
+      <item>INTO TABLE it_inob</item>
+      <item>FOR ALL ENTRIES IN it_inob_objek</item>
+      <item>WHERE klart = &apos;023&apos;</item>
+      <item>AND obtab = &apos;MCH1&apos;</item>
+      <item>AND objek = it_inob_objek-objek.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>IF it_inob IS NOT INITIAL.</item>
+      <item>REFRESH it_ausp_objek.</item>
+      <item>LOOP AT it_inob INTO wa_inob.</item>
+      <item>MOVE wa_inob-objek TO wa_ausp_objek-objek.</item>
+      <item>APPEND wa_ausp_objek TO it_ausp_objek.</item>
+      <item>CLEAR: wa_inob, wa_ausp_objek.</item>
+      <item>ENDLOOP.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>IF it_ausp_objek IS NOT INITIAL.</item>
+      <item>REFRESH it_ausp2.</item>
+      <item>SELECT atwrt objek atinn</item>
+      <item>FROM ausp</item>
+      <item>INTO TABLE it_ausp2</item>
+      <item>FOR ALL ENTRIES IN it_ausp_objek</item>
+      <item>WHERE objek = it_ausp_objek-objek</item>
+      <item>AND atinn IN ( &apos;0000000821&apos;, &apos;0000000867&apos;, &apos;0000000831&apos; ).</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>REFRESH it_mvke.</item>
+      <item>SELECT matnr vkorg mvgr5</item>
+      <item>FROM mvke</item>
+      <item>INTO TABLE it_mvke</item>
+      <item>FOR ALL ENTRIES IN bestand</item>
+      <item>WHERE matnr = bestand-matnr.</item>
+      <item/>
+      <item>IF it_mvke IS NOT INITIAL.</item>
+      <item>REFRESH it_tvm5t.</item>
+      <item>SELECT bezei mvgr5</item>
+      <item>FROM tvm5t</item>
+      <item>INTO TABLE it_tvm5t</item>
+      <item>FOR ALL ENTRIES IN it_mvke</item>
+      <item>WHERE mvgr5 = it_mvke-mvgr5</item>
+      <item>AND spras EQ &apos;E&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>REFRESH: it_mchb.</item>
+      <item>SELECT matnr werks lgort charg ersda laeda</item>
+      <item>FROM mcHB into TABLE it_mchb</item>
+      <item>FOR ALL ENTRIES IN bestand</item>
+      <item>WHERE matnr = bestand-matnr</item>
+      <item>AND charg = bestand-charg</item>
+      <item>AND werks = bestand-werks</item>
+      <item>and lgort = bestand-lgort.</item>
+      <item/>
+      <item>SORT : it_mard  BY matnr</item>
+      <item>werks</item>
+      <item>lgort,</item>
+      <item>it_mch1  BY matnr</item>
+      <item>charg,</item>
+      <item>it_csize BY matnr,</item>
+      <item>it_ausp  BY objek,</item>
+      <item>it_plant BY werks,</item>
+      <item>it_t005h BY cityc,</item>
+      <item>it_b_mrp BY matnr</item>
+      <item>spart</item>
+      <item>charg,</item>
+      <item>it_a605  BY spart</item>
+      <item>regio</item>
+      <item>matnr</item>
+      <item>konda,</item>
+      <item>it_konp  BY knumh,</item>
+      <item>it_t188t BY konda,</item>
+      <item>it_inob  BY objek,</item>
+      <item>it_ausp2 BY objek,</item>
+      <item>it_mvke  BY matnr</item>
+      <item>vkorg,</item>
+      <item>it_tvm5t BY mvgr5,</item>
+      <item>it_mchb  BY matnr</item>
+      <item>werks</item>
+      <item>lgort</item>
+      <item>charg.</item>
+      <item/>
+      <item>LOOP AT bestand.</item>
+      <item>CLEAR wa_mard.</item>
+      <item>READ TABLE it_mard INTO wa_mard WITH KEY matnr = bestand-matnr</item>
+      <item>werks = bestand-werks</item>
+      <item>lgort = bestand-lgort</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-lgpbe = wa_mard-lgpbe.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>CLEAR wa_mch1.</item>
+      <item>READ TABLE it_mch1 INTO wa_mch1 WITH KEY matnr = bestand-matnr</item>
+      <item>charg = bestand-charg</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-hsdat    = wa_mch1-hsdat.</item>
+      <item>bestand-vfdat    = wa_mch1-vfdat.</item>
+      <item>bestand-cuobj_bm = wa_mch1-cuobj_bm.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>CLEAR wa_csize.</item>
+      <item>READ TABLE it_csize INTO wa_csize</item>
+      <item>WITH KEY matnr = bestand-matnr</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-zfkimg = wa_csize-zfkimg.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>CLEAR wa_ausp.</item>
+      <item>READ TABLE it_ausp INTO wa_ausp</item>
+      <item>WITH KEY objek = bestand-cuobj_bm</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-atwrt = wa_ausp-atwrt.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>IF bestand-vfdat IS NOT INITIAL.</item>
+      <item>bestand-sl_days = bestand-vfdat - sy-datum.</item>
+      <item>*write : BESTAND-VFDAT to zfinal_date.</item>
+      <item>****** code added by sachin **********************</item>
+      <item>CALL FUNCTION &apos;ISP_GET_MONTH_NAME&apos;</item>
+      <item>EXPORTING</item>
+      <item>date        = bestand-vfdat</item>
+      <item>language    = sy-langu</item>
+      <item>*         MONTH_NUMBER       = &apos;00&apos;</item>
+      <item>IMPORTING</item>
+      <item>*         LANGU_BACK  = EN&apos;</item>
+      <item>*         LONGTEXT    =</item>
+      <item>shorttext   = bestand-ktx</item>
+      <item>EXCEPTIONS</item>
+      <item>calendar_id = 1</item>
+      <item>date_error  = 2</item>
+      <item>not_found   = 3</item>
+      <item>wrong_input = 4</item>
+      <item>OTHERS      = 5.</item>
+      <item>IF sy-subrc &lt;&gt; 0.</item>
+      <item>MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno</item>
+      <item>WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.</item>
+      <item>ENDIF.</item>
+      <item>zyear = bestand-vfdat(4).</item>
+      <item>CONCATENATE bestand-ktx zyear INTO bestand-zdate1</item>
+      <item>SEPARATED BY space.</item>
+      <item>CLEAR :zyear.&quot;, bestand-ktx.</item>
+      <item>***********end of added code ****************</item>
+      <item>ENDIF.</item>
+      <item>*If&lt;=90 ,then-&quot;Near Expiry&quot;</item>
+      <item>*IF&lt;=0,&quot;Expired&quot;</item>
+      <item>*If&gt;90&lt;180,then&quot;90 to 180 days&quot;</item>
+      <item>*If&gt;180&lt;360,then&quot;180 to 360 days expiry&quot;</item>
+      <item>*If&gt;360,then &quot;More than 1 year&quot;</item>
+      <item/>
+      <item>IF bestand-vfdat IS NOT INITIAL.</item>
+      <item>IF bestand-sl_days &lt;= 90 AND bestand-sl_days &gt; 0.</item>
+      <item>bestand-status = &apos;Near Expiry&apos;.</item>
+      <item>ELSEIF bestand-sl_days &lt;= 0.</item>
+      <item>bestand-status = &apos;Expired&apos;.</item>
+      <item>ELSEIF bestand-sl_days &gt; 90 AND bestand-sl_days &lt;= 180.</item>
+      <item>bestand-status = &apos;90 to 180 days&apos;.</item>
+      <item>ELSEIF bestand-sl_days &gt; 180 AND bestand-sl_days &lt;= 360.</item>
+      <item>bestand-status = &apos;180 to 360 days expiry&apos;.</item>
+      <item>ELSEIF bestand-sl_days &gt; 360.</item>
+      <item>bestand-status = &apos;More than 1 year&apos;.</item>
+      <item>ENDIF.</item>
+      <item>ELSE.</item>
+      <item>bestand-status = &apos;Not Applicable&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>CLEAR wa_plant.</item>
+      <item>READ TABLE it_plant INTO wa_plant</item>
+      <item>WITH KEY werks = bestand-werks</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-cityc = wa_plant-cityc.</item>
+      <item/>
+      <item>READ TABLE it_t005h INTO wa_t005h</item>
+      <item>WITH KEY cityc = bestand-cityc</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-bezei = wa_t005h-bezei.</item>
+      <item>CLEAR wa_t005h.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item>CLEAR wa_b_mrp.</item>
+      <item>READ TABLE it_b_mrp INTO wa_b_mrp WITH KEY matnr = bestand-matnr</item>
+      <item>spart = bestand-spart</item>
+      <item>charg = bestand-charg</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-konda = wa_b_mrp-konda.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>CLEAR wa_a605.</item>
+      <item>READ TABLE it_a605 INTO wa_a605 WITH KEY spart = bestand-spart</item>
+      <item>regio = wa_plant-regio</item>
+      <item>matnr = bestand-matnr</item>
+      <item>konda = bestand-konda</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>CLEAR wa_konp.</item>
+      <item>READ TABLE it_konp INTO wa_konp</item>
+      <item>WITH KEY knumh = wa_a605-knumh</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-kbetr = wa_konp-kbetr.</item>
+      <item>bestand-other_kbetr = wa_konp-kbetr.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>CLEAR wa_t188t.</item>
+      <item>READ TABLE it_t188t INTO wa_t188t</item>
+      <item>WITH KEY konda = bestand-konda</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-konda_txt = wa_t188t-vtext.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item>CLEAR wa_inob.</item>
+      <item>READ TABLE it_inob INTO wa_inob</item>
+      <item>WITH KEY objek = bestand-matnr &amp;&amp; bestand-charg</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>CLEAR wa_ausp.</item>
+      <item>READ TABLE it_ausp2 INTO wa_ausp</item>
+      <item>WITH KEY objek = wa_inob-cuobj</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-atwrt_pg = wa_ausp-atwrt.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>CLEAR wa_mvke.</item>
+      <item>READ TABLE it_mvke INTO wa_mvke WITH KEY matnr = bestand-matnr</item>
+      <item>vkorg = wa_plant-vkorg</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-mvgr5 = wa_mvke-mvgr5.</item>
+      <item>CLEAR wa_tvm5t.</item>
+      <item>READ TABLE it_tvm5t INTO wa_tvm5t</item>
+      <item>WITH KEY mvgr5 = bestand-mvgr5</item>
+      <item>BINARY SEARCH.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-mvgr5_txt = wa_tvm5t-bezei.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>CLEAR wa_mchb.</item>
+      <item>READ TABLE it_mchb INTO wa_mchb WITH KEY matnr = bestand-matnr</item>
+      <item>werks = bestand-werks</item>
+      <item>lgort = bestand-lgort</item>
+      <item>charg = bestand-charg.</item>
+      <item>IF sy-subrc = 0.</item>
+      <item>bestand-ersda = wa_mchb-ersda.</item>
+      <item>bestand-laeda = wa_mchb-laeda.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item>MODIFY bestand.</item>
+      <item>ENDLOOP.</item>
+      <item/>
+      <item>IF cityc IS NOT INITIAL.</item>
+      <item>IF bestand[] IS NOT INITIAL.</item>
+      <item>DELETE bestand[] WHERE cityc NOT IN cityc.</item>
+      <item>ENDIF.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>FREE : it_mard[],</item>
+      <item>it_mch1[],</item>
+      <item>it_ausp[],</item>
+      <item>it_a605[],</item>
+      <item>it_konp[],</item>
+      <item>it_inob[],</item>
+      <item>it_mvke[],</item>
+      <item>it_mchb[],</item>
+      <item>it_csize[],</item>
+      <item>it_plant[],</item>
+      <item>it_t005h[],</item>
+      <item>it_b_mrp[],</item>
+      <item>it_t188t[],</item>
+      <item>it_ausp2[],</item>
+      <item>it_tvm5t[].</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_3\EI</FULL_NAME>
+     <SOURCE>
+      <item>*** selectionn screen Custom fields</item>
+      <item/>
+      <item>SELECTION-SCREEN BEGIN OF BLOCK custom_fields WITH FRAME TITLE text-208.</item>
+      <item/>
+      <item>SELECT-OPTIONS:</item>
+      <item>cityc  FOR t005g-cityc , &quot; Sales district</item>
+      <item>extwg FOR mara-extwg. &quot; Ext. Material Group</item>
+      <item/>
+      <item>SELECTION-SCREEN END OF BLOCK custom_fields.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_G7\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>TABLES : t005g.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_24\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;HSDAT&apos;.  &quot; Date of Manufacture</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;VFDAT&apos;. &quot; &quot;Shelf Life Exp. Date</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>&quot;&quot;&quot;&quot;&quot;added by sachin</item>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ZDATE1&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  FIELDCAT-REF_TABNAME   = &apos;MCH1&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Expiry Date&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item>&quot;&quot;&quot;&quot;&quot;end of addec ode</item>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ATWRT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;AUSP&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Legacy batch No&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;SL_DAYS&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;AUSP&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Shelf Life-Days&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;STATUS&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;AUSP&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;STATUS&apos;.</item>
+      <item>fieldcat-outputlen     = 22.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;LGPBE&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Storage Bin&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ZFKIMG&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Case Size&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;CITYC&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales Dist.&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;BEZEI&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales Dist.Text&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;KONDA&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Price group&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;KONDA_TXT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Price grp.&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;KBETR&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Condition amt.&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ATWRT_PG&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;OTHER PG MSC2N/COR2&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ATWRT_TXT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;OTHER PG&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;OTHER_KBETR&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;MSC2N/COR2 Cond.amt.&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;MVGR5&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Material Grp.5&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;MVGR5_TXT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Material Grp.5&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ERSDA&apos;.   &quot;</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Loc Received Date&apos;.</item>
+      <item>fieldcat-ref_tabname   = &apos;MCHB&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;LAEDA&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Last movement Date&apos;.</item>
+      <item>fieldcat-ref_tabname   = &apos;MCHB&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_40\EI</FULL_NAME>
+     <SOURCE>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;SL_DAYS&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Shelf Life-Days&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>fieldcat-col_pos       = 27.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;STATUS&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;STATUS&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>fieldcat-outputlen     = 22.</item>
+      <item>fieldcat-col_pos       = 28.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;SPART&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Division&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>*     fieldcat-outputlen     = 22.</item>
+      <item>fieldcat-col_pos       = 29.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;VTEXT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Division&apos;.</item>
+      <item>fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>*     fieldcat-outputlen     = 22.</item>
+      <item>fieldcat-col_pos       = 30.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ZDATE1&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Expiry Date&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>*  FIELDCAT-OUTPUTLEN     = 22.</item>
+      <item>fieldcat-col_pos       = 31.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;LGPBE&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Storage Bin&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ZFKIMG&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Case Size&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;CITYC&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales Dist.&apos;.</item>
+      <item>fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>*     fieldcat-outputlen     = 22.</item>
+      <item>*    fieldcat-COL_POS       = 30.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;BEZEI&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales Dist.Text&apos;.</item>
+      <item>fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>*     fieldcat-outputlen     = 22.</item>
+      <item>*    fieldcat-COL_POS       = 30.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;KONDA&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Price group&apos;.</item>
+      <item>fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;KONDA_TXT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Price grp.&apos;.</item>
+      <item>fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;KBETR&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Condition amt.&apos;.</item>
+      <item>fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ATWRT_PG&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;OTHER PG MSC2N/COR2&apos;.</item>
+      <item>fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ATWRT_TXT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;OTHER PG&apos;.</item>
+      <item>fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;OTHER_KBETR&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;MSC2N/COR2 Cond.amt.&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;MVGR5&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Material Grp.5&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;MVGR5_TXT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Material Grp.5&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;HSDAT&apos;.  &quot; Date of Manufacture</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;VFDAT&apos;. &quot; &quot;Shelf Life Exp. Date</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-ref_tabname   = &apos;MCH1&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ATWRT&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>*    fieldcat-ref_tabname   = &apos;AUSP&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Legacy batch No&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;ERSDA&apos;.   &quot;</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Loc Received Date&apos;.</item>
+      <item>fieldcat-ref_tabname   = &apos;MCHB&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;LAEDA&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Last movement Date&apos;.</item>
+      <item>fieldcat-ref_tabname   = &apos;MCHB&apos;.</item>
+      <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_29\EI</FULL_NAME>
+     <SOURCE>
+      <item>*BREAK 10106.</item>
+      <item>*if  VALUE_DISPLAY = &apos;ZMB52&apos;.</item>
+      <item>*</item>
+      <item>*   repid = &apos;ZRM07MLBS&apos;.</item>
+      <item>*</item>
+      <item>*ENDIF.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_RM07MLBS</SPOTNAME>
+     <PROGRAMNAME>RM07MLBS</PROGRAMNAME>
+     <ENHMODE>S</ENHMODE>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_28\EI</FULL_NAME>
+     <SOURCE>
+      <item>BREAK 10106.</item>
+      <item>if  VALUE_DISPLAY = &apos;ZMB52&apos;.</item>
+      <item/>
+      <item>repid = &apos;ZRM07MLBS&apos;.</item>
+      <item>ELSEIF VALUE_DISPLAY = &apos;ZMB52_VAL&apos;.</item>
+      <item/>
+      <item>repid = &apos;ZRM07MLBS_NEW&apos;.</item>
+      <item/>
+      <item>ENDIF.</item>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SPACES>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_04\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>1</item>
+      <item>1</item>
+      <item>4</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>4</item>
+      <item>2</item>
+      <item>2</item>
+      <item>1</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_05\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_07\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>1</item>
+      <item>1</item>
+      <item>4</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>4</item>
+      <item>2</item>
+      <item>2</item>
+      <item>1</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_03\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_01\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_02\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\FO:DATA_SELECTION_NEW\SE:END\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>8</item>
+      <item>2</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>1</item>
+      <item>0</item>
+      <item>0</item>
+      <item>3</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>11</item>
+      <item>11</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>4</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>29</item>
+      <item>29</item>
+      <item>6</item>
+      <item>8</item>
+      <item>8</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>4</item>
+      <item>0</item>
+      <item>3</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>2</item>
+      <item>0</item>
+      <item>3</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>4</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>2</item>
+      <item>0</item>
+      <item>1</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>9</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>2</item>
+      <item>21</item>
+      <item>21</item>
+      <item>9</item>
+      <item>21</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>21</item>
+      <item>21</item>
+      <item>9</item>
+      <item>21</item>
+      <item>21</item>
+      <item>21</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>21</item>
+      <item>9</item>
+      <item>9</item>
+      <item>21</item>
+      <item>21</item>
+      <item>21</item>
+      <item>0</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>45</item>
+      <item>45</item>
+      <item>45</item>
+      <item>4</item>
+      <item>6</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>45</item>
+      <item>45</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>24</item>
+      <item>24</item>
+      <item>4</item>
+      <item>6</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>23</item>
+      <item>23</item>
+      <item>4</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>6</item>
+      <item>0</item>
+      <item>0</item>
+      <item>6</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>0</item>
+      <item>8</item>
+      <item>0</item>
+      <item>0</item>
+      <item>10</item>
+      <item>8</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>10</item>
+      <item>6</item>
+      <item>8</item>
+      <item>16</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>4</item>
+      <item>6</item>
+      <item>8</item>
+      <item>6</item>
+      <item>8</item>
+      <item>6</item>
+      <item>8</item>
+      <item>6</item>
+      <item>8</item>
+      <item>6</item>
+      <item>8</item>
+      <item>6</item>
+      <item>4</item>
+      <item>6</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>24</item>
+      <item>24</item>
+      <item>4</item>
+      <item>6</item>
+      <item>0</item>
+      <item>6</item>
+      <item>26</item>
+      <item>26</item>
+      <item>6</item>
+      <item>8</item>
+      <item>8</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>47</item>
+      <item>47</item>
+      <item>47</item>
+      <item>4</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>45</item>
+      <item>45</item>
+      <item>45</item>
+      <item>45</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>25</item>
+      <item>25</item>
+      <item>6</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>24</item>
+      <item>24</item>
+      <item>4</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>23</item>
+      <item>23</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>26</item>
+      <item>26</item>
+      <item>6</item>
+      <item>8</item>
+      <item>0</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>45</item>
+      <item>45</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>26</item>
+      <item>26</item>
+      <item>6</item>
+      <item>8</item>
+      <item>0</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>45</item>
+      <item>45</item>
+      <item>45</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>6</item>
+      <item>4</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_3\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>5</item>
+      <item>5</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_G7\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_24\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_40\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>1</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_29\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+    <item>
+     <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_28\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>3</item>
+      <item>0</item>
+      <item>0</item>
+      <item>3</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+   </SPACES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

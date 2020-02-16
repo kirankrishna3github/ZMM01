@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>Make Quantity Input off if PR is released</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>COMF</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>COMF</ORG_MAIN_NAME>
+    <PROGRAMNAME>SAPLCOMF</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <SPOTNAME>ES_SAPLCOMF</SPOTNAME>
+     <PROGRAMNAME>SAPLCOMF</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:SAPLCOMF\EX:CO_MF_COMPONENT_MODIFINVIS_01\EI</FULL_NAME>
+     <SOURCE>
+      <item/>
+      <item>******Change by Monika on 14th Octtober 2011*************</item>
+      <item>*1. To Make field “BEDNR“ mandatory in Transaction “CJ20N”.</item>
+      <item/>
+      <item/>
+      <item>IF SCREEN-NAME = &apos;RESBD-BEDNR&apos;.</item>
+      <item>SCREEN-REQUIRED = 1.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>*2.	To Make field Requirement qty &lt;MENGE&gt; non-editable</item>
+      <item>* in Transaction “CJ20N” if purchase requisition is released.</item>
+      <item/>
+      <item>IF SCREEN-NAME EQ &apos;RESBD-MENGE&apos; OR SCREEN-NAME EQ &apos;RESBD-EINHEIT&apos;.</item>
+      <item/>
+      <item>DATA : LV_BANFN TYPE RESBD-BANFNR.</item>
+      <item>SELECT SINGLE BANFN FROM EBAN INTO LV_BANFN</item>
+      <item>WHERE FRGKZ = &apos;2&apos;</item>
+      <item>AND BANFN = RESBD-BANFNR.</item>
+      <item/>
+      <item>IF SY-SUBRC EQ 0.</item>
+      <item>SCREEN-INPUT = 0.</item>
+      <item>ENDIF.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>****End of change by monika*********************************</item>
+      <item/>
+      <item/>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SPACES>
+    <item>
+     <FULL_NAME>\PR:SAPLCOMF\EX:CO_MF_COMPONENT_MODIFINVIS_01\EI</FULL_NAME>
+     <SPACES>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>4</item>
+      <item>6</item>
+      <item>4</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>6</item>
+      <item>6</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>10</item>
+      <item>15</item>
+      <item>10</item>
+      <item>4</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+     </SPACES>
+    </item>
+   </SPACES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Imp. class for BAdI imp. Z6MM014B_GATE_ENT_DT</DESCRIPT>
+    <STATE>1</STATE>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>401</KEY>
+     <ENTRY>&lt;html&gt;&lt;head&gt;&lt;title&gt;NEW STOCK&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>402</KEY>
+     <ENTRY>&lt;table width =&quot;100%&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; style =&apos;font-family:helvetica, sans-serif;&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>403</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height =&apos;25&apos; bgcolor=&apos;#43474A&apos; colspan=&apos;3&apos;&gt;&lt;/td&gt;&lt;/tr&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>404</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height =&apos;130&apos; bgcolor=&apos;#43474A&apos;&gt; &amp;nbsp;&lt;/td&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>405</KEY>
+     <ENTRY>&lt;td rowspan =&apos;2&apos; width=&apos;620&apos; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>406</KEY>
+     <ENTRY>&lt;table width =&quot;620&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; &gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>407</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td&gt;&lt;table width=&quot;620&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>408</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td bgcolor =&apos;#43474A&apos; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>409</KEY>
+     <ENTRY>&lt;table width =&quot;620&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>410</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td align=&apos;left&apos; valign=&apos;top&apos; &gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>411</KEY>
+     <ENTRY>&lt;p style =&apos;color: #69C374; font-size:22px; text-decoration:none;&apos;&gt;&lt;b&gt;Indofil&lt;/b&gt; Industries LTD&lt;/p&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>412</KEY>
+     <ENTRY>&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>413</KEY>
+     <ENTRY>&lt;table width=&quot;620&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>414</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&apos;25&apos; bgcolor=&apos;#43474A&apos;&gt;&lt;/td&gt;&lt;/tr&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>415</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&apos;5&apos; bgcolor=&apos;#69C374&apos;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>416</KEY>
+     <ENTRY>&lt;table width=&quot;620&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>417</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td  width=&apos;70&apos;&gt;&lt;/td&gt;&lt;td  align=&apos;center&apos; width =&apos;620&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>418</KEY>
+     <ENTRY>&lt;h2 style=&apos;font-size:26px;&apos;&gt;&lt;br&gt;New Stock Notification&lt;/h2&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>419</KEY>
+     <ENTRY>&lt;/td&gt;&lt;td  width=&apos;70&apos;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>420</KEY>
+     <ENTRY>&lt;table width=&quot;530&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos; height=&apos;150&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>421</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>422</KEY>
+     <ENTRY>&lt;td width=&apos;620&apos; style=&quot;color:#4b3832; font-size: 13px; font-family:Lucida Grande,arial,sans-serif;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>423</KEY>
+     <ENTRY>&lt;p&gt;&lt;br&gt;&lt;br&gt;Dear Indofil TM,&lt;br&gt;&lt;br&gt;Greetings !!&lt;br&gt;&lt;BR&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>424</KEY>
+     <ENTRY>Kindly note fresh stock of following materials has been received at depot&lt;b&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>425</KEY>
+     <ENTRY>&lt;/b&gt;&lt;br&gt;&lt;/p&gt;&lt;/td&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>426</KEY>
+     <ENTRY>&lt;table width=&quot;530&quot; border=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos; height=&apos;150&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>427</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>428</KEY>
+     <ENTRY>&lt;table width=&quot;530&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos; height=&apos;70&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>429</KEY>
+     <ENTRY>&lt;TR&gt;&lt;TD height=&apos;10&apos;&gt;&lt;/TD&gt;&lt;/TR&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>430</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td width=&apos;620&apos; style=&quot;color:#4b3832; font-size: 13px; font-family:Lucida Grande,arial,sans-serif;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>431</KEY>
+     <ENTRY>Thank you, &lt;Br&gt;&lt;br&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>432</KEY>
+     <ENTRY>Regards,&lt;br&gt;&lt;b&gt;Indofil Industries LTD&lt;/b&gt;&lt;BR&gt;&lt;BR&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>433</KEY>
+     <ENTRY>&lt;table width=&quot;530&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>434</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&apos;10&apos;&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>435</KEY>
+     <ENTRY>&lt;table width=&quot;530&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>436</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&apos;10&apos; style=&quot;color:#69C374; font-size: 11px; font-family:Lucida Grande,arial,sans-serif;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>437</KEY>
+     <ENTRY>&lt;B&gt;DID YOU&lt;/B&gt; &lt;/td&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>438</KEY>
+     <ENTRY>&lt;TD style=&quot;color:#4b3832; font-size: 11px; font-family:Lucida Grande,arial,sans-serif;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>439</KEY>
+     <ENTRY>You can get stock of a material by sending SMS as &lt;b&gt; STK (Material number) &lt;/b&gt; to 9769161877.&lt;/TD&gt;&lt;/tr&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>440</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&apos;10&apos; style=&quot;color:#69C374; font-size: 11px; font-family:Lucida Grande,arial,sans-serif;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>441</KEY>
+     <ENTRY>&lt;b&gt;KNOW?&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;color:#4b3832; font-size: 11px; font-family:Lucida Grande,arial,sans-serif;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>442</KEY>
+     <ENTRY>Example : send SMS as &lt;b&gt;STK 20000155&lt;/b&gt; to 9769161877 from your registered number.&lt;/TD&gt;&lt;/tr&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>443</KEY>
+     <ENTRY>&lt;/table&gt;&lt;table width=&quot;530&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align =&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>444</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&apos;10&apos;&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>445</KEY>
+     <ENTRY>&lt;table width=&quot;620&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>446</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&apos;8&apos; bgcolor=&apos;#69C374&apos;&gt;&lt;/td&gt;&lt;/tr&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>447</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td&gt;&lt;table width=&quot;620&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos; bgcolor=&apos;69C374&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>448</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td width=&apos;25&apos;&gt;&lt;/td&gt;&lt;td width=&apos;475&apos; valign=&apos;middle&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>449</KEY>
+     <ENTRY>&lt;p style=&quot;color:#ffffff; font-size: 11px; text-align: center; font-family:Lucida Grande,arial,sans-serif;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>450</KEY>
+     <ENTRY>Note : This is a system generated e-mail, Please do not reply to this message.&lt;/p&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>451</KEY>
+     <ENTRY>&lt;/td&gt;&lt;td width=&apos;10&apos;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>452</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&apos;10&apos; bgcolor=&apos;#69C374&apos;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>453</KEY>
+     <ENTRY>&lt;table width=&quot;620&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; align=&quot;center&quot; valign=&apos;top&apos;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>454</KEY>
+     <ENTRY>&lt;tr&gt;&lt;td height=&quot;60&quot; valign=&quot;middle&quot; style=&quot;vertical-align:middle; height:60px;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>455</KEY>
+     <ENTRY>&lt;p style=&quot;color:#4b3832; font-size: 12px; text-align: center;font-family:Lucida Grande,arial,sans-serif;&quot;&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>456</KEY>
+     <ENTRY>Head Office &amp;amp; Registered Office | Indofil Industries Ltd, 4th Floor, Kalparu Square, Kondivita Lane,</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>457</KEY>
+     <ENTRY>Off Andheri Kurla Road, Andheri East, Mumbai, Maharashtra | Tel: 022 6663 7373 |&lt;/p&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>458</KEY>
+     <ENTRY>&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td height=&apos;28&apos;&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>459</KEY>
+     <ENTRY>&lt;/table&gt;&lt;/td&gt;&lt;td height=&apos;130&apos; bgcolor=&apos;#43474A&apos;&gt;&amp;nbsp;&lt;/td&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>460</KEY>
+     <ENTRY>&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; &amp;nbsp;&lt;/td&gt; &lt;td&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; &lt;/body&gt;&lt;/html&gt;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+   </TPOOL>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+     <CMPNAME>GF_CLASS_ID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Class ID for MIGO Components (External Detail Screen)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+     <CMPNAME>GS_EXDATA_HEADER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>MIGO BADI: Transfer Structure to/from External Header Screen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+     <CMPNAME>GT_EXTDATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>MIGO BAdI: Transfer Structure Type to/from External Screen</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+     <CMPNAME>GT_ITEM</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>MMIM Enjoy: Item Data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+     <CMPNAME>G_CANCEL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Checkbox</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+     <CMPNAME>G_LINE_ID</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Unique number for one line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+     <CMPNAME>G_NO_INPUT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Checkbox</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IM_6MM014B_GATE_ENT_DT</CLSNAME>
+     <CMPNAME>G_POORD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Checkbox</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

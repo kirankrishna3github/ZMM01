@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_NROB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTRIBUTES>
+    <OBJECT>ZRGPNRGP</OBJECT>
+    <DTELSOBJ>WERKS_D</DTELSOBJ>
+    <YEARIND>X</YEARIND>
+    <DOMLEN>ZZGNO</DOMLEN>
+    <PERCENTAGE>0.5</PERCENTAGE>
+    <BUFFER>X</BUFFER>
+   </ATTRIBUTES>
+   <TEXT>
+    <LANGU>E</LANGU>
+    <OBJECT>ZRGPNRGP</OBJECT>
+    <TXT>RGP - NRGP Number Range Object</TXT>
+    <TXTSHORT>RGP - NRGP N Obj</TXTSHORT>
+   </TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>
