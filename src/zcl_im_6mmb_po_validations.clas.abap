@@ -276,6 +276,23 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 
       IF l_items_header-loekz EQ '' AND l_items_header-elikz EQ ''.
 
+        " IHDK905362
+        if ls_header-bsart = 'YSTO' or ls_header-bsart = 'ZSTO'.
+          if l_items_header-matnr is not initial.
+            select single ktgrm
+              from mvke
+              where matnr = @l_items_header-matnr
+              and   vkorg = @ls_header-bukrs
+              into @data(lv_acc_assign_grp).
+
+            if lv_acc_assign_grp is initial.
+              " IHDK905398
+              message condense( |{ l_items_header-matnr alpha = out }: Account assignment group not maintained| ) type 'E'.
+            endif.
+          endif.
+        endif.
+        " End IHDK905362
+
         " IRDK932925
         CLEAR div_chk.
         SELECT SINGLE spart FROM mara INTO div_chk-div WHERE matnr = l_items_header-matnr.
