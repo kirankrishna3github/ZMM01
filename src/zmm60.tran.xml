@@ -17,6 +17,19 @@
     <TCODE>ZMM60</TCODE>
     <TTEXT>Materials List</TTEXT>
    </TSTCT>
+   <AUTHORIZATIONS>
+    <TSTCA>
+     <TCODE>ZMM60</TCODE>
+     <OBJCT>M_MATE_STA</OBJCT>
+     <FIELD>ACTVT</FIELD>
+     <VALUE>03</VALUE>
+    </TSTCA>
+    <TSTCA>
+     <TCODE>ZMM60</TCODE>
+     <OBJCT>M_MATE_STA</OBJCT>
+     <FIELD>STATM</FIELD>
+    </TSTCA>
+   </AUTHORIZATIONS>
   </asx:values>
  </asx:abap>
 </abapGit>

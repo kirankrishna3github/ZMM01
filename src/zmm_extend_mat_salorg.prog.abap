@@ -123,7 +123,8 @@ SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE text-001.
 SELECT-OPTIONS: s_matnr FOR mara-matnr.
 PARAMETERS:     p_werks TYPE marc-werks OBLIGATORY,
                 p_vkorg TYPE mvke-vkorg OBLIGATORY,
-                p_vtweg TYPE mvke-vtweg OBLIGATORY.
+                p_vtweg TYPE mvke-vtweg OBLIGATORY,
+                p_ktgrm type mvke-ktgrm.  " IHDK905589
 SELECTION-SCREEN END OF BLOCK b1.
 
 * Start of Main *
@@ -454,7 +455,9 @@ FORM material_extension .
 *              AND   vkorg = p_vkorg.   " May not be maintained for the given sal. org
 
             IF wa_mvke IS NOT INITIAL.
-              salesdata-acct_assgt  = wa_mvke-ktgrm.
+              salesdata-acct_assgt  = cond #( when p_ktgrm is not initial
+                                              then p_ktgrm
+                                              else wa_mvke-ktgrm ). " IHDK905589
               salesdata-matl_grp_1  = wa_mvke-mvgr1.
               salesdata-matl_grp_2  = wa_mvke-mvgr2.
               salesdata-matl_grp_3  = wa_mvke-mvgr3.
