@@ -190,7 +190,7 @@ FORM SEND_MAIL.
 
         DATA: V_SENDER TYPE AD_SMTPADR.
         DATA L_VISNAME TYPE AD_NAMELAS.
-        V_SENDER =   'rkm-icc@modi.com'." 'sshah-icc@modi.com'."
+        V_SENDER =   'rkm@indofil.com'." 'sshah@indofil.com'."
 *  L_VISNAME = 'R.K.Malhotra'.
         L_SENDER = CL_CAM_ADDRESS_BCS=>CREATE_INTERNET_ADDRESS( V_SENDER ).
 *
@@ -371,27 +371,27 @@ DATA: BEGIN OF WA_PA0000,
 *clear S_MAILID.
 **
 *
-*  WL_MAILID-RECEIVER = 'pshinde-icc@modi.com'."'sshah-icc@modi.com'.
+*  WL_MAILID-RECEIVER = 'pshinde@indofil.com'."'sshah@indofil.com'.
 *  APPEND WL_MAILID TO S_MAILID.
 *  CLEAR WL_MAILID.
 *
-*  WL_MAILID-RECEIVER = 'vmenon-icc@modi.com'.
+*  WL_MAILID-RECEIVER = 'vmenon@indofil.com'.
 *  APPEND WL_MAILID TO S_MAILID.
 *  CLEAR WL_MAILID.
 *
-*  WL_MAILID-RECEIVER = 'pjoshi-icc@modi.com'.
+*  WL_MAILID-RECEIVER = 'pjoshi@indofil.com'.
 *  APPEND WL_MAILID TO S_MAILID.
 *  CLEAR WL_MAILID.
 
-*  WL_MAILID-RECEIVER = 'spalkar-icc@modi.com'.
+*  WL_MAILID-RECEIVER = 'spalkar@indofil.com'.
 *  APPEND WL_MAILID TO S_MAILID.
 *  CLEAR WL_MAILID.
 *
-*  WL_MAILID-RECEIVER = 'kvarma-icc@modi.com'.
+*  WL_MAILID-RECEIVER = 'kvarma@indofil.com'.
 *  APPEND WL_MAILID TO S_MAILID.
 *  CLEAR WL_MAILID.
 
-*  WL_MAILID-RECEIVER = 'hohelpdesk-icc@modi.com'."'sshah-icc@modi.com'.
+*  WL_MAILID-RECEIVER = 'hohelpdesk@indofil.com'."'sshah@indofil.com'.
 *  APPEND WL_MAILID TO S_MAILID.
 *  CLEAR WL_MAILID.
 
