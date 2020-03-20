@@ -656,7 +656,7 @@ FORM sending_mail_new USING lifnr TYPE ekko-lifnr
 ***
 ***  APPEND OBJTXT.
   CLEAR : ld_sender_address , ld_sender_address_type.
-  ld_sender_address      = 'sapautomail-icc@modi.com'.
+  ld_sender_address      = 'sapautomail@indofil.com'.
   ld_sender_address_type = 'SMTP'.
 
   DESCRIBE TABLE it_message LINES tab_lines.
@@ -735,25 +735,25 @@ FORM sending_mail_new USING lifnr TYPE ekko-lifnr
       AND ( param1 = 'ZIMP' OR param1 = 'YIMP' ).
 
     LOOP AT it_params INTO wa_para.
-      reclist-receiver = wa_para-paramval. "'aabane-icc@modi.com'.
+      reclist-receiver = wa_para-paramval. "'aabane@indofil.com'.
       reclist-rec_type = 'U'.
       reclist-copy = 'X'.
       APPEND reclist.
     ENDLOOP.
 
-*    RECLIST-RECEIVER = 'aabane-icc@modi.com'.
+*    RECLIST-RECEIVER = 'aabane@indofil.com'.
 ****    reclist-receiver = 'raulnish09@gmail.com'.
 *    RECLIST-REC_TYPE = 'U'.
 *    RECLIST-COPY = 'X'.
 *    APPEND RECLIST.
 *
-*    RECLIST-RECEIVER = 'rrane-icc@modi.com'.
+*    RECLIST-RECEIVER = 'rrane@indofil.com'.
 ****    reclist-receiver = 'nishankar.rahul@gmail.com'.
 *    RECLIST-REC_TYPE = 'U'.
 *    RECLIST-COPY = 'X'.
 *    APPEND RECLIST.
 **  ELSE.
-**    RECLIST-RECEIVER = 'rjoshi-icc@modi.com'.
+**    RECLIST-RECEIVER = 'rjoshi@indofil.com'.
 **    RECLIST-REC_TYPE = 'U'.
 **    RECLIST-COPY = 'X'.
 **    APPEND RECLIST.
@@ -774,7 +774,7 @@ FORM sending_mail_new USING lifnr TYPE ekko-lifnr
 *endif.
 *above code is written on date 18.09.2015 , mail should trigger to user who executed this pgm
 
-* 'sapautomail-icc@modi.com'
+* 'sapautomail@indofil.com'
 * stop mail if pgm executed in QA or developement ,
 * only mail will trigger to user who is executing this report
   break 10106.
