@@ -5127,16 +5127,17 @@ class lcl_zraw_zpkg_zpku_create implementation.
         if return-number = '356' and return-type = 'S'. " Check if creation/extension succeeded (MSG 356) and log it in status log
           call function 'BAPI_TRANSACTION_COMMIT' exporting wait = abap_true. " IHDK903847
 
-          if wa_data-xchpf eq abap_true.
-            maint_material_classif(
-              exporting
-                material = headdata-material
-                class_num = cond #( when wa_data-mtart eq 'ZRAW' then 'ZRM' else 'ZPM' )  " IHDK900652
-                                                                                          " As per requirement from Varma Sir(Mail dated 18.9.18)
-                class_type = '023'    " IHDK901148
-          changing
-            classif_status = classif_status ).
-          endif.
+          " commented: IHDK905737
+*          if wa_data-xchpf eq abap_true.
+*            maint_material_classif(
+*              exporting
+*                material = headdata-material
+*                class_num = cond #( when wa_data-mtart eq 'ZRAW' then 'ZRM' else 'ZPM' )  " IHDK900652
+*                                                                                          " As per requirement from Varma Sir(Mail dated 18.9.18)
+*                class_type = '023'    " IHDK901148
+*          changing
+*            classif_status = classif_status ).
+*          endif.
 
           " For ZRAW, ZPKG, ZPKU, Exclude materials of plant 14XX from inspection setup
           clear: lv_insp_perform.
@@ -5201,10 +5202,10 @@ class lcl_zraw_zpkg_zpku_create implementation.
 
           wa_log-matnr = headdata-material.
           wa_log-log = return-message.
-          " Check status of classification
-          if classif_status ne 1 and wa_data-xchpf eq abap_true.
-            wa_log-log = wa_log-log && '. Classification data: Failed.'.
-          endif.
+*          " Check status of classification; commented: IHDK905737
+*          if classif_status ne 1 and wa_data-xchpf eq abap_true.
+*            wa_log-log = wa_log-log && '. Classification data: Failed.'.
+*          endif.
           " Check status of inspection setup
           if insp_status ne 'X' and lv_insp_perform eq abap_true.
             wa_log-log = wa_log-log && '. Inspection setup: Failed.'.

@@ -258,6 +258,13 @@
 *& Rev. Request#              : IHDK904473
 *& Rev. Description           : 1. Update log to DB(ZMM_T_MAT01_LOG), Re-org matnr generation
 *&---------------------------------------------------------------------*
+*& Revision #                 : 28    # Rev 28
+*& Rev. Date                  : Wednesday, March 25, 2020 13:40:38
+*& Rev. Author                : 6010859 - SaurabhK
+*& Rev. Requested/Approved By : KV/VG
+*& Rev. Request#              : IHDK905737
+*& Rev. Description           : 1. MM: S_K: ZMAT01: Disable classif for RAW/PKG/PKU: 25.3.20
+*&---------------------------------------------------------------------*
 program zmm_prg_material_master message-id zmm.
 
 include zmm_inc_mat_mast_top.       " Global Data
