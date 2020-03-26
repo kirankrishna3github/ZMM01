@@ -3249,8 +3249,10 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 
       endif.
 
-      if ls_header-bsart+0(1) eq 'Z' and  ( ls_mepoitem-werks+0(1) eq '2' and ls_mepoitem-werks+0(2) ne '28' ). " IHDK900965; allow ‘Z’ PO type in 28XX plants(IndoReagans)
-        mmpur_message_forced 'E' 'ZMM01' '000' text-003 '' '' ''.
+      if ls_header-bsart+0(1) eq 'Z' and ls_header-bsart ne 'ZINT'. " intercompany STO; IHDK905761
+        if ( ls_mepoitem-werks+0(1) eq '2' and ls_mepoitem-werks+0(2) ne '28' ). " IHDK900965; allow ‘Z’ PO type in 28XX plants(IndoReagans)
+          mmpur_message_forced 'E' 'ZMM01' '000' text-003 '' '' ''.
+        endif.
       endif.
 
       if ls_header-bsart+0(1) eq 'Y' and  ls_mepoitem-werks+0(1) eq '1'.
@@ -3262,7 +3264,6 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
         if ls_header-reswk+0(2) eq '14' and ls_header-reswk ne '1400'.
           if ls_mepoitem-bsgru is initial.
             mmpur_message_forced 'E' 'ZMM01' '000' text-004 '' '' ''.
-
           endif.
 
         endif.
