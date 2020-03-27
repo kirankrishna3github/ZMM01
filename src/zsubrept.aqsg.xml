@@ -280,6 +280,14 @@
      <MAXL>060</MAXL>
      <TEXT>PO Item</TEXT>
     </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00134</TINDX>
+     <MODIF>0002</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Material Document Posting Date</TEXT>
+    </AQGTS>
    </AQGTS>
    <AQGTS_field_catalog>
     <item>
@@ -570,6 +578,12 @@
      <FIELD>ZEILE</FIELD>
      <IOBJNM>@1ZSUBREPT@@@@@@@@@@@@@@@@0034</IOBJNM>
      <TXTFIELDNM>TEXT_J_1IG_SUBCON_ZEILE</TXTFIELDNM>
+    </AQGSBWMAP>
+    <AQGSBWMAP>
+     <CLAS>ZSUBREPT</CLAS>
+     <TAB>MSEG</TAB>
+     <FIELD>BUDAT_MKPF</FIELD>
+     <IOBJNM>@1ZSUBREPT@@@@@@@@@@@@@@@@0038</IOBJNM>
     </AQGSBWMAP>
     <AQGSBWMAP>
      <CLAS>ZSUBREPT</CLAS>

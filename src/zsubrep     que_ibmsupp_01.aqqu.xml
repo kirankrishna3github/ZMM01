@@ -74,6 +74,14 @@
      <MAXL>030</MAXL>
      <TEXT>Number of Material Document</TEXT>
     </AQGTQ>
+    <AQGTQ>
+     <SPRSL>E</SPRSL>
+     <NUM>ZSUBREP</NUM>
+     <QNUM>QUE_IBMSUPP_01</QNUM>
+     <TINDX>00070</TINDX>
+     <MAXL>030</MAXL>
+     <TEXT>Mat Doc Posting Date</TEXT>
+    </AQGTQ>
    </AQGTQ>
    <AQGTQ_field_catalog>
     <item>
