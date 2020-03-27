@@ -38,8 +38,9 @@
      <QNUM>QUE_IBMSUPP_01</QNUM>
      <TINDX>00001</TINDX>
      <HEAD>X</HEAD>
+     <MODIF>0001</MODIF>
      <MAXL>060</MAXL>
-     <TEXT>SAP Query 27.03.2020/16:12:21 IBMSUPPORT</TEXT>
+     <TEXT>Subcontract Report</TEXT>
     </AQGTQ>
     <AQGTQ>
      <SPRSL>E</SPRSL>

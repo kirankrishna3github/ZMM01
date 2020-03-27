@@ -88,6 +88,198 @@
      <MAXL>080</MAXL>
      <TEXT>Subcontracting Document Reference</TEXT>
     </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00008</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Purchasing Document</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00012</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>PO Item</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00024</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>SLoc</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00028</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Order Quantity</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00030</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>UoM</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00036</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Net Order Value</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00038</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Material Document</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00040</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Mat.Doc Year</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00042</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Mat.Doc Item</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00044</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Movement type</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00056</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>SLoc</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00062</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Vendor Number</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00068</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>UoM</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00072</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Material Document</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00076</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Mat.Doc Year</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00080</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Mat.Doc Item</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00086</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Challan Number</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00090</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Challan Item</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00092</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Posting Date</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00094</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Movement type</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00108</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Vendor Number</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00116</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Record Creation Date</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00122</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>Purchase Order</TEXT>
+    </AQGTS>
+    <AQGTS>
+     <SPRSL>E</SPRSL>
+     <CLAS>ZSUBREPT</CLAS>
+     <TINDX>00126</TINDX>
+     <MODIF>0001</MODIF>
+     <MAXL>060</MAXL>
+     <TEXT>PO Item</TEXT>
+    </AQGTS>
    </AQGTS>
    <AQGTS_field_catalog>
     <item>
@@ -395,6 +587,20 @@
     <AQGSBWMAP>
      <CLAS>ZSUBREPT</CLAS>
      <TAB>MSEG</TAB>
+     <FIELD>EBELN</FIELD>
+     <IOBJNM>@1ZSUBREPT@@@@@@@@@@@@@@@@0035</IOBJNM>
+     <TXTFIELDNM>TEXT_MSEG_EBELN</TXTFIELDNM>
+    </AQGSBWMAP>
+    <AQGSBWMAP>
+     <CLAS>ZSUBREPT</CLAS>
+     <TAB>MSEG</TAB>
+     <FIELD>EBELP</FIELD>
+     <IOBJNM>@1ZSUBREPT@@@@@@@@@@@@@@@@0036</IOBJNM>
+     <TXTFIELDNM>TEXT_MSEG_EBELP</TXTFIELDNM>
+    </AQGSBWMAP>
+    <AQGSBWMAP>
+     <CLAS>ZSUBREPT</CLAS>
+     <TAB>MSEG</TAB>
      <FIELD>LGORT</FIELD>
      <IOBJNM>@1ZSUBREPT@@@@@@@@@@@@@@@@0012</IOBJNM>
      <TXTFIELDNM>TEXT_MSEG_LGORT</TXTFIELDNM>
@@ -444,6 +650,13 @@
      <FIELD>WERKS</FIELD>
      <IOBJNM>@1ZSUBREPT@@@@@@@@@@@@@@@@0019</IOBJNM>
      <TXTFIELDNM>TEXT_MSEG_WERKS</TXTFIELDNM>
+    </AQGSBWMAP>
+    <AQGSBWMAP>
+     <CLAS>ZSUBREPT</CLAS>
+     <TAB>MSEG</TAB>
+     <FIELD>XAUTO</FIELD>
+     <IOBJNM>@1ZSUBREPT@@@@@@@@@@@@@@@@0037</IOBJNM>
+     <TXTFIELDNM>TEXT_MSEG_XAUTO</TXTFIELDNM>
     </AQGSBWMAP>
     <AQGSBWMAP>
      <CLAS>ZSUBREPT</CLAS>
