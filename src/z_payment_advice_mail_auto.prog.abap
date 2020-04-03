@@ -1019,9 +1019,9 @@ BREAK 10106.
 ** select clearing document of payment voucher from bseg .
 SELECT bukrs  , belnr , gjahr , augbl , auggj
   FROM bseg INTO TABLE @data(it_bseg)
-  WHERE bukrs EQ @P_BUKRS
-  AND belnr in @S_belnr
-  AND gjahr EQ @P_GJAHR
+  WHERE bukrs EQ @it_bkpf-BUKRS
+  AND belnr EQ @it_bkpf-belnr
+  AND gjahr EQ @it_bkpf-GJAHR
   AND koart EQ 'K'
   AND augbl <> ''.
 
