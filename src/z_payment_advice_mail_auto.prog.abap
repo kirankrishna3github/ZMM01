@@ -104,6 +104,31 @@ DATA: W_RETURN TYPE SSFCRESCL.
 DATA: LV_ADRNR TYPE LFA1-ADRNR, LV_SMTP_ADDR TYPE ADR6-SMTP_ADDR.
 
 CONSTANTS: C_KTOPL LIKE SKAT-KTOPL VALUE '1000'.
+
+DATA: BEGIN OF wa_bseg ,
+      bukrs TYPE bseg-bukrs,
+      belnr TYPE bseg-belnr,
+      gjahr TYPE bseg-gjahr,
+      ebeln TYPE bseg-ebeln,
+      augbl TYPE bseg-augbl,
+      auggj type bseg-auggj,
+      END OF wa_bseg ,
+      it_bseg like TABLE OF wa_bseg ,
+      wa_augbl LIKE wa_bseg,
+      it_augbl LIKE TABLE OF wa_augbl,
+      wa_ebeln LIKE wa_bseg,
+      it_ebeln LIKE TABLE OF wa_ebeln .
+
+DATA: BEGIN OF wa_EXGRP ,
+      ebeln TYPE ekko-bukrs,
+      ekgrp TYPE ekko-ekgrp,
+      banfn TYPE ekpo-banfn,
+      smtp_addr TYPE T024-smtp_addr,
+      END OF wa_exgrp ,
+      IT_EXGRP like TABLE OF wa_exgrp .
+
+
+
 *&----------------------------------------------------------------&*
 *   SELECTION CRITERIA                                             *
 *&----------------------------------------------------------------&*
@@ -492,6 +517,7 @@ FORM SELECTION .
 
 
     if P_MAIL = 'X'.
+
 *** send mail based on PO - Purchasing group-  user combination and PR creator .
     PERFORM get_receipents.
     endif.
@@ -963,6 +989,7 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
 
 **** send mail based on PO - Purchasing group-  user combination and PR creator .
 *    PERFORM get_receipents.
+READ TABLE it_bseg INTO DATA(wa_bseg) WITH KEY bukrs = it_bkpf-BUKRS belnr = it_bkpf-belnr gjahr = it_bkpf-GJAHR.
 
 *    LOOP AT IT_EXGRP INTO DATA(wa_exgrp).
 *                   L_USERID = wa_exgrp-smtp_addr.
