@@ -516,11 +516,11 @@ FORM SELECTION .
     ENDIF.
 
 
-    if P_MAIL = 'X'.
-
-*** send mail based on PO - Purchasing group-  user combination and PR creator .
-    PERFORM get_receipents.
-    endif.
+*    if P_MAIL = 'X'.
+*
+**** send mail based on PO - Purchasing group-  user combination and PR creator .
+*    PERFORM get_receipents.
+*    endif.
 
     LOOP AT IT_BKPF.
       CLEAR : REGUH,PAYR.
@@ -988,17 +988,39 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
     endif.
 
 **** send mail based on PO - Purchasing group-  user combination and PR creator .
-*    PERFORM get_receipents.
-READ TABLE it_bseg INTO DATA(wa_bseg) WITH KEY bukrs = it_bkpf-BUKRS belnr = it_bkpf-belnr gjahr = it_bkpf-GJAHR.
+   PERFORM get_receipents.
 
-*    LOOP AT IT_EXGRP INTO DATA(wa_exgrp).
-*                   L_USERID = wa_exgrp-smtp_addr.
-*                   I_RECLIST-RECEIVER = L_USERID.
-*                   I_RECLIST-REC_TYPE = 'U'.
-*                   I_RECLIST-COM_TYPE = 'INT'.
-*                   APPEND  I_RECLIST.
-*                   CLEAR:  L_USERID.
-*    ENDLOOP.
+    LOOP AT IT_EXGRP INTO wa_exgrp.
+                   L_USERID = wa_exgrp-smtp_addr.
+                   I_RECLIST-RECEIVER = L_USERID.
+                   I_RECLIST-REC_TYPE = 'U'.
+                   I_RECLIST-COM_TYPE = 'INT'.
+                   APPEND  I_RECLIST.
+                   CLEAR:  L_USERID.
+
+    IF wa_exgrp-banfn IS NOT INITIAL .
+      SELECT SINGLE ernam
+        FROM EBKN INTO @data(zernam) " PR creator
+        WHERE banfn = @wa_exgrp-banfn.
+        IF sy-subrc = 0.
+          CLEAR: L_USERID.
+                SELECT SINGLE USRID_LONG INTO L_USERID
+                    FROM PA0105
+                    WHERE PERNR = zernam
+                    AND ENDDA >= sy-datum
+                    AND SUBTY = '0010'.
+
+                I_RECLIST-RECEIVER = L_USERID.
+                I_RECLIST-REC_TYPE = 'U'.
+                I_RECLIST-COM_TYPE = 'INT'.
+                APPEND  I_RECLIST.
+                CLEAR:  L_USERID.
+
+        ENDIF.
+
+    ENDIF.
+
+    ENDLOOP.
 *
 
     IF I_RECLIST IS NOT INITIAL.
@@ -1059,43 +1081,43 @@ form get_receipents .
 * DATA : L_USERID TYPE P0105-USRID_LONG.
 BREAK 10106.
 ** select clearing document of payment voucher from bseg .
-SELECT bukrs  , belnr , gjahr , augbl , auggj
-  FROM bseg INTO TABLE @data(it_bseg)
-  FOR ALL ENTRIES IN @it_bkpf
-  WHERE bukrs EQ @it_bkpf-BUKRS
-  AND belnr EQ @it_bkpf-belnr
-  AND gjahr EQ @it_bkpf-GJAHR
+SELECT bukrs belnr  gjahr  augbl  auggj
+  FROM bseg INTO CORRESPONDING FIELDS OF TABLE it_bseg
+  FOR ALL ENTRIES IN it_bkpf
+  WHERE bukrs EQ it_bkpf-BUKRS
+  AND belnr EQ it_bkpf-belnr
+  AND gjahr EQ it_bkpf-GJAHR
   AND koart EQ 'K'
   AND augbl <> ''.
 
 ** select all documents clear in above clearing to fetch PO number
 IF sy-subrc = 0.
-  SELECT bukrs, belnr, gjahr, augbl, auggj
-    FROM bseg INTO TABLE @data(it_augbl)
-    FOR ALL ENTRIES IN @it_bseg
-    WHERE bukrs EQ @it_bseg-bukrs
-    AND augbl EQ @it_bseg-augbl
-    AND auggj EQ @it_bseg-auggj.
+  SELECT bukrs belnr gjahr augbl auggj
+    FROM bseg INTO CORRESPONDING FIELDS OF TABLE it_augbl
+    FOR ALL ENTRIES IN it_bseg
+    WHERE bukrs EQ it_bseg-bukrs
+    AND augbl EQ it_bseg-augbl
+    AND auggj EQ it_bseg-auggj.
     IF sy-subrc = 0.
 
-       SELECT bukrs, belnr, gjahr, ebeln , augbl, auggj
-        FROM bseg INTO TABLE @DATA(it_ebeln)
-        FOR ALL ENTRIES IN @it_augbl
-        WHERE bukrs EQ @it_augbl-bukrs
-        And   belnr EQ @it_augbl-belnr
-        AND   gjahr EQ @it_augbl-gjahr
+       SELECT bukrs belnr gjahr ebeln  augbl auggj
+        FROM bseg INTO CORRESPONDING FIELDS OF TABLE it_ebeln
+        FOR ALL ENTRIES IN it_augbl
+        WHERE bukrs EQ it_augbl-bukrs
+        And   belnr EQ it_augbl-belnr
+        AND   gjahr EQ it_augbl-gjahr
         AND   ebeln <> ''.
 
         IF sy-subrc = 0.
-          SELECT a~EBELN ,a~EKGRP, b~banfn , c~SMTP_ADDR
+          SELECT a~EBELN a~EKGRP b~banfn c~SMTP_ADDR
             FROM EKKO as a
             JOIN EKPO as b
             on a~ebeln = b~ebeln
             JOIN T024 as c
             on a~ekgrp = c~EKGRP
-            INTO TABLE @DATA(IT_EXGRP)
-            FOR ALL ENTRIES IN @it_ebeln
-            WHERE a~EBELN EQ @it_ebeln-ebeln
+            INTO TABLE IT_EXGRP
+            FOR ALL ENTRIES IN it_ebeln
+            WHERE a~EBELN EQ it_ebeln-ebeln
             AND c~SMTP_ADDR <> ''.
 
 
