@@ -490,6 +490,12 @@ FORM SELECTION .
 
     ENDIF.
 
+
+    if P_MAIL = 'X'.
+*** send mail based on PO - Purchasing group-  user combination and PR creator .
+    PERFORM get_receipents.
+    endif.
+
     LOOP AT IT_BKPF.
       CLEAR : REGUH,PAYR.
       REFRESH : TT_ITEMS.
@@ -955,9 +961,18 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
       sy-uname = 'IRPBTC300'. " automail
     endif.
 
-*** send mail based on PO - Purchasing group-  user combination and PR creator .
-    PERFORM get_receipents.
+**** send mail based on PO - Purchasing group-  user combination and PR creator .
+*    PERFORM get_receipents.
 
+*    LOOP AT IT_EXGRP INTO DATA(wa_exgrp).
+*                   L_USERID = wa_exgrp-smtp_addr.
+*                   I_RECLIST-RECEIVER = L_USERID.
+*                   I_RECLIST-REC_TYPE = 'U'.
+*                   I_RECLIST-COM_TYPE = 'INT'.
+*                   APPEND  I_RECLIST.
+*                   CLEAR:  L_USERID.
+*    ENDLOOP.
+*
 
     IF I_RECLIST IS NOT INITIAL.
 
@@ -1014,11 +1029,12 @@ ENDFORM.                    " SEND_MAIL
 *& <--  p2        text
 *&---------------------------------------------------------------------*
 form get_receipents .
-
+* DATA : L_USERID TYPE P0105-USRID_LONG.
 BREAK 10106.
 ** select clearing document of payment voucher from bseg .
 SELECT bukrs  , belnr , gjahr , augbl , auggj
   FROM bseg INTO TABLE @data(it_bseg)
+  FOR ALL ENTRIES IN @it_bkpf
   WHERE bukrs EQ @it_bkpf-BUKRS
   AND belnr EQ @it_bkpf-belnr
   AND gjahr EQ @it_bkpf-GJAHR
@@ -1052,17 +1068,14 @@ IF sy-subrc = 0.
             on a~ekgrp = c~EKGRP
             INTO TABLE @DATA(IT_EXGRP)
             FOR ALL ENTRIES IN @it_ebeln
-            WHERE a~EBELN EQ @it_ebeln-ebeln.
+            WHERE a~EBELN EQ @it_ebeln-ebeln
+            AND c~SMTP_ADDR <> ''.
+
+
 
         ENDIF.
 
     ENDIF.
-
-
-*    LOOP AT it_augbl INTO DATA(wa_augbl) WHERE ebeln IS NOT INITIAL.
-*
-*    ENDLOOP.
-
 
 
 ENDIF.

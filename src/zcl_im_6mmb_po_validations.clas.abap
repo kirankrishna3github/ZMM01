@@ -2805,15 +2805,9 @@ if ls_account-sakto is not initial.
 
 endif.
 
-ENDIF.
+endif.
 
-
-
-
-ENDIF.
-
-
-
+endif.
 
 endmethod.
 
