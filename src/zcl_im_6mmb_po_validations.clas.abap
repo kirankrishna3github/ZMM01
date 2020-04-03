@@ -2781,8 +2781,18 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
   ENDMETHOD.
 
 
-  method if_ex_me_process_po_cust~process_account.
-  endmethod.
+method if_ex_me_process_po_cust~process_account.
+
+break ibmsupport.
+
+DATA: IM_ITEM TYPE REF TO IF_PURCHASE_ORDER_ITEM_MM.
+DATA: LS_ITEM  TYPE MEPOITEM.
+
+IM_ITEM = IM_ACCOUNT->GET_ITEM( ).
+LS_ITEM  = IM_ITEM->GET_DATA( ).
+
+
+endmethod.
 
 
   method if_ex_me_process_po_cust~process_header.

@@ -1034,6 +1034,12 @@ IF sy-subrc = 0.
     AND augbl EQ @it_bseg-augbl
     AND auggj EQ @it_bseg-auggj.
 
+    LOOP AT it_augbl INTO DATA(wa_augbl) WHERE ebeln IS NOT INITIAL.
+
+    ENDLOOP.
+
+
+
 ENDIF.
 
 
