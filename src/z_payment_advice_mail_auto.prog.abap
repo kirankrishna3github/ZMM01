@@ -954,6 +954,11 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
     if sy-tcode ne 'ZFIAD_MAIL'.  " IHDK901437
       sy-uname = 'IRPBTC300'. " automail
     endif.
+
+*** send mail based on PO - Purchasing group-  user combination and PR creator .
+    PERFORM get_receipents.
+
+
     IF I_RECLIST IS NOT INITIAL.
 
 *    ld_sender_address      = 'sapautomail-icc@modi.com'.
@@ -1000,3 +1005,19 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
   ENDIF.
 
 ENDFORM.                    " SEND_MAIL
+*&---------------------------------------------------------------------*
+*& Form GET_RECEIPENTS
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+form get_receipents .
+
+** select clesring document of payment voucher from bseg .
+
+
+
+
+endform.
