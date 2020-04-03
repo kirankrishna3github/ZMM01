@@ -1027,16 +1027,41 @@ SELECT bukrs  , belnr , gjahr , augbl , auggj
 
 ** select all documents clear in above clearing to fetch PO number
 IF sy-subrc = 0.
-  SELECT bukrs, belnr, gjahr, ebeln, augbl, auggj
+  SELECT bukrs, belnr, gjahr, augbl, auggj
     FROM bseg INTO TABLE @data(it_augbl)
     FOR ALL ENTRIES IN @it_bseg
     WHERE bukrs EQ @it_bseg-bukrs
     AND augbl EQ @it_bseg-augbl
     AND auggj EQ @it_bseg-auggj.
+    IF sy-subrc = 0.
 
-    LOOP AT it_augbl INTO DATA(wa_augbl) WHERE ebeln IS NOT INITIAL.
+       SELECT bukrs, belnr, gjahr, ebeln , augbl, auggj
+        FROM bseg INTO TABLE @DATA(it_ebeln)
+        FOR ALL ENTRIES IN @it_augbl
+        WHERE bukrs EQ @it_augbl-bukrs
+        And   belnr EQ @it_augbl-belnr
+        AND   gjahr EQ @it_augbl-gjahr
+        AND   ebeln <> ''.
 
-    ENDLOOP.
+        IF sy-subrc = 0.
+          SELECT a~EBELN ,a~EKGRP, b~banfn , c~SMTP_ADDR
+            FROM EKKO as a
+            JOIN EKPO as b
+            on a~ebeln = b~ebeln
+            JOIN T024 as c
+            on a~ekgrp = c~EKGRP
+            INTO TABLE @DATA(IT_EXGRP)
+            FOR ALL ENTRIES IN @it_ebeln
+            WHERE a~EBELN EQ @it_ebeln-ebeln.
+
+        ENDIF.
+
+    ENDIF.
+
+
+*    LOOP AT it_augbl INTO DATA(wa_augbl) WHERE ebeln IS NOT INITIAL.
+*
+*    ENDLOOP.
 
 
 
