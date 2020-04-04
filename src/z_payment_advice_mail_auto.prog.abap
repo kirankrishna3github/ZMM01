@@ -120,7 +120,7 @@ DATA: BEGIN OF wa_bseg ,
       it_ebeln LIKE TABLE OF wa_ebeln .
 
 DATA: BEGIN OF wa_EXGRP ,
-      ebeln TYPE ekko-bukrs,
+      ebeln TYPE ekko-ebeln,
       ekgrp TYPE ekko-ekgrp,
       banfn TYPE ekpo-banfn,
       smtp_addr TYPE T024-smtp_addr,
@@ -991,13 +991,16 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
    PERFORM get_receipents.
 
     LOOP AT IT_EXGRP INTO wa_exgrp.
-                   L_USERID = wa_exgrp-smtp_addr.
-                   I_RECLIST-RECEIVER = L_USERID.
-                   I_RECLIST-REC_TYPE = 'U'.
-                   I_RECLIST-COM_TYPE = 'INT'.
-                   APPEND  I_RECLIST.
-                   CLEAR:  L_USERID.
+        IF wa_exgrp-smtp_addr is NOT INITIAL.
 
+            L_USERID = wa_exgrp-smtp_addr.
+            I_RECLIST-RECEIVER = L_USERID.
+            I_RECLIST-REC_TYPE = 'U'.
+            I_RECLIST-COM_TYPE = 'INT'.
+            APPEND  I_RECLIST.
+           CLEAR:  L_USERID.
+
+        ENDIF.
     IF wa_exgrp-banfn IS NOT INITIAL .
       SELECT SINGLE ernam
         FROM EBKN INTO @data(zernam) " PR creator
@@ -1022,6 +1025,8 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
 
     ENDLOOP.
 *
+    sort I_RECLIST by RECEIVER.
+    delete ADJACENT DUPLICATES FROM I_RECLIST.
 
     IF I_RECLIST IS NOT INITIAL.
 
@@ -1080,6 +1085,8 @@ ENDFORM.                    " SEND_MAIL
 form get_receipents .
 * DATA : L_USERID TYPE P0105-USRID_LONG.
 BREAK 10106.
+CLEAR: it_bseg , it_augbl , it_ebeln , IT_EXGRP.
+
 ** select clearing document of payment voucher from bseg .
 SELECT bukrs belnr  gjahr  augbl  auggj
   FROM bseg INTO CORRESPONDING FIELDS OF TABLE it_bseg
@@ -1117,10 +1124,8 @@ IF sy-subrc = 0.
             on a~ekgrp = c~EKGRP
             INTO TABLE IT_EXGRP
             FOR ALL ENTRIES IN it_ebeln
-            WHERE a~EBELN EQ it_ebeln-ebeln
-            AND c~SMTP_ADDR <> ''.
-
-
+            WHERE a~EBELN EQ it_ebeln-ebeln.
+*            AND c~SMTP_ADDR <> ''.
 
         ENDIF.
 
