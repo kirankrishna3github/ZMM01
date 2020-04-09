@@ -300,8 +300,16 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
           append div_chk to div_chk_tab.
         endif.
         " End IRDK932925
-
+*--------------------------------------------------------------------*
         " IHDK906033
+*--------------------------------------------------------------------*
+        " IDT requirement: In case of vendor document, if vendor GST and...
+        " business place GST have the same state code, then IGST tax code...
+        " should not be allowed.
+        " Refer mail from Prajay Bhansali [pbhansali@indofil.com]
+        " Subj: RE: Data Punching - GST Tax code validation
+        " Dated: Fri 03/04/2020 19:40
+*--------------------------------------------------------------------*
         if l_items_header-mwskz is not initial.
           select single gstin
             from j_1bbranch
@@ -331,7 +339,9 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
             endif.
           endif.
         endif.
+*--------------------------------------------------------------------*
         " End IHDK906033
+*--------------------------------------------------------------------*
 
 **    added by NK on 25.07.2017 - For Validation of Division(SPART) '00'
         call method l_single-item->get_shipping_data
@@ -1395,6 +1405,11 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
           endif.
         endif.
       endif.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
+
+      clear:
+        lv_bupla_gstin,
+        lv_vendor_gstin,
+        lv_igst_tax_code.
     endloop.
 
     " IRDK932925
