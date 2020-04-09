@@ -27,35 +27,35 @@ ENDCLASS.
 CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 
 
-  METHOD if_ex_me_process_po_cust~check.
-    TYPES:BEGIN OF type_val_pro,
-            ebelp     TYPE ebelp,
-            matnr     TYPE matnr,
-            prno      TYPE zprno,
-            pr_itemno TYPE zpritemno,
-          END OF type_val_pro.
-    DATA: lt_val_pro TYPE TABLE OF type_val_pro,
-          ls_val_pro TYPE type_val_pro.
-    DATA : l_items TYPE purchase_order_items.
-    DATA : l_single TYPE purchase_order_item.
-    DATA : l_item_cond TYPE mmpur_tkomv.
-    DATA : ls_cond TYPE komv.
-    DATA : ls_header TYPE mepoheader.
-    DATA : ls_shipping_data TYPE ekpv. "Shipping Data For Stock Transfer of Purchasing Document Item
-    DATA : l_items_header TYPE mepoitem,
-           wa_a505        TYPE a505,
-           wa_konp        TYPE konp,
-           ev_maktx       TYPE makt-maktx,
-           ls_mepoitem    TYPE mepoitem,
-           ls_proposal    TYPE zmm_pur_proposal,
-           lt_proposal    TYPE TABLE OF zmm_pur_proposal.
-    DATA: gv_index TYPE sy-tabix.
-    DATA: zknumh       TYPE a017-knumh, zzterm TYPE konp-zterm,
-          header_ztag1 TYPE dztage,
-          info_ztag1   TYPE dztage,
-          header_zterm TYPE t052-zterm, info_zterm TYPE t052-zterm.
+  method if_ex_me_process_po_cust~check.
+    types:begin of type_val_pro,
+            ebelp     type ebelp,
+            matnr     type matnr,
+            prno      type zprno,
+            pr_itemno type zpritemno,
+          end of type_val_pro.
+    data: lt_val_pro type table of type_val_pro,
+          ls_val_pro type type_val_pro.
+    data : l_items type purchase_order_items.
+    data : l_single type purchase_order_item.
+    data : l_item_cond type mmpur_tkomv.
+    data : ls_cond type komv.
+    data : ls_header type mepoheader.
+    data : ls_shipping_data type ekpv. "Shipping Data For Stock Transfer of Purchasing Document Item
+    data : l_items_header type mepoitem,
+           wa_a505        type a505,
+           wa_konp        type konp,
+           ev_maktx       type makt-maktx,
+           ls_mepoitem    type mepoitem,
+           ls_proposal    type zmm_pur_proposal,
+           lt_proposal    type table of zmm_pur_proposal.
+    data: gv_index type sy-tabix.
+    data: zknumh       type a017-knumh, zzterm type konp-zterm,
+          header_ztag1 type dztage,
+          info_ztag1   type dztage,
+          header_zterm type t052-zterm, info_zterm type t052-zterm.
 
-    DATA : gv_flg_matnr,
+    data : gv_flg_matnr,
            gv_flg_lifnr,
            gv_flg_menge,
            gv_flg_netpr,
@@ -64,50 +64,50 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
            gv_flg_bukrs,
            gv_flg_ekgrp.
 
-    DATA: gv_rel1_lvl,
+    data: gv_rel1_lvl,
           gv_rel2_lvl,
           gv_rel3_lvl,
           gv_rel4_lvl.
-    DATA:
-      lv_stcd3         TYPE stcd3,
-      lv_ktokk         TYPE ktokk,
-      lv_j_1ipanno     TYPE ktokk,
-      lv_ven_class     TYPE j_1igtakld,
-      lv_taxtariffcode TYPE esll-taxtariffcode,
-      lv_wemng         TYPE eket-wemng,
-      lv_procstat      TYPE ekko-procstat,
-      lv_ebeln_grr     TYPE ebeln,
-      gv_taxtariffcode TYPE esll-taxtariffcode.
+    data:
+      lv_stcd3         type stcd3,
+      lv_ktokk         type ktokk,
+      lv_j_1ipanno     type ktokk,
+      lv_ven_class     type j_1igtakld,
+      lv_taxtariffcode type esll-taxtariffcode,
+      lv_wemng         type eket-wemng,
+      lv_procstat      type ekko-procstat,
+      lv_ebeln_grr     type ebeln,
+      gv_taxtariffcode type esll-taxtariffcode.
 
-    DATA:
-      lt_esll TYPE mmsrv_esll,
-      ls_esll LIKE LINE OF lt_esll,
+    data:
+      lt_esll type mmsrv_esll,
+      ls_esll like line of lt_esll,
 * Handle for Item of a Purchasing Document
-      lr_item TYPE REF TO cl_po_item_handle_mm.
-    DATA: ls_ekko_ekpo     TYPE wb2_v_ekko_ekpo2,
-          lt_ekko_ekpo     TYPE TABLE OF wb2_v_ekko_ekpo2,
-          lt_ekko_ekpo_tmp TYPE TABLE OF wb2_v_ekko_ekpo2.
-    DATA: n TYPE sy-dbcnt.
+      lr_item type ref to cl_po_item_handle_mm.
+    data: ls_ekko_ekpo     type wb2_v_ekko_ekpo2,
+          lt_ekko_ekpo     type table of wb2_v_ekko_ekpo2,
+          lt_ekko_ekpo_tmp type table of wb2_v_ekko_ekpo2.
+    data: n type sy-dbcnt.
 
-    TYPES: BEGIN OF type_ekbe,
-             ebeln TYPE ebeln,
-             ebelp TYPE ebelp,
-             gjahr TYPE mjahr,
-             belnr TYPE mblnr,
-             buzei TYPE mblpo,
-             bewtp TYPE bewtp,
-             budat TYPE budat,
-             menge TYPE menge_d,
-             dmbtr TYPE dmbtr,
-             matnr TYPE matnr,
-             werks TYPE werks_d,
-           END OF type_ekbe.
-    DATA: lt_ekbe TYPE TABLE OF type_ekbe,
-          ls_ekbe TYPE type_ekbe.
+    types: begin of type_ekbe,
+             ebeln type ebeln,
+             ebelp type ebelp,
+             gjahr type mjahr,
+             belnr type mblnr,
+             buzei type mblpo,
+             bewtp type bewtp,
+             budat type budat,
+             menge type menge_d,
+             dmbtr type dmbtr,
+             matnr type matnr,
+             werks type werks_d,
+           end of type_ekbe.
+    data: lt_ekbe type table of type_ekbe,
+          ls_ekbe type type_ekbe.
 
-    DATA: tmp_spart TYPE mara-spart.
-    INCLUDE mm_messages_mac.
-    DATA: zmtart TYPE mara-mtart.
+    data: tmp_spart type mara-spart.
+    include mm_messages_mac.
+    data: zmtart type mara-mtart.
 *  DATA: msg1(100).
 *--------------------------------------------------------------------*
 *---<< S/4HANA >>---*
@@ -118,28 +118,28 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 * Solution   - Change msg field length to be compatible with matnr field length change
 * TR         - SBXK900028 - S4H: S_K: Simplification List: 03.10.2018
 *--------------------------------------------------------------------*
-    DATA: msg1 TYPE bapi_msg.
-    DATA: zj_1kftbus TYPE lfa1-j_1kftbus.
-    DATA: ztel_extens TYPE t024-tel_extens, zekgrp TYPE marc-ekgrp.
+    data: msg1 type bapi_msg.
+    data: zj_1kftbus type lfa1-j_1kftbus.
+    data: ztel_extens type t024-tel_extens, zekgrp type marc-ekgrp.
 
-    DATA: lv_kunnr_sto    TYPE kunnr,
-          lt_knvi         TYPE TABLE OF knvi,
-          ls_knvi         TYPE knvi,
+    data: lv_kunnr_sto    type kunnr,
+          lt_knvi         type table of knvi,
+          ls_knvi         type knvi,
           lv_msg_sto(132),
-          lv_spart_sto    TYPE knvv-spart.
+          lv_spart_sto    type knvv-spart.
 
-    TYPES : BEGIN OF ty_proposal,
-              matnr TYPE matnr,
-            END OF ty_proposal.
-    DATA : gt_proposal TYPE TABLE OF ty_proposal,
-           gs_proposal TYPE ty_proposal.
-    DATA: lv_hsn_tmp TYPE t604f-steuc.
-    DATA: vv_msg       TYPE string.
+    types : begin of ty_proposal,
+              matnr type matnr,
+            end of ty_proposal.
+    data : gt_proposal type table of ty_proposal,
+           gs_proposal type ty_proposal.
+    data: lv_hsn_tmp type t604f-steuc.
+    data: vv_msg       type string.
 
-    DATA: BEGIN OF div_chk, " IRDK932925
-            div TYPE spart,
-          END OF div_chk,
-          div_chk_tab LIKE STANDARD TABLE OF div_chk.
+    data: begin of div_chk, " IRDK932925
+            div type spart,
+          end of div_chk,
+          div_chk_tab like standard table of div_chk.
 
 
 **** below code is for DMS valid only for QA and DEV on date 12.12.2017 because open PO validation moveing to PRD
@@ -163,118 +163,118 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 *****    ENDIF.
 *****  ENDIF.
 ************************************************ended
-    REFRESH gt_proposal.
+    refresh gt_proposal.
     ls_header = im_header->get_data( ).
 
-    CALL METHOD im_header->get_items
-      RECEIVING
+    call method im_header->get_items
+      receiving
         re_items = l_items.
 
 **********************************************************************    ,
 ***    below validation is to check whether vendor is extended to company code mentined in PO header . -- 20.11.2019 mail from rajesh kubchandani / venu
 
-    IF ls_header-bsart NE 'ZSTO'. "added by varun on 19.12.2019 as said by punam
-      IF ls_header-bsart NE 'YSTO'.
-      SELECT SINGLE bukrs
-        FROM lfb1 INTO @DATA(zbukrs)
-        WHERE lifnr = @ls_header-lifnr
-        AND bukrs =  @ls_header-bukrs.
-      IF sy-subrc <> 0.
-        MESSAGE 'Please Extend Vendor to desired Company code.' TYPE 'E'.
-      ENDIF.
+    if ls_header-bsart ne 'ZSTO'. "added by varun on 19.12.2019 as said by punam
+      if ls_header-bsart ne 'YSTO'.
+        select single bukrs
+          from lfb1 into @data(zbukrs)
+          where lifnr = @ls_header-lifnr
+          and bukrs =  @ls_header-bukrs.
+        if sy-subrc <> 0.
+          message 'Please Extend Vendor to desired Company code.' type 'E'.
+        endif.
       endif.
-    ENDIF.
+    endif.
 
 
 **********************************************************************
 **********************************************************************
     "GST Validation for vendor added by varun on 09.12.2019
-    IF sy-tcode = 'ME21N' OR sy-tcode = 'ME22N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME29N'.
+    if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
 
-     if ls_header-bsart = 'ZSTO' or ls_header-bsart = 'YSTO' .
-      DATA(zlifnr) =  | V { ls_header-reswk }|."INTO .
-      CONDENSE zlifnr NO-GAPS.
-     ELSE.
-       zlifnr = ls_header-lifnr.
-     endif.
+      if ls_header-bsart = 'ZSTO' or ls_header-bsart = 'YSTO' .
+        data(zlifnr) =  |V{ ls_header-reswk }|."INTO .
+        condense zlifnr no-gaps.
+      else.
+        zlifnr = ls_header-lifnr.
+      endif.
 
-      TRY.
+      try.
           zcl_bupa_utilities=>validate_gst_number(
-            EXPORTING
-                iv_entity = conv char10( zlifnr ) "ls_header-lifnr
-            RECEIVING
-              rv_valid      = DATA(lv_gst_valid)
+            exporting
+              iv_entity = conv char10( zlifnr ) "ls_header-lifnr
+            receiving
+              rv_valid      = data(lv_gst_valid)
           ).
 
-        CATCH zcx_generic INTO DATA(lox). " Generic Exception Class
-          MESSAGE lox->get_text( ) TYPE 'E'.
-      ENDTRY.
-      TRY .
+        catch zcx_generic into data(lox). " Generic Exception Class
+          message lox->get_text( ) type 'E'.
+      endtry.
+      try .
           zcl_bupa_utilities=>validate_postal_code(
-            EXPORTING
+            exporting
               iv_entity      = conv char10( zlifnr ) "ls_header-lifnr
-            RECEIVING
-              rv_valid       = DATA(lv_post_code_valid)
+            receiving
+              rv_valid       = data(lv_post_code_valid)
           ).
-        CATCH zcx_generic INTO DATA(lox1). " Generic Exception Class
-          MESSAGE lox1->get_text( ) TYPE 'E'.
-      ENDTRY.
-    ENDIF.
+        catch zcx_generic into data(lox1). " Generic Exception Class
+          message lox1->get_text( ) type 'E'.
+      endtry.
+    endif.
 **********************************************************************
 
-    IMPORT gv_flg_ekgrp TO gv_flg_ekgrp FROM MEMORY ID 'ME21N_EKGRP'.
-    IMPORT gv_flg_lifnr TO gv_flg_lifnr FROM MEMORY ID 'ME21N_LIFNR2'.
-    IMPORT gv_flg_bukrs TO gv_flg_bukrs FROM MEMORY ID 'ME21N_BUKRS'.
-    IMPORT gv_flg_werks TO gv_flg_werks FROM MEMORY ID 'ME21N_WERKS'.
-    IMPORT gv_flg_matnr TO gv_flg_matnr FROM MEMORY ID 'ME21N_MATNR'.
-    IMPORT gv_flg_menge TO gv_flg_menge FROM MEMORY ID 'ME21N_MENGE'.
-    IMPORT gv_flg_netpr TO gv_flg_netpr FROM MEMORY ID 'ME21N_NETPR'.
-    IMPORT gv_flg_mwskz TO gv_flg_mwskz FROM MEMORY ID 'ME21N_MWSKZ'.
+    import gv_flg_ekgrp to gv_flg_ekgrp from memory id 'ME21N_EKGRP'.
+    import gv_flg_lifnr to gv_flg_lifnr from memory id 'ME21N_LIFNR2'.
+    import gv_flg_bukrs to gv_flg_bukrs from memory id 'ME21N_BUKRS'.
+    import gv_flg_werks to gv_flg_werks from memory id 'ME21N_WERKS'.
+    import gv_flg_matnr to gv_flg_matnr from memory id 'ME21N_MATNR'.
+    import gv_flg_menge to gv_flg_menge from memory id 'ME21N_MENGE'.
+    import gv_flg_netpr to gv_flg_netpr from memory id 'ME21N_NETPR'.
+    import gv_flg_mwskz to gv_flg_mwskz from memory id 'ME21N_MWSKZ'.
 
-    IMPORT gv_rel1_lvl TO gv_rel1_lvl FROM MEMORY ID 'REL1_LVL'.
-    IMPORT gv_rel2_lvl TO gv_rel2_lvl FROM MEMORY ID 'REL2_LVL'.
-    IMPORT gv_rel3_lvl TO gv_rel3_lvl FROM MEMORY ID 'REL3_LVL'.
-    IMPORT gv_rel4_lvl TO gv_rel4_lvl FROM MEMORY ID 'REL4_LVL'.
+    import gv_rel1_lvl to gv_rel1_lvl from memory id 'REL1_LVL'.
+    import gv_rel2_lvl to gv_rel2_lvl from memory id 'REL2_LVL'.
+    import gv_rel3_lvl to gv_rel3_lvl from memory id 'REL3_LVL'.
+    import gv_rel4_lvl to gv_rel4_lvl from memory id 'REL4_LVL'.
 ** Vendor Acct grp is needed on   '4th - PO  validation if already 3 similar type PO's exists'
 **  & HSN code validation
-    SELECT SINGLE ktokk stcd3 FROM lfa1 INTO (lv_ktokk, lv_stcd3)
-        WHERE lifnr = ls_header-lifnr.
+    select single ktokk stcd3 from lfa1 into (lv_ktokk, lv_stcd3)
+        where lifnr = ls_header-lifnr.
 *  SORT l_items.
-    SORT lt_proposal.
+    sort lt_proposal.
 
     " IRDK933113
     " MM: S_K: PO_BADI: PO Short-close: 16.8.18
     " This is done to skip header level checks in PO's whose all line items are short-closed deleted
-    LOOP AT l_items INTO l_single.
-      CLEAR l_items_header.
-      CALL METHOD l_single-item->get_data
-        RECEIVING
+    loop at l_items into l_single.
+      clear l_items_header.
+      call method l_single-item->get_data
+        receiving
           re_data = l_items_header.
 
-      IF l_items_header-loekz EQ '' AND l_items_header-elikz EQ ''.
-        DATA(all_close) = abap_false.
-        EXIT.
-      ELSE.
+      if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
+        data(all_close) = abap_false.
+        exit.
+      else.
         all_close = abap_true.  " this item is short-closed/deleted
-      ENDIF.
-      FREE l_single.
-    ENDLOOP.
+      endif.
+      free l_single.
+    endloop.
 
-    REFRESH div_chk_tab.  " IRDK932925
-    LOOP AT l_items INTO l_single.
+    refresh div_chk_tab.  " IRDK932925
+    loop at l_items into l_single.
 
-      CALL METHOD l_single-item->get_conditions
-        IMPORTING
+      call method l_single-item->get_conditions
+        importing
           ex_conditions = l_item_cond.
 
-      CALL METHOD l_single-item->get_data
-        RECEIVING
+      call method l_single-item->get_data
+        receiving
           re_data = l_items_header.
 
       " Exclude deleted and delivery complete items from validation as per mail from Venu Sir: 09.08.2018: PO ERR
       " IRDK933092: MM: S_K: PO_BADI: PO Short-close: 14.8.18
 
-      IF l_items_header-loekz EQ '' AND l_items_header-elikz EQ ''.
+      if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
 
         " IHDK905362
         if ls_header-bsart = 'YSTO' or ls_header-bsart = 'ZSTO'.
@@ -294,377 +294,409 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
         " End IHDK905362
 
         " IRDK932925
-        CLEAR div_chk.
-        SELECT SINGLE spart FROM mara INTO div_chk-div WHERE matnr = l_items_header-matnr.
-        IF div_chk-div IS NOT INITIAL.
-          APPEND div_chk TO div_chk_tab.
-        ENDIF.
+        clear div_chk.
+        select single spart from mara into div_chk-div where matnr = l_items_header-matnr.
+        if div_chk-div is not initial.
+          append div_chk to div_chk_tab.
+        endif.
         " End IRDK932925
 
+        " IHDK906033
+        if l_items_header-mwskz is not initial.
+          select single gstin
+            from j_1bbranch
+            where bukrs  = @ls_header-bukrs
+            and   branch = ( select j_1bbranch from t001w where werks = @l_items_header-werks )
+            into @data(lv_bupla_gstin).
+
+          select single stcd3
+            from lfa1
+            where lifnr = @zlifnr
+            into @data(lv_vendor_gstin).
+
+          if lv_bupla_gstin is not initial and lv_vendor_gstin is not initial.
+            if lv_bupla_gstin+0(2) = lv_vendor_gstin+0(2).  " business place and vendor belong to the same state
+              " prevent selection of igst tax code
+              select single @abap_true
+                from t007s
+                where spras = @sy-langu
+                and   kalsm = 'ZTXINN'    " GST tax procedure
+                and   mwskz = @l_items_header-mwskz
+                and   text1 like '%Input%IGST%'
+                into @data(lv_igst_tax_code).
+
+              if lv_igst_tax_code = abap_true.
+                message e023(zfi01).
+              endif.
+            endif.
+          endif.
+        endif.
+        " End IHDK906033
+
 **    added by NK on 25.07.2017 - For Validation of Division(SPART) '00'
-        CALL METHOD l_single-item->get_shipping_data
-          RECEIVING
+        call method l_single-item->get_shipping_data
+          receiving
             re_ekpv = ls_shipping_data.
 
 ********************************************************************** proposal logic added by NK start
 **** This is the Proposal Logic & only execute when Proposal No. is present !!
-        IF zcl_helper=>is_development( ) OR zcl_helper=>is_quality( ).
-          IF ls_header-prno IS NOT INITIAL.
-            SELECT * FROM zmm_pur_proposal INTO TABLE lt_proposal WHERE prno = ls_header-prno AND app_vendor = 'X'.
-            READ TABLE lt_proposal INTO ls_proposal WITH KEY pr_itemno = l_items_header-ebelp matnr = l_items_header-matnr.
-            IF sy-subrc EQ 0.
+        if zcl_helper=>is_development( ) or zcl_helper=>is_quality( ).
+          if ls_header-prno is not initial.
+            select * from zmm_pur_proposal into table lt_proposal where prno = ls_header-prno and app_vendor = 'X'.
+            read table lt_proposal into ls_proposal with key pr_itemno = l_items_header-ebelp matnr = l_items_header-matnr.
+            if sy-subrc eq 0.
               gv_index = sy-tabix.
 ****      Deletion Indicator - if in case any User deletes a line item !!
-              IF l_items_header-loekz <> 'L'.
-                IF sy-tcode EQ 'ME22N' OR sy-tcode EQ 'ZMMQUERY1' OR sy-tcode EQ 'ME23N'.
+              if l_items_header-loekz <> 'L'.
+                if sy-tcode eq 'ME22N' or sy-tcode eq 'ZMMQUERY1' or sy-tcode eq 'ME23N'.
 
-                  IF l_items_header-netpr EQ ls_proposal-netpr.
-                    CLEAR gv_flg_netpr.
-                  ELSE.
+                  if l_items_header-netpr eq ls_proposal-netpr.
+                    clear gv_flg_netpr.
+                  else.
                     gv_flg_netpr = 'X'.
-                  ENDIF.
-                  IF  ls_proposal-menge GE l_items_header-menge.
-                    CLEAR gv_flg_menge.
-                  ELSE.
+                  endif.
+                  if  ls_proposal-menge ge l_items_header-menge.
+                    clear gv_flg_menge.
+                  else.
                     gv_flg_menge = 'X'.
-                  ENDIF.
+                  endif.
 
-                  IF gv_flg_ekgrp IS NOT INITIAL.
-                    MESSAGE e008(zprno) WITH 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
-                  ENDIF.
-                  IF gv_flg_lifnr IS NOT INITIAL.
-                    MESSAGE e007(zprno) WITH 'Maintain same Vendor as in Proposal for Line Item' l_items_header-ebelp.
-                  ENDIF.
-                  IF ls_header-bukrs EQ ls_proposal-bukrs.
-                    CLEAR gv_flg_bukrs.
-                  ELSE.
+                  if gv_flg_ekgrp is not initial.
+                    message e008(zprno) with 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
+                  endif.
+                  if gv_flg_lifnr is not initial.
+                    message e007(zprno) with 'Maintain same Vendor as in Proposal for Line Item' l_items_header-ebelp.
+                  endif.
+                  if ls_header-bukrs eq ls_proposal-bukrs.
+                    clear gv_flg_bukrs.
+                  else.
                     gv_flg_bukrs = 'X'.
-                    IF gv_flg_bukrs IS NOT INITIAL.
-                      MESSAGE e006(zprno) WITH 'Maintain same Company Code as in Proposal' ls_proposal-prno.
-                    ENDIF.
-                  ENDIF.
-                  IF l_items_header-werks EQ ls_proposal-werks.
-                    CLEAR gv_flg_werks.
-                  ELSE.
+                    if gv_flg_bukrs is not initial.
+                      message e006(zprno) with 'Maintain same Company Code as in Proposal' ls_proposal-prno.
+                    endif.
+                  endif.
+                  if l_items_header-werks eq ls_proposal-werks.
+                    clear gv_flg_werks.
+                  else.
 ***   This flag is used for Import/Export to other methods
                     gv_flg_werks = 'X'.
-                    IF gv_flg_werks IS NOT INITIAL.
-                      MESSAGE e005(zprno) WITH 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
-                    ENDIF.
-                  ENDIF.
-                  IF gv_flg_menge IS NOT INITIAL.
-                    MESSAGE e002(zprno) WITH 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
-                  ENDIF.
+                    if gv_flg_werks is not initial.
+                      message e005(zprno) with 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
+                    endif.
+                  endif.
+                  if gv_flg_menge is not initial.
+                    message e002(zprno) with 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
+                  endif.
 
-                  IF gv_flg_netpr IS NOT INITIAL.
-                    MESSAGE e000(zprno) WITH 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
-                  ENDIF.
+                  if gv_flg_netpr is not initial.
+                    message e000(zprno) with 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
+                  endif.
 
-                  IF l_items_header-mwskz EQ ls_proposal-mwskz.
-                    CLEAR gv_flg_mwskz.
-                  ELSE.
+                  if l_items_header-mwskz eq ls_proposal-mwskz.
+                    clear gv_flg_mwskz.
+                  else.
                     gv_flg_mwskz = 'X'.
-                    IF gv_flg_mwskz IS NOT INITIAL.
-                      MESSAGE e004(zprno) WITH 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
-                    ENDIF.
-                  ENDIF.
+                    if gv_flg_mwskz is not initial.
+                      message e004(zprno) with 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
+                    endif.
+                  endif.
 
-                  IF l_items_header-matnr EQ ls_proposal-matnr.
-                    CLEAR gv_flg_matnr.
-                  ELSE.
-                    IF gv_flg_matnr IS NOT INITIAL.
-                      MESSAGE e009(zprno) WITH 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
-                    ENDIF.
-                  ENDIF.
-                ENDIF.
-              ENDIF.
-            ELSE.
-              IF l_items_header-loekz <> 'L'.
-                IF gv_rel4_lvl = 'X'.
-                  READ TABLE lt_proposal INTO ls_proposal WITH KEY matnr = l_items_header-matnr." releaser2_date = '00000000'.
-                  IF sy-subrc EQ 0.
+                  if l_items_header-matnr eq ls_proposal-matnr.
+                    clear gv_flg_matnr.
+                  else.
+                    if gv_flg_matnr is not initial.
+                      message e009(zprno) with 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
+                    endif.
+                  endif.
+                endif.
+              endif.
+            else.
+              if l_items_header-loekz <> 'L'.
+                if gv_rel4_lvl = 'X'.
+                  read table lt_proposal into ls_proposal with key matnr = l_items_header-matnr." releaser2_date = '00000000'.
+                  if sy-subrc eq 0.
 *****      Means the material exists - now check whether it is Released by USER or not !!
-                    READ TABLE lt_proposal INTO ls_proposal WITH KEY matnr = l_items_header-matnr releaser4_date = '00000000'.
-                    IF sy-subrc EQ 0.
+                    read table lt_proposal into ls_proposal with key matnr = l_items_header-matnr releaser4_date = '00000000'.
+                    if sy-subrc eq 0.
 *** If Material no. is mis match or changed in order based on line item EBELP  then this error msg !!
                       gv_flg_matnr = 'X'.
-                      IF gv_flg_matnr IS NOT INITIAL.
-                        MESSAGE e009(zprno) WITH 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                    ELSE.
-                      CLEAR gv_flg_matnr.
-                      IF l_items_header-netpr EQ ls_proposal-netpr.
-                        CLEAR gv_flg_netpr.
-                      ELSE.
+                      if gv_flg_matnr is not initial.
+                        message e009(zprno) with 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                    else.
+                      clear gv_flg_matnr.
+                      if l_items_header-netpr eq ls_proposal-netpr.
+                        clear gv_flg_netpr.
+                      else.
                         gv_flg_netpr = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-menge GE l_items_header-menge.
-                        CLEAR gv_flg_menge.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-menge ge l_items_header-menge.
+                        clear gv_flg_menge.
+                      else.
                         gv_flg_menge = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-werks EQ l_items_header-werks.
-                        CLEAR gv_flg_werks.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-werks eq l_items_header-werks.
+                        clear gv_flg_werks.
+                      else.
                         gv_flg_werks = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-ekgrp EQ ls_header-ekgrp.
-                        CLEAR gv_flg_ekgrp.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-ekgrp eq ls_header-ekgrp.
+                        clear gv_flg_ekgrp.
+                      else.
                         gv_flg_ekgrp = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-bukrs EQ ls_header-bukrs.
-                        CLEAR gv_flg_bukrs.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-bukrs eq ls_header-bukrs.
+                        clear gv_flg_bukrs.
+                      else.
                         gv_flg_bukrs = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-mwskz EQ l_items_header-mwskz.
-                        CLEAR gv_flg_mwskz.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-mwskz eq l_items_header-mwskz.
+                        clear gv_flg_mwskz.
+                      else.
                         gv_flg_mwskz = 'X'.
-                      ENDIF.
-                      IF gv_flg_werks IS NOT INITIAL.
-                        MESSAGE e005(zprno) WITH 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_menge IS NOT INITIAL.
-                        MESSAGE e002(zprno) WITH 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_netpr IS NOT INITIAL.
-                        MESSAGE e000(zprno) WITH 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_mwskz IS NOT INITIAL.
-                        MESSAGE e004(zprno) WITH 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_ekgrp IS NOT INITIAL.
-                        MESSAGE e008(zprno) WITH 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
-                      ENDIF.
-                      IF gv_flg_bukrs IS NOT INITIAL.
-                        MESSAGE e006(zprno) WITH 'Maintain same Company Code as in Proposal' ls_proposal-prno.
-                      ENDIF.
-                    ENDIF.
-                  ELSE.
+                      endif.
+                      if gv_flg_werks is not initial.
+                        message e005(zprno) with 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_menge is not initial.
+                        message e002(zprno) with 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_netpr is not initial.
+                        message e000(zprno) with 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_mwskz is not initial.
+                        message e004(zprno) with 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_ekgrp is not initial.
+                        message e008(zprno) with 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
+                      endif.
+                      if gv_flg_bukrs is not initial.
+                        message e006(zprno) with 'Maintain same Company Code as in Proposal' ls_proposal-prno.
+                      endif.
+                    endif.
+                  else.
 
-                  ENDIF.
+                  endif.
 
 
-                ELSEIF gv_rel3_lvl = 'X'.
-                  READ TABLE lt_proposal INTO ls_proposal WITH KEY matnr = l_items_header-matnr." releaser2_date = '00000000'.
-                  IF sy-subrc EQ 0.
+                elseif gv_rel3_lvl = 'X'.
+                  read table lt_proposal into ls_proposal with key matnr = l_items_header-matnr." releaser2_date = '00000000'.
+                  if sy-subrc eq 0.
 *****      Means the material exists - now check whether it is Released by USER or not !!
-                    READ TABLE lt_proposal INTO ls_proposal WITH KEY matnr = l_items_header-matnr releaser3_date = '00000000'.
-                    IF sy-subrc EQ 0.
+                    read table lt_proposal into ls_proposal with key matnr = l_items_header-matnr releaser3_date = '00000000'.
+                    if sy-subrc eq 0.
 *** If Material no. is mis match or changed in order based on line item EBELP  then this error msg !!
                       gv_flg_matnr = 'X'.
-                      IF gv_flg_matnr IS NOT INITIAL.
-                        MESSAGE e009(zprno) WITH 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                    ELSE.
-                      CLEAR gv_flg_matnr.
-                      IF l_items_header-netpr EQ ls_proposal-netpr.
-                        CLEAR gv_flg_netpr.
-                      ELSE.
+                      if gv_flg_matnr is not initial.
+                        message e009(zprno) with 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                    else.
+                      clear gv_flg_matnr.
+                      if l_items_header-netpr eq ls_proposal-netpr.
+                        clear gv_flg_netpr.
+                      else.
                         gv_flg_netpr = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-menge GE l_items_header-menge.
-                        CLEAR gv_flg_menge.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-menge ge l_items_header-menge.
+                        clear gv_flg_menge.
+                      else.
                         gv_flg_menge = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-werks EQ l_items_header-werks.
-                        CLEAR gv_flg_werks.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-werks eq l_items_header-werks.
+                        clear gv_flg_werks.
+                      else.
                         gv_flg_werks = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-ekgrp EQ ls_header-ekgrp.
-                        CLEAR gv_flg_ekgrp.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-ekgrp eq ls_header-ekgrp.
+                        clear gv_flg_ekgrp.
+                      else.
                         gv_flg_ekgrp = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-bukrs EQ ls_header-bukrs.
-                        CLEAR gv_flg_bukrs.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-bukrs eq ls_header-bukrs.
+                        clear gv_flg_bukrs.
+                      else.
                         gv_flg_bukrs = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-mwskz EQ l_items_header-mwskz.
-                        CLEAR gv_flg_mwskz.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-mwskz eq l_items_header-mwskz.
+                        clear gv_flg_mwskz.
+                      else.
                         gv_flg_mwskz = 'X'.
-                      ENDIF.
-                      IF gv_flg_werks IS NOT INITIAL.
-                        MESSAGE e005(zprno) WITH 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_menge IS NOT INITIAL.
-                        MESSAGE e002(zprno) WITH 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_netpr IS NOT INITIAL.
-                        MESSAGE e000(zprno) WITH 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_mwskz IS NOT INITIAL.
-                        MESSAGE e004(zprno) WITH 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_ekgrp IS NOT INITIAL.
-                        MESSAGE e008(zprno) WITH 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
-                      ENDIF.
-                      IF gv_flg_bukrs IS NOT INITIAL.
-                        MESSAGE e006(zprno) WITH 'Maintain same Company Code as in Proposal' ls_proposal-prno.
-                      ENDIF.
-                    ENDIF.
-                  ELSE.
+                      endif.
+                      if gv_flg_werks is not initial.
+                        message e005(zprno) with 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_menge is not initial.
+                        message e002(zprno) with 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_netpr is not initial.
+                        message e000(zprno) with 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_mwskz is not initial.
+                        message e004(zprno) with 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_ekgrp is not initial.
+                        message e008(zprno) with 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
+                      endif.
+                      if gv_flg_bukrs is not initial.
+                        message e006(zprno) with 'Maintain same Company Code as in Proposal' ls_proposal-prno.
+                      endif.
+                    endif.
+                  else.
 
-                  ENDIF.
+                  endif.
 
-                ELSEIF gv_rel2_lvl = 'X'.
-                  READ TABLE lt_proposal INTO ls_proposal WITH KEY matnr = l_items_header-matnr." releaser2_date = '00000000'.
-                  IF sy-subrc EQ 0.
+                elseif gv_rel2_lvl = 'X'.
+                  read table lt_proposal into ls_proposal with key matnr = l_items_header-matnr." releaser2_date = '00000000'.
+                  if sy-subrc eq 0.
 *****      Means the material exists - now check whether it is Released by USER or not !!
-                    READ TABLE lt_proposal INTO ls_proposal WITH KEY matnr = l_items_header-matnr releaser2_date = '00000000'.
-                    IF sy-subrc EQ 0.
+                    read table lt_proposal into ls_proposal with key matnr = l_items_header-matnr releaser2_date = '00000000'.
+                    if sy-subrc eq 0.
 *** If Material no. is mis match or changed in order based on line item EBELP  then this error msg !!
                       gv_flg_matnr = 'X'.
-                      IF gv_flg_matnr IS NOT INITIAL.
-                        MESSAGE e009(zprno) WITH 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                    ELSE.
-                      CLEAR gv_flg_matnr.
-                      IF l_items_header-netpr EQ ls_proposal-netpr.
-                        CLEAR gv_flg_netpr.
-                      ELSE.
+                      if gv_flg_matnr is not initial.
+                        message e009(zprno) with 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                    else.
+                      clear gv_flg_matnr.
+                      if l_items_header-netpr eq ls_proposal-netpr.
+                        clear gv_flg_netpr.
+                      else.
                         gv_flg_netpr = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-menge GE l_items_header-menge.
-                        CLEAR gv_flg_menge.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-menge ge l_items_header-menge.
+                        clear gv_flg_menge.
+                      else.
                         gv_flg_menge = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-werks EQ l_items_header-werks.
-                        CLEAR gv_flg_werks.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-werks eq l_items_header-werks.
+                        clear gv_flg_werks.
+                      else.
                         gv_flg_werks = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-ekgrp EQ ls_header-ekgrp.
-                        CLEAR gv_flg_ekgrp.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-ekgrp eq ls_header-ekgrp.
+                        clear gv_flg_ekgrp.
+                      else.
                         gv_flg_ekgrp = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-bukrs EQ ls_header-bukrs.
-                        CLEAR gv_flg_bukrs.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-bukrs eq ls_header-bukrs.
+                        clear gv_flg_bukrs.
+                      else.
                         gv_flg_bukrs = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-mwskz EQ l_items_header-mwskz.
-                        CLEAR gv_flg_mwskz.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-mwskz eq l_items_header-mwskz.
+                        clear gv_flg_mwskz.
+                      else.
                         gv_flg_mwskz = 'X'.
-                      ENDIF.
-                      IF gv_flg_werks IS NOT INITIAL.
-                        MESSAGE e005(zprno) WITH 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_menge IS NOT INITIAL.
-                        MESSAGE e002(zprno) WITH 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_netpr IS NOT INITIAL.
-                        MESSAGE e000(zprno) WITH 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_mwskz IS NOT INITIAL.
-                        MESSAGE e004(zprno) WITH 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_ekgrp IS NOT INITIAL.
-                        MESSAGE e008(zprno) WITH 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
-                      ENDIF.
-                      IF gv_flg_bukrs IS NOT INITIAL.
-                        MESSAGE e006(zprno) WITH 'Maintain same Company Code as in Proposal' ls_proposal-prno.
-                      ENDIF.
-                    ENDIF.
-                  ELSE.
+                      endif.
+                      if gv_flg_werks is not initial.
+                        message e005(zprno) with 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_menge is not initial.
+                        message e002(zprno) with 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_netpr is not initial.
+                        message e000(zprno) with 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_mwskz is not initial.
+                        message e004(zprno) with 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_ekgrp is not initial.
+                        message e008(zprno) with 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
+                      endif.
+                      if gv_flg_bukrs is not initial.
+                        message e006(zprno) with 'Maintain same Company Code as in Proposal' ls_proposal-prno.
+                      endif.
+                    endif.
+                  else.
 
-                  ENDIF.
+                  endif.
 
-                ELSEIF gv_rel1_lvl = 'X'.
-                  READ TABLE lt_proposal INTO ls_proposal WITH KEY matnr = l_items_header-matnr." releaser2_date = '00000000'.
-                  IF sy-subrc EQ 0.
+                elseif gv_rel1_lvl = 'X'.
+                  read table lt_proposal into ls_proposal with key matnr = l_items_header-matnr." releaser2_date = '00000000'.
+                  if sy-subrc eq 0.
 *****      Means the material exists - now check whether it is Released by USER or not !!
-                    READ TABLE lt_proposal INTO ls_proposal WITH KEY matnr = l_items_header-matnr releaser1_date = '00000000'.
-                    IF sy-subrc EQ 0.
+                    read table lt_proposal into ls_proposal with key matnr = l_items_header-matnr releaser1_date = '00000000'.
+                    if sy-subrc eq 0.
 *** If Material no. is mis match or changed in order based on line item EBELP  then this error msg !!
                       gv_flg_matnr = 'X'.
-                      IF gv_flg_matnr IS NOT INITIAL.
-                        MESSAGE e009(zprno) WITH 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                    ELSE.
-                      CLEAR gv_flg_matnr.
-                      IF l_items_header-netpr EQ ls_proposal-netpr.
-                        CLEAR gv_flg_netpr.
-                      ELSE.
+                      if gv_flg_matnr is not initial.
+                        message e009(zprno) with 'Maintain same Material as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                    else.
+                      clear gv_flg_matnr.
+                      if l_items_header-netpr eq ls_proposal-netpr.
+                        clear gv_flg_netpr.
+                      else.
                         gv_flg_netpr = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-menge GE l_items_header-menge.
-                        CLEAR gv_flg_menge.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-menge ge l_items_header-menge.
+                        clear gv_flg_menge.
+                      else.
                         gv_flg_menge = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-werks EQ l_items_header-werks.
-                        CLEAR gv_flg_werks.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-werks eq l_items_header-werks.
+                        clear gv_flg_werks.
+                      else.
                         gv_flg_werks = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-ekgrp EQ ls_header-ekgrp.
-                        CLEAR gv_flg_ekgrp.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-ekgrp eq ls_header-ekgrp.
+                        clear gv_flg_ekgrp.
+                      else.
                         gv_flg_ekgrp = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-bukrs EQ ls_header-bukrs.
-                        CLEAR gv_flg_bukrs.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-bukrs eq ls_header-bukrs.
+                        clear gv_flg_bukrs.
+                      else.
                         gv_flg_bukrs = 'X'.
-                      ENDIF.
-                      IF  ls_proposal-mwskz EQ l_items_header-mwskz.
-                        CLEAR gv_flg_mwskz.
-                      ELSE.
+                      endif.
+                      if  ls_proposal-mwskz eq l_items_header-mwskz.
+                        clear gv_flg_mwskz.
+                      else.
                         gv_flg_mwskz = 'X'.
-                      ENDIF.
-                      IF gv_flg_werks IS NOT INITIAL.
-                        MESSAGE e005(zprno) WITH 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_menge IS NOT INITIAL.
-                        MESSAGE e002(zprno) WITH 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_netpr IS NOT INITIAL.
-                        MESSAGE e000(zprno) WITH 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_mwskz IS NOT INITIAL.
-                        MESSAGE e004(zprno) WITH 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
-                      ENDIF.
-                      IF gv_flg_ekgrp IS NOT INITIAL.
-                        MESSAGE e008(zprno) WITH 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
-                      ENDIF.
-                      IF gv_flg_bukrs IS NOT INITIAL.
-                        MESSAGE e006(zprno) WITH 'Maintain same Company Code as in Proposal' ls_proposal-prno.
-                      ENDIF.
-                    ENDIF.
-                  ELSE.
+                      endif.
+                      if gv_flg_werks is not initial.
+                        message e005(zprno) with 'Maintain same Plant as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_menge is not initial.
+                        message e002(zprno) with 'Maintain same Quantity as in Proposal for' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_netpr is not initial.
+                        message e000(zprno) with 'Maintain same Price as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_mwskz is not initial.
+                        message e004(zprno) with 'Maintain same Tax Code as in Proposal for Line Item' l_items_header-ebelp.
+                      endif.
+                      if gv_flg_ekgrp is not initial.
+                        message e008(zprno) with 'Maintain same Purchasing Group as in Proposal' ls_proposal-prno.
+                      endif.
+                      if gv_flg_bukrs is not initial.
+                        message e006(zprno) with 'Maintain same Company Code as in Proposal' ls_proposal-prno.
+                      endif.
+                    endif.
+                  else.
 
-                  ENDIF.
-                ENDIF.
+                  endif.
+                endif.
 
-              ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+              endif.
+            endif.
+          endif.
+        endif.
 ********************************************************************** proposal changes added by NK end
 **********************************************************************  GST related validation by NK Start on 10.07.2017
 ** Validation for JIIG, JISG, JICG, JIMD during PO creation - Atleast 1 of these conditions have to be maintained
-        DATA: ls_taxcom TYPE taxcom,
-              ls_komv   TYPE komv,
-              lt_komv   TYPE TABLE OF komv.
+        data: ls_taxcom type taxcom,
+              ls_komv   type komv,
+              lt_komv   type table of komv.
 *CONSTANTS
-        DATA: bstyp_info  VALUE 'I',
-              bstyp_ordr  VALUE 'W',
-              bstyp_banf  VALUE 'B',
-              bstyp_best  VALUE 'F',
-              bstyp_anfr  VALUE 'A',
-              bstyp_kont  VALUE 'K',
-              bstyp_lfpl  VALUE 'L',
-              bstyp_lerf  VALUE 'Q',
+        data: bstyp_info  value 'I',
+              bstyp_ordr  value 'W',
+              bstyp_banf  value 'B',
+              bstyp_best  value 'F',
+              bstyp_anfr  value 'A',
+              bstyp_kont  value 'K',
+              bstyp_lfpl  value 'L',
+              bstyp_lerf  value 'Q',
               lv_jiig_flg,
               lv_jisg_flg,
               lv_jicg_flg,
@@ -672,7 +704,7 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 
 * For GSTN number in Vendor master & GST Indicator
 **  Vendor grp = '1000' & '3000'
-        IF sy-tcode = 'ME21N' OR sy-tcode = 'ME22N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME29N'.
+        if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
 *      DATA:
 *        lv_stcd3     TYPE stcd3,
 *        lv_ktokk     TYPE ktokk,
@@ -692,42 +724,42 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 * Solution   - Replace Table KAN1 from J_1IPANNO
 * TR         - SBXK900270 - BM:Replace Table Excise to General Master Data:14.11.2018
 *--------------------------------------------------------------------*
-          SELECT SINGLE j_1ipanno
+          select single j_1ipanno
                         ven_class
-                        FROM lfa1
-                        INTO (lv_j_1ipanno, lv_ven_class)
-                       WHERE lifnr EQ ls_header-lifnr.
+                        from lfa1
+                        into (lv_j_1ipanno, lv_ven_class)
+                       where lifnr eq ls_header-lifnr.
 
           "-------------------------MOD1----------------------"FOR STO PLANT AS VENDOR
-          IF  ls_header-bsart = 'ZSTO'  OR ls_header-bsart = 'YSTO'.
-            DATA : lv_lifnr TYPE lfa1-lifnr.
+          if  ls_header-bsart = 'ZSTO'  or ls_header-bsart = 'YSTO'.
+            data : lv_lifnr type lfa1-lifnr.
 
-            CLEAR : lv_lifnr.
+            clear : lv_lifnr.
 
-            CONCATENATE 'V' ls_header-reswk INTO lv_lifnr.
+            concatenate 'V' ls_header-reswk into lv_lifnr.
 
-            SELECT SINGLE j_1ipanno
+            select single j_1ipanno
                          ven_class
-                         FROM lfa1
-                         INTO (lv_j_1ipanno, lv_ven_class)
-                        WHERE lifnr EQ lv_lifnr.
+                         from lfa1
+                         into (lv_j_1ipanno, lv_ven_class)
+                        where lifnr eq lv_lifnr.
 
-          ENDIF.
+          endif.
           "--------------------------END-------------------------"
 
-          IF lv_ktokk = '1000' OR lv_ktokk = '3000'.
-            IF lv_ven_class IS INITIAL. " registered vendor
-              IF lv_stcd3 IS INITIAL. " tax code 3 in vendor master is blank i.e GSTN number is blank in vendor master
+          if lv_ktokk = '1000' or lv_ktokk = '3000'.
+            if lv_ven_class is initial. " registered vendor
+              if lv_stcd3 is initial. " tax code 3 in vendor master is blank i.e GSTN number is blank in vendor master
 
-                MESSAGE 'Kindly maintain GSTN number in Vendor master' TYPE 'E'.
+                message 'Kindly maintain GSTN number in Vendor master' type 'E'.
 
-              ENDIF.
-            ELSE. " unre gistered vendor
+              endif.
+            else. " unre gistered vendor
 
-              MESSAGE 'Please NOTE This Vendor is Unregistered !!' TYPE 'W'.
+              message 'Please NOTE This Vendor is Unregistered !!' type 'W'.
 
-            ENDIF.
-          ENDIF.
+            endif.
+          endif.
 *      IF lv_ktokk = '1000' OR lv_ktokk = '3000'.
 *        IF lv_stcd3 IS NOT INITIAL.
 *          IF lv_ven_class IS INITIAL.  "Ven_class = ''  - Registered, '1' - Not registered
@@ -744,15 +776,15 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 *      ENDIF.
 
           "To Exclude Employee Vendor for Pan No. Validation
-          IF lv_ktokk NE 'EMPL'.
-            IF ls_header-bsart NE 'ZIMP' AND ls_header-bsart NE 'YIMP' AND ls_header-bsart NE 'IBIO' AND ls_header-bsart NE 'IBPI' .
+          if lv_ktokk ne 'EMPL'.
+            if ls_header-bsart ne 'ZIMP' and ls_header-bsart ne 'YIMP' and ls_header-bsart ne 'IBIO' and ls_header-bsart ne 'IBPI' .
               " skip below validation for import vendor as mail from rakesh pamula on 16.05.2019 PS
-              IF lv_j_1ipanno IS INITIAL.
-                MESSAGE 'Kindly maintained PAN number for Vendor' TYPE 'E'.
-              ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+              if lv_j_1ipanno is initial.
+                message 'Kindly maintained PAN number for Vendor' type 'E'.
+              endif.
+            endif.
+          endif.
+        endif.
 *}   INSERT
 *
 *  CALL METHOD im_header->get_items
@@ -771,426 +803,426 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 
 
 ***    For GST HSN code validation
-        IF sy-tcode = 'ME21N' OR sy-tcode = 'ME22N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME29N'.
+        if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
 ***     Exclude Export PO i.e., ZIMP & YIMP
-          IF ls_header-bsart NE 'ZIMP' AND ls_header-bsart NE 'YIMP'.
-            DATA:
-              lv_steuc  TYPE steuc, " HSN code
-              lv_steuc1 TYPE steuc. " HSN code
+          if ls_header-bsart ne 'ZIMP' and ls_header-bsart ne 'YIMP'.
+            data:
+              lv_steuc  type steuc, " HSN code
+              lv_steuc1 type steuc. " HSN code
 **  For Service PO - Material no. does not exist - So as of now no Validation !!
-            IF l_items_header-matnr IS NOT INITIAL.
-              SELECT SINGLE steuc FROM marc INTO lv_steuc
-                WHERE matnr = l_items_header-matnr
-                AND   werks = l_items_header-werks.
+            if l_items_header-matnr is not initial.
+              select single steuc from marc into lv_steuc
+                where matnr = l_items_header-matnr
+                and   werks = l_items_header-werks.
 
-              IF lv_steuc IS NOT INITIAL.
-                IF l_items_header-j_1bnbm <> lv_steuc.  " IRDK932412
-                  MESSAGE 'Control code(India tab) does not match material HSN code.' TYPE 'E'.
-                ENDIF.
+              if lv_steuc is not initial.
+                if l_items_header-j_1bnbm <> lv_steuc.  " IRDK932412
+                  message 'Control code(India tab) does not match material HSN code.' type 'E'.
+                endif.
 **       Do nothing
-              ELSE.
-                MESSAGE 'HSN code for Material not maintained' TYPE 'E'.
-              ENDIF.
-              IF ls_header-reswk IS NOT INITIAL.
-                SELECT SINGLE steuc FROM marc INTO lv_steuc1
-                WHERE matnr = l_items_header-matnr
-                AND   werks = ls_header-reswk.
-                IF lv_steuc1 IS NOT INITIAL.
+              else.
+                message 'HSN code for Material not maintained' type 'E'.
+              endif.
+              if ls_header-reswk is not initial.
+                select single steuc from marc into lv_steuc1
+                where matnr = l_items_header-matnr
+                and   werks = ls_header-reswk.
+                if lv_steuc1 is not initial.
 **       Do nothing
-                ELSE.
-                  MESSAGE 'HSN code for Supplying Plant not maintained' TYPE 'E'.
-                ENDIF.
-              ENDIF.
-            ELSE.
+                else.
+                  message 'HSN code for Supplying Plant not maintained' type 'E'.
+                endif.
+              endif.
+            else.
 **   Added by NK on 13.07.2017 (If Material is INITIAL)
 **         HSN code for Non-coded Material
 **              Refer table T163Y  - If l_items_header-PSTYP = '9' means 'D' -  Service, l_items_header-PSTYP = '0' means - Standard PO
-              IF l_items_header-loekz NE 'L'.   " added by NK on 11.09.2017
-                IF l_items_header-pstyp = '9'."  This is logic is for Standard PO ---> l_items_header-pstyp = '0'.
+              if l_items_header-loekz ne 'L'.   " added by NK on 11.09.2017
+                if l_items_header-pstyp = '9'."  This is logic is for Standard PO ---> l_items_header-pstyp = '0'.
 ***        Commented by NK on 24.07.2017 - As discussed with Mamata's - Account assignment Category
-                  IF l_items_header-knttp = 'A' OR l_items_header-knttp = 'K' OR l_items_header-knttp = 'P' OR l_items_header-knttp = 'Q'.
+                  if l_items_header-knttp = 'A' or l_items_header-knttp = 'K' or l_items_header-knttp = 'P' or l_items_header-knttp = 'Q'.
 
 * Macro to get item
 *                    mmpur_dynamic_cast lr_item l_single-item. " cl_po_item_handle_mm
-                    TRY.
+                    try.
                         lr_item ?= l_single-item.
-                      CATCH cx_sy_move_cast_error.
-                    ENDTRY.
+                      catch cx_sy_move_cast_error.
+                    endtry.
 
 * Use method of IF_SERVICES_MM interface to fetch Service data
-                    CALL METHOD lr_item->if_services_mm~get_srv_data
-                      EXPORTING
+                    call method lr_item->if_services_mm~get_srv_data
+                      exporting
                         im_packno = l_items_header-packno
-                      IMPORTING
+                      importing
                         ex_esll   = lt_esll.
 
-                    DELETE lt_esll WHERE menge = '0.000'.
-                    READ TABLE lt_esll INTO ls_esll WITH KEY taxtariffcode = ' '.
-                    IF sy-subrc EQ 0 AND ls_esll EQ ''.
+                    delete lt_esll where menge = '0.000'.
+                    read table lt_esll into ls_esll with key taxtariffcode = ' '.
+                    if sy-subrc eq 0 and ls_esll eq ''.
                       " Exclude deleted and delivery complete items from validation as per mail from Venu Sir: 09.08.2018: PO ERR
                       " IRDK933092: MM: S_K: PO_BADI: PO Short-close: 14.8.18
 
-                      IF sy-tcode = 'ME29N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME22N'.
+                      if sy-tcode = 'ME29N' or sy-tcode = 'ME23N' or sy-tcode = 'ME22N'.
                         l_items_header-packno = l_items_header-packno + 1.
 **  In case of multiple service line items in Service tab - need to look for ESLL-INTROW / EXTROW field !!
-                        SELECT SINGLE taxtariffcode FROM esll INTO gv_taxtariffcode WHERE packno = l_items_header-packno.
-                        IF sy-subrc NE 0.
-                          SELECT SINGLE taxtariffcode FROM esll INTO gv_taxtariffcode WHERE packno = ls_esll-packno.
-                          IF sy-subrc NE 0.
-                            MESSAGE 'Tax Tariff Code for Non-coded Material not maintained' TYPE 'E'.
-                          ENDIF.
-                        ENDIF.
-                      ELSE.
-                        SELECT SINGLE taxtariffcode FROM esll INTO gv_taxtariffcode WHERE packno = ls_esll-packno.
-                        IF sy-subrc NE 0.
-                          MESSAGE 'Tax Tariff Code for Non-coded Material not maintained' TYPE 'E'.
-                        ENDIF.
-                      ENDIF.
-                    ENDIF.
-                  ENDIF.
-                ELSE.
-                  IF l_items_header-j_1bnbm IS INITIAL.
-                    IF l_items_header-knttp = 'F'.  " F = Order
+                        select single taxtariffcode from esll into gv_taxtariffcode where packno = l_items_header-packno.
+                        if sy-subrc ne 0.
+                          select single taxtariffcode from esll into gv_taxtariffcode where packno = ls_esll-packno.
+                          if sy-subrc ne 0.
+                            message 'Tax Tariff Code for Non-coded Material not maintained' type 'E'.
+                          endif.
+                        endif.
+                      else.
+                        select single taxtariffcode from esll into gv_taxtariffcode where packno = ls_esll-packno.
+                        if sy-subrc ne 0.
+                          message 'Tax Tariff Code for Non-coded Material not maintained' type 'E'.
+                        endif.
+                      endif.
+                    endif.
+                  endif.
+                else.
+                  if l_items_header-j_1bnbm is initial.
+                    if l_items_header-knttp = 'F'.  " F = Order
 **              Don't give error message for HSN for Non-coded material. As discusssed with Varmaji on 06.10.2017
-                    ELSE.
+                    else.
 **             Not a service PO
-                      MESSAGE 'HSN code for Non-coded Material not maintained' TYPE 'E'.
-                    ENDIF.
-                  ELSE.
-                    SELECT SINGLE steuc FROM t604f INTO lv_hsn_tmp WHERE land1 = 'IN' AND steuc = l_items_header-j_1bnbm.
-                    IF sy-subrc NE 0.
+                      message 'HSN code for Non-coded Material not maintained' type 'E'.
+                    endif.
+                  else.
+                    select single steuc from t604f into lv_hsn_tmp where land1 = 'IN' and steuc = l_items_header-j_1bnbm.
+                    if sy-subrc ne 0.
 ***        Commented by NK on 24.07.2017 - As discussed with Mamata's - Account assignment Category
-                      IF l_items_header-knttp = 'A' OR l_items_header-knttp = 'K' OR l_items_header-knttp = 'P' OR l_items_header-knttp = 'Q'.
-                        MESSAGE 'HSN code is not maintained in master table' TYPE 'E'.
-                      ENDIF.
-                    ENDIF.
-                  ENDIF.
-                ENDIF.
-              ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+                      if l_items_header-knttp = 'A' or l_items_header-knttp = 'K' or l_items_header-knttp = 'P' or l_items_header-knttp = 'Q'.
+                        message 'HSN code is not maintained in master table' type 'E'.
+                      endif.
+                    endif.
+                  endif.
+                endif.
+              endif.
+            endif.
+          endif.
+        endif.
 
 *** Validation for JIIG, JISG, JICG, JIMD during PO creation - Atleast 1 of these conditions have to be maintained
-        IF sy-tcode = 'ME21N' OR sy-tcode = 'ME22N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME29N'.
+        if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
 *** Unless & until Tax code is not filled up - Don't calculate conditions values
 
-          IF lv_ven_class IS INITIAL. " registered vendor
-            IF lv_stcd3 IS INITIAL. " tax code 3 in vendor master is blank i.e GSTN number is blank in vendor master
+          if lv_ven_class is initial. " registered vendor
+            if lv_stcd3 is initial. " tax code 3 in vendor master is blank i.e GSTN number is blank in vendor master
 
-              IF l_items_header-mwskz IS NOT INITIAL.
+              if l_items_header-mwskz is not initial.
                 " * << S/4HANA / 6010859 / SBXK900270 / Tuesday, November 20, 2018 12:19:38
 
                 " IHDK900056
-                DATA: ls_ekko TYPE ekko,
-                      ls_ekpo TYPE ekpo.
+                data: ls_ekko type ekko,
+                      ls_ekpo type ekpo.
 
-                CLEAR: ls_ekpo, ls_ekko.
+                clear: ls_ekpo, ls_ekko.
 
-                MOVE-CORRESPONDING: ls_header TO ls_ekko,
-                                    l_items_header TO ls_ekpo.
+                move-corresponding: ls_header to ls_ekko,
+                                    l_items_header to ls_ekpo.
 
-                REFRESH lt_komv.
-                CALL METHOD zcl_helper=>calc_po_item_tax
-                  EXPORTING
+                refresh lt_komv.
+                call method zcl_helper=>calc_po_item_tax
+                  exporting
                     is_ekko  = ls_ekko
                     is_ekpo  = ls_ekpo
-                  IMPORTING
+                  importing
                     et_taxes = lt_komv.
 
-                READ TABLE lt_komv INTO ls_komv WITH KEY kschl = 'JIIG'.
-                IF sy-subrc EQ 0.
-                  CLEAR lv_jiig_flg.
-                ELSE.
-                  READ TABLE lt_komv INTO ls_komv WITH KEY kschl = 'JICG'.
-                  IF sy-subrc EQ 0.
-                    CLEAR lv_jicg_flg.
-                  ELSE.
-                    READ TABLE lt_komv INTO ls_komv WITH KEY kschl = 'JISG'.
-                    IF sy-subrc EQ 0.
-                      CLEAR lv_jisg_flg.
-                    ELSE.
-                      READ TABLE lt_komv INTO ls_komv WITH KEY kschl = 'JIMD'.
-                      IF sy-subrc EQ 0.
-                        CLEAR lv_jimd_flg.
-                      ELSE.
+                read table lt_komv into ls_komv with key kschl = 'JIIG'.
+                if sy-subrc eq 0.
+                  clear lv_jiig_flg.
+                else.
+                  read table lt_komv into ls_komv with key kschl = 'JICG'.
+                  if sy-subrc eq 0.
+                    clear lv_jicg_flg.
+                  else.
+                    read table lt_komv into ls_komv with key kschl = 'JISG'.
+                    if sy-subrc eq 0.
+                      clear lv_jisg_flg.
+                    else.
+                      read table lt_komv into ls_komv with key kschl = 'JIMD'.
+                      if sy-subrc eq 0.
+                        clear lv_jimd_flg.
+                      else.
                         lv_jimd_flg = 'X'.
-                      ENDIF.
+                      endif.
 *   lv_jisg_flg = 'X'.
-                    ENDIF.
+                    endif.
 *   lv_jicg_flg = 'X'.
-                  ENDIF.
+                  endif.
 *   lv_jiig_flg = 'X'.
-                ENDIF.
-              ENDIF.
+                endif.
+              endif.
 
 
-            ENDIF.
-          ENDIF.
-          IF lv_jimd_flg = 'X'."lv_jiig_flg = ' ' or lv_jisg_flg = ' ' or lv_jicg_flg = ' ' or lv_jimd_flg = ' '.
-            IF sy-mandt NE '120'.
-              MESSAGE 'GST related Tax Code is not maintained. Kindly maintain a proper Tax Code' TYPE 'E'.
-            ENDIF.
-          ELSE.
-            CLEAR: lv_jiig_flg ,lv_jisg_flg, lv_jicg_flg, lv_jimd_flg.
-          ENDIF.
+            endif.
+          endif.
+          if lv_jimd_flg = 'X'."lv_jiig_flg = ' ' or lv_jisg_flg = ' ' or lv_jicg_flg = ' ' or lv_jimd_flg = ' '.
+            if sy-mandt ne '120'.
+              message 'GST related Tax Code is not maintained. Kindly maintain a proper Tax Code' type 'E'.
+            endif.
+          else.
+            clear: lv_jiig_flg ,lv_jisg_flg, lv_jicg_flg, lv_jimd_flg.
+          endif.
 
 ** For Vendor Account Group 1000 only
-          IF lv_ktokk = '1000'.
-            DATA: gs_gst_tax TYPE zgst_taxes,
-                  gt_gst_tax TYPE TABLE OF zgst_taxes.
+          if lv_ktokk = '1000'.
+            data: gs_gst_tax type zgst_taxes,
+                  gt_gst_tax type table of zgst_taxes.
 
-            SELECT SINGLE tax_cd FROM zgst_taxes
-              INTO gs_gst_tax
-              WHERE tax_cd = l_items_header-mwskz.
-            IF sy-subrc EQ 0.
+            select single tax_cd from zgst_taxes
+              into gs_gst_tax
+              where tax_cd = l_items_header-mwskz.
+            if sy-subrc eq 0.
 ** Do nothing
-            ELSE.
-              IF sy-mandt NE '120'.
-                MESSAGE 'Kindly maintain GST related Tax Code as in ZGST_TAXES table' TYPE 'E'.
-              ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+            else.
+              if sy-mandt ne '120'.
+                message 'Kindly maintain GST related Tax Code as in ZGST_TAXES table' type 'E'.
+              endif.
+            endif.
+          endif.
+        endif.
 **********************************************************************  GST related validation by NK End on 10.07.2017
 
 ********************************************************************** Division 00 validaton by NK on 25.07.2017
 *    ls_shipping_data
-        IF sy-tcode = 'ME21N' OR sy-tcode = 'ME22N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME29N'.
-          IF ls_header-bsart EQ 'ZSTO' OR ls_header-bsart EQ 'YSTO'.
-            IF ls_header-aedat GE '20170701'.
-              IF ls_shipping_data-spart NE '00'.
-                MESSAGE 'Kindly Assign Shipping Point to Division 00' TYPE 'E'.
-              ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+        if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
+          if ls_header-bsart eq 'ZSTO' or ls_header-bsart eq 'YSTO'.
+            if ls_header-aedat ge '20170701'.
+              if ls_shipping_data-spart ne '00'.
+                message 'Kindly Assign Shipping Point to Division 00' type 'E'.
+              endif.
+            endif.
+          endif.
+        endif.
 **********************************************************************
-        IF ls_header-bsart EQ 'ZSTO'.
-          READ TABLE l_item_cond INTO ls_cond WITH KEY kschl = 'ZSTR'.
-          IF sy-subrc <> 0.
-            CLEAR: vv_msg.
-            CONCATENATE 'Please maintain ZSTR condition type for item:' l_items_header-ebelp
-            INTO vv_msg.
-            MESSAGE vv_msg TYPE 'E'.
-          ELSEIF sy-subrc = 0 AND ls_cond-kbetr LE 0. " IRDK932302: Wednesday, May 30, 2018 12:18:34
-            CLEAR vv_msg.
-            CONCATENATE 'ZSTR condition value should be non-zero for item:' l_items_header-ebelp
-            INTO vv_msg.
-            MESSAGE vv_msg TYPE 'E'.
-          ENDIF.
+        if ls_header-bsart eq 'ZSTO'.
+          read table l_item_cond into ls_cond with key kschl = 'ZSTR'.
+          if sy-subrc <> 0.
+            clear: vv_msg.
+            concatenate 'Please maintain ZSTR condition type for item:' l_items_header-ebelp
+            into vv_msg.
+            message vv_msg type 'E'.
+          elseif sy-subrc = 0 and ls_cond-kbetr le 0. " IRDK932302: Wednesday, May 30, 2018 12:18:34
+            clear vv_msg.
+            concatenate 'ZSTR condition value should be non-zero for item:' l_items_header-ebelp
+            into vv_msg.
+            message vv_msg type 'E'.
+          endif.
 
 *    Validate Transportation cost FRC1 condition type mandatory for SPCD division only
-          CLEAR : tmp_spart.
-          SELECT SINGLE spart FROM mara INTO tmp_spart WHERE matnr = l_items_header-matnr AND mtart = 'ZFGM' AND ( spart = '20' OR spart = '28' ).
-          IF sy-subrc = 0 .
-            IF tmp_spart = '20' OR tmp_spart = '28'.  " IHDK900966: IndoReagans(2800): MM: S_K: Incorporate 2800/28: 19.3.19
+          clear : tmp_spart.
+          select single spart from mara into tmp_spart where matnr = l_items_header-matnr and mtart = 'ZFGM' and ( spart = '20' or spart = '28' ).
+          if sy-subrc = 0 .
+            if tmp_spart = '20' or tmp_spart = '28'.  " IHDK900966: IndoReagans(2800): MM: S_K: Incorporate 2800/28: 19.3.19
 
-              READ TABLE l_item_cond INTO ls_cond WITH KEY kschl = 'FRC1'.
-              IF sy-subrc <> 0.
-                MESSAGE 'Please maintain FRC1 condition type' TYPE 'E'.
-              ENDIF.
-            ENDIF.
-          ELSE.
-            CLEAR tmp_spart .
-          ENDIF.
+              read table l_item_cond into ls_cond with key kschl = 'FRC1'.
+              if sy-subrc <> 0.
+                message 'Please maintain FRC1 condition type' type 'E'.
+              endif.
+            endif.
+          else.
+            clear tmp_spart .
+          endif.
 
-        ENDIF.
-        CLEAR: ls_cond.
+        endif.
+        clear: ls_cond.
 
-        LOOP AT l_item_cond INTO ls_cond WHERE kschl = 'ZCH1' OR kschl = 'ZCH2' OR kschl = 'ZCH3'.
-          IF ls_cond-waers <> 'INR'.
-            MESSAGE e398(00) WITH 'For item : ' ls_cond-kposn 'Please enter in INR only for cond.type' ls_cond-kschl.
-          ENDIF.
-        ENDLOOP.
+        loop at l_item_cond into ls_cond where kschl = 'ZCH1' or kschl = 'ZCH2' or kschl = 'ZCH3'.
+          if ls_cond-waers <> 'INR'.
+            message e398(00) with 'For item : ' ls_cond-kposn 'Please enter in INR only for cond.type' ls_cond-kschl.
+          endif.
+        endloop.
 
-        IF ls_header-bsart NE 'ZSED' AND ls_header-bsart NE 'ZSEI'
-          AND ls_header-bsart NE 'YSED' AND ls_header-bsart NE 'YSEI'.
-          SELECT SINGLE * FROM a505 INTO wa_a505 WHERE kschl = 'ZCH3'
-                                                   AND werks = l_items_header-werks
-                                                   AND lifnr = ls_header-lifnr
-                                                   AND matnr = l_items_header-matnr
-                                                   AND datab <= sy-datum
-                                                   AND datbi >= sy-datum.
-          IF sy-subrc = 0.
-            SELECT SINGLE * FROM konp INTO wa_konp WHERE knumh = wa_a505-knumh.
-            LOOP AT l_item_cond INTO ls_cond WHERE kschl = 'ZCH3'.
-              IF ls_cond-kbetr > wa_konp-kbetr.
-                MESSAGE e398(00) WITH 'ZCH3 Value is Greater than MEK1 - Material:' l_items_header-matnr.
-              ENDIF.
-            ENDLOOP.
-          ELSE.
-            READ TABLE l_item_cond INTO ls_cond WITH KEY kschl = 'ZCH3'.
-            IF sy-subrc = 0.
-              MESSAGE e398(00) WITH 'Maintain Condition Type ZCH3 in MEK1 - Material:' l_items_header-matnr.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+        if ls_header-bsart ne 'ZSED' and ls_header-bsart ne 'ZSEI'
+          and ls_header-bsart ne 'YSED' and ls_header-bsart ne 'YSEI'.
+          select single * from a505 into wa_a505 where kschl = 'ZCH3'
+                                                   and werks = l_items_header-werks
+                                                   and lifnr = ls_header-lifnr
+                                                   and matnr = l_items_header-matnr
+                                                   and datab <= sy-datum
+                                                   and datbi >= sy-datum.
+          if sy-subrc = 0.
+            select single * from konp into wa_konp where knumh = wa_a505-knumh.
+            loop at l_item_cond into ls_cond where kschl = 'ZCH3'.
+              if ls_cond-kbetr > wa_konp-kbetr.
+                message e398(00) with 'ZCH3 Value is Greater than MEK1 - Material:' l_items_header-matnr.
+              endif.
+            endloop.
+          else.
+            read table l_item_cond into ls_cond with key kschl = 'ZCH3'.
+            if sy-subrc = 0.
+              message e398(00) with 'Maintain Condition Type ZCH3 in MEK1 - Material:' l_items_header-matnr.
+            endif.
+          endif.
+        endif.
 
-        IF ls_header-bsart EQ 'YIMP' AND ls_header-bsart EQ 'ZIMP'.
-          READ TABLE l_item_cond INTO ls_cond WITH KEY kschl = 'ZCH3'.
-          IF sy-subrc <> 0.
-            MESSAGE e398(00) WITH 'Maintain Condition Type ZCH3 for material - ' l_items_header-matnr.
-          ENDIF.
-        ENDIF.
+        if ls_header-bsart eq 'YIMP' and ls_header-bsart eq 'ZIMP'.
+          read table l_item_cond into ls_cond with key kschl = 'ZCH3'.
+          if sy-subrc <> 0.
+            message e398(00) with 'Maintain Condition Type ZCH3 for material - ' l_items_header-matnr.
+          endif.
+        endif.
 ******************************************************************************************************
 
 *validation for ZBPP condition for raw and pkg
-        IF ls_header-bsart EQ 'YDOM' OR
-             ls_header-bsart EQ 'YIMP' OR
-             ls_header-bsart EQ 'YSED' OR
-             ls_header-bsart EQ 'YSEI' OR
-             ls_header-bsart EQ 'ZDOM' OR
-             ls_header-bsart EQ 'ZIMP' OR
-             ls_header-bsart EQ 'ZSED' OR
-             ls_header-bsart EQ 'ZSEI' OR
-             ls_header-bsart EQ 'ZDTP' OR
-             ls_header-bsart EQ 'ZENG' OR
-             ls_header-bsart EQ 'YENG' .
+        if ls_header-bsart eq 'YDOM' or
+             ls_header-bsart eq 'YIMP' or
+             ls_header-bsart eq 'YSED' or
+             ls_header-bsart eq 'YSEI' or
+             ls_header-bsart eq 'ZDOM' or
+             ls_header-bsart eq 'ZIMP' or
+             ls_header-bsart eq 'ZSED' or
+             ls_header-bsart eq 'ZSEI' or
+             ls_header-bsart eq 'ZDTP' or
+             ls_header-bsart eq 'ZENG' or
+             ls_header-bsart eq 'YENG' .
 
-          CLEAR: zmtart.
-          SELECT SINGLE mtart FROM mara INTO zmtart WHERE matnr = l_items_header-matnr.
+          clear: zmtart.
+          select single mtart from mara into zmtart where matnr = l_items_header-matnr.
 
-          IF zmtart = 'ZPKG' OR zmtart = 'ZRAW'.
-            IF ls_header-ekgrp <> '205'.  "Exclude ZBPP ZBPL ZBPC validation for 205 Purchasing group
-              IF ls_header-bedat > '20150211'.
+          if zmtart = 'ZPKG' or zmtart = 'ZRAW'.
+            if ls_header-ekgrp <> '205'.  "Exclude ZBPP ZBPL ZBPC validation for 205 Purchasing group
+              if ls_header-bedat > '20150211'.
                 "IF KOMP-MTART = 'ZRAW' OR KOMP-MTART = 'ZPKG'.
-                CLEAR msg1.
+                clear msg1.
                 "READ TABLE xkomv INTO wa_komv WITH KEY kschl = 'ZBPP'.
-                READ TABLE l_item_cond INTO ls_cond WITH KEY kschl = 'ZBPP'.
-                IF sy-subrc <> 0.
-                  CONCATENATE 'Maintain ZBPP condition for Item :'
+                read table l_item_cond into ls_cond with key kschl = 'ZBPP'.
+                if sy-subrc <> 0.
+                  concatenate 'Maintain ZBPP condition for Item :'
                    l_items_header-ebelp
                    'Material:'
                    l_items_header-matnr
-                   INTO msg1 SEPARATED BY space.
-                  MESSAGE msg1 TYPE 'E'.
-                ENDIF.
+                   into msg1 separated by space.
+                  message msg1 type 'E'.
+                endif.
 *   READ TABLE xkomv INTO wa_komv WITH KEY kschl = 'ZBPL'.
-                READ TABLE l_item_cond INTO ls_cond WITH KEY kschl = 'ZBPL'.
-                IF sy-subrc <> 0.
-                  CONCATENATE 'Maintain ZBPL condition for Item :'
+                read table l_item_cond into ls_cond with key kschl = 'ZBPL'.
+                if sy-subrc <> 0.
+                  concatenate 'Maintain ZBPL condition for Item :'
                    l_items_header-ebelp
                   'Material:'
                   l_items_header-matnr
-                  INTO msg1 SEPARATED BY space.
-                  MESSAGE msg1 TYPE 'E'.
-                ENDIF.
-              ENDIF.
-            ENDIF.
-          ENDIF.
+                  into msg1 separated by space.
+                  message msg1 type 'E'.
+                endif.
+              endif.
+            endif.
+          endif.
 
 * below validation is for first release PO to check purchasing group
 * developed on : 16.02.2015 developer: Punam S
-          IF zmtart = 'ZPKG' OR zmtart = 'ZRAW' OR zmtart = 'ZTRD' .
-            IF ls_header-bedat > '20150304'.
-              CLEAR: ztel_extens , zekgrp.
-              SELECT SINGLE tel_extens FROM t024 INTO ztel_extens
-                WHERE ekgrp = ls_header-ekgrp.
-              IF ztel_extens = 'XX'.
+          if zmtart = 'ZPKG' or zmtart = 'ZRAW' or zmtart = 'ZTRD' .
+            if ls_header-bedat > '20150304'.
+              clear: ztel_extens , zekgrp.
+              select single tel_extens from t024 into ztel_extens
+                where ekgrp = ls_header-ekgrp.
+              if ztel_extens = 'XX'.
 
-                SELECT SINGLE ekgrp
-                  FROM marc INTO zekgrp
-                  WHERE matnr = l_items_header-matnr
-                  AND werks = l_items_header-werks.
-                IF ls_header-ekgrp <> zekgrp.
+                select single ekgrp
+                  from marc into zekgrp
+                  where matnr = l_items_header-matnr
+                  and werks = l_items_header-werks.
+                if ls_header-ekgrp <> zekgrp.
 
-                  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'  "#EC CI_FLDEXT_OK[2215424]
-                    EXPORTING
+                  call function 'CONVERSION_EXIT_ALPHA_OUTPUT'  "#EC CI_FLDEXT_OK[2215424]
+                    exporting
                       input  = l_items_header-matnr
-                    IMPORTING
+                    importing
                       output = l_items_header-matnr.
 
 
-                  CONCATENATE 'Purch.Group mismatch with header for Item :'
+                  concatenate 'Purch.Group mismatch with header for Item :'
                     l_items_header-ebelp
                    ',Material:'
                    l_items_header-matnr
-                   INTO msg1 SEPARATED BY space.
-                  MESSAGE msg1 TYPE 'E'.
+                   into msg1 separated by space.
+                  message msg1 type 'E'.
 
-                  CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT' "#EC CI_FLDEXT_OK[2215424]
-                    EXPORTING
+                  call function 'CONVERSION_EXIT_ALPHA_INPUT' "#EC CI_FLDEXT_OK[2215424]
+                    exporting
                       input  = l_items_header-matnr
-                    IMPORTING
+                    importing
                       output = l_items_header-matnr.
 
 
 *    ENDIF.
 
-                ENDIF.
-              ELSE.
+                endif.
+              else.
 *  below code to validate if header purc group is not XX grp i.e. B01 b02... etc , then if
 *  user enter item which belongs to XX purchasing grp ,throw error msg.
 *  date : 23.02.2015 PS
 
-                CLEAR: ztel_extens.
-                SELECT SINGLE ekgrp
-                    FROM marc INTO zekgrp
-                    WHERE matnr = l_items_header-matnr
-                    AND werks = l_items_header-werks.
-                IF zekgrp IS NOT INITIAL.
-                  SELECT SINGLE tel_extens FROM t024 INTO ztel_extens
-                    WHERE ekgrp = zekgrp.
+                clear: ztel_extens.
+                select single ekgrp
+                    from marc into zekgrp
+                    where matnr = l_items_header-matnr
+                    and werks = l_items_header-werks.
+                if zekgrp is not initial.
+                  select single tel_extens from t024 into ztel_extens
+                    where ekgrp = zekgrp.
 
-                  IF ztel_extens = 'XX'.
+                  if ztel_extens = 'XX'.
 
-                    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'  "#EC CI_FLDEXT_OK[2215424]
-                      EXPORTING
+                    call function 'CONVERSION_EXIT_ALPHA_OUTPUT'  "#EC CI_FLDEXT_OK[2215424]
+                      exporting
                         input  = l_items_header-matnr
-                      IMPORTING
+                      importing
                         output = l_items_header-matnr.
 
 
-                    CONCATENATE 'Purch.Group mismatch with header for Item :'
+                    concatenate 'Purch.Group mismatch with header for Item :'
                       l_items_header-ebelp
                      ',Material:'
                      l_items_header-matnr
-                     INTO msg1 SEPARATED BY space.
-                    MESSAGE msg1 TYPE 'E'.
+                     into msg1 separated by space.
+                    message msg1 type 'E'.
 
-                    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT' "#EC CI_FLDEXT_OK[2215424]
-                      EXPORTING
+                    call function 'CONVERSION_EXIT_ALPHA_INPUT' "#EC CI_FLDEXT_OK[2215424]
+                      exporting
                         input  = l_items_header-matnr
-                      IMPORTING
+                      importing
                         output = l_items_header-matnr.
 
-                  ENDIF.
-                  CLEAR: ztel_extens.
-                ENDIF.
-              ENDIF.
-            ENDIF.
-          ENDIF.
+                  endif.
+                  clear: ztel_extens.
+                endif.
+              endif.
+            endif.
+          endif.
 
-        ENDIF.
+        endif.
 
 
-        IF ls_header-bsart = 'ZIMP'.
-          IF ls_header-ekgrp <> '205'.  "Exclude ZBPP ZBPL ZBPC validation for 205 Purchasing group
-            IF zmtart = 'ZRAW' OR zmtart = 'ZPKG'.
-              IF ls_header-bedat > '20150211'.
+        if ls_header-bsart = 'ZIMP'.
+          if ls_header-ekgrp <> '205'.  "Exclude ZBPP ZBPL ZBPC validation for 205 Purchasing group
+            if zmtart = 'ZRAW' or zmtart = 'ZPKG'.
+              if ls_header-bedat > '20150211'.
 *READ TABLE xkomv INTO wa_komv WITH KEY kschl = 'ZBPC'.
-                READ TABLE l_item_cond INTO ls_cond WITH KEY kschl = 'ZBPC'.
-                IF sy-subrc <> 0.
-                  CONCATENATE 'Maintain ZBPC condition for Item :'
+                read table l_item_cond into ls_cond with key kschl = 'ZBPC'.
+                if sy-subrc <> 0.
+                  concatenate 'Maintain ZBPC condition for Item :'
                   l_items_header-ebelp
                   'Material:'
                    l_items_header-matnr
-                  INTO msg1 SEPARATED BY space.
-                  MESSAGE msg1 TYPE 'E'.
-                ENDIF.
-              ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+                  into msg1 separated by space.
+                  message msg1 type 'E'.
+                endif.
+              endif.
+            endif.
+          endif.
+        endif.
 
 ********************************************************************* " added by NK on 27.07.2017
 *        if zcl_helper=>is_development( ) or zcl_helper=>is_quality( ). " IHDK903412
-        IF sy-tcode = 'ME21N' OR sy-tcode = 'ME22N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME29N'.
-          IF lv_ktokk = '1000'. " Vendor Acct. grp (only Domestic vendors)
-            IF ls_header-bsart NE 'ZSTO' OR ls_header-bsart NE 'YSTO'.
-              IF l_items_header-loekz <> 'L' . " Deletion Indicator
-                IF l_items_header-mtart = 'ZRAW' OR l_items_header-mtart = 'ZPKG' OR l_items_header-mtart = 'YROH' OR l_items_header-mtart = 'ZPKU'.
+        if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
+          if lv_ktokk = '1000'. " Vendor Acct. grp (only Domestic vendors)
+            if ls_header-bsart ne 'ZSTO' or ls_header-bsart ne 'YSTO'.
+              if l_items_header-loekz <> 'L' . " Deletion Indicator
+                if l_items_header-mtart = 'ZRAW' or l_items_header-mtart = 'ZPKG' or l_items_header-mtart = 'YROH' or l_items_header-mtart = 'ZPKU'.
 *    *      Now on the combination was Vendor & Material - Check whether any other open PO's are present
 *    *      Checking for open PO's means - (1) either GRR not done
 *                                          (2) whether it is not short closed
@@ -1199,94 +1231,94 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 *    ** Use DB view WB2_V_EKKO_EKPO2 to get all the PO's based on Vendor & Material
 *    **    then    EKBE-BEWTP = 'E'  - for GR done or not
 *    *      For closed PO's means -        (1) if GRR done, look for check/Tik mark is there !
-                  IF l_items_header-matnr IS NOT INITIAL.
-                    SELECT * FROM wb2_v_ekko_ekpo2 INTO TABLE lt_ekko_ekpo WHERE bukrs = ls_header-bukrs
-                                                                      AND  bsart NE 'ZSTO'
-                                                                      AND  bsart NE 'YSTO'"NOT IN ('ZSTO','YSTO')
-                                                                      AND  aedat GE '20170401'
-                                                                      AND  lifnr = ls_header-lifnr
-                                                                      AND  matnr_i = l_items_header-matnr
-                                                                      AND  werks_i = l_items_header-werks " IHDK903474
-                                                                      AND  loekz_i NOT IN ( 'L', 'S' )
-                                                                      AND  elikz_i NE abap_true.
-                  ELSE.
-                    SELECT * FROM wb2_v_ekko_ekpo2 INTO TABLE lt_ekko_ekpo WHERE bukrs = ls_header-bukrs
-                                                                      AND  bsart NE 'ZSTO'
-                                                                      AND  bsart NE 'YSTO'"NOT IN ('ZSTO','YSTO')
-                                                                      AND  aedat GE '20170401'
-                                                                      AND  lifnr = ls_header-lifnr
-                                                                      AND  werks_i = l_items_header-werks " IHDK903474
-                                                                      AND  loekz_i NOT IN ( 'L', 'S' )
-                                                                      AND  elikz_i NE abap_true.
+                  if l_items_header-matnr is not initial.
+                    select * from wb2_v_ekko_ekpo2 into table lt_ekko_ekpo where bukrs = ls_header-bukrs
+                                                                      and  bsart ne 'ZSTO'
+                                                                      and  bsart ne 'YSTO'"NOT IN ('ZSTO','YSTO')
+                                                                      and  aedat ge '20170401'
+                                                                      and  lifnr = ls_header-lifnr
+                                                                      and  matnr_i = l_items_header-matnr
+                                                                      and  werks_i = l_items_header-werks " IHDK903474
+                                                                      and  loekz_i not in ( 'L', 'S' )
+                                                                      and  elikz_i ne abap_true.
+                  else.
+                    select * from wb2_v_ekko_ekpo2 into table lt_ekko_ekpo where bukrs = ls_header-bukrs
+                                                                      and  bsart ne 'ZSTO'
+                                                                      and  bsart ne 'YSTO'"NOT IN ('ZSTO','YSTO')
+                                                                      and  aedat ge '20170401'
+                                                                      and  lifnr = ls_header-lifnr
+                                                                      and  werks_i = l_items_header-werks " IHDK903474
+                                                                      and  loekz_i not in ( 'L', 'S' )
+                                                                      and  elikz_i ne abap_true.
 *                                                                    AND  matnr_i = l_items_header-matnr.
-                  ENDIF.
-                  IF lt_ekko_ekpo IS NOT INITIAL.
-                    SELECT ebeln ebelp gjahr belnr buzei bewtp budat menge dmbtr matnr werks
-                       FROM ekbe INTO TABLE lt_ekbe FOR ALL ENTRIES IN lt_ekko_ekpo
-                      WHERE ebeln = lt_ekko_ekpo-ebeln_i
-                      AND   ebelp = lt_ekko_ekpo-ebelp_i
-                      AND   bewtp = 'E' " for GR done but here Quantity is not verified
-                      AND   bwart = '101'. " GR receipt ( in some cases BWART = 106 )
+                  endif.
+                  if lt_ekko_ekpo is not initial.
+                    select ebeln ebelp gjahr belnr buzei bewtp budat menge dmbtr matnr werks
+                       from ekbe into table lt_ekbe for all entries in lt_ekko_ekpo
+                      where ebeln = lt_ekko_ekpo-ebeln_i
+                      and   ebelp = lt_ekko_ekpo-ebelp_i
+                      and   bewtp = 'E' " for GR done but here Quantity is not verified
+                      and   bwart = '101'. " GR receipt ( in some cases BWART = 106 )
 *                    and   elikz = 'X'.
 
-                    IF lt_ekbe IS NOT INITIAL.
+                    if lt_ekbe is not initial.
                       lt_ekko_ekpo_tmp[] = lt_ekko_ekpo[].
 *    **        EKBE-ELIKZ = 'X' (Delivery completed)
-                      LOOP AT lt_ekbe INTO ls_ekbe.
-                        READ TABLE lt_ekko_ekpo INTO ls_ekko_ekpo WITH KEY ebeln_i = ls_ekbe-ebeln ebelp_i = ls_ekbe-ebelp elikz_i = 'X'.
-                        IF sy-subrc EQ 0.
+                      loop at lt_ekbe into ls_ekbe.
+                        read table lt_ekko_ekpo into ls_ekko_ekpo with key ebeln_i = ls_ekbe-ebeln ebelp_i = ls_ekbe-ebelp elikz_i = 'X'.
+                        if sy-subrc eq 0.
 *    *                    Deleting those whose GR completed & Delivery Completed indicator also set
-                          DELETE lt_ekko_ekpo WHERE ebeln_i = ls_ekbe-ebeln AND ebelp_i = ls_ekbe-ebelp.
+                          delete lt_ekko_ekpo where ebeln_i = ls_ekbe-ebeln and ebelp_i = ls_ekbe-ebelp.
 *    *                  PO Short closed or not
 
-                        ELSE.
+                        else.
 *    *                  PO Short closed or not
 
-                        ENDIF.
+                        endif.
 
-                      ENDLOOP.
+                      endloop.
 
 *    *           Checking for Quantity with PO - i.e., EKET-WEMNG(GR quantity)
-                      READ TABLE lt_ekko_ekpo INTO ls_ekko_ekpo WITH KEY ebeln_i = l_items_header-ebeln ebelp_i = l_items_header-ebelp.
-                      IF sy-subrc EQ 0.
-                        SELECT SINGLE ebeln FROM ekbe INTO lv_ebeln_grr WHERE ebeln = ls_ekko_ekpo-ebeln_i
-                                                                         AND  bewtp = 'E'
-                                                                         AND  bwart = '101'.
-                        IF sy-subrc EQ 0.
-                          SELECT SINGLE wemng FROM eket INTO lv_wemng WHERE ebeln = ls_ekko_ekpo-ebeln_i AND ebelp = ls_ekko_ekpo-ebelp_i.
-                          IF l_items_header-menge EQ lv_wemng.
+                      read table lt_ekko_ekpo into ls_ekko_ekpo with key ebeln_i = l_items_header-ebeln ebelp_i = l_items_header-ebelp.
+                      if sy-subrc eq 0.
+                        select single ebeln from ekbe into lv_ebeln_grr where ebeln = ls_ekko_ekpo-ebeln_i
+                                                                         and  bewtp = 'E'
+                                                                         and  bwart = '101'.
+                        if sy-subrc eq 0.
+                          select single wemng from eket into lv_wemng where ebeln = ls_ekko_ekpo-ebeln_i and ebelp = ls_ekko_ekpo-ebelp_i.
+                          if l_items_header-menge eq lv_wemng.
 *    *                     Do nothing
-                          ELSE.
+                          else.
                             " message commented IHDK903417
 *                              message 'GR not done. Kindly check the Quantity' type 'E'.
-                          ENDIF.
-                        ENDIF.
-                      ENDIF.
+                          endif.
+                        endif.
+                      endif.
 *    **       If more than 3 Open PO's then don't allow to make 4th PO !!
-                      IF sy-tcode = 'ME21N'.
-                        DESCRIBE TABLE lt_ekko_ekpo LINES n.
-                        IF n GE '3'.
-                          MESSAGE '3 open POs for same Material/Vendor/Plant exists. 4th PO not possible' TYPE 'E'.
-                        ENDIF.
-                      ENDIF.
-                      IF sy-tcode = 'ME22N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME29N'.
-                        DESCRIBE TABLE lt_ekko_ekpo LINES n.
-                        IF n GT '3'.
-                          MESSAGE '3 open POs for same Material/Vendor/Plant exists. 4th PO not possible' TYPE 'E'.
-                        ENDIF.
-                      ENDIF.
-                    ELSE.
-                      DESCRIBE TABLE lt_ekko_ekpo LINES n.
-                      IF n GT '3'.
-                        MESSAGE '3 open POs for same Material/Vendor/Plant exists. 4th PO not possible' TYPE 'E'.
-                      ENDIF.
-                    ENDIF.
-                  ENDIF.
-                ENDIF.
-              ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+                      if sy-tcode = 'ME21N'.
+                        describe table lt_ekko_ekpo lines n.
+                        if n ge '3'.
+                          message '3 open POs for same Material/Vendor/Plant exists. 4th PO not possible' type 'E'.
+                        endif.
+                      endif.
+                      if sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
+                        describe table lt_ekko_ekpo lines n.
+                        if n gt '3'.
+                          message '3 open POs for same Material/Vendor/Plant exists. 4th PO not possible' type 'E'.
+                        endif.
+                      endif.
+                    else.
+                      describe table lt_ekko_ekpo lines n.
+                      if n gt '3'.
+                        message '3 open POs for same Material/Vendor/Plant exists. 4th PO not possible' type 'E'.
+                      endif.
+                    endif.
+                  endif.
+                endif.
+              endif.
+            endif.
+          endif.
+        endif.
 *        endif.
 *********************************************************************
 ** added by NK on 13.09.2017 - start
@@ -1295,85 +1327,85 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 **  tax categaries in that Customer.
 **  Also note the Division is 00(for STO) in this case !!
 
-        IF sy-tcode = 'ME21N' OR sy-tcode = 'ME22N' OR sy-tcode = 'ME23N'." OR sy-tcode = 'ME29N'.
-          IF ls_header-bsart EQ 'ZSTO' OR ls_header-bsart EQ 'YSTO'.
+        if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N'." OR sy-tcode = 'ME29N'.
+          if ls_header-bsart eq 'ZSTO' or ls_header-bsart eq 'YSTO'.
 *      ....if KNVI-TAXKD NE '0' for any TATYP ---> then throw an error !!
-            CONCATENATE 'C' l_items_header-werks INTO lv_kunnr_sto.
-            CONDENSE lv_kunnr_sto.
+            concatenate 'C' l_items_header-werks into lv_kunnr_sto.
+            condense lv_kunnr_sto.
 **        Only for Division 00
-            SELECT SINGLE spart FROM knvv INTO lv_spart_sto WHERE kunnr = lv_kunnr_sto AND spart = '00'.
-            IF sy-subrc EQ 0.
-              IF lv_kunnr_sto NE 'C' OR lv_kunnr_sto NE '0'.
-                SELECT * FROM knvi INTO TABLE lt_knvi WHERE kunnr = lv_kunnr_sto.
-                IF sy-subrc EQ 0.
-                  LOOP AT lt_knvi INTO ls_knvi WHERE taxkd IS INITIAL.
-                    CONCATENATE 'Please Update Customer' lv_kunnr_sto 'Tax classification' INTO lv_msg_sto SEPARATED BY space.
-                    MESSAGE lv_msg_sto TYPE 'E'.
-                  ENDLOOP.
-                ENDIF.
-              ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
+            select single spart from knvv into lv_spart_sto where kunnr = lv_kunnr_sto and spart = '00'.
+            if sy-subrc eq 0.
+              if lv_kunnr_sto ne 'C' or lv_kunnr_sto ne '0'.
+                select * from knvi into table lt_knvi where kunnr = lv_kunnr_sto.
+                if sy-subrc eq 0.
+                  loop at lt_knvi into ls_knvi where taxkd is initial.
+                    concatenate 'Please Update Customer' lv_kunnr_sto 'Tax classification' into lv_msg_sto separated by space.
+                    message lv_msg_sto type 'E'.
+                  endloop.
+                endif.
+              endif.
+            endif.
+          endif.
+        endif.
 ** added by NK on 13.09.2017 - end
 
 *    gs_proposal-matnr = l_items_header-matnr.  """""ravi on 20.12.2016
 *    APPEND gs_proposal TO gt_proposal.
 *    CLEAR gs_proposal.
-        CLEAR: zmtart, zekgrp.
-        IF ls_header-bsart EQ 'ZENG' OR ls_header-bsart EQ 'YENG'.
-          IF l_items_header-matnr IS NOT INITIAL. " this validation is only applicable for coded po .
-            SELECT SINGLE mtart FROM mara INTO zmtart WHERE matnr = l_items_header-matnr.
-            IF zmtart NE 'ZSPR' AND zmtart NE 'ZEU2' AND zmtart NE 'ZCON' AND zmtart NE 'ZMCO'.
+        clear: zmtart, zekgrp.
+        if ls_header-bsart eq 'ZENG' or ls_header-bsart eq 'YENG'.
+          if l_items_header-matnr is not initial. " this validation is only applicable for coded po .
+            select single mtart from mara into zmtart where matnr = l_items_header-matnr.
+            if zmtart ne 'ZSPR' and zmtart ne 'ZEU2' and zmtart ne 'ZCON' and zmtart ne 'ZMCO'.
 
-              MESSAGE e398(00) WITH 'Incorrect Material for this PO type:' l_items_header-ebelp ',' l_items_header-matnr.
+              message e398(00) with 'Incorrect Material for this PO type:' l_items_header-ebelp ',' l_items_header-matnr.
 
-            ENDIF.
+            endif.
 
-            SELECT SINGLE ekgrp
-                       FROM marc INTO zekgrp
-                       WHERE matnr = l_items_header-matnr
-                       AND werks = l_items_header-werks.
-            IF ls_header-ekgrp <> zekgrp.
+            select single ekgrp
+                       from marc into zekgrp
+                       where matnr = l_items_header-matnr
+                       and werks = l_items_header-werks.
+            if ls_header-ekgrp <> zekgrp.
 
-              CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'  "#EC CI_FLDEXT_OK[2215424]
-                EXPORTING
+              call function 'CONVERSION_EXIT_ALPHA_OUTPUT'  "#EC CI_FLDEXT_OK[2215424]
+                exporting
                   input  = l_items_header-matnr
-                IMPORTING
+                importing
                   output = l_items_header-matnr.
 
 
-              CONCATENATE 'Purch.Group mismatch with header for Item :'
+              concatenate 'Purch.Group mismatch with header for Item :'
                 l_items_header-ebelp
                ',Material:'
                l_items_header-matnr
-               INTO msg1 SEPARATED BY space.
-              MESSAGE msg1 TYPE 'E'.
+               into msg1 separated by space.
+              message msg1 type 'E'.
 
-              CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT' "#EC CI_FLDEXT_OK[2215424]
-                EXPORTING
+              call function 'CONVERSION_EXIT_ALPHA_INPUT' "#EC CI_FLDEXT_OK[2215424]
+                exporting
                   input  = l_items_header-matnr
-                IMPORTING
+                importing
                   output = l_items_header-matnr.
 
 
-            ENDIF.
+            endif.
 
 
-          ENDIF.
-        ENDIF.
-      ENDIF.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
-    ENDLOOP.
+          endif.
+        endif.
+      endif.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
+    endloop.
 
     " IRDK932925
-    IF div_chk_tab IS NOT INITIAL AND ls_header-bsart EQ 'ZSTO'.
-      SORT div_chk_tab.
-      DELETE ADJACENT DUPLICATES FROM div_chk_tab COMPARING div.
+    if div_chk_tab is not initial and ls_header-bsart eq 'ZSTO'.
+      sort div_chk_tab.
+      delete adjacent duplicates from div_chk_tab comparing div.
 
-      IF lines( div_chk_tab ) GT 1.
-        MESSAGE e398(00) WITH 'All items should belong to the same division'.
-      ENDIF.
-    ENDIF.
+      if lines( div_chk_tab ) gt 1.
+        message e398(00) with 'All items should belong to the same division'.
+      endif.
+    endif.
     " End IRDK932925
 
 ************ Developed By Punam
@@ -1382,113 +1414,113 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 *
 *
 
-    CLEAR: zmtart.
-    IF ls_header-ekorg = '1000' OR ls_header-ekorg = '2800'."Extended validations for Indoreagens
-      IF ls_header-bedat > '20150211'.
-        IF ls_header-ekgrp <> '205'.
-          IF sy-uname NE '1805' AND sy-uname NE '10032' AND sy-uname NE '2866' AND sy-uname NE '1788'.
-            IF ls_header-bsart EQ 'YDOM' OR
-             ls_header-bsart EQ 'YIMP' OR
-             ls_header-bsart EQ 'YSED' OR
-             ls_header-bsart EQ 'YSEI' OR
-             ls_header-bsart EQ 'ZDOM' OR
-             ls_header-bsart EQ 'ZIMP' OR
-             ls_header-bsart EQ 'ZSED' OR
-             ls_header-bsart EQ 'ZSEI' OR
-             ls_header-bsart EQ 'ZDTP' OR
-             ls_header-bsart EQ 'ZENG' OR
-             ls_header-bsart EQ 'YENG' .
+    clear: zmtart.
+    if ls_header-ekorg = '1000' or ls_header-ekorg = '2800'."Extended validations for Indoreagens
+      if ls_header-bedat > '20150211'.
+        if ls_header-ekgrp <> '205'.
+          if sy-uname ne '1805' and sy-uname ne '10032' and sy-uname ne '2866' and sy-uname ne '1788'.
+            if ls_header-bsart eq 'YDOM' or
+             ls_header-bsart eq 'YIMP' or
+             ls_header-bsart eq 'YSED' or
+             ls_header-bsart eq 'YSEI' or
+             ls_header-bsart eq 'ZDOM' or
+             ls_header-bsart eq 'ZIMP' or
+             ls_header-bsart eq 'ZSED' or
+             ls_header-bsart eq 'ZSEI' or
+             ls_header-bsart eq 'ZDTP' or
+             ls_header-bsart eq 'ZENG' or
+             ls_header-bsart eq 'YENG' .
 
-              CLEAR: l_single ,l_items_header .
-              LOOP AT l_items INTO l_single.
+              clear: l_single ,l_items_header .
+              loop at l_items into l_single.
 
 
 
-                CALL METHOD l_single-item->get_data
-                  RECEIVING
+                call method l_single-item->get_data
+                  receiving
                     re_data = l_items_header.
 
                 " Exclude deleted and delivery complete items from validation as per mail from Venu Sir: 09.08.2018: PO ERR
                 " IRDK933092: MM: S_K: PO_BADI: PO Short-close: 14.8.18
 
-                IF l_items_header-loekz EQ '' AND l_items_header-elikz EQ ''.
+                if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
 
-                  CLEAR: zmtart.
-                  SELECT SINGLE mtart FROM mara INTO zmtart WHERE matnr = l_items_header-matnr.
-                  IF zmtart = 'ZPKG' OR zmtart = 'ZRAW'.
+                  clear: zmtart.
+                  select single mtart from mara into zmtart where matnr = l_items_header-matnr.
+                  if zmtart = 'ZPKG' or zmtart = 'ZRAW'.
 
-                    CLEAR: zknumh , zzterm.
-                    SELECT SINGLE knumh
-                     FROM a017
-                     INTO zknumh
-                     WHERE matnr = l_items_header-matnr
-                     AND lifnr = ls_header-lifnr
-                     AND ekorg = ls_header-ekorg
-                     AND werks = l_items_header-werks
-                     AND datab <= ls_header-bedat
-                     AND datbi >= ls_header-bedat." '99991231'.
+                    clear: zknumh , zzterm.
+                    select single knumh
+                     from a017
+                     into zknumh
+                     where matnr = l_items_header-matnr
+                     and lifnr = ls_header-lifnr
+                     and ekorg = ls_header-ekorg
+                     and werks = l_items_header-werks
+                     and datab <= ls_header-bedat
+                     and datbi >= ls_header-bedat." '99991231'.
 
-                    IF sy-subrc = 0.
+                    if sy-subrc = 0.
 
-                      SELECT SINGLE zterm
-                        FROM konp
-                        INTO zzterm
-                        WHERE knumh = zknumh.
+                      select single zterm
+                        from konp
+                        into zzterm
+                        where knumh = zknumh.
 
-                      IF sy-subrc = 0.
-                        IF zzterm <> ls_header-zterm.
+                      if sy-subrc = 0.
+                        if zzterm <> ls_header-zterm.
 
 *        MMPUR_MESSAGE_FORCED 'E' 'ZMM01' '000' TEXT-006 '' '' ''.
 
-                          SELECT SINGLE ztag1 FROM t052 INTO header_ztag1
-                             WHERE zterm = ls_header-zterm.
-                          SELECT SINGLE ztag1 FROM t052 INTO info_ztag1
-                            WHERE zterm = zzterm.
-                          IF header_ztag1 <> info_ztag1.
-                            IF l_items_header-loekz <> 'L'.
-                              MESSAGE e398(00) WITH 'Credit Days are mismatch with Info record for' l_items_header-matnr.
-                            ENDIF.
+                          select single ztag1 from t052 into header_ztag1
+                             where zterm = ls_header-zterm.
+                          select single ztag1 from t052 into info_ztag1
+                            where zterm = zzterm.
+                          if header_ztag1 <> info_ztag1.
+                            if l_items_header-loekz <> 'L'.
+                              message e398(00) with 'Credit Days are mismatch with Info record for' l_items_header-matnr.
+                            endif.
 *          MMPUR_MESSAGE_FORCED 'E' 'ZMM01' '000' TEXT-007 '' '' ''.
-                          ENDIF.
+                          endif.
 *            MMPUR_MESSAGE_FORCED 'E' 'ZMM01' '000' TEXT-006 '' '' ''.
-                        ENDIF.
-                      ENDIF.
+                        endif.
+                      endif.
 
-                    ELSE.
+                    else.
 *                  DATA: msg(50).
-                      DATA: msg TYPE t100-text.
-                      CONCATENATE l_items_header-matnr 'Vendor :' ls_header-lifnr 'Plant:' l_items_header-werks INTO msg.
-                      MESSAGE e398(00) WITH 'Please maintain Plant Spec.Inforecord for Material' l_items_header-matnr 'Vendor :' ls_header-lifnr.
+                      data: msg type t100-text.
+                      concatenate l_items_header-matnr 'Vendor :' ls_header-lifnr 'Plant:' l_items_header-werks into msg.
+                      message e398(00) with 'Please maintain Plant Spec.Inforecord for Material' l_items_header-matnr 'Vendor :' ls_header-lifnr.
                       " 'Plant:' L_ITEMS_HEADER-werks.
 
-                    ENDIF.
-                  ENDIF.
+                    endif.
+                  endif.
 
-                ENDIF.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
-              ENDLOOP.
+                endif.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
+              endloop.
 *    ENDIF.
-            ENDIF.
-          ENDIF.
-        ENDIF.
-      ENDIF.
+            endif.
+          endif.
+        endif.
+      endif.
 ** Vendor Tagging - Check if Vendor Plant has been maintained or not
-      IF ls_header-bsart EQ 'ZDOM' OR ls_header-bsart EQ 'YDOM' OR ls_header-bsart EQ 'ZDTP' OR ls_header-bsart EQ 'ZENG' OR ls_header-bsart EQ 'YENG'.
-        CONSTANTS: mmmfd_zzvendorplant TYPE mmpur_metafield VALUE 90000000.
-        IF ls_header-lifnr IS NOT INITIAL.
-          IF ls_header-zzvendorplant = space.
+      if ls_header-bsart eq 'ZDOM' or ls_header-bsart eq 'YDOM' or ls_header-bsart eq 'ZDTP' or ls_header-bsart eq 'ZENG' or ls_header-bsart eq 'YENG'.
+        constants: mmmfd_zzvendorplant type mmpur_metafield value 90000000.
+        if ls_header-lifnr is not initial.
+          if ls_header-zzvendorplant = space.
 *LFA1-J_1KFTBUS
-            CLEAR: zj_1kftbus.
-            SELECT SINGLE j_1kftbus
-              FROM lfa1 INTO zj_1kftbus
-              WHERE lifnr = ls_header-lifnr.
-            IF zj_1kftbus = 'V2 - Multi Plant Manufacturer'.
+            clear: zj_1kftbus.
+            select single j_1kftbus
+              from lfa1 into zj_1kftbus
+              where lifnr = ls_header-lifnr.
+            if zj_1kftbus = 'V2 - Multi Plant Manufacturer'.
               mmpur_metafield  mmmfd_zzvendorplant.
               mmpur_message_forced 'E' 'ZMM01' '000' 'Please Select Vendor Supplying Plant Location ' '' '' ''.
-            ENDIF.
-          ENDIF.
-        ENDIF.
-      ENDIF.
-    ENDIF.
+            endif.
+          endif.
+        endif.
+      endif.
+    endif.
 *  clear: zmtart.
 *  select single mtart from mara into zmtart where matnr = L_ITEMS_HEADER-MATNR.
 *
@@ -1558,113 +1590,113 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 ***** Added by Naren Karra - 30.08.2016 -End
 
 
-    IF ls_header-bsart = 'ZSTO' OR ls_header-bsart = 'YSTO' .
+    if ls_header-bsart = 'ZSTO' or ls_header-bsart = 'YSTO' .
 
-      DATA: it_eina TYPE TABLE OF eina,
-            wa_eina TYPE eina,
+      data: it_eina type table of eina,
+            wa_eina type eina,
 
-            it_eine TYPE TABLE OF eine,
-            wa_eine TYPE eine,
+            it_eine type table of eine,
+            wa_eine type eine,
 
-            v_gstno TYPE kna1-stcd3.
+            v_gstno type kna1-stcd3.
 
-      DATA: lv_reswk    TYPE eina-lifnr,
-            v_msg       TYPE string,
-            lifnr       TYPE bdcdata-fval,
-            matnr       TYPE bdcdata-fval,
-            ekorg       TYPE bdcdata-fval,
-            werks       TYPE bdcdata-fval,
-            ekgrp       TYPE bdcdata-fval,
-            netpr       TYPE bdcdata-fval,
-            subrc       LIKE sy-subrc,
-            messages    TYPE TABLE OF bdcmsgcoll,
-            lw_messages TYPE bdcmsgcoll,
-            v_supplnt   TYPE kna1-kunnr,
-            v_recplnt   TYPE kna1-kunnr.
+      data: lv_reswk    type eina-lifnr,
+            v_msg       type string,
+            lifnr       type bdcdata-fval,
+            matnr       type bdcdata-fval,
+            ekorg       type bdcdata-fval,
+            werks       type bdcdata-fval,
+            ekgrp       type bdcdata-fval,
+            netpr       type bdcdata-fval,
+            subrc       like sy-subrc,
+            messages    type table of bdcmsgcoll,
+            lw_messages type bdcmsgcoll,
+            v_supplnt   type kna1-kunnr,
+            v_recplnt   type kna1-kunnr.
 
 *Saurabh
-      LOOP AT l_items INTO l_single.
-        CLEAR: l_items_header, lv_reswk, v_supplnt, v_recplnt.
-        CALL METHOD l_single-item->get_data
-          RECEIVING
+      loop at l_items into l_single.
+        clear: l_items_header, lv_reswk, v_supplnt, v_recplnt.
+        call method l_single-item->get_data
+          receiving
             re_data = l_items_header.
 
         " Exclude deleted and delivery complete items from validation as per mail from Venu Sir: 09.08.2018: PO ERR
         " IRDK933092: MM: S_K: PO_BADI: PO Short-close: 14.8.18
 
-        IF l_items_header-loekz EQ '' AND l_items_header-elikz EQ ''.
+        if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
 * Make GST No mandatory for supplying, recieving plant *
-          CONCATENATE 'V' ls_header-reswk INTO lv_reswk.
-          CONCATENATE 'V' ls_header-reswk INTO v_supplnt.     " IHDK900966
-          CONCATENATE 'C' l_items_header-werks INTO v_recplnt.
+          concatenate 'V' ls_header-reswk into lv_reswk.
+          concatenate 'V' ls_header-reswk into v_supplnt.     " IHDK900966
+          concatenate 'C' l_items_header-werks into v_recplnt.
 
-          IF v_supplnt IS NOT INITIAL.
-            CLEAR v_gstno.
-            SELECT SINGLE stcd3
-              FROM lfa1
-              INTO v_gstno
-              WHERE lifnr = v_supplnt.  " supplying plant = vendor (VXXXX); " IHDK900966
-            IF v_gstno IS INITIAL.
-              CLEAR msg.
-              CONCATENATE 'GSTIN No. not maintained for plant' ls_header-reswk INTO msg SEPARATED BY space.
+          if v_supplnt is not initial.
+            clear v_gstno.
+            select single stcd3
+              from lfa1
+              into v_gstno
+              where lifnr = v_supplnt.  " supplying plant = vendor (VXXXX); " IHDK900966
+            if v_gstno is initial.
+              clear msg.
+              concatenate 'GSTIN No. not maintained for plant' ls_header-reswk into msg separated by space.
 *          MESSAGE msg TYPE 'E'.
               mmpur_message_forced 'E' 'ZMM01' '000' msg '' '' ''.
-            ENDIF.
-          ENDIF.
+            endif.
+          endif.
 
-          IF v_recplnt IS NOT INITIAL.
-            CLEAR v_gstno.
-            SELECT SINGLE stcd3
-              FROM kna1
-              INTO v_gstno
-              WHERE kunnr = v_recplnt.  " recving plant = customer (CXXXX); " IHDK900966
-            IF v_gstno IS INITIAL.
-              CLEAR msg.
-              CONCATENATE 'GSTIN No. not maintained for plant' l_items_header-werks INTO msg SEPARATED BY space.
+          if v_recplnt is not initial.
+            clear v_gstno.
+            select single stcd3
+              from kna1
+              into v_gstno
+              where kunnr = v_recplnt.  " recving plant = customer (CXXXX); " IHDK900966
+            if v_gstno is initial.
+              clear msg.
+              concatenate 'GSTIN No. not maintained for plant' l_items_header-werks into msg separated by space.
 *          MESSAGE msg TYPE 'E'.
               mmpur_message_forced 'E' 'ZMM01' '000' msg '' '' ''.
-            ENDIF.
-          ENDIF.
+            endif.
+          endif.
 * Maintain inforecord for material, purch org, plnt before saving if not maintained *
-          SELECT *
-            FROM eina
-            INTO TABLE it_eina
-            WHERE matnr = l_items_header-matnr
-            AND   lifnr = lv_reswk
-            AND   loekz NE 'X'.
+          select *
+            from eina
+            into table it_eina
+            where matnr = l_items_header-matnr
+            and   lifnr = lv_reswk
+            and   loekz ne 'X'.
 
-          IF sy-subrc = 0 AND it_eina IS NOT INITIAL.
-            SELECT *
-              FROM eine
-              INTO TABLE it_eine
-              FOR ALL ENTRIES IN it_eina
-              WHERE infnr = it_eina-infnr
-              AND   ekorg = ls_header-ekorg
-              AND   werks = l_items_header-werks
-              AND   loekz NE 'X'.
-          ENDIF.
+          if sy-subrc = 0 and it_eina is not initial.
+            select *
+              from eine
+              into table it_eine
+              for all entries in it_eina
+              where infnr = it_eina-infnr
+              and   ekorg = ls_header-ekorg
+              and   werks = l_items_header-werks
+              and   loekz ne 'X'.
+          endif.
 
-          IF it_eine[] IS INITIAL.
-            CLEAR v_msg.
-            SHIFT l_items_header-ebelp LEFT DELETING LEADING '0'.
-            CONCATENATE 'Item' l_items_header-ebelp 'Maintaining Inforecord for'
+          if it_eine[] is initial.
+            clear v_msg.
+            shift l_items_header-ebelp left deleting leading '0'.
+            concatenate 'Item' l_items_header-ebelp 'Maintaining Inforecord for'
             ls_header-reswk '/' l_items_header-werks 'in STO...'
-            INTO v_msg SEPARATED BY space.
+            into v_msg separated by space.
 *        MESSAGE  v_msg TYPE 'S'.
             mmpur_message_forced 'S' 'ZMM01' '000' v_msg '' '' ''.
 
-            CLEAR: lifnr, matnr, ekorg, werks, ekgrp, netpr.
-            MOVE: lv_reswk TO lifnr,
-                  l_items_header-matnr TO matnr,
-                  ls_header-ekorg TO ekorg,
-                  l_items_header-werks TO werks,
-                  ls_header-ekgrp TO ekgrp,
-                  l_items_header-netpr TO netpr.
+            clear: lifnr, matnr, ekorg, werks, ekgrp, netpr.
+            move: lv_reswk to lifnr,
+                  l_items_header-matnr to matnr,
+                  ls_header-ekorg to ekorg,
+                  l_items_header-werks to werks,
+                  ls_header-ekgrp to ekgrp,
+                  l_items_header-netpr to netpr.
 
-            SHIFT netpr LEFT DELETING LEADING space.
+            shift netpr left deleting leading space.
 
-            CALL FUNCTION 'ZFM_INFORECORD_ME11_PO'
-              EXPORTING
+            call function 'ZFM_INFORECORD_ME11_PO'
+              exporting
 *               mode      = 'N'
                 lifnr_001 = lifnr  "'V1101'
                 matnr_002 = matnr  "'20000096'
@@ -1673,56 +1705,56 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
                 ekgrp_011 = ekgrp  "'302'
 *               mwskz_012 = 'G3'
                 netpr_015 = netpr  "'             1'
-              IMPORTING
+              importing
                 subrc     = subrc
-              TABLES
+              tables
                 messtab   = messages.
 
-            REFRESH: it_eina[], it_eine[].
+            refresh: it_eina[], it_eine[].
 
-            SELECT *
-            FROM eina
-            INTO TABLE it_eina
-            WHERE matnr = l_items_header-matnr
-            AND   lifnr = lv_reswk.
+            select *
+            from eina
+            into table it_eina
+            where matnr = l_items_header-matnr
+            and   lifnr = lv_reswk.
 
-            IF sy-subrc = 0 AND it_eina[] IS NOT INITIAL.
-              SELECT *
-                FROM eine
-                INTO TABLE it_eine
-                FOR ALL ENTRIES IN it_eina
-                WHERE infnr = it_eina-infnr
-                AND   ekorg = ls_header-ekorg
-                AND   werks = l_items_header-werks.
-            ENDIF.
+            if sy-subrc = 0 and it_eina[] is not initial.
+              select *
+                from eine
+                into table it_eine
+                for all entries in it_eina
+                where infnr = it_eina-infnr
+                and   ekorg = ls_header-ekorg
+                and   werks = l_items_header-werks.
+            endif.
 
-            IF it_eine[] IS NOT INITIAL.
-              CLEAR v_msg.
-              SHIFT l_items_header-ebelp LEFT DELETING LEADING '0'.
-              CONCATENATE 'Item' l_items_header-ebelp 'Inforecord maintained for'
+            if it_eine[] is not initial.
+              clear v_msg.
+              shift l_items_header-ebelp left deleting leading '0'.
+              concatenate 'Item' l_items_header-ebelp 'Inforecord maintained for'
               ls_header-reswk '/' l_items_header-werks 'in STO...'
-              INTO v_msg SEPARATED BY space.
+              into v_msg separated by space.
 *          MESSAGE  v_msg TYPE 'S'.
               mmpur_message_forced 'S' 'ZMM01' '000' v_msg '' '' ''.
-            ELSE.
-              CLEAR v_msg.
-              SHIFT l_items_header-ebelp LEFT DELETING LEADING '0'.
-              CONCATENATE 'Item' l_items_header-ebelp 'Inforecord not maintained for'
+            else.
+              clear v_msg.
+              shift l_items_header-ebelp left deleting leading '0'.
+              concatenate 'Item' l_items_header-ebelp 'Inforecord not maintained for'
               ls_header-reswk '/' l_items_header-werks 'in STO...'
-              INTO v_msg SEPARATED BY space.
+              into v_msg separated by space.
 *          MESSAGE  v_msg TYPE 'E'.
               mmpur_message_forced 'E' 'ZMM01' '000' v_msg '' '' ''.
 
-              DATA: lv_msgid TYPE symsgid,
-                    lv_msgty TYPE symsgty,
-                    lv_msgno TYPE symsgno,
-                    lv_msgv1 TYPE symsgv,
-                    lv_msgv2 TYPE symsgv,
-                    lv_msgv3 TYPE symsgv,
-                    lv_msgv4 TYPE symsgv.
+              data: lv_msgid type symsgid,
+                    lv_msgty type symsgty,
+                    lv_msgno type symsgno,
+                    lv_msgv1 type symsgv,
+                    lv_msgv2 type symsgv,
+                    lv_msgv3 type symsgv,
+                    lv_msgv4 type symsgv.
 
-              LOOP AT messages INTO DATA(ls_message) WHERE ( msgtyp EQ 'E' OR msgtyp EQ 'A' ).
-                CLEAR: lv_msgid,
+              loop at messages into data(ls_message) where ( msgtyp eq 'E' or msgtyp eq 'A' ).
+                clear: lv_msgid,
                        lv_msgty,
                        lv_msgno,
                        lv_msgv1,
@@ -1730,117 +1762,117 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
                        lv_msgv3,
                        lv_msgv4.
 
-                lv_msgid = CONV #( ls_message-msgid ).
-                lv_msgty = CONV #( ls_message-msgtyp ).
-                lv_msgno = CONV #( ls_message-msgnr ).
-                lv_msgv1 = CONV #( ls_message-msgv1 ).
-                lv_msgv2 = CONV #( ls_message-msgv2 ).
-                lv_msgv3 = CONV #( ls_message-msgv3 ).
-                lv_msgv4 = CONV #( ls_message-msgv4 ).
+                lv_msgid = conv #( ls_message-msgid ).
+                lv_msgty = conv #( ls_message-msgtyp ).
+                lv_msgno = conv #( ls_message-msgnr ).
+                lv_msgv1 = conv #( ls_message-msgv1 ).
+                lv_msgv2 = conv #( ls_message-msgv2 ).
+                lv_msgv3 = conv #( ls_message-msgv3 ).
+                lv_msgv4 = conv #( ls_message-msgv4 ).
 
                 mmpur_message_forced lv_msgty lv_msgid lv_msgno
                                      lv_msgv1 lv_msgv2 lv_msgv3 lv_msgv4.
-                CLEAR ls_message.
-              ENDLOOP.
-            ENDIF.
+                clear ls_message.
+              endloop.
+            endif.
 
-          ENDIF.
+          endif.
 
-        ENDIF. " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
-        REFRESH: it_eina[], it_eine[], messages[].
-      ENDLOOP.
-    ENDIF.
+        endif. " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
+        refresh: it_eina[], it_eine[], messages[].
+      endloop.
+    endif.
 
     " IRDK930553: MM: S_K: ME22N: PO_BADI: Check PO Line items with Q Info rec
 *  IF sy-sysid EQ 'IRD' OR sy-sysid EQ 'IRQ'.  " IRDK931151, IRDK931155; commented IRDK932948: MM: S_K: PO_BADI: Check: Move QIR validation to PRD: 25.7.18
-    IF me->gv_trtyp EQ 'V' AND ( ls_header-ekgrp NOT BETWEEN '301' AND '304' ). " IRDK932296: exclude purch grp 301 to 304 relevant to STO only
+    if me->gv_trtyp eq 'V' and ( ls_header-ekgrp not between '301' and '304' ). " IRDK932296: exclude purch grp 301 to 304 relevant to STO only
       " Edit Mode => 22N, 29N? others?
-      DATA: rel_until TYPE qinf-frei_dat. " Release until date in QI info record
-      DATA: rel_date_out(10) TYPE c.  " rel until date in output format
-      DATA: item_delv_date(10) TYPE c.  " delv date in output format
-      DATA: qm_proc_active TYPE mara-qmpur. " Check whether qm procuerment is active for that material
+      data: rel_until type qinf-frei_dat. " Release until date in QI info record
+      data: rel_date_out(10) type c.  " rel until date in output format
+      data: item_delv_date(10) type c.  " delv date in output format
+      data: qm_proc_active type mara-qmpur. " Check whether qm procuerment is active for that material
 
-      FREE l_single.
-      LOOP AT l_items INTO l_single.
-        CLEAR: l_items_header.
-        CALL METHOD l_single-item->get_data
-          RECEIVING
+      free l_single.
+      loop at l_items into l_single.
+        clear: l_items_header.
+        call method l_single-item->get_data
+          receiving
             re_data = l_items_header.
 
         " Exclude deleted and delivery complete items from validation as per mail from Venu Sir: 09.08.2018: PO ERR
         " IRDK933092: MM: S_K: PO_BADI: PO Short-close: 14.8.18
 
-        IF l_items_header-loekz EQ '' AND l_items_header-elikz EQ ''.
+        if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
 
-          IF l_items_header IS NOT INITIAL.
+          if l_items_header is not initial.
             " IRDK930980: MM: S_K: PO BADI: QI Info validation: Exclude non QM items
-            SELECT SINGLE qmpur
-              FROM mara
-              INTO qm_proc_active
-              WHERE matnr = l_items_header-matnr.
+            select single qmpur
+              from mara
+              into qm_proc_active
+              where matnr = l_items_header-matnr.
             " This validation is applicable only for items for which qm procurment is active in master
-            IF qm_proc_active = abap_true.
+            if qm_proc_active = abap_true.
               " This validation is applicable only for items that are not deleted AND not completely delivered(all validations should be, ideally)
-              IF l_items_header-loekz NE abap_true.   " Not deleted
-                IF l_items_header-elikz NE abap_true " Delivery not yet complete
-                  AND l_items_header-matnr IS NOT INITIAL.  " Coded PO line items only  " IRDK933018
-                  CLEAR: rel_until, rel_date_out.
+              if l_items_header-loekz ne abap_true.   " Not deleted
+                if l_items_header-elikz ne abap_true " Delivery not yet complete
+                  and l_items_header-matnr is not initial.  " Coded PO line items only  " IRDK933018
+                  clear: rel_until, rel_date_out.
                   " Get QI info record for material, vendor, plant combination => get its release until date
                   " Compare that date with the delivery date of the po item, rel_until date should be greater than or = po item delivery date
-                  SELECT SINGLE frei_dat FROM qinf INTO rel_until
-                    WHERE matnr = l_items_header-matnr  " material
-                    AND   lieferant = ls_header-lifnr   " vendor
-                    AND   werk = l_items_header-werks   " plant
-                    AND   loekz NE abap_true. " record not marked for deletion
+                  select single frei_dat from qinf into rel_until
+                    where matnr = l_items_header-matnr  " material
+                    and   lieferant = ls_header-lifnr   " vendor
+                    and   werk = l_items_header-werks   " plant
+                    and   loekz ne abap_true. " record not marked for deletion
 
-                  IF sy-subrc IS NOT INITIAL. " not maintained or marked for deletion
-                    CLEAR v_msg.
-                    CONCATENATE l_items_header-ebelp ':' l_items_header-matnr ls_header-lifnr l_items_header-werks ':'
-                    'QI info rec. not maintained ot deleted' INTO v_msg SEPARATED BY space.
-                    MESSAGE v_msg TYPE 'E'.
-                  ELSE. " QI info record found, now compare the rel until date with po item delv date
-                    IF rel_until LT l_items_header-eindt. " Delivery date, IRDK930737
+                  if sy-subrc is not initial. " not maintained or marked for deletion
+                    clear v_msg.
+                    concatenate l_items_header-ebelp ':' l_items_header-matnr ls_header-lifnr l_items_header-werks ':'
+                    'QI info rec. not maintained ot deleted' into v_msg separated by space.
+                    message v_msg type 'E'.
+                  else. " QI info record found, now compare the rel until date with po item delv date
+                    if rel_until lt l_items_header-eindt. " Delivery date, IRDK930737
                       " PO delivery date exceeds release until date in QI info record
 
-                      CALL FUNCTION 'CONVERT_DATE_TO_EXTERNAL'
-                        EXPORTING
+                      call function 'CONVERT_DATE_TO_EXTERNAL'
+                        exporting
                           date_internal            = rel_until
-                        IMPORTING
+                        importing
                           date_external            = rel_date_out
-                        EXCEPTIONS
+                        exceptions
                           date_internal_is_invalid = 1
-                          OTHERS                   = 2.
-                      IF sy-subrc <> 0.
+                          others                   = 2.
+                      if sy-subrc <> 0.
 *        Implement suitable error handling here
-                      ENDIF.
+                      endif.
 
-                      CALL FUNCTION 'CONVERT_DATE_TO_EXTERNAL'
-                        EXPORTING
+                      call function 'CONVERT_DATE_TO_EXTERNAL'
+                        exporting
                           date_internal            = l_items_header-eindt " IRDK930737
-                        IMPORTING
+                        importing
                           date_external            = item_delv_date
-                        EXCEPTIONS
+                        exceptions
                           date_internal_is_invalid = 1
-                          OTHERS                   = 2.
-                      IF sy-subrc <> 0.
+                          others                   = 2.
+                      if sy-subrc <> 0.
 *        Implement suitable error handling here
-                      ENDIF.
+                      endif.
 
-                      CLEAR v_msg.
-                      CONCATENATE l_items_header-ebelp ':' 'Release until date in QI:' rel_date_out 'exceeds item deliv. date :'
-                      item_delv_date INTO v_msg SEPARATED BY space.
-                      MESSAGE v_msg TYPE 'E'.
-                    ENDIF.
-                  ENDIF.
-                ENDIF.
-              ENDIF.
-            ENDIF.
-          ENDIF.
+                      clear v_msg.
+                      concatenate l_items_header-ebelp ':' 'Release until date in QI:' rel_date_out 'exceeds item deliv. date :'
+                      item_delv_date into v_msg separated by space.
+                      message v_msg type 'E'.
+                    endif.
+                  endif.
+                endif.
+              endif.
+            endif.
+          endif.
 
-        ENDIF.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
-        FREE l_single.
-      ENDLOOP.
-    ENDIF.
+        endif.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
+        free l_single.
+      endloop.
+    endif.
 *  ENDIF.
     " End IRDK930553
 
@@ -1850,119 +1882,119 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 *********** no effects on PO created earlier
 ************ Developer: 10106
 
-    IF all_close = abap_false.  " IRDK933113; perform header level checks if atleast one po item is not closed or deleted
-      IF ls_header-aedat GE '20180401'.
-        IF ls_header-bsart EQ 'ZDOM' AND ls_header-bukrs EQ '2000'.
+    if all_close = abap_false.  " IRDK933113; perform header level checks if atleast one po item is not closed or deleted
+      if ls_header-aedat ge '20180401'.
+        if ls_header-bsart eq 'ZDOM' and ls_header-bukrs eq '2000'.
           mmpur_message_forced 'E' 'ZMM01' '000' 'Document Type it should start with Y* ' '' '' ''.
-        ENDIF.
+        endif.
 
-        IF ls_header-bsart EQ 'ZENG' AND ls_header-bukrs EQ '2000'.
+        if ls_header-bsart eq 'ZENG' and ls_header-bukrs eq '2000'.
           mmpur_message_forced 'E' 'ZMM01' '000' 'Document Type it should start with Y* ' '' '' ''.
-        ENDIF.
+        endif.
 
-        IF ls_header-bsart EQ 'ZENG' AND ls_header-bukrs EQ '2050'.
+        if ls_header-bsart eq 'ZENG' and ls_header-bukrs eq '2050'.
           mmpur_message_forced 'E' 'ZMM01' '000' 'Document Type it should start with Y* ' '' '' ''.
-        ENDIF.
+        endif.
 
-        IF ls_header-bsart EQ 'YENG' AND ( ls_header-bukrs EQ '1000' OR ls_header-bukrs EQ '2800' ).  " IHDK900987: IndoReagans(2800): SD: S_K: Incorporate 2800/28: 19.3.19
+        if ls_header-bsart eq 'YENG' and ( ls_header-bukrs eq '1000' or ls_header-bukrs eq '2800' ).  " IHDK900987: IndoReagans(2800): SD: S_K: Incorporate 2800/28: 19.3.19
           mmpur_message_forced 'E' 'ZMM01' '000' 'Document Type it should start with Z* ' '' '' ''.
-        ENDIF.
+        endif.
 
-        IF ls_header-bsart EQ 'YDOM' AND ( ls_header-bukrs EQ '1000' OR ls_header-bukrs EQ '2800' ).  " IHDK900987: IndoReagans(2800): SD: S_K: Incorporate 2800/28: 19.3.19
+        if ls_header-bsart eq 'YDOM' and ( ls_header-bukrs eq '1000' or ls_header-bukrs eq '2800' ).  " IHDK900987: IndoReagans(2800): SD: S_K: Incorporate 2800/28: 19.3.19
           mmpur_message_forced 'E' 'ZMM01' '000' 'Document Type it should Start with Y* ' '' '' ''.
-        ENDIF.
+        endif.
 
         "Check on Credit Days
-        IF ls_header-bsart NE 'YPTR' AND ls_header-bsart NE 'YSTO' AND ls_header-bsart NE 'ZSTO'
-          AND ls_header-bsart NE 'ZPTR' AND ls_header-bsart NE 'YSTI'  .
-          IF ls_header-zterm IS INITIAL.
-            MESSAGE 'Enter Payment Terms' TYPE 'E'.
-          ENDIF.
-        ENDIF.
+        if ls_header-bsart ne 'YPTR' and ls_header-bsart ne 'YSTO' and ls_header-bsart ne 'ZSTO'
+          and ls_header-bsart ne 'ZPTR' and ls_header-bsart ne 'YSTI'  .
+          if ls_header-zterm is initial.
+            message 'Enter Payment Terms' type 'E'.
+          endif.
+        endif.
 
-        DATA : wa_t052 TYPE t052.
+        data : wa_t052 type t052.
 
-        SELECT SINGLE * FROM t052 INTO wa_t052
-        WHERE zterm = ls_header-zterm.
-        IF sy-subrc = 0.
-          IF wa_t052-koart = 'D'. " changes on 07.01.2014 by 10106
-            MESSAGE 'Select Correct Payment Term of Vendor (Purchasing)' TYPE 'E'.
-          ENDIF.
-        ENDIF.
-      ENDIF.
+        select single * from t052 into wa_t052
+        where zterm = ls_header-zterm.
+        if sy-subrc = 0.
+          if wa_t052-koart = 'D'. " changes on 07.01.2014 by 10106
+            message 'Select Correct Payment Term of Vendor (Purchasing)' type 'E'.
+          endif.
+        endif.
+      endif.
 
-    ENDIF.  " if all_close = abap_false.
+    endif.  " if all_close = abap_false.
 
 *** below validation is to check if ZARP is maintained for receiveing plants region and resp. material
 ***  done on 29.05.2018 PS
-    DATA: it_a605 TYPE TABLE OF a605 .
-    DATA: zspart TYPE mara-spart, zmvgr5 TYPE mvke-mvgr5, zvkorg TYPE mvke-vkorg, zvtweg TYPE mvke-vtweg,zregio TYPE t001w-regio.
-    BREAK 10106.
-    IF ls_header-bsart EQ 'ZSTO' .
-      LOOP AT l_items INTO l_single.
-        CLEAR: l_items_header.
+    data: it_a605 type table of a605 .
+    data: zspart type mara-spart, zmvgr5 type mvke-mvgr5, zvkorg type mvke-vkorg, zvtweg type mvke-vtweg,zregio type t001w-regio.
+    break 10106.
+    if ls_header-bsart eq 'ZSTO' .
+      loop at l_items into l_single.
+        clear: l_items_header.
 
-        CALL METHOD l_single-item->get_data
-          RECEIVING
+        call method l_single-item->get_data
+          receiving
             re_data = l_items_header.
 
         " Exclude deleted and delivery complete items from validation as per mail from Venu Sir: 09.08.2018: PO ERR
         " IRDK933092: MM: S_K: PO_BADI: PO Short-close: 14.8.18
 
-        IF l_items_header-loekz EQ '' AND l_items_header-elikz EQ ''.
+        if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
 
-          CLEAR: zmtart , zspart , zmvgr5 , zvkorg , zvtweg.
-          SELECT SINGLE mtart spart FROM mara INTO (zmtart , zspart ) WHERE matnr = l_items_header-matnr.
+          clear: zmtart , zspart , zmvgr5 , zvkorg , zvtweg.
+          select single mtart spart from mara into (zmtart , zspart ) where matnr = l_items_header-matnr.
 
-          SELECT SINGLE vkorg vtweg mvgr5
-          FROM mvke
-          INTO (zvkorg , zvtweg  ,zmvgr5 )
-          WHERE matnr = l_items_header-matnr.
-
-
-          IF ( zmtart = 'ZFGM' OR zmtart = 'ZTRD' OR zmtart = 'ZLFG' OR zmtart = 'ZLTD' )
-            AND ( zspart = '10' OR zspart = '15')
-            AND zvkorg = '1000'  AND zvtweg = '10' AND zmvgr5 = '002'.
-            IF ls_header-bedat >= '20180529'.
-
-              CLEAR: it_a605 , zregio.
-
-              SELECT SINGLE regio FROM t001w INTO zregio WHERE werks = l_items_header-werks.
+          select single vkorg vtweg mvgr5
+          from mvke
+          into (zvkorg , zvtweg  ,zmvgr5 )
+          where matnr = l_items_header-matnr.
 
 
-              SELECT * FROM a605 INTO TABLE it_a605
-              WHERE kschl = 'ZARP'
-              AND vkorg = zvkorg
-              AND vtweg = zvtweg
-              AND spart = zspart
-              AND regio = zregio "receiving plant region
-              AND ( kdgrp = '02' OR kdgrp = '01' ) "komk-kdgrp
-              AND matnr = l_items_header-matnr
-              AND datab <= sy-datum
-              AND datbi >= sy-datum.
-              IF sy-subrc <> 0.
-                CLEAR: v_msg.
-                CONCATENATE 'Ask SD key user to Maintain ZARP(Region Apprvd price) fo line item:' l_items_header-ebelp INTO v_msg.
-                MESSAGE v_msg TYPE 'E'.
+          if ( zmtart = 'ZFGM' or zmtart = 'ZTRD' or zmtart = 'ZLFG' or zmtart = 'ZLTD' )
+            and ( zspart = '10' or zspart = '15')
+            and zvkorg = '1000'  and zvtweg = '10' and zmvgr5 = '002'.
+            if ls_header-bedat >= '20180529'.
 
-              ENDIF.
+              clear: it_a605 , zregio.
 
-            ENDIF.
-          ENDIF.
+              select single regio from t001w into zregio where werks = l_items_header-werks.
 
-        ENDIF.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
-      ENDLOOP.
-    ENDIF.
+
+              select * from a605 into table it_a605
+              where kschl = 'ZARP'
+              and vkorg = zvkorg
+              and vtweg = zvtweg
+              and spart = zspart
+              and regio = zregio "receiving plant region
+              and ( kdgrp = '02' or kdgrp = '01' ) "komk-kdgrp
+              and matnr = l_items_header-matnr
+              and datab <= sy-datum
+              and datbi >= sy-datum.
+              if sy-subrc <> 0.
+                clear: v_msg.
+                concatenate 'Ask SD key user to Maintain ZARP(Region Apprvd price) fo line item:' l_items_header-ebelp into v_msg.
+                message v_msg type 'E'.
+
+              endif.
+
+            endif.
+          endif.
+
+        endif.  " if l_items_header-loekz eq '' and l_items_header-elikz eq ''.
+      endloop.
+    endif.
 
 **** error - dont allow to save ZSTO if purchasing group is not between 301 to 304
 
-    IF all_close = abap_false.  " IRDK933113; perform header level checks if atleast one po item is not closed or deleted
-      IF ls_header-bsart EQ 'ZSTO' .
-        IF ls_header-ekgrp NOT BETWEEN '301' AND  '304'.
-          MESSAGE 'Please provide correct Purchasing Group for ZSTO.' TYPE 'E'.
-        ENDIF.
-      ENDIF.
-    ENDIF.  " if all_close = abap_false.
+    if all_close = abap_false.  " IRDK933113; perform header level checks if atleast one po item is not closed or deleted
+      if ls_header-bsart eq 'ZSTO' .
+        if ls_header-ekgrp not between '301' and  '304'.
+          message 'Please provide correct Purchasing Group for ZSTO.' type 'E'.
+        endif.
+      endif.
+    endif.  " if all_close = abap_false.
 
     " Code commented: IRDK931062
 *  " IRDK931002
@@ -2178,7 +2210,7 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 *    ENDIF.
 *  ENDIF.
 *ENDMETHOD.
-  ENDMETHOD.
+  endmethod.
 
 
   method if_ex_me_process_po_cust~close.
