@@ -320,6 +320,7 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
           select single stcd3
             from lfa1
             where lifnr = @zlifnr
+            and   ktokk not in ( '2000', '4000' ) " import and one time vendors excluded; IHDK906039
             into @data(lv_vendor_gstin).
 
           if lv_bupla_gstin is not initial and lv_vendor_gstin is not initial.
