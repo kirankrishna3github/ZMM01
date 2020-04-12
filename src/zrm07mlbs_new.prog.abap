@@ -524,7 +524,7 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
 AT SELECTION-SCREEN OUTPUT.
   "added by varun on 12.04.2020
   SELECT SINGLE * FROM usr05 INTO @DATA(lv_usr05) WHERE bname EQ @sy-uname
-                                                  AND   parid EQ 'MB52_SAS_TABLE_DWN'.
+                                                  AND   parid EQ 'ZSAS_MB52_VAL'.
   IF sy-subrc NE 0.
     LOOP AT SCREEN.
       IF screen-group1 EQ 'DWN'.
