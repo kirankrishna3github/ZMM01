@@ -1177,6 +1177,29 @@
       <item/>
       <item>repid = &apos;ZRM07MLBS_NEW&apos;.</item>
       <item/>
+      <item>DATA: lt_zbestand TYPE TABLE OF zbestand,</item>
+      <item>ls_zbestand TYPE zbestand,</item>
+      <item>lv_dwn TYPE abap_bool.</item>
+      <item/>
+      <item>import lv_dwn TO lv_dwn from MEMORY ID &apos;BESTAND_DWN&apos;.</item>
+      <item/>
+      <item>if lv_dwn eq abap_true.</item>
+      <item/>
+      <item>SELECT * FROM zbestand INTO TABLE @DATA(lt_bestand_del).</item>
+      <item>if sy-subrc eq 0.</item>
+      <item>delete zbestand FROM TABLE lt_bestand_del[].</item>
+      <item/>
+      <item>lt_zbestand[] = CORRESPONDING #( bestand[] ).</item>
+      <item/>
+      <item>modify zbestand FROM TABLE lt_zbestand[].</item>
+      <item>IF sy-subrc eq 0.</item>
+      <item>COMMIT WORK.</item>
+      <item>ELSE.</item>
+      <item>rollback WORK.</item>
+      <item>ENDIF.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item/>
       <item>ENDIF.</item>
       <item/>
      </SOURCE>
@@ -2307,6 +2330,29 @@
       <item>3</item>
       <item>0</item>
       <item>0</item>
+      <item>3</item>
+      <item>0</item>
+      <item>3</item>
+      <item>9</item>
+      <item>9</item>
+      <item>0</item>
+      <item>3</item>
+      <item>0</item>
+      <item>3</item>
+      <item>0</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>0</item>
+      <item>5</item>
+      <item>0</item>
+      <item>5</item>
+      <item>5</item>
+      <item>7</item>
+      <item>5</item>
+      <item>7</item>
+      <item>5</item>
+      <item>5</item>
       <item>3</item>
       <item>0</item>
       <item>0</item>

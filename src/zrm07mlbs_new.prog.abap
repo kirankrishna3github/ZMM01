@@ -523,6 +523,12 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
 
 AT SELECTION-SCREEN.
 
+  "added by varun on 12.04.2020
+  IF p_dwn EQ abap_true.
+    DATA(lv_dwn) = CONV abap_bool( abap_true ).
+    EXPORT lv_dwn TO MEMORY ID 'BESTAND_DWN'.
+  ENDIF.
+
 * check radiobuttons                                          "n667256
   IF  pa_hsq IS INITIAL.                                    "n667256
     IF  pa_flt IS INITIAL.                                  "n667256
