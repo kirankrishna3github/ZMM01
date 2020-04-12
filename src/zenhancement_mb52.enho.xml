@@ -1190,6 +1190,8 @@
       <item>SELECT * FROM zbestand INTO TABLE @DATA(lt_bestand_del).</item>
       <item>if sy-subrc eq 0.</item>
       <item>delete zbestand FROM TABLE lt_bestand_del[].</item>
+      <item>COMMIT WORK.</item>
+      <item>endif.</item>
       <item/>
       <item>lt_zbestand[] = CORRESPONDING #( bestand[] ).</item>
       <item/>
@@ -1199,7 +1201,7 @@
       <item>ELSE.</item>
       <item>rollback WORK.</item>
       <item>ENDIF.</item>
-      <item>endif.</item>
+      <item/>
       <item>endif.</item>
       <item/>
       <item>ENDIF.</item>
@@ -2347,6 +2349,8 @@
       <item>5</item>
       <item>5</item>
       <item>5</item>
+      <item>5</item>
+      <item>5</item>
       <item>0</item>
       <item>5</item>
       <item>0</item>
@@ -2356,7 +2360,7 @@
       <item>5</item>
       <item>7</item>
       <item>5</item>
-      <item>5</item>
+      <item>0</item>
       <item>3</item>
       <item>0</item>
       <item>0</item>
