@@ -127,42 +127,42 @@ TABLES : sscrfields.         "for the user-commands
 
 * working table for the entries of all stock tables
 DATA: BEGIN OF collector OCCURS 0,
-       matnr LIKE mara-matnr,
-       werks LIKE t001w-werks,
-       lgort LIKE mard-lgort,
-       sobkz LIKE mkol-sobkz,
-       pspnr               LIKE  mspr-pspnr,
-       vbeln               LIKE  mska-vbeln,
-       posnr               LIKE  mska-posnr,
-       lifnr LIKE mslb-lifnr,
-       kunnr LIKE msku-kunnr,
-       lvorm               LIKE  mard-lvorm,
+        matnr LIKE mara-matnr,
+        werks LIKE t001w-werks,
+        lgort LIKE mard-lgort,
+        sobkz LIKE mkol-sobkz,
+        pspnr LIKE  mspr-pspnr,
+        vbeln LIKE  mska-vbeln,
+        posnr LIKE  mska-posnr,
+        lifnr LIKE mslb-lifnr,
+        kunnr LIKE msku-kunnr,
+        lvorm LIKE  mard-lvorm,
 
-       kzbws LIKE mssa-kzbws,
-       charg LIKE mchb-charg,
-       labst LIKE mard-labst,
-       insme LIKE mard-insme,
-       speme LIKE mard-speme,
-       einme LIKE mard-einme,
-       retme LIKE mard-retme,
-       umlme LIKE mard-umlme,
-       bwesb               LIKE  marc-bwesb,                "AC0K020254
-       glgmg LIKE marc-glgmg,                               "n912093
-       trame LIKE marc-trame,                               "n912093
-       umlmc LIKE marc-umlmc,                               "n912093
+        kzbws LIKE mssa-kzbws,
+        charg LIKE mchb-charg,
+        labst LIKE mard-labst,
+        insme LIKE mard-insme,
+        speme LIKE mard-speme,
+        einme LIKE mard-einme,
+        retme LIKE mard-retme,
+        umlme LIKE mard-umlme,
+        bwesb LIKE  marc-bwesb,                             "AC0K020254
+        glgmg LIKE marc-glgmg,                              "n912093
+        trame LIKE marc-trame,                              "n912093
+        umlmc LIKE marc-umlmc,                              "n912093
 *ENHANCEMENT-POINT EHP604_RM07MLBS_01 SPOTS ES_RM07MLBS STATIC .
 * CHANGES BY PUNAM TO ADD FOLLOWING THREE FIELDS
-       hsdat TYPE mch1-hsdat, " Date of Manufacture                  "PUNAM
-       vfdat TYPE mch1-vfdat, "Shelf Life Exp. Date                  "PUNAM
-       atwrt TYPE auspc_v1-atwrt, "Old Batch number                  "PUNAM
-       spart LIKE mara-spart, " DIVISION                             "PUNAM
-       vtext LIKE tspat-vtext, " DIVISION DESCRIPTION                "PUNAM
+        hsdat TYPE mch1-hsdat, " Date of Manufacture                  "PUNAM
+        vfdat TYPE mch1-vfdat, "Shelf Life Exp. Date                  "PUNAM
+        atwrt TYPE auspc_v1-atwrt, "Old Batch number                  "PUNAM
+        spart LIKE mara-spart, " DIVISION                             "PUNAM
+        vtext LIKE tspat-vtext, " DIVISION DESCRIPTION                "PUNAM
 * END BY PUNAM
-       cityc LIKE t001w-cityc,
-       bezei LIKE t005h-bezei,
-       ersda TYPE mchb-ersda, " Loc Received Date - Added by CS on 30.12.2015
-       laeda TYPE	mchb-laeda " Last movement Date - Added by CS on 30.12.2015
-       .
+        cityc LIKE t001w-cityc,
+        bezei LIKE t005h-bezei,
+        ersda TYPE mchb-ersda, " Loc Received Date - Added by CS on 30.12.2015
+        laeda TYPE  mchb-laeda " Last movement Date - Added by CS on 30.12.2015
+        .
 DATA: END OF collector.
 
 * Internal tables
@@ -183,138 +183,138 @@ DATA: END OF header.
 
 DATA: BEGIN OF bestand OCCURS 0,
 *        Key fields
-         matnr LIKE mara-matnr,
-         werks LIKE t001w-werks,
-         lgort LIKE mard-lgort,
-         sobkz LIKE mkol-sobkz,
-         ssnum               LIKE  bickey-ssnum,            "n531604
-         pspnr               LIKE  mspr-pspnr,              "n531604
-         vbeln               LIKE  mska-vbeln,              "n531604
-         posnr               LIKE  mska-posnr,              "n531604
-         lifnr LIKE mkol-lifnr,
-         kunnr LIKE msku-kunnr,
-         kzbws LIKE mssa-kzbws,
-         charg LIKE mchb-charg,
+        matnr      LIKE mara-matnr,
+        werks      LIKE t001w-werks,
+        lgort      LIKE mard-lgort,
+        sobkz      LIKE mkol-sobkz,
+        ssnum      LIKE  bickey-ssnum,                      "n531604
+        pspnr      LIKE  mspr-pspnr,                        "n531604
+        vbeln      LIKE  mska-vbeln,                        "n531604
+        posnr      LIKE  mska-posnr,                        "n531604
+        lifnr      LIKE mkol-lifnr,
+        kunnr      LIKE msku-kunnr,
+        kzbws      LIKE mssa-kzbws,
+        charg      LIKE mchb-charg,
 *        Additional data (texts, unit, ...)
-         maktx LIKE marav-maktx,
-         bwkey LIKE mbew-bwkey,
-         mtart LIKE marav-mtart,
-         matkl LIKE marav-matkl,
-         meins LIKE marav-meins,
-         bwtty LIKE marc-bwtty,
-         xchar LIKE marc-xchar,
-         lgobe LIKE t001l-lgobe,
-         bwtar LIKE mcha-bwtar,
-         waers LIKE t001-waers,
-         name1 LIKE t001w-name1,
+        maktx      LIKE marav-maktx,
+        bwkey      LIKE mbew-bwkey,
+        mtart      LIKE marav-mtart,
+        matkl      LIKE marav-matkl,
+        meins      LIKE marav-meins,
+        bwtty      LIKE marc-bwtty,
+        xchar      LIKE marc-xchar,
+        lgobe      LIKE t001l-lgobe,
+        bwtar      LIKE mcha-bwtar,
+        waers      LIKE t001-waers,
+        name1      LIKE t001w-name1,
 *        Quantities and currencies
-         labst LIKE mard-labst,
-         wlabs LIKE mbew-salk3,
-         insme LIKE mard-insme,
-         winsm LIKE mbew-salk3,
-         speme LIKE mard-speme,
-         wspem LIKE mbew-salk3,
-         einme LIKE mard-einme,
-         weinm LIKE mbew-salk3,
-         retme LIKE mard-retme,
-         wretm LIKE mbew-salk3,
-         umlme LIKE mard-umlme,
-         wumlm LIKE mbew-salk3,
-         glgmg LIKE marc-glgmg,                             "n912093
-         wglgm LIKE mbew-salk3,                             "n912093
-         trame LIKE marc-trame,                             "n912093
-         wtram LIKE mbew-salk3,                             "n912093
-         umlmc LIKE marc-umlmc,                             "n912093
-         wumlc LIKE mbew-salk3,                             "n912093
+        labst      LIKE mard-labst,
+        wlabs      LIKE mbew-salk3,
+        insme      LIKE mard-insme,
+        winsm      LIKE mbew-salk3,
+        speme      LIKE mard-speme,
+        wspem      LIKE mbew-salk3,
+        einme      LIKE mard-einme,
+        weinm      LIKE mbew-salk3,
+        retme      LIKE mard-retme,
+        wretm      LIKE mbew-salk3,
+        umlme      LIKE mard-umlme,
+        wumlm      LIKE mbew-salk3,
+        glgmg      LIKE marc-glgmg,                         "n912093
+        wglgm      LIKE mbew-salk3,                         "n912093
+        trame      LIKE marc-trame,                         "n912093
+        wtram      LIKE mbew-salk3,                         "n912093
+        umlmc      LIKE marc-umlmc,                         "n912093
+        wumlc      LIKE mbew-salk3,                         "n912093
 
 *        Dummy field
-         dummy               TYPE  alv_dummy,
+        dummy      TYPE  alv_dummy,
 *        Colour
-         farbe TYPE slis_t_specialcol_alv,
-         lvorm               LIKE  mard-lvorm,
+        farbe      TYPE slis_t_specialcol_alv,
+        lvorm      LIKE  mard-lvorm,
 
 *        valuated blocked GR stock                       "AC0K020254
-         bwesb               LIKE  marc-bwesb,              "AC0K020254
-         wbwesb              LIKE  mbew-salk3,              "AC0K020254
+        bwesb      LIKE  marc-bwesb,                        "AC0K020254
+        wbwesb     LIKE  mbew-salk3,                        "AC0K020254
 *ENHANCEMENT-POINT EHP604_RM07MLBS_03 SPOTS ES_RM07MLBS STATIC .
 
 * CHANGES BY PUNAM TO ADD FOLLOWING THREE FIELDS
-         hsdat TYPE mch1-hsdat, " Date of Manufacture                  "PUNAM
-         vfdat TYPE mch1-vfdat, "Shelf Life Exp. Date                  "PUNAM
-         cuobj_bm TYPE mch1-cuobj_bm,
-         atwrt TYPE auspc_v1-atwrt, "Old Batch number                      "PUNAM
-         spart LIKE mara-spart, " DIVISION                      "PUNAM
-         vtext LIKE tspat-vtext, " DIVISION DESCRIPTION                "PUNAM
-         sl_days TYPE i, "Shelf Life-Days
-         status(50),
-         cityc LIKE t001w-cityc,
-         extwg LIKE mara-extwg,
-         bezei LIKE t005h-bezei,
-         ersda TYPE mchb-ersda, " Loc Received Date - Added by CS on 30.12.2015
-         laeda TYPE	mchb-laeda " Last movement Date - Added by CS on 30.12.2015
-         .
+        hsdat      TYPE mch1-hsdat, " Date of Manufacture                  "PUNAM
+        vfdat      TYPE mch1-vfdat, "Shelf Life Exp. Date                  "PUNAM
+        cuobj_bm   TYPE mch1-cuobj_bm,
+        atwrt      TYPE auspc_v1-atwrt, "Old Batch number                      "PUNAM
+        spart      LIKE mara-spart, " DIVISION                      "PUNAM
+        vtext      LIKE tspat-vtext, " DIVISION DESCRIPTION                "PUNAM
+        sl_days    TYPE i, "Shelf Life-Days
+        status(50),
+        cityc      LIKE t001w-cityc,
+        extwg      LIKE mara-extwg,
+        bezei      LIKE t005h-bezei,
+        ersda      TYPE mchb-ersda, " Loc Received Date - Added by CS on 30.12.2015
+        laeda      TYPE	mchb-laeda " Last movement Date - Added by CS on 30.12.2015
+        .
 * END BY PUNAM
 DATA:  END OF bestand.
 
 * define a lean table organ
 TYPES : BEGIN OF stype_organ,
-          werks              LIKE  t001w-werks,
-          bwkey              LIKE  t001w-bwkey,
-          name1              LIKE  t001w-name1,
-          bukrs              LIKE  t001-bukrs,
-          waers              LIKE  t001-waers,
+          werks LIKE  t001w-werks,
+          bwkey LIKE  t001w-bwkey,
+          name1 LIKE  t001w-name1,
+          bukrs LIKE  t001-bukrs,
+          waers LIKE  t001-waers,
         END OF stype_organ,
 
-        stab_organ           TYPE STANDARD TABLE OF
+        stab_organ TYPE STANDARD TABLE OF
                              stype_organ
                              WITH DEFAULT KEY.
 
-DATA: g_t_organ              TYPE  stab_organ,
-      g_s_organ              TYPE  stype_organ.
+DATA: g_t_organ TYPE  stab_organ,
+      g_s_organ TYPE  stype_organ.
 
 * define a buffer table for the MARD entries with flag
 * for deletion
 TYPES : BEGIN OF stype_mard_lv,
-          matnr              LIKE  mard-matnr,
-          werks              LIKE  mard-werks,
-          lgort              LIKE  mard-lgort,
-          lvorm              LIKE  mard-lvorm,
+          matnr LIKE  mard-matnr,
+          werks LIKE  mard-werks,
+          lgort LIKE  mard-lgort,
+          lvorm LIKE  mard-lvorm,
         END OF stype_mard_lv,
 
-        htab_mard_lv         TYPE HASHED TABLE OF
+        htab_mard_lv TYPE HASHED TABLE OF
                              stype_mard_lv
                    WITH UNIQUE KEY matnr werks lgort.
 
-DATA : g_s_mard_lv           TYPE  stype_mard_lv,
-       g_t_mard_lv           TYPE  htab_mard_lv.
+DATA : g_s_mard_lv TYPE  stype_mard_lv,
+       g_t_mard_lv TYPE  htab_mard_lv.
 
 * define a buffer table for the storage bins
 TYPES : BEGIN OF stype_t001l,
-          werks              LIKE  t001l-werks,
-          lgort              LIKE  t001l-lgort,
-          lgobe              LIKE  t001l-lgobe,
+          werks LIKE  t001l-werks,
+          lgort LIKE  t001l-lgort,
+          lgobe LIKE  t001l-lgobe,
         END OF stype_t001l,
 
-        htab_t001l           TYPE HASHED TABLE OF
+        htab_t001l TYPE HASHED TABLE OF
                              stype_t001l
                              WITH UNIQUE KEY werks lgort.
 
-DATA : g_s_t001l             TYPE  stype_t001l,
-       g_t_t001l             TYPE  htab_t001l.
+DATA : g_s_t001l TYPE  stype_t001l,
+       g_t_t001l TYPE  htab_t001l.
 
 * define working areas for access table organ               "n531604
 TYPES : BEGIN OF stype_buffer,                              "n531604
-         werks               LIKE  t001w-werks,
-         bukrs               LIKE  t001-bukrs,
-         subrc               LIKE  syst-subrc,
-       END OF stype_buffer,
+          werks LIKE  t001w-werks,
+          bukrs LIKE  t001-bukrs,
+          subrc LIKE  syst-subrc,
+        END OF stype_buffer,
 
-       stab_buffer           TYPE STANDARD TABLE OF
-                             stype_buffer
-                             WITH DEFAULT KEY.
+        stab_buffer TYPE STANDARD TABLE OF
+              stype_buffer
+              WITH DEFAULT KEY.
 
-DATA : g_s_buffer          TYPE  stype_buffer,
-       g_t_buffer          TYPE  stab_buffer.
+DATA : g_s_buffer TYPE  stype_buffer,
+       g_t_buffer TYPE  stab_buffer.
 
 * Data for listviewer
 DATA: repid     LIKE sy-repid.
@@ -332,8 +332,8 @@ DATA: gt_events     TYPE slis_t_event.                      "n667256
 
                                                             "n667256
 * for the header of the list, when alv grid is in use       "n667256
-DATA : gt_ueb                TYPE  slis_t_listheader,       "n667256
-       gs_ueb                TYPE  slis_listheader.         "n667256
+DATA : gt_ueb TYPE  slis_t_listheader,                      "n667256
+       gs_ueb TYPE  slis_listheader.                        "n667256
 
 * Variants
 DATA: variante        LIKE disvariant,
@@ -344,12 +344,12 @@ DATA: variante        LIKE disvariant,
 
 *ENHANCEMENT-POINT RM07MLBS_01 SPOTS ES_RM07MLBS STATIC.
 *ENHANCEMENT-POINT RM07MLBS_13 SPOTS ES_RM07MLBS STATIC .
-DATA : g_f_vari_hsq          LIKE  disvariant-variant,
-       g_f_vari_flt          LIKE  disvariant-variant.
+DATA : g_f_vari_hsq LIKE  disvariant-variant,
+       g_f_vari_flt LIKE  disvariant-variant.
 
 * working fields to save the initial display variants       "n579976
-DATA : g_f_vari_hsq_initial  LIKE  disvariant-variant,      "n579976
-       g_f_vari_flt_initial  LIKE  disvariant-variant.      "n579976
+DATA : g_f_vari_hsq_initial LIKE  disvariant-variant,       "n579976
+       g_f_vari_flt_initial LIKE  disvariant-variant.       "n579976
 
 * Global variables for handling ALV functionality
 TABLES: mmim_rep_print.
@@ -359,19 +359,19 @@ DATA: alv_variant      LIKE disvariant.
 DATA: alv_layout       TYPE slis_layout_alv.
 DATA: alv_repid        LIKE sy-repid.
 DATA: alv_print        TYPE slis_print_alv.
-DATA: alv_detail_func(30)    TYPE  c,
-      alv_color              LIKE      mmim_rep_print-color.
+DATA: alv_detail_func(30) TYPE  c,
+      alv_color           LIKE      mmim_rep_print-color.
 
 * User settings for the checkboxes
 DATA: oref_settings TYPE REF TO cl_mmim_userdefaults.
 
 * define working fields
-DATA : g_cnt_col_pos         TYPE i,
-       g_cnt_spos            TYPE i.
+DATA : g_cnt_col_pos TYPE i,
+       g_cnt_spos    TYPE i.
 
-DATA : g_flag_ok(01)         TYPE c,
-       g_flag_mess_333(01)   TYPE c,
-       g_flag_t001l(01)      TYPE c.
+DATA : g_flag_ok(01)       TYPE c,
+       g_flag_mess_333(01) TYPE c,
+       g_flag_t001l(01)    TYPE c.
 
 DATA : g_cnt_variant_error   TYPE i.                        "n667256
 
@@ -379,14 +379,14 @@ DATA : g_cnt_variant_error   TYPE i.                        "n667256
 DATA : g_flag_suppress_init_lgort(01)  TYPE c.              "n577268
 
 DATA : BEGIN OF g_flag_sobkz,
-         vbeln(01)           TYPE c,
-         pspnr(01)           TYPE c,
-         lifnr(01)           TYPE c,
-         kunnr(01)           TYPE c,
+         vbeln(01) TYPE c,
+         pspnr(01) TYPE c,
+         lifnr(01) TYPE c,
+         kunnr(01) TYPE c,
        END OF g_flag_sobkz.
 
-CONSTANTS : c_no_out(01)     TYPE c    VALUE 'X',
-            c_out(01)        TYPE c    VALUE space.
+CONSTANTS : c_no_out(01) TYPE c    VALUE 'X',
+            c_out(01)    TYPE c    VALUE space.
 
 * flag to be set when INITIALIZATION was processed          "n667256
 DATA g_flag_initialization(01) TYPE c.                      "n667256
@@ -412,12 +412,12 @@ DATA: lv_werks_auth_flg TYPE c VALUE '',  " Plant Authorization Flag, Added by C
 
 DATA : lv_objek TYPE ausp-objek.
 *}   INSERT
-DATA: VALUE_DISPLAY(10).
+DATA: value_display(10).
 ************************************************************************
 * Selection screen
 ************************************************************************
 
-SELECTION-SCREEN BEGIN OF BLOCK abgrenzung WITH FRAME TITLE text-001.
+SELECTION-SCREEN BEGIN OF BLOCK abgrenzung WITH FRAME TITLE TEXT-001.
 
 SELECT-OPTIONS:
   matnr  FOR mara-matnr MEMORY ID mat MATCHCODE OBJECT mat1,
@@ -430,7 +430,7 @@ SELECTION-SCREEN END OF BLOCK abgrenzung.
 
 *----------------------------------------------------------------------*
 
-SELECTION-SCREEN BEGIN OF BLOCK lbs WITH FRAME TITLE text-070.
+SELECTION-SCREEN BEGIN OF BLOCK lbs WITH FRAME TITLE TEXT-070.
 
 SELECT-OPTIONS:
   matart FOR mara-mtart,
@@ -444,7 +444,7 @@ SELECTION-SCREEN END OF BLOCK lbs.
 *----------------------------------------------------------------------*
 
 * for the selection os special stocks
-SELECTION-SCREEN BEGIN OF BLOCK lb2 WITH FRAME TITLE text-071.
+SELECTION-SCREEN BEGIN OF BLOCK lb2 WITH FRAME TITLE TEXT-071.
 
 * for the selection os special stocks
 PARAMETERS : pa_sond       LIKE      rmmmb-kzlso
@@ -457,7 +457,7 @@ SELECTION-SCREEN END OF BLOCK lb2.
 
 *----------------------------------------------------------------------*
 
-SELECTION-SCREEN BEGIN OF BLOCK lb1 WITH FRAME TITLE text-080.
+SELECTION-SCREEN BEGIN OF BLOCK lb1 WITH FRAME TITLE TEXT-080.
 
 * select only lines who contain at least one negative stock
 PARAMETERS: negativ LIKE am07m-seneg.
@@ -478,7 +478,7 @@ SELECTION-SCREEN END OF BLOCK lb1.
 
 *----------------------------------------------------------------------*
 
-SELECTION-SCREEN BEGIN OF BLOCK liste WITH FRAME TITLE text-005.
+SELECTION-SCREEN BEGIN OF BLOCK liste WITH FRAME TITLE TEXT-005.
 
 * choose flat or hierarchic list                            "n531604
 SELECTION-SCREEN BEGIN OF LINE.                             "n531604
@@ -487,7 +487,7 @@ PARAMETERS : pa_hsq      LIKE  am07m-mb52_alv_hsq           "n531604
                          DEFAULT  'X'                       "n531604
                          RADIOBUTTON GROUP alvv             "n531604
                          USER-COMMAND alvv.                 "n531604
-SELECTION-SCREEN         COMMENT 3(40)  text-006            "n531604
+SELECTION-SCREEN         COMMENT 3(40)  TEXT-006            "n531604
                          FOR FIELD pa_hsq.                  "n531604
 SELECTION-SCREEN END OF LINE.                               "n531604
                                                             "n531604
@@ -495,7 +495,7 @@ SELECTION-SCREEN BEGIN OF LINE.                             "n531604
 SELECTION-SCREEN         POSITION 1.                        "n531604
 PARAMETERS : pa_flt      LIKE  am07m-mb52_alv_flt           "n531604
                          RADIOBUTTON GROUP alvv.            "n531604
-SELECTION-SCREEN         COMMENT 3(40)  text-007            "n531604
+SELECTION-SCREEN         COMMENT 3(40)  TEXT-007            "n531604
                          FOR FIELD pa_flt.                  "n531604
 SELECTION-SCREEN END OF LINE.                               "n531604
 
@@ -512,6 +512,10 @@ SELECTION-SCREEN END OF BLOCK liste.
 *ENHANCEMENT-POINT EHP604_RM07MLBS_04 SPOTS ES_RM07MLBS STATIC .
 
 *----------------------------------------------------------------------*
+"added by varun on 12.04.2020
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-999.
+PARAMETERS p_dwn TYPE char01 AS CHECKBOX.
+SELECTION-SCREEN END OF BLOCK b1.
 
 * F4-Help for variant
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
@@ -575,9 +579,9 @@ AT SELECTION-SCREEN.
 
 
 START-OF-SELECTION.
-VALUE_DISPLAY = 'ZMB52_VAL'.
-EXPORT VALUE_DISPLAY FROM VALUE_DISPLAY to MEMORY id 'VALUE_DISPLAY'.
-PERFORM CALL_STD_MB52.
+  value_display = 'ZMB52_VAL'.
+  EXPORT value_display FROM value_display TO MEMORY ID 'VALUE_DISPLAY'.
+  PERFORM call_std_mb52.
 
 *&---------------------------------------------------------------------*
 *& Form CALL_STD_MB52
@@ -587,29 +591,29 @@ PERFORM CALL_STD_MB52.
 *& -->  p1        text
 *& <--  p2        text
 *&---------------------------------------------------------------------*
-FORM CALL_STD_MB52 .
+FORM call_std_mb52 .
 
 *call TRANSACTION 'MB52' WITH AUTHORITY-CHECK .
-SUBMIT RM07MLBS
-WITH matnr in matnr " Material
-WITH werks in werks " Plant
-WITH cityc IN cityc " Sales district
-WITH lgort IN lgort " Storage Location
-WITH charg in charg " Batch
-WITH matart in matart " Material Type
-WITH matkla in matkla " Material Group
-WITH extwg in extwg " Purchasing Group
-WITH ekgrup in ekgrup " Ext. Material Group
-WITH pa_sond = pa_sond " Read Special Stocks
-WITH so_sobkz IN so_sobkz " Special Stock Indicator
-WITH negativ = negativ " Negative stocks
-WITH xmchb = xmchb " Display batch stocks
-WITH nozero = nozero " No zero stock lines
-WITH novalues = novalues  " Do not display values
-WITH pa_hsq = pa_hsq " Generate Hierarchical List
-WITH pa_flt = pa_flt " Generate Non-Hierarchical List
-WITH p_vari = p_vari " Layout
-AND RETURN.
+  SUBMIT rm07mlbs
+  WITH matnr IN matnr " Material
+  WITH werks IN werks " Plant
+  WITH cityc IN cityc " Sales district
+  WITH lgort IN lgort " Storage Location
+  WITH charg IN charg " Batch
+  WITH matart IN matart " Material Type
+  WITH matkla IN matkla " Material Group
+  WITH extwg IN extwg " Purchasing Group
+  WITH ekgrup IN ekgrup " Ext. Material Group
+  WITH pa_sond = pa_sond " Read Special Stocks
+  WITH so_sobkz IN so_sobkz " Special Stock Indicator
+  WITH negativ = negativ " Negative stocks
+  WITH xmchb = xmchb " Display batch stocks
+  WITH nozero = nozero " No zero stock lines
+  WITH novalues = novalues  " Do not display values
+  WITH pa_hsq = pa_hsq " Generate Hierarchical List
+  WITH pa_flt = pa_flt " Generate Non-Hierarchical List
+  WITH p_vari = p_vari " Layout
+  AND RETURN.
 
 ENDFORM.
 
@@ -625,29 +629,29 @@ FORM f4_for_variant.
   IF      NOT pa_hsq IS INITIAL.
 *     for hierarchic seq. list
 
-    variante-REPORT = sy-repid.
-    variante-USERNAME = sy-uname.
+    variante-report = sy-repid.
+    variante-username = sy-uname.
     MOVE variante          TO  def_variante_f4.
 
   ELSEIF  NOT  pa_flt IS INITIAL.
 *     for flat ( simple ) list
-    variante_flat-REPORT = sy-repid.
-    variante_flat-USERNAME = sy-uname.
-    variante_flat-HANDLE = 'FLAT'.
+    variante_flat-report = sy-repid.
+    variante_flat-username = sy-uname.
+    variante_flat-handle = 'FLAT'.
 
     MOVE variante_flat     TO  def_variante_f4.
   ENDIF.
 
   CALL FUNCTION 'REUSE_ALV_VARIANT_F4'
-       EXPORTING
-            is_variant          = def_variante_f4
-            i_save              = 'A'
-*           it_default_fieldcat =
-       IMPORTING
-            e_exit              = variant_exit
-            es_variant          = def_variante
-       EXCEPTIONS
-            not_found = 2.
+    EXPORTING
+      is_variant = def_variante_f4
+      i_save     = 'A'
+*     it_default_fieldcat =
+    IMPORTING
+      e_exit     = variant_exit
+      es_variant = def_variante
+    EXCEPTIONS
+      not_found  = 2.
 
   IF sy-subrc = 2.
     MESSAGE ID sy-msgid TYPE 'S' NUMBER sy-msgno

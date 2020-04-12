@@ -4326,6 +4326,12 @@
      <LENGTH>50</LENGTH>
     </item>
     <item>
+     <ID>I</ID>
+     <KEY>999</KEY>
+     <ENTRY>Downlaod Output Data</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
      <ID>R</ID>
      <ENTRY>Display Warehouse Stocks of Material</ENTRY>
      <LENGTH>36</LENGTH>
@@ -4402,6 +4408,12 @@
      <KEY>PA_SOND</KEY>
      <ENTRY>Also Select Special Stocks</ENTRY>
      <LENGTH>37</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_DWN</KEY>
+     <ENTRY>Download Bestand Data</ENTRY>
+     <LENGTH>29</LENGTH>
     </item>
     <item>
      <ID>S</ID>
