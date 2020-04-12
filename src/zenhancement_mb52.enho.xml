@@ -1181,7 +1181,9 @@
       <item>ls_zbestand TYPE zbestand,</item>
       <item>lv_dwn TYPE abap_bool.</item>
       <item/>
+      <item>CLEAR lv_dwn.</item>
       <item>import lv_dwn TO lv_dwn from MEMORY ID &apos;BESTAND_DWN&apos;.</item>
+      <item>FREE MEMORY id &apos;BESTAND_DWN&apos;.</item>
       <item/>
       <item>if lv_dwn eq abap_true.</item>
       <item/>
@@ -2336,6 +2338,8 @@
       <item>9</item>
       <item>9</item>
       <item>0</item>
+      <item>3</item>
+      <item>3</item>
       <item>3</item>
       <item>0</item>
       <item>3</item>

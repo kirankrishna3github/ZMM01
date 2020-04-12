@@ -514,22 +514,30 @@ SELECTION-SCREEN END OF BLOCK liste.
 *----------------------------------------------------------------------*
 "added by varun on 12.04.2020
 SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-999.
-PARAMETERS p_dwn TYPE char01 AS CHECKBOX.
+PARAMETERS p_dwn TYPE char01 AS CHECKBOX MODIF ID dwn.
 SELECTION-SCREEN END OF BLOCK b1.
 
 * F4-Help for variant
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
   PERFORM f4_for_variant.
 
-AT SELECTION-SCREEN.
-
+AT SELECTION-SCREEN OUTPUT.
   "added by varun on 12.04.2020
-  IF p_dwn EQ abap_true.
-    DATA(lv_dwn) = CONV abap_bool( abap_true ).
-    EXPORT lv_dwn TO MEMORY ID 'BESTAND_DWN'.
+  SELECT SINGLE * FROM usr05 INTO @DATA(lv_usr05) WHERE bname EQ @sy-uname
+                                                  AND   parid EQ 'MB52_SAS_TABLE_DWN'.
+  IF sy-subrc NE 0.
+    LOOP AT SCREEN.
+      IF screen-group1 EQ 'DWN'.
+        screen-active = 0.
+        screen-input = 0.
+        MODIFY SCREEN.
+      ENDIF.
+    ENDLOOP.
   ENDIF.
 
-* check radiobuttons                                          "n667256
+AT SELECTION-SCREEN.
+
+* check radiobuttons                                        "n667256
   IF  pa_hsq IS INITIAL.                                    "n667256
     IF  pa_flt IS INITIAL.                                  "n667256
 *     not allowed                                             "n667256
@@ -585,6 +593,12 @@ AT SELECTION-SCREEN.
 
 
 START-OF-SELECTION.
+  "added by varun on 12.04.2020
+  IF p_dwn EQ abap_true.
+    DATA(lv_dwn) = CONV abap_bool( abap_true ).
+    EXPORT lv_dwn TO MEMORY ID 'BESTAND_DWN'.
+  ENDIF.
+
   value_display = 'ZMB52_VAL'.
   EXPORT value_display FROM value_display TO MEMORY ID 'VALUE_DISPLAY'.
   PERFORM call_std_mb52.
