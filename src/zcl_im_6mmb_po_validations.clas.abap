@@ -170,57 +170,12 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
       receiving
         re_items = l_items.
 
-**********************************************************************    ,
-***    below validation is to check whether vendor is extended to company code mentined in PO header . -- 20.11.2019 mail from rajesh kubchandani / venu
-
-    if ls_header-bsart ne 'ZSTO'. "added by varun on 19.12.2019 as said by punam
-      if ls_header-bsart ne 'YSTO'.
-        select single bukrs
-          from lfb1 into @data(zbukrs)
-          where lifnr = @ls_header-lifnr
-          and bukrs =  @ls_header-bukrs.
-        if sy-subrc <> 0.
-          message 'Please Extend Vendor to desired Company code.' type 'E'.
-        endif.
-      endif.
+    if ls_header-bsart = 'ZSTO' or ls_header-bsart = 'YSTO' .
+      data(zlifnr) =  |V{ ls_header-reswk }|."INTO .
+      condense zlifnr no-gaps.
+    else.
+      zlifnr = ls_header-lifnr.
     endif.
-
-
-**********************************************************************
-**********************************************************************
-    "GST Validation for vendor added by varun on 09.12.2019
-    if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
-
-      if ls_header-bsart = 'ZSTO' or ls_header-bsart = 'YSTO' .
-        data(zlifnr) =  |V{ ls_header-reswk }|."INTO .
-        condense zlifnr no-gaps.
-      else.
-        zlifnr = ls_header-lifnr.
-      endif.
-
-      try.
-          zcl_bupa_utilities=>validate_gst_number(
-            exporting
-              iv_entity = conv char10( zlifnr ) "ls_header-lifnr
-            receiving
-              rv_valid      = data(lv_gst_valid)
-          ).
-
-        catch zcx_generic into data(lox). " Generic Exception Class
-          message lox->get_text( ) type 'E'.
-      endtry.
-      try .
-          zcl_bupa_utilities=>validate_postal_code(
-            exporting
-              iv_entity      = conv char10( zlifnr ) "ls_header-lifnr
-            receiving
-              rv_valid       = data(lv_post_code_valid)
-          ).
-        catch zcx_generic into data(lox1). " Generic Exception Class
-          message lox1->get_text( ) type 'E'.
-      endtry.
-    endif.
-**********************************************************************
 
     import gv_flg_ekgrp to gv_flg_ekgrp from memory id 'ME21N_EKGRP'.
     import gv_flg_lifnr to gv_flg_lifnr from memory id 'ME21N_LIFNR2'.
@@ -1939,6 +1894,50 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
         endif.
       endif.
 
+      " IHDK906115 - moved under all_close if
+**********************************************************************    ,
+***    below validation is to check whether vendor is extended to company code mentined in PO header . -- 20.11.2019 mail from rajesh kubchandani / venu
+
+      if ls_header-bsart ne 'ZSTO'. "added by varun on 19.12.2019 as said by punam
+        if ls_header-bsart ne 'YSTO'.
+          select single bukrs
+            from lfb1 into @data(zbukrs)
+            where lifnr = @ls_header-lifnr
+            and bukrs =  @ls_header-bukrs.
+          if sy-subrc <> 0.
+            message 'Please Extend Vendor to desired Company code.' type 'E'.
+          endif.
+        endif.
+      endif.
+
+**********************************************************************
+**********************************************************************
+      "GST Validation for vendor added by varun on 09.12.2019
+      if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
+        try.
+            zcl_bupa_utilities=>validate_gst_number(
+              exporting
+                iv_entity = conv char10( zlifnr ) "ls_header-lifnr
+              receiving
+                rv_valid      = data(lv_gst_valid)
+            ).
+
+          catch zcx_generic into data(lox). " Generic Exception Class
+            message lox->get_text( ) type 'E'.
+        endtry.
+        try .
+            zcl_bupa_utilities=>validate_postal_code(
+              exporting
+                iv_entity      = conv char10( zlifnr ) "ls_header-lifnr
+              receiving
+                rv_valid       = data(lv_post_code_valid)
+            ).
+          catch zcx_generic into data(lox1). " Generic Exception Class
+            message lox1->get_text( ) type 'E'.
+        endtry.
+      endif.
+**********************************************************************
+      " End IHDK906115
     endif.  " if all_close = abap_false.
 
 *** below validation is to check if ZARP is maintained for receiveing plants region and resp. material
