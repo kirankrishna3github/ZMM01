@@ -997,13 +997,14 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
             I_RECLIST-RECEIVER = L_USERID.
             I_RECLIST-REC_TYPE = 'U'.
             I_RECLIST-COM_TYPE = 'INT'.
+
             APPEND  I_RECLIST.
            CLEAR:  L_USERID.
 
         ENDIF.
     IF wa_exgrp-banfn IS NOT INITIAL .
       SELECT SINGLE ernam
-        FROM EBKN INTO @data(zernam) " PR creator
+        FROM EBAN INTO @data(zernam) " PR creator
         WHERE banfn = @wa_exgrp-banfn.
         IF sy-subrc = 0.
           CLEAR: L_USERID.
@@ -1064,6 +1065,11 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
         ELSEIF WA_BSIK2-LIFNR IS NOT INITIAL ..
           WRITE: / 'Mail send Sucessfully to vendor: '  , WA_BSIK2-LIFNR.
         ENDIF.
+      WRITE: / 'Mail id details for referance :'.
+      LOOP AT I_RECLIST.
+      WRITE: /  I_RECLIST-receiver.
+      ENDLOOP.
+      WRITE: / '================================================================================'.
       ELSE.
         MESSAGE 'Error occured in Sending the Mail' TYPE 'E'.
       ENDIF.
