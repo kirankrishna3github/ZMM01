@@ -2829,33 +2829,6 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 
 
 method if_ex_me_process_po_cust~process_account.
-
-break ibmsupport.
-
-data: im_item    type ref to if_purchase_order_item_mm,ls_item  type mepoitem.
-data: lt_account type mepoaccounting,ls_account type mepoaccounting.
-
-" Get Item Data
-im_item  = im_account->get_item( ).
-ls_item  = im_item->get_data( ).
-
-" Get Account Data
-
-ls_account = im_account->get_data( ).
-
-IF sy-tcode eq 'ME21N' or sy-tcode eq 'ME22N' or sy-tcode eq 'ME23N'.
-
-IF ls_item-knttp = 'A'.
-
-if ls_account-sakto is not initial.
-
-
-endif.
-
-endif.
-
-endif.
-
 endmethod.
 
 
