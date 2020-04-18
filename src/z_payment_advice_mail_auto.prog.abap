@@ -1013,13 +1013,25 @@ DATA: ld_sender_address LIKE  soextreci1-receiver,
                     WHERE PERNR = zernam
                     AND ENDDA >= sy-datum
                     AND SUBTY = '0010'.
-
+                IF L_USERID <> ''.
                 I_RECLIST-RECEIVER = L_USERID.
                 I_RECLIST-REC_TYPE = 'U'.
                 I_RECLIST-COM_TYPE = 'INT'.
                 APPEND  I_RECLIST.
                 CLEAR:  L_USERID.
+                ELSE.
+***** if no user found in HR master then search for Su01 user profile
 
+                 SELECT SINGLE a~smtp_addr
+                   FROM adr6 as a
+                   JOIN usr21 as b
+                   on a~ADDRNUMBER = b~ADDRNUMBER
+                   AND b~PERSNUMBER = b~PERSNUMBER
+                   INTO L_USERID
+                   WHERE b~bname = zernam.
+
+
+                ENDIF.
         ENDIF.
 
     ENDIF.
