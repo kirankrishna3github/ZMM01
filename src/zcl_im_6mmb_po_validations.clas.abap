@@ -272,25 +272,28 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
             and   branch = ( select j_1bbranch from t001w where werks = @l_items_header-werks )
             into @data(lv_bupla_gstin).
 
-          select single stcd3
-            from lfa1
-            where lifnr = @zlifnr
-            and   ktokk not in ( '2000', '4000' ) " import and one time vendors excluded; IHDK906039
-            into @data(lv_vendor_gstin).
+          if lv_bupla_gstin <> '24AABCI4568D2ZR' and lv_bupla_gstin <> '24AACCI6317D1Z0'.  " SEZ excluded; IHDK906187
 
-          if lv_bupla_gstin is not initial and lv_vendor_gstin is not initial.
-            if lv_bupla_gstin+0(2) = lv_vendor_gstin+0(2).  " business place and vendor belong to the same state
-              " prevent selection of igst tax code
-              select single @abap_true
-                from t007s
-                where spras = @sy-langu
-                and   kalsm = 'ZTXINN'    " GST tax procedure
-                and   mwskz = @l_items_header-mwskz
-                and   text1 like '%Input%IGST%'
-                into @data(lv_igst_tax_code).
+            select single stcd3
+              from lfa1
+              where lifnr = @zlifnr
+              and   ktokk not in ( '2000', '4000' ) " import and one time vendors excluded; IHDK906039
+              into @data(lv_vendor_gstin).
 
-              if lv_igst_tax_code = abap_true.
-                message e023(zfi01).
+            if lv_bupla_gstin is not initial and lv_vendor_gstin is not initial.
+              if lv_bupla_gstin+0(2) = lv_vendor_gstin+0(2).  " business place and vendor belong to the same state
+                " prevent selection of igst tax code
+                select single @abap_true
+                  from t007s
+                  where spras = @sy-langu
+                  and   kalsm = 'ZTXINN'    " GST tax procedure
+                  and   mwskz = @l_items_header-mwskz
+                  and   text1 like '%Input%IGST%'
+                  into @data(lv_igst_tax_code).
+
+                if lv_igst_tax_code = abap_true.
+                  message e023(zfi01).
+                endif.
               endif.
             endif.
           endif.
