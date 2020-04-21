@@ -260,6 +260,8 @@ FORM f_get_data.
 
         IF it_pohistory-db_cr_ind = 'H'.
           it_pohistory-deliv_qty = it_pohistory-deliv_qty * -1.
+          it_pohistory-quantity = it_pohistory-quantity * -1.
+
         ENDIF.
         CASE it_pohistory-move_type.
           WHEN '107'.
@@ -267,9 +269,9 @@ FORM f_get_data.
           WHEN '108'.
             wa_itab-qty_108 = wa_itab-qty_108 + it_pohistory-deliv_qty.
           WHEN '109'.
-            wa_itab-qty_109 = wa_itab-qty_109 + it_pohistory-deliv_qty.
+            wa_itab-qty_109 = wa_itab-qty_109 + it_pohistory-quantity.
           WHEN '110'.
-            wa_itab-qty_110 = wa_itab-qty_110 + it_pohistory-deliv_qty.
+            wa_itab-qty_110 = wa_itab-qty_110 + it_pohistory-quantity.
           WHEN OTHERS.
         ENDCASE.
 
@@ -277,7 +279,7 @@ FORM f_get_data.
 
         wa_itab-blocked_qy = wa_itab-qty_107_108 = wa_itab-qty_107 + wa_itab-qty_108.
         wa_itab-qty_109_110 = wa_itab-qty_109 + wa_itab-qty_110.
-        wa_itab-balpt = wa_itab-qty_107_108 + wa_itab-qty_110.
+        wa_itab-balpt = wa_itab-qty_107_108 - wa_itab-qty_109_110.
 *        wa_itab-quantity =  wa_itab-quantity + wa_itab-qty_107_108.
         wa_itab-deliv_qty = wa_itab-qty_109.
 
@@ -476,12 +478,12 @@ FORM disp_records.
 
     LOOP AT it_fieldcat INTO wa_fieldcat.
 
-*      IF wa_fieldcat-fieldname = 'BALPT'.
-*        wa_fieldcat-seltext_l = 'Balance Qty at Port'.
-*        wa_fieldcat-seltext_m = 'Balance Qty at Port'.
-*        wa_fieldcat-seltext_s = 'Balance Qty at Port'.
-*        wa_fieldcat-ddictxt = 'M'.
-*      ENDIF.
+      IF wa_fieldcat-fieldname = 'BALPT'.
+        wa_fieldcat-seltext_l = 'Balance Qty at Port'.
+        wa_fieldcat-seltext_m = 'Balance Qty at Port'.
+        wa_fieldcat-seltext_s = 'Balance Qty at Port'.
+        wa_fieldcat-ddictxt = 'M'.
+      ENDIF.
 
       IF wa_fieldcat-fieldname = 'QUANTITY'.
         wa_fieldcat-seltext_l = 'Shipped from Vendor'.
@@ -498,9 +500,9 @@ FORM disp_records.
       ENDIF.
 
       IF wa_fieldcat-fieldname = 'BLOCKED_QY'.
-        wa_fieldcat-seltext_l = 'Qty at Port'.
-        wa_fieldcat-seltext_m = 'Qty at Port'.
-        wa_fieldcat-seltext_s = 'Qty at Port'.
+        wa_fieldcat-seltext_l = 'Bal.Qty at Port(107-108)'.
+        wa_fieldcat-seltext_m = 'Bal.Qty at Port(107-108)'.
+        wa_fieldcat-seltext_s = 'Bal.Qty at Port(107-108)'.
         wa_fieldcat-ddictxt = 'M'.
       ENDIF.
 *
@@ -555,6 +557,16 @@ FORM disp_records.
       ENDIF.
 
 
+      IF wa_fieldcat-fieldname = 'QTY_109_110'.
+        wa_fieldcat-seltext_l = 'Bal.Qty at Plant(109-110)'.
+        wa_fieldcat-seltext_m = 'Bal.Qty at Plant(109-110)'.
+        wa_fieldcat-seltext_s = 'Bal.Qty at Plant(109-110)'.
+        wa_fieldcat-ddictxt = 'M'.
+      ENDIF.
+
+
+
+
       IF p_qty IS INITIAL.
         IF wa_fieldcat-fieldname EQ 'QUANTITY' OR wa_fieldcat-fieldname EQ 'BLOCKED_QY'
                            OR wa_fieldcat-fieldname EQ 'DELIV_QTY'.
@@ -577,6 +589,11 @@ FORM disp_records.
       MODIFY it_fieldcat FROM wa_fieldcat.
       CLEAR wa_fieldcat.
     ENDLOOP.
+
+    delete it_fieldcat WHERE fieldname = 'QTY_107_108'.
+*    delete it_fieldcat WHERE fieldname = 'QTY_109_110'.
+    delete it_fieldcat WHERE fieldname = 'DELIV_QTY'.
+*    delete it_fieldcat WHERE fieldname = 'BALPT'.
 
     CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
      EXPORTING
