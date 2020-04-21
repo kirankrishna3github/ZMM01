@@ -244,6 +244,40 @@ FORM f_get_data.
         wa_itab-quantity = wa_itab-quantity +  it_poconfirmation-quantity.
 
       ENDLOOP.
+
+**      Quantity at port 107 movement .
+**      Quantity rejected at port 108 movement - rev of 107 .
+**      Balance(107-108) Balance at Port
+**      Qty Received at Plant (109)
+**      Qty Rej at plant (110) - rev of 109
+**      Balance Qty at Port (107-108) + 110
+
+        LOOP AT it_pohistory WHERE po_item = wa_itab-ebelp
+                                   AND move_type EQ '107'
+                                    OR move_type EQ '108'
+                                    OR move_type EQ '109'
+                                    OR move_type EQ '110'.
+
+        IF it_pohistory-db_cr_ind = 'H'.
+          it_pohistory-deliv_qty = it_pohistory-deliv_qty * -1.
+        ENDIF.
+        CASE it_pohistory-move_type.
+          WHEN '107'.
+            wa_itab-qty_107 = wa_itab-qty_107 + it_pohistory-deliv_qty.
+          WHEN '108'.
+            wa_itab-qty_108 = wa_itab-qty_108 + it_pohistory-deliv_qty.
+          WHEN '109'.
+            wa_itab-qty_109 = wa_itab-qty_109 + it_pohistory-deliv_qty.
+          WHEN '110'.
+            wa_itab-qty_110 = wa_itab-qty_110 + it_pohistory-deliv_qty.
+          WHEN OTHERS.
+        ENDCASE.
+
+        endloop.
+
+
+
+*********************************************************************************
       READ TABLE it_pohistory_totals WITH KEY po_item = wa_itab-ebelp.
       IF sy-subrc EQ 0.
 
