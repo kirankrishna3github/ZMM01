@@ -278,7 +278,7 @@ FORM f_get_data.
         wa_itab-blocked_qy = wa_itab-qty_107_108 = wa_itab-qty_107 + wa_itab-qty_108.
         wa_itab-qty_109_110 = wa_itab-qty_109 + wa_itab-qty_110.
         wa_itab-balpt = wa_itab-qty_107_108 + wa_itab-qty_110.
-        wa_itab-quantity =  wa_itab-quantity + wa_itab-qty_107_108.
+*        wa_itab-quantity =  wa_itab-quantity + wa_itab-qty_107_108.
         wa_itab-deliv_qty = wa_itab-qty_109.
 
 *********************************************************************************
@@ -476,12 +476,12 @@ FORM disp_records.
 
     LOOP AT it_fieldcat INTO wa_fieldcat.
 
-      IF wa_fieldcat-fieldname = 'BALPT'.
-        wa_fieldcat-seltext_l = 'Balance Qty at Port'.
-        wa_fieldcat-seltext_m = 'Balance Qty at Port'.
-        wa_fieldcat-seltext_s = 'Balance Qty at Port'.
-        wa_fieldcat-ddictxt = 'M'.
-      ENDIF.
+*      IF wa_fieldcat-fieldname = 'BALPT'.
+*        wa_fieldcat-seltext_l = 'Balance Qty at Port'.
+*        wa_fieldcat-seltext_m = 'Balance Qty at Port'.
+*        wa_fieldcat-seltext_s = 'Balance Qty at Port'.
+*        wa_fieldcat-ddictxt = 'M'.
+*      ENDIF.
 
       IF wa_fieldcat-fieldname = 'QUANTITY'.
         wa_fieldcat-seltext_l = 'Shipped from Vendor'.
@@ -503,13 +503,13 @@ FORM disp_records.
         wa_fieldcat-seltext_s = 'Qty at Port'.
         wa_fieldcat-ddictxt = 'M'.
       ENDIF.
-
-      IF wa_fieldcat-fieldname = 'DELIV_QTY'.
-        wa_fieldcat-seltext_l = 'Qty Rec.at Plant'.
-        wa_fieldcat-seltext_m = 'Qty Rec.at Plant'.
-        wa_fieldcat-seltext_s = 'Qty Rec.at Plant'.
-        wa_fieldcat-ddictxt = 'M'.
-      ENDIF.
+*
+*      IF wa_fieldcat-fieldname = 'DELIV_QTY'.
+*        wa_fieldcat-seltext_l = 'Qty Rec.at Plant'.
+*        wa_fieldcat-seltext_m = 'Qty Rec.at Plant'.
+*        wa_fieldcat-seltext_s = 'Qty Rec.at Plant'.
+*        wa_fieldcat-ddictxt = 'M'.
+*      ENDIF.
 
       IF wa_fieldcat-fieldname = 'CIFVL'.
         wa_fieldcat-seltext_l = 'CIF Value in Doc.Curr'.
