@@ -500,9 +500,9 @@ FORM disp_records.
       ENDIF.
 
       IF wa_fieldcat-fieldname = 'BLOCKED_QY'.
-        wa_fieldcat-seltext_l = 'Bal.Qty at Port(107-108)'.
-        wa_fieldcat-seltext_m = 'Bal.Qty at Port(107-108)'.
-        wa_fieldcat-seltext_s = 'Bal.Qty at Port(107-108)'.
+        wa_fieldcat-seltext_l = 'BalQty Port(107-108)'.
+        wa_fieldcat-seltext_m = 'BalQty Port(107-108)'.
+        wa_fieldcat-seltext_s = 'BalQty Port(107-108)'.
         wa_fieldcat-ddictxt = 'M'.
       ENDIF.
 *
@@ -543,24 +543,24 @@ FORM disp_records.
 
       IF wa_fieldcat-fieldname = 'QTY_109'.
         wa_fieldcat-seltext_l = 'Qty Received at Plant(109)'.
-        wa_fieldcat-seltext_m = 'Qty Rec.at Plant(109)'.
-        wa_fieldcat-seltext_s = 'Qty Rec.at Plant(109)'.
+        wa_fieldcat-seltext_m = 'QtyRecd Plant(109)'.
+        wa_fieldcat-seltext_s = 'QtyRecd Plant(109)'.
         wa_fieldcat-ddictxt = 'M'.
       ENDIF.
 
 
       IF wa_fieldcat-fieldname = 'QTY_110'.
         wa_fieldcat-seltext_l = 'Qty Rejected at Plant(110)'.
-        wa_fieldcat-seltext_m = 'Qty Rej.at Plant(110)'.
-        wa_fieldcat-seltext_s = 'Qty Rej.at Plant(110)'.
+        wa_fieldcat-seltext_m = 'QtyRej Plant(110)'.
+        wa_fieldcat-seltext_s = 'QtyRej Plant(110)'.
         wa_fieldcat-ddictxt = 'M'.
       ENDIF.
 
 
       IF wa_fieldcat-fieldname = 'QTY_109_110'.
-        wa_fieldcat-seltext_l = 'Bal.Qty at Plant(109-110)'.
-        wa_fieldcat-seltext_m = 'Bal.Qty at Plant(109-110)'.
-        wa_fieldcat-seltext_s = 'Bal.Qty at Plant(109-110)'.
+        wa_fieldcat-seltext_l = 'BalQty Plnt(109-110)'.
+        wa_fieldcat-seltext_m = 'BalQty Plnt(109-110)'.
+        wa_fieldcat-seltext_s = 'BalQty Plnt(109-110)'.
         wa_fieldcat-ddictxt = 'M'.
       ENDIF.
 
