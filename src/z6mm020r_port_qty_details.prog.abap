@@ -275,17 +275,19 @@ FORM f_get_data.
 
         endloop.
 
-        wa_itab-qty_107_108 = wa_itab-qty_107 + wa_itab-qty_108.
+        wa_itab-blocked_qy = wa_itab-qty_107_108 = wa_itab-qty_107 + wa_itab-qty_108.
         wa_itab-qty_109_110 = wa_itab-qty_109 + wa_itab-qty_110.
         wa_itab-balpt = wa_itab-qty_107_108 + wa_itab-qty_110.
+        wa_itab-quantity =  wa_itab-quantity + wa_itab-qty_107_108.
+        wa_itab-deliv_qty = wa_itab-qty_109.
 
 *********************************************************************************
       READ TABLE it_pohistory_totals WITH KEY po_item = wa_itab-ebelp.
       IF sy-subrc EQ 0.
 
 
-        wa_itab-blocked_qy = it_pohistory_totals-blocked_qy + it_pohistory_totals-deliv_qty.
-        wa_itab-deliv_qty =  it_pohistory_totals-deliv_qty.
+*        wa_itab-blocked_qy = it_pohistory_totals-blocked_qy + it_pohistory_totals-deliv_qty.
+*        wa_itab-deliv_qty =  it_pohistory_totals-deliv_qty.
         IF NOT wa_itab-quantity IS INITIAL.
           wa_itab-balpo = wa_itab-menge - wa_itab-quantity.
         ELSE.
@@ -479,8 +481,6 @@ FORM disp_records.
         wa_fieldcat-seltext_m = 'Balance Qty at Port'.
         wa_fieldcat-seltext_s = 'Balance Qty at Port'.
         wa_fieldcat-ddictxt = 'M'.
-
-
       ENDIF.
 
       IF wa_fieldcat-fieldname = 'QUANTITY'.
@@ -488,8 +488,6 @@ FORM disp_records.
         wa_fieldcat-seltext_m = 'Shipped from Vendor'.
         wa_fieldcat-seltext_s = 'Shipped from Vendor'.
         wa_fieldcat-ddictxt = 'M'.
-
-
       ENDIF.
 
       IF wa_fieldcat-fieldname = 'BALPO'.
@@ -497,43 +495,66 @@ FORM disp_records.
         wa_fieldcat-seltext_m = 'Balance PO Qty'.
         wa_fieldcat-seltext_s = 'Balance PO Qty'.
         wa_fieldcat-ddictxt = 'M'.
-
-
       ENDIF.
+
       IF wa_fieldcat-fieldname = 'BLOCKED_QY'.
         wa_fieldcat-seltext_l = 'Qty at Port'.
         wa_fieldcat-seltext_m = 'Qty at Port'.
         wa_fieldcat-seltext_s = 'Qty at Port'.
         wa_fieldcat-ddictxt = 'M'.
-
-
       ENDIF.
+
       IF wa_fieldcat-fieldname = 'DELIV_QTY'.
         wa_fieldcat-seltext_l = 'Qty Rec.at Plant'.
         wa_fieldcat-seltext_m = 'Qty Rec.at Plant'.
         wa_fieldcat-seltext_s = 'Qty Rec.at Plant'.
         wa_fieldcat-ddictxt = 'M'.
-
-
       ENDIF.
-
 
       IF wa_fieldcat-fieldname = 'CIFVL'.
         wa_fieldcat-seltext_l = 'CIF Value in Doc.Curr'.
         wa_fieldcat-seltext_m = 'CIF Value in Doc.Curr'.
         wa_fieldcat-seltext_s = 'CIF Value in Doc.Curr'.
         wa_fieldcat-ddictxt = 'M'.
-
-
       ENDIF.
+
       IF wa_fieldcat-fieldname = 'CIFRL'.
         wa_fieldcat-seltext_l = 'CIF Value in loc.Curr'.
         wa_fieldcat-seltext_m = 'CIF Value in Loc.Curr'.
         wa_fieldcat-seltext_s = 'CIF Value in Loc.Curr'.
         wa_fieldcat-ddictxt = 'M'.
-
-
       ENDIF.
+
+      IF wa_fieldcat-fieldname = 'QTY_107'.
+        wa_fieldcat-seltext_l = 'Qty at Port(107)'.
+        wa_fieldcat-seltext_m = 'Qty at Port(107)'.
+        wa_fieldcat-seltext_s = 'Qty at Port(107)'.
+        wa_fieldcat-ddictxt = 'M'.
+      ENDIF.
+
+      IF wa_fieldcat-fieldname = 'QTY_108'.
+        wa_fieldcat-seltext_l = 'Qty Rejected(108)'.
+        wa_fieldcat-seltext_m = 'Qty Rejected(108)'.
+        wa_fieldcat-seltext_s = 'Qty Rejected(108)'.
+        wa_fieldcat-ddictxt = 'M'.
+      ENDIF.
+
+      IF wa_fieldcat-fieldname = 'QTY_109'.
+        wa_fieldcat-seltext_l = 'Qty Received at Plant(109)'.
+        wa_fieldcat-seltext_m = 'Qty Rec.at Plant(109)'.
+        wa_fieldcat-seltext_s = 'Qty Rec.at Plant(109)'.
+        wa_fieldcat-ddictxt = 'M'.
+      ENDIF.
+
+
+      IF wa_fieldcat-fieldname = 'QTY_110'.
+        wa_fieldcat-seltext_l = 'Qty Rejected at Plant(110)'.
+        wa_fieldcat-seltext_m = 'Qty Rej.at Plant(110)'.
+        wa_fieldcat-seltext_s = 'Qty Rej.at Plant(110)'.
+        wa_fieldcat-ddictxt = 'M'.
+      ENDIF.
+
+
       IF p_qty IS INITIAL.
         IF wa_fieldcat-fieldname EQ 'QUANTITY' OR wa_fieldcat-fieldname EQ 'BLOCKED_QY'
                            OR wa_fieldcat-fieldname EQ 'DELIV_QTY'.
