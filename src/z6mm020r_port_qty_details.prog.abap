@@ -275,7 +275,9 @@ FORM f_get_data.
 
         endloop.
 
-
+        wa_itab-qty_107_108 = wa_itab-qty_107 + wa_itab-qty_108.
+        wa_itab-qty_109_110 = wa_itab-qty_109 + wa_itab-qty_110.
+        wa_itab-balpt = wa_itab-qty_107_108 + wa_itab-qty_110.
 
 *********************************************************************************
       READ TABLE it_pohistory_totals WITH KEY po_item = wa_itab-ebelp.
@@ -289,7 +291,7 @@ FORM f_get_data.
         ELSE.
           wa_itab-balpo = wa_itab-menge - wa_itab-blocked_qy.
         ENDIF.
-        wa_itab-balpt = it_pohistory_totals-blocked_qy .
+*        wa_itab-balpt = it_pohistory_totals-blocked_qy .
         SELECT SINGLE kzwi2 FROM ekpo INTO lv_kzwi2 WHERE ebeln = wa_ekko-ebeln
                                                       AND ebelp = wa_itab-ebelp.
         CALL FUNCTION 'BAPI_EXCHANGERATE_GETDETAIL'
