@@ -282,7 +282,7 @@ FORM f_get_data.
         wa_itab-balpt = wa_itab-qty_107_108 - wa_itab-qty_109_110.
 *        wa_itab-quantity =  wa_itab-quantity + wa_itab-qty_107_108.
         wa_itab-deliv_qty = wa_itab-qty_109.
-
+        wa_itab-balpo = wa_itab-menge - wa_itab-quantity. " balance PO Quantity
 *********************************************************************************
       READ TABLE it_pohistory_totals WITH KEY po_item = wa_itab-ebelp.
       IF sy-subrc EQ 0.
@@ -290,11 +290,11 @@ FORM f_get_data.
 
 *        wa_itab-blocked_qy = it_pohistory_totals-blocked_qy + it_pohistory_totals-deliv_qty.
 *        wa_itab-deliv_qty =  it_pohistory_totals-deliv_qty.
-        IF NOT wa_itab-quantity IS INITIAL.
-          wa_itab-balpo = wa_itab-menge - wa_itab-quantity.
-        ELSE.
-          wa_itab-balpo = wa_itab-menge - wa_itab-blocked_qy.
-        ENDIF.
+*        IF NOT wa_itab-quantity IS INITIAL.
+*          wa_itab-balpo = wa_itab-menge - wa_itab-quantity.
+*        ELSE.
+*          wa_itab-balpo = wa_itab-menge - wa_itab-blocked_qy.
+*        ENDIF.
 *        wa_itab-balpt = it_pohistory_totals-blocked_qy .
         SELECT SINGLE kzwi2 FROM ekpo INTO lv_kzwi2 WHERE ebeln = wa_ekko-ebeln
                                                       AND ebelp = wa_itab-ebelp.
@@ -378,12 +378,12 @@ FORM f_get_data.
 
       ENDIF.
 
-
+    APPEND wa_itab TO it_itab.
+    CLEAR wa_itab.
 
 
     ENDLOOP.
-    APPEND wa_itab TO it_itab.
-    CLEAR wa_itab.
+
 
   ENDLOOP.
 
