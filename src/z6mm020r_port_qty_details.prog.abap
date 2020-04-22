@@ -252,11 +252,11 @@ FORM f_get_data.
 **      Qty Rej at plant (110) - rev of 109
 **      Balance Qty at Port (107-108) + 110
 
-        LOOP AT it_pohistory WHERE po_item = wa_itab-ebelp
-                                   AND move_type EQ '107'
-                                    OR move_type EQ '108'
-                                    OR move_type EQ '109'
-                                    OR move_type EQ '110'.
+        LOOP AT it_pohistory WHERE po_item = wa_itab-ebelp.
+*                                   AND move_type EQ '107'
+*                                    OR move_type EQ '108'
+*                                    OR move_type EQ '109'
+*                                    OR move_type EQ '110'.
 
         IF it_pohistory-db_cr_ind = 'H'.
           it_pohistory-deliv_qty = it_pohistory-deliv_qty * -1.
@@ -479,9 +479,9 @@ FORM disp_records.
     LOOP AT it_fieldcat INTO wa_fieldcat.
 
       IF wa_fieldcat-fieldname = 'BALPT'.
-        wa_fieldcat-seltext_l = 'Balance Qty at Port'.
-        wa_fieldcat-seltext_m = 'Balance Qty at Port'.
-        wa_fieldcat-seltext_s = 'Balance Qty at Port'.
+        wa_fieldcat-seltext_l = 'Act.BalQty at Port'.
+        wa_fieldcat-seltext_m = 'Act.BalQty at Port'.
+        wa_fieldcat-seltext_s = 'Act.BalQty at Port'.
         wa_fieldcat-ddictxt = 'M'.
       ENDIF.
 
@@ -500,9 +500,9 @@ FORM disp_records.
       ENDIF.
 
       IF wa_fieldcat-fieldname = 'BLOCKED_QY'.
-        wa_fieldcat-seltext_l = 'BalQty Port(107-108)'.
-        wa_fieldcat-seltext_m = 'BalQty Port(107-108)'.
-        wa_fieldcat-seltext_s = 'BalQty Port(107-108)'.
+        wa_fieldcat-seltext_l = 'BalQty (107-108)'.
+        wa_fieldcat-seltext_m = 'BalQty (107-108)'.
+        wa_fieldcat-seltext_s = 'BalQty (107-108)'.
         wa_fieldcat-ddictxt = 'M'.
       ENDIF.
 *
