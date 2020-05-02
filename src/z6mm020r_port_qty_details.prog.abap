@@ -251,6 +251,7 @@ FORM f_get_data.
 **      Qty Received at Plant (109)
 **      Qty Rej at plant (110) - rev of 109
 **      Balance Qty at Port (107-108) + 110
+**      Blance Shipped Qty = Shipped from Vendor - (107 + (-108)) """""""""""""""Act.BalQty at Port(BALPT)
 
         LOOP AT it_pohistory WHERE po_item = wa_itab-ebelp.
 *                                   AND move_type EQ '107'
@@ -279,10 +280,12 @@ FORM f_get_data.
 
         wa_itab-blocked_qy = wa_itab-qty_107_108 = wa_itab-qty_107 + wa_itab-qty_108.
         wa_itab-qty_109_110 = wa_itab-qty_109 + wa_itab-qty_110.
-        wa_itab-balpt = wa_itab-qty_107_108 - wa_itab-qty_109_110.
+*        wa_itab-balpt = wa_itab-qty_107_108 - wa_itab-qty_109_110.
+        wa_itab-balpt = wa_itab-qty_107_108 - wa_itab-qty_109.
 *        wa_itab-quantity =  wa_itab-quantity + wa_itab-qty_107_108.
         wa_itab-deliv_qty = wa_itab-qty_109.
         wa_itab-balpo = wa_itab-menge - wa_itab-quantity. " balance PO Quantity
+        wa_itab-BAL_SHP_QTY = wa_itab-quantity - wa_itab-qty_107_108.
 *********************************************************************************
       READ TABLE it_pohistory_totals WITH KEY po_item = wa_itab-ebelp.
       IF sy-subrc EQ 0.
@@ -565,7 +568,12 @@ FORM disp_records.
       ENDIF.
 
 
-
+      IF wa_fieldcat-fieldname = 'BAL_SHP_QTY'.
+        wa_fieldcat-seltext_l = 'Balance Shipped Qty'.
+        wa_fieldcat-seltext_m = 'Balance Shipped Qty'.
+        wa_fieldcat-seltext_s = 'Balance Shipped Qty'.
+        wa_fieldcat-ddictxt = 'M'.
+      ENDIF.
 
       IF p_qty IS INITIAL.
         IF wa_fieldcat-fieldname EQ 'QUANTITY' OR wa_fieldcat-fieldname EQ 'BLOCKED_QY'
