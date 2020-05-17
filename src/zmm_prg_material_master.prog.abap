@@ -265,6 +265,13 @@
 *& Rev. Request#              : IHDK905737
 *& Rev. Description           : 1. MM: S_K: ZMAT01: Disable classif for RAW/PKG/PKU: 25.3.20
 *&---------------------------------------------------------------------*
+*& Revision #                 : 29    # Rev 29
+*& Rev. Date                  : Friday, May 08, 2020 19:19:55
+*& Rev. Author                : 6010859 - SaurabhK
+*& Rev. Requested/Approved By : VG
+*& Rev. Request#              : IHDK906383
+*& Rev. Description           : 1. MM: S_K: ZMAT01: Add acc assign grp for RAW/PKG: 8.5.20
+*&---------------------------------------------------------------------*
 program zmm_prg_material_master message-id zmm.
 
 include zmm_inc_mat_mast_top.       " Global Data

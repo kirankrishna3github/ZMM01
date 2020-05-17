@@ -3308,6 +3308,7 @@ endmethod.
       if ls_header-bsart+0(1) eq 'Y' and  ls_mepoitem-werks+0(1) eq '1'.
 
         mmpur_message_forced 'E' 'ZMM01' '000' text-003 '' '' ''.
+
       endif.
 
       if ls_header-bsart = 'ZSTO'.

@@ -5034,6 +5034,14 @@ class lcl_zraw_zpkg_zpku_create implementation.
       select single bukrs from t001k into salesdata-sales_org where bwkey eq wa_data-werks.
       move '10' to salesdata-distr_chan.
       move 'NORM' to salesdata-item_cat.
+      " IHDK906383
+      if wa_data-ktgrm is initial.
+        wa_log-log = |Account assignment group is mandatory|.
+        append wa_log to it_log.
+        continue.
+      else.
+        move wa_data-ktgrm to salesdata-acct_assgt.
+      endif.
 
       fill_bapix(
       exporting
@@ -5638,6 +5646,12 @@ class lcl_zraw_zpkg_zpku_ext_plt_dpt implementation.
             move 'NORM' to salesdata-item_cat.
           endif.
           move: lo_ext_helper->wa_mat-target_bukrs to salesdata-sales_org.
+          " IHDK906383
+          if salesdata-acct_assgt is initial.
+            wa_log-log = |Mandatory field account assignment group is missing|.
+            append wa_log to it_log.
+            continue.
+          endif.
 
           " Fill salesdatax
           fill_bapix(

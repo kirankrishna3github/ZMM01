@@ -1108,7 +1108,7 @@ CLEAR: it_bseg , it_augbl , it_ebeln , IT_EXGRP.
 ** select clearing document of payment voucher from bseg .
 SELECT bukrs belnr  gjahr  augbl  auggj
   FROM bseg INTO CORRESPONDING FIELDS OF TABLE it_bseg
-  FOR ALL ENTRIES IN it_bkpf
+*  FOR ALL ENTRIES IN it_bkpf
   WHERE bukrs EQ it_bkpf-BUKRS
   AND belnr EQ it_bkpf-belnr
   AND gjahr EQ it_bkpf-GJAHR

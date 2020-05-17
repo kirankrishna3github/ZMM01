@@ -542,6 +542,7 @@ interface zif_mm_mat01
            webaz     type excelcell,
            fhori     type excelcell,
            mtvfp     type excelcell,
+           ktgrm     type excelcell,
            lgort     type excelcell,  " Mard/Storagelocationdata + plant(werks)
            hrkft     type excelcell,
            sobsk     type excelcell,
@@ -625,6 +626,7 @@ interface zif_mm_mat01
            hrkft     type mbew-hrkft,
            sobsk     type marc-sobsk,
            losgr     type marc-losgr,
+           ktgrm     type mvke-ktgrm,
            vprsv     type mbew-vprsv,
            peinh     type mbew-peinh,
            verpr     type mbew-verpr,
