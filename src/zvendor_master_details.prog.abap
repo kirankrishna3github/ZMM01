@@ -193,6 +193,7 @@ TYPES : BEGIN OF ty_final,
           txt50          TYPE skat-txt50,
 ***        added GSTN & Tax Indicator by NK on 05.07.2017
           stcd3          TYPE lfa1-stcd3,
+          erdat          TYPE lfa1-erdat,
 *{   REPLACE        SBXK900270                                        4
 *\          ven_class      TYPE j_1imovend-ven_class,
           ven_class      TYPE lfa1-ven_class,
@@ -689,6 +690,8 @@ FORM display_data .
     wa_final-ktokk = wa_lfa1-ktokk. """"acc. grp.
     wa_final-sperq = wa_lfa1-sperq.
     wa_final-stcd3 = wa_lfa1-stcd3.  " added by NK on 05.07.2017
+    wa_final-erdat = wa_lfa1-erdat.
+
     wa_final-kunnr = wa_lfa1-kunnr.  " added by NK on 25.07.2017
     wa_final-werks = wa_lfa1-werks.  " added by NK on 25.07.2017
 
@@ -1541,6 +1544,15 @@ FORM alv_fieldcatlog .
   ADD 1 TO cnt.
   wa_fieldcatalog-fieldname   = 'BPTYPE' .
   wa_fieldcatalog-seltext_m   = 'BP Type'.
+  wa_fieldcatalog-col_pos     = cnt.
+*  wa_fieldcatalog-no_out      = 'X'.
+  APPEND wa_fieldcatalog TO it_fieldcatalog.
+  CLEAR  wa_fieldcatalog.
+
+
+  ADD 1 TO cnt.
+  wa_fieldcatalog-fieldname   = 'ERDAT' .
+  wa_fieldcatalog-seltext_m   = 'Creation Date'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
   APPEND wa_fieldcatalog TO it_fieldcatalog.
