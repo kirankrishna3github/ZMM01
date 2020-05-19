@@ -324,7 +324,10 @@ SELECTION-SCREEN BEGIN OF BLOCK blk1 WITH FRAME TITLE TEXT-001.
 SELECT-OPTIONS: s_lifnr FOR lfa1-lifnr , """vendor
                 s_bukrs FOR lfb1-bukrs OBLIGATORY,   """company code
                 s_accgr FOR lfa1-ktokk , """account group
-                s_purorg FOR lfm1-ekorg."""Purchasing Org.
+                s_purorg FOR lfm1-ekorg,"""Purchasing Org.
+                S_pan FOR lfa1-j_1ipanno ,
+                s_gst FOR lfa1-stcd3 ,
+                s_erdat FOR lfa1-erdat.
 SELECTION-SCREEN END OF BLOCK blk1   .
 
 SELECTION-SCREEN BEGIN OF BLOCK layout WITH FRAME TITLE TEXT-002.
@@ -450,7 +453,10 @@ FORM fetch_data .
   FROM lfa1
   INTO TABLE it_lfa1
   WHERE lifnr IN s_lifnr
-  AND   ktokk IN s_accgr.
+  AND   ktokk IN s_accgr
+  AND   j_1ipanno in s_pan
+  AND   stcd3 in s_gst
+  AND   erdat in s_erdat       .
 
 
   IF NOT it_lfa1[] IS INITIAL ."and not s_bukrs is initial.

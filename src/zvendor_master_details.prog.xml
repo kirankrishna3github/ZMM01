@@ -49,10 +49,28 @@
     </item>
     <item>
      <ID>S</ID>
+     <KEY>S_ERDAT</KEY>
+     <ENTRY>Created on</ENTRY>
+     <LENGTH>18</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>S_GST</KEY>
+     <ENTRY>GSTN Number</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
      <KEY>S_LIFNR</KEY>
      <ENTRY>.</ENTRY>
      <LENGTH>14</LENGTH>
      <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>S_PAN</KEY>
+     <ENTRY>PAN Number</ENTRY>
+     <LENGTH>18</LENGTH>
     </item>
     <item>
      <ID>S</ID>
