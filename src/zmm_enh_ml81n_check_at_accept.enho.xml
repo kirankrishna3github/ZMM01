@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_ENHO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOOL>HOOK_IMPL</TOOL>
+   <SHORTTEXT>ML81N - Validations at acceptance step</SHORTTEXT>
+   <ORIGINAL_OBJECT>
+    <PGMID>R3TR</PGMID>
+    <ORG_OBJ_TYPE>FUGR</ORG_OBJ_TYPE>
+    <ORG_OBJ_NAME>MLSR</ORG_OBJ_NAME>
+    <ORG_MAIN_TYPE>FUGR</ORG_MAIN_TYPE>
+    <ORG_MAIN_NAME>MLSR</ORG_MAIN_NAME>
+    <PROGRAMNAME>SAPLMLSR</PROGRAMNAME>
+   </ORIGINAL_OBJECT>
+   <ENHANCEMENTS>
+    <ENH_HOOK_IMPL>
+     <PROGRAMNAME>SAPLMLSR</PROGRAMNAME>
+     <ENHMODE>D</ENHMODE>
+     <FULL_NAME>\PR:SAPLMLSR\FO:FCODE_ACCEPT\SE:BEGIN\EI</FULL_NAME>
+     <SOURCE>
+      <item>break-point id z_cpg_abap.</item>
+      <item>if sy-tcode = &apos;ML81N&apos; and i_reset = space and aktyp &lt;&gt; anz.</item>
+      <item>&quot; document date and posting date cannot be initial</item>
+      <item>if essr-bldat is initial.</item>
+      <item>set cursor field &apos;ESSR-BLDAT&apos;.</item>
+      <item>message &apos;Document date is mandatory&apos; type &apos;E&apos;.</item>
+      <item>endif.</item>
+      <item>if essr-budat is initial.</item>
+      <item>set cursor field &apos;ESSR-BUDAT&apos;.</item>
+      <item>message &apos;Posting date is mandatory&apos; type &apos;E&apos;.</item>
+      <item>endif.</item>
+      <item/>
+      <item>&quot; Posting date cannot be less than document date</item>
+      <item>if essr-budat &lt; essr-bldat.</item>
+      <item>set cursor field &apos;ESSR-BUDAT&apos;.</item>
+      <item>message &apos;Posting date cannot be less than document date&apos; type &apos;E&apos;.</item>
+      <item>endif.</item>
+      <item/>
+      <item>&quot; Document date cannot be more tha 60 days in the past</item>
+      <item>select single @abap_true</item>
+      <item>from z6mma_params</item>
+      <item>where progname = &apos;EXCL_ML81N_DT&apos;</item>
+      <item>and   todt     &gt;= @sy-datum</item>
+      <item>into @data(lv_excl_dt).</item>
+      <item/>
+      <item>if lv_excl_dt = abap_false. &quot; exclusion is not active = validation is active</item>
+      <item>data(lv_60_days_back) = conv sy-datum( sy-datum - 60 ).</item>
+      <item>if essr-bldat &lt; lv_60_days_back.</item>
+      <item>message &apos;Document date cannot be more than 60 days in the past&apos; type &apos;E&apos;.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+      <item>endif.</item>
+     </SOURCE>
+    </ENH_HOOK_IMPL>
+   </ENHANCEMENTS>
+   <SPACES>
+    <item>
+     <FULL_NAME>\PR:SAPLMLSR\FO:FCODE_ACCEPT\SE:BEGIN\EI</FULL_NAME>
+     <SPACES>
+      <item>2</item>
+      <item>2</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>8</item>
+      <item>6</item>
+      <item>4</item>
+      <item>2</item>
+     </SPACES>
+    </item>
+   </SPACES>
+  </asx:values>
+ </asx:abap>
+</abapGit>
