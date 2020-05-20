@@ -18,6 +18,9 @@
      <ENHMODE>D</ENHMODE>
      <FULL_NAME>\PR:SAPLMLSR\FO:FCODE_ACCEPT\SE:BEGIN\EI</FULL_NAME>
      <SOURCE>
+      <item>&quot; Wednesday, May 20, 2020 18:45:01</item>
+      <item>&quot; IHDK906600 - MM: S_K: ENH: ML81N/MIGO Doc Date Validtns: 20.5.20</item>
+      <item>&quot; Mail from Rajesh Khubchandani | CR for keeping Document date Blank during MIGO/ML81N entry | 27 April 2020 14:06</item>
       <item>break-point id z_cpg_abap.</item>
       <item>if sy-tcode = &apos;ML81N&apos; and i_reset = space and aktyp &lt;&gt; anz.</item>
       <item>&quot; document date and posting date cannot be initial</item>
@@ -57,6 +60,9 @@
     <item>
      <FULL_NAME>\PR:SAPLMLSR\FO:FCODE_ACCEPT\SE:BEGIN\EI</FULL_NAME>
      <SPACES>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
       <item>2</item>
       <item>2</item>
       <item>4</item>
