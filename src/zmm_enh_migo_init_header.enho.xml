@@ -23,7 +23,7 @@
       <item>&quot; IHDK906600 - MM: S_K: ENH: ML81N/MIGO Doc Date Validtns: 20.5.20</item>
       <item>&quot; Mail from Rajesh Khubchandani | CR for keeping Document date Blank during MIGO/ML81N entry | 27 April 2020 14:06</item>
       <item>break-point id z_cpg_abap.</item>
-      <item>if sy-tcode = &apos;MIGO&apos; or sy-tcode = &apos;MIGO_GR&apos;</item>
+      <item>if ( sy-tcode = &apos;MIGO&apos; or sy-tcode = &apos;MIGO_GR&apos; )</item>
       <item>and s_action-create = abap_true</item>
       <item>and s_action-receipt = abap_true</item>
       <item>and s_action-migo_mode = &apos;GR&apos;</item>
