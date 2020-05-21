@@ -1308,15 +1308,15 @@
        <CONT_NAME>TCTRL_ZFI_V_VEN_DT_VAL</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*ZFI_V_VEN_DT_VAL-PROGNAME</NAME>
-       <TEXT>Program_Name____________________________</TEXT>
+       <TEXT>Exclusion_Parameter</TEXT>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
-       <LENGTH>040</LENGTH>
-       <VISLENGTH>040</VISLENGTH>
+       <LENGTH>019</LENGTH>
+       <VISLENGTH>022</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <FROM_DICT>X</FROM_DICT>
-       <MODIFIC>V</MODIFIC>
+       <MODIFIC>F</MODIFIC>
        <REQU_ENTRY>N</REQU_ENTRY>
        <TC_HEADING>X</TC_HEADING>
       </RPY_DYFATC>
@@ -1325,11 +1325,13 @@
        <CONT_NAME>TCTRL_ZFI_V_VEN_DT_VAL</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*ZFI_V_VEN_DT_VAL-PARAM1</NAME>
-       <TEXT>+_______________________________________</TEXT>
+       <TEXT>Vendor_Group</TEXT>
+       <ICON_QINFO>Applicable_for_EXCL_VEND_DT</ICON_QINFO>
+       <ICON_QSPEC>X</ICON_QSPEC>
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
-       <LENGTH>040</LENGTH>
-       <VISLENGTH>030</VISLENGTH>
+       <LENGTH>043</LENGTH>
+       <VISLENGTH>015</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <REQU_ENTRY>N</REQU_ENTRY>
@@ -1340,10 +1342,10 @@
        <CONT_NAME>TCTRL_ZFI_V_VEN_DT_VAL</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*ZFI_V_VEN_DT_VAL-PARAM2</NAME>
-       <TEXT>+_______________________________________</TEXT>
+       <TEXT>NA</TEXT>
        <LINE>001</LINE>
        <COLUMN>003</COLUMN>
-       <LENGTH>040</LENGTH>
+       <LENGTH>002</LENGTH>
        <VISLENGTH>030</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
@@ -1355,10 +1357,10 @@
        <CONT_NAME>TCTRL_ZFI_V_VEN_DT_VAL</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*ZFI_V_VEN_DT_VAL-PARAM3</NAME>
-       <TEXT>+_______________________________________</TEXT>
+       <TEXT>NA</TEXT>
        <LINE>001</LINE>
        <COLUMN>004</COLUMN>
-       <LENGTH>040</LENGTH>
+       <LENGTH>002</LENGTH>
        <VISLENGTH>030</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
@@ -1370,10 +1372,10 @@
        <CONT_NAME>TCTRL_ZFI_V_VEN_DT_VAL</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*ZFI_V_VEN_DT_VAL-PARAM4</NAME>
-       <TEXT>+_______________________________________</TEXT>
+       <TEXT>NA</TEXT>
        <LINE>001</LINE>
        <COLUMN>005</COLUMN>
-       <LENGTH>040</LENGTH>
+       <LENGTH>002</LENGTH>
        <VISLENGTH>030</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
@@ -1385,15 +1387,15 @@
        <CONT_NAME>TCTRL_ZFI_V_VEN_DT_VAL</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*ZFI_V_VEN_DT_VAL-SERNO</NAME>
-       <TEXT>Dummy___________________________________</TEXT>
+       <TEXT>NA</TEXT>
        <LINE>001</LINE>
        <COLUMN>006</COLUMN>
-       <LENGTH>040</LENGTH>
-       <VISLENGTH>010</VISLENGTH>
+       <LENGTH>002</LENGTH>
+       <VISLENGTH>005</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <FROM_DICT>X</FROM_DICT>
-       <MODIFIC>1</MODIFIC>
+       <MODIFIC>F</MODIFIC>
        <REQU_ENTRY>N</REQU_ENTRY>
        <TC_HEADING>X</TC_HEADING>
       </RPY_DYFATC>
@@ -1402,15 +1404,15 @@
        <CONT_NAME>TCTRL_ZFI_V_VEN_DT_VAL</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*ZFI_V_VEN_DT_VAL-FROMDT</NAME>
-       <TEXT>Valid_From______________________________</TEXT>
+       <TEXT>NA</TEXT>
        <LINE>001</LINE>
        <COLUMN>007</COLUMN>
-       <LENGTH>040</LENGTH>
-       <VISLENGTH>015</VISLENGTH>
+       <LENGTH>002</LENGTH>
+       <VISLENGTH>007</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <FROM_DICT>X</FROM_DICT>
-       <MODIFIC>2</MODIFIC>
+       <MODIFIC>F</MODIFIC>
        <REQU_ENTRY>N</REQU_ENTRY>
        <TC_HEADING>X</TC_HEADING>
       </RPY_DYFATC>
@@ -1419,15 +1421,15 @@
        <CONT_NAME>TCTRL_ZFI_V_VEN_DT_VAL</CONT_NAME>
        <TYPE>TEXT</TYPE>
        <NAME>*ZFI_V_VEN_DT_VAL-TODT</NAME>
-       <TEXT>Valid_To________________________________</TEXT>
+       <TEXT>Exclusion_Valid_Upto________________________________</TEXT>
        <LINE>001</LINE>
        <COLUMN>008</COLUMN>
-       <LENGTH>040</LENGTH>
-       <VISLENGTH>015</VISLENGTH>
+       <LENGTH>052</LENGTH>
+       <VISLENGTH>023</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <FORMAT>CHAR</FORMAT>
        <FROM_DICT>X</FROM_DICT>
-       <MODIFIC>2</MODIFIC>
+       <MODIFIC>F</MODIFIC>
        <REQU_ENTRY>N</REQU_ENTRY>
        <TC_HEADING>X</TC_HEADING>
       </RPY_DYFATC>
@@ -1455,7 +1457,7 @@
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
        <LENGTH>040</LENGTH>
-       <VISLENGTH>005</VISLENGTH>
+       <VISLENGTH>022</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <GROUP1>KEY</GROUP1>
        <FORMAT>CHAR</FORMAT>
@@ -1473,7 +1475,7 @@
        <LINE>001</LINE>
        <COLUMN>002</COLUMN>
        <LENGTH>030</LENGTH>
-       <VISLENGTH>007</VISLENGTH>
+       <VISLENGTH>015</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <GROUP1>KEY</GROUP1>
        <FORMAT>CHAR</FORMAT>
@@ -1587,7 +1589,7 @@
        <LINE>001</LINE>
        <COLUMN>008</COLUMN>
        <LENGTH>010</LENGTH>
-       <VISLENGTH>007</VISLENGTH>
+       <VISLENGTH>023</VISLENGTH>
        <HEIGHT>001</HEIGHT>
        <GROUP1>KEY</GROUP1>
        <FORMAT>DATS</FORMAT>
