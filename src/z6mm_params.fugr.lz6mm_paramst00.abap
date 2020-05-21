@@ -1,6 +1,6 @@
 *---------------------------------------------------------------------*
 *    view related data declarations
-*   generation date: 21.05.2020 at 16:15:06
+*   generation date: 21.05.2020 at 16:51:17
 *   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 *...processing: Z6MMA_PARAMS....................................*
