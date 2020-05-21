@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TOBJ" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <OBJH>
+    <OBJECTNAME>ZFI_V_VEN_DT_VAL</OBJECTNAME>
+    <OBJECTTYPE>V</OBJECTTYPE>
+    <CLIDEP>X</CLIDEP>
+    <OBJCATEG>CUST</OBJCATEG>
+    <OBJTRANSP>2</OBJTRANSP>
+    <IMPORTABLE>3</IMPORTABLE>
+   </OBJH>
+   <OBJT>
+    <LANGUAGE>E</LANGUAGE>
+    <OBJECTNAME>ZFI_V_VEN_DT_VAL</OBJECTNAME>
+    <OBJECTTYPE>V</OBJECTTYPE>
+    <DDTEXT>Maintain exclusion period for vendor date validations</DDTEXT>
+   </OBJT>
+   <OBJS>
+    <OBJS>
+     <OBJECTNAME>ZFI_V_VEN_DT_VAL</OBJECTNAME>
+     <OBJECTTYPE>V</OBJECTTYPE>
+     <TABNAME>Z6MMA_PARAMS</TABNAME>
+     <DDIC>X</DDIC>
+     <PRIM_TABLE>X</PRIM_TABLE>
+    </OBJS>
+   </OBJS>
+   <TOBJ>
+    <TDDAT>
+     <TABNAME>ZFI_V_VEN_DT_VAL</TABNAME>
+     <CCLASS>&amp;NC&amp;</CCLASS>
+    </TDDAT>
+    <TVDIR>
+     <TABNAME>ZFI_V_VEN_DT_VAL</TABNAME>
+     <AREA>Z6MM_PARAMS</AREA>
+     <DEVCLASS>ZMM01</DEVCLASS>
+     <TYPE>1</TYPE>
+     <LISTE>0002</LISTE>
+    </TVDIR>
+   </TOBJ>
+  </asx:values>
+ </asx:abap>
+</abapGit>
