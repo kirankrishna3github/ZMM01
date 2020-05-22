@@ -30,10 +30,10 @@
 *& Goal is to make this a universal vendor master update program. The structure of the program is such that new fields can be easily added.
 *& Also existing fields can be supplied optionally, meaning fields that are not supplied will not be cleared or overwritten.
 *& Currently, i have made provision for updating fields related to Vendor Payment module including address details,
-*& pan, gst no and bank details. Instructions for adding new fields have been enumerated in the program. Requesting you to add new fields
-*& in the same program in the future *& rather than creating a new one. This will help reduce multiple bdc’s for the same purpose
-*& and reduce duplication of efforts. *& if time permits, we will try to bring all the existing vendor master update programs
-*& under this single program. File format can be downloaded from the selection screen. Kindly check and confirm for PRD.
+*& pan, gst no and bank details. Instructions for adding new fields have been enumerated in the program. You may to add new fields
+*& in the same program in the future rather than creating a new one. This will help reduce multiple bdc’s for the same purpose
+*& and reduce duplication of efforts. if time permits, we will try to bring all the existing vendor master update programs
+*& under this single program. File format can be downloaded from the selection screen.
 *&---------------------------------------------------------------------*
 *& * ---- Revision History ---- *
 *&---------------------------------------------------------------------*
