@@ -507,6 +507,24 @@ class lcl_application implementation.
         data(lv_m1_err) = abap_true.
       endif.
 
+      select single * from lfa1 where lifnr = @gv_vendor into @data(ls_lfa1).
+      try.
+          zcl_bupa_utilities=>validate_gst_number(
+            exporting
+              iv_state       = cond #( when m1-regio is not initial
+                                       then m1-regio
+                                       else ls_lfa1-regio ) " Region (State, Province, County)
+              iv_gst_number  = cond #( when m2-gstno is not initial
+                                       then m2-gstno
+                                       else ls_lfa1-stcd3 ) ). " Postal Code
+        catch zcx_generic into data(lox_generic). " Generic Exception Class
+          output_line-icon = icon_red_light.
+          output_line-msg = output_line-msg && ` ` && |Err - { lox_generic->get_text( ) }|.
+          lv_lifnr_err = abap_true.
+      endtry.
+
+      clear lox_generic.
+
       if lv_lifnr_err eq abap_false.  " error in vendor, no further processing
         " M1
         if lv_m1_err eq abap_false. " m1 validation error
@@ -531,6 +549,7 @@ class lcl_application implementation.
             output_line-msg = output_line-msg && ` ` && 'M2:Err - OMT3E - No authority for maintaining CIN details'.
             lv_m2_err = abap_true.
           endif.
+
           if lv_m2_err eq abap_false. " m2 validation error
             conversion_exit( changing m = m2 ).
             meth2( exporting index = lv_index ).
@@ -980,7 +999,6 @@ class lcl_application implementation.
         <ls_data>-vendor-header-object_instance-lifnr = gv_vendor.
         <ls_data>-vendor-header-object_task = gc_object_task_update.
 
-*        <ls_data>-vendor-company_data-current_state = abap_true.
         append initial line to <ls_data>-vendor-company_data-company assigning field-symbol(<ls_comp>).
         if <ls_comp> is assigned.
           <ls_comp>-task = gc_object_task_update.
