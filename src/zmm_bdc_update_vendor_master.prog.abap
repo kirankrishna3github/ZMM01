@@ -145,6 +145,7 @@ class lcl_application definition.
             akont     type excelcell,   " Recon acc no
             p_zterm   type excelcell,   " Purchasing Payment Terms
             bptype    type excelcell,   " BP Type
+            qland     type excelcell,   " W/H Tax Country
             " Additional fields here...
           end of excel_line,
           excel like standard table of excel_line.
@@ -201,7 +202,11 @@ class lcl_application definition.
           begin of m6,
             bptype type tb004-bpkind,    " BP Type
           end of m6,
-          m6_tab like standard table of m6.
+          m6_tab like standard table of m6,
+
+          begin of m7,
+            qland type lfb1-qland,
+          end of m7.
 
     " Your structure here...
 
@@ -259,29 +264,40 @@ class lcl_application definition.
           index type i, " update data in m5
       meth6
         importing
-          index type i, " update data in m5
+          index type i, " update data in m6
+      meth7
+        importing
+          index type i, " update data in m7
 
       " Your method definition here
-      conversion_exit changing m type any,
+      conversion_exit
+        changing
+          m type any,
+
       call_bdc
         importing
           iv_tcode type sy-tcode
           m_name   type any
           index    type i,
+
       bdc_dynpro
         importing
           program type bdcdata-program
           dynpro  type bdcdata-dynpro,
+
       bdc_field
         importing
           fnam type bdcdata-fnam
           fval type any,  "bdcdata-fval,
+
       call_bapi
         importing
           it_data type cvis_ei_extern_t
           m_name  type any
           index   type i,
+
       display_log,
+
       hotspot_click for event link_click of cl_salv_events_table  " event handler
         importing
             row
@@ -480,10 +496,13 @@ class lcl_application implementation.
         where addrnumber = ( select adrnr from lfa1 where lifnr = @gv_vendor )
         and   r3_user = '3'.
 
+      select single stcd3 from lfa1 where lifnr = @gv_vendor into @data(lv_stcd3).
+
       " mobile no and email are mandatory; IRDK932865
-      if ( lv_email is initial and excel_line-email is initial ) or ( lv_mobile is initial and excel_line-mobil is initial ).
+      if ( lv_email is initial and excel_line-email is initial ) or ( lv_mobile is initial and excel_line-mobil is initial )
+        or ( lv_stcd3 is initial and excel_line-gstno is initial ).
         output_line-icon = icon_red_light.
-        output_line-msg = output_line-msg && ` ` && 'Err - Mobile Number and/or Email ID not supplied/not mainained'.
+        output_line-msg = output_line-msg && ` ` && 'Err - Mobile Number and/or Email ID and/or GST No. not supplied/not mainained'.
         lv_lifnr_err = abap_true.
         data(lv_m1_err) = abap_true.
       endif.
@@ -607,10 +626,26 @@ class lcl_application implementation.
           meth6( exporting index = lv_index ).
         endif.
 
-        " Similarly for M6 and so on
+        " M7
+        move-corresponding excel_line to m7.
+        if m7 is not initial.
+          if gv_comp is initial or gv_comp eq no_data.  " IHDK902058
+            output_line-icon = icon_red_light.
+            output_line-msg = output_line-msg && ` ` && 'M5:Err - Company code is mandatory for company code data'. " IHDK902056
+            data(lv_m7_err) = abap_true.
+          endif.
+
+          if lv_m7_err = abap_false.
+            conversion_exit( changing m = m7 ).
+            meth7( exporting index = lv_index ).
+          endif.
+        endif.
+
+        " Similarly for M8 and so on
       endif.
       append output_line to output.
-      clear: excel_line, lv_email, lv_mobile, lv_lifnr_err, lv_m1_err, lv_m2_err, lv_m3_err.
+      clear: excel_line, lv_email, lv_mobile, lv_stcd3,
+        lv_lifnr_err, lv_m1_err, lv_m2_err, lv_m3_err, lv_m4_err, lv_m5_err, lv_m7_err.
     endloop.
   endmethod.
 
@@ -915,6 +950,49 @@ class lcl_application implementation.
 
 *--------------------------------------------------------------------* End Data Fill
       call_bapi( exporting it_data = lt_data m_name = 'M6' index = index ).
+    endif.
+
+  endmethod.
+
+  method meth7. " Update BP Type
+
+    data: lt_data type cvis_ei_extern_t.  " complex BP interface
+
+    " get business partner assigned to vendor
+    call method zcl_bupa_utilities=>get_bp_assigned_to_vendor
+      exporting
+        iv_vendor       = gv_vendor
+      importing
+        ev_partner      = data(lv_partner)
+        ev_partner_guid = data(lv_partner_guid).
+
+    if lv_partner is not initial. " Do not proceed if B-partner does not exist.
+      append initial line to lt_data assigning field-symbol(<ls_data>).
+      if <ls_data> is assigned.
+
+        " Inform the system that the BP is being updated
+        <ls_data>-partner-header-object_task = gc_object_task_update.
+        <ls_data>-partner-header-object = gc_object_bp.
+        <ls_data>-partner-header-object_instance-bpartner = lv_partner.
+        <ls_data>-partner-header-object_instance-bpartnerguid = lv_partner_guid.
+
+        " Inform the system that the customer is being updated
+        <ls_data>-vendor-header-object_instance-lifnr = gv_vendor.
+        <ls_data>-vendor-header-object_task = gc_object_task_update.
+
+*        <ls_data>-vendor-company_data-current_state = abap_true.
+        append initial line to <ls_data>-vendor-company_data-company assigning field-symbol(<ls_comp>).
+        if <ls_comp> is assigned.
+          <ls_comp>-task = gc_object_task_update.
+          <ls_comp>-data_key-bukrs = gv_comp.
+          if m7-qland is not initial.
+            <ls_comp>-data-qland = m7-qland.
+            <ls_comp>-datax-qland = abap_true.
+          endif.
+        endif.
+      endif.
+*--------------------------------------------------------------------* End Data Fill
+      call_bapi( exporting it_data = lt_data m_name = 'M7' index = index ).
     endif.
 
   endmethod.
@@ -1324,6 +1402,12 @@ class lcl_application implementation.
             o_column->set_long_text( value = 'Partner Type' ).
             o_column->set_medium_text( value = 'Partner Type' ).
             o_column->set_short_text( value = 'BP Type' ).
+
+            free o_column.
+            o_column ?= o_columns->get_column( columnname = 'BPTYPE' ).
+            o_column->set_long_text( value = 'WTax Country' ).
+            o_column->set_medium_text( value = 'WTax Country' ).
+            o_column->set_short_text( value = 'WTax Cty' ).
 
             " Add fcat for your fields here
 
