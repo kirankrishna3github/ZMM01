@@ -205,6 +205,9 @@ TYPES : BEGIN OF ty_final,
           check_gst_no   TYPE char30,
           check_postal   TYPE char30,
           color          TYPE slis_t_specialcol_alv, "for row color
+          "added by varun on 22.05.2020
+          esic_no        TYPE but0id-idnumber,
+          msme_no        TYPE but0id-idnumber,
         END OF ty_final.
 
 TYPES : BEGIN OF ty_knvk,
@@ -316,6 +319,13 @@ DATA : it_link    TYPE TABLE OF ts_cvi_vend_link,
        it_partner TYPE TABLE OF ts_but000,
        wa_partner TYPE ts_but000.
 "----------------end-----------------"
+"added by varun on 22.05.2020
+TYPES: BEGIN OF ty_but0id,
+         partner  TYPE but0id-partner,
+         type     TYPE but0id-type,
+         idnumber TYPE but0id-idnumber,
+       END OF ty_but0id.
+DATA: lt_but0id TYPE TABLE OF ty_but0id.
 
 DATA: lv_incrt_gst    TYPE flag,  "added by varun on 07.01.2020 for gst and postal code validation
       lv_incrt_postal TYPE flag,
@@ -326,7 +336,7 @@ SELECT-OPTIONS: s_lifnr FOR lfa1-lifnr , """vendor
                 s_bukrs FOR lfb1-bukrs OBLIGATORY,   """company code
                 s_accgr FOR lfa1-ktokk , """account group
                 s_purorg FOR lfm1-ekorg,"""Purchasing Org.
-                S_pan FOR lfa1-j_1ipanno ,
+                s_pan FOR lfa1-j_1ipanno ,
                 s_gst FOR lfa1-stcd3 ,
                 s_erdat FOR lfa1-erdat.
 SELECTION-SCREEN END OF BLOCK blk1   .
@@ -455,9 +465,9 @@ FORM fetch_data .
   INTO TABLE it_lfa1
   WHERE lifnr IN s_lifnr
   AND   ktokk IN s_accgr
-  AND   j_1ipanno in s_pan
-  AND   stcd3 in s_gst
-  AND   erdat in s_erdat       .
+  AND   j_1ipanno IN s_pan
+  AND   stcd3 IN s_gst
+  AND   erdat IN s_erdat       .
 
 
   IF NOT it_lfa1[] IS INITIAL ."and not s_bukrs is initial.
@@ -471,6 +481,13 @@ FORM fetch_data .
       SELECT partner partner_guid bpkind FROM but000
         INTO TABLE it_partner
         FOR ALL ENTRIES IN  it_link WHERE partner_guid = it_link-partner_guid.
+      "added by varun on 22.05.2020
+      IF sy-subrc EQ 0.
+        SELECT partner,type,idnumber FROM but0id INTO TABLE @lt_but0id
+                                     FOR ALL ENTRIES IN @it_partner
+                                     WHERE partner EQ @it_partner-partner
+                                     AND   type IN ( 'ZESIC', 'ZMSME' ).
+      ENDIF.
     ENDIF.
     "----------------end------------------------"
 
@@ -703,13 +720,17 @@ FORM display_data .
       IF sy-subrc = 0.
         wa_final-partner = wa_partner-partner.
         wa_final-bptype = wa_partner-bpkind.
+
+        LOOP AT lt_but0id INTO DATA(ls_but0id) WHERE partner = wa_final-partner.
+          IF ls_but0id-type EQ 'ZMSME'.
+            wa_final-msme_no = ls_but0id-idnumber.
+          ELSEIF ls_but0id-type EQ 'ZESIC'.
+            wa_final-esic_no = ls_but0id-idnumber.
+          ENDIF.
+        ENDLOOP.
       ENDIF.
     ENDIF.
     "------------------end------------------------------"
-
-
-
-
 
     READ TABLE it_tq04s INTO wa_tq04s WITH KEY sperrfkt = wa_lfa1-sperq.
 
@@ -1553,6 +1574,22 @@ FORM alv_fieldcatlog .
   ADD 1 TO cnt.
   wa_fieldcatalog-fieldname   = 'ERDAT' .
   wa_fieldcatalog-seltext_m   = 'Creation Date'.
+  wa_fieldcatalog-col_pos     = cnt.
+*  wa_fieldcatalog-no_out      = 'X'.
+  APPEND wa_fieldcatalog TO it_fieldcatalog.
+  CLEAR  wa_fieldcatalog.
+
+  ADD 1 TO cnt.
+  wa_fieldcatalog-fieldname   = 'ESIC_NO' .
+  wa_fieldcatalog-seltext_m   = 'ESIC Number'.
+  wa_fieldcatalog-col_pos     = cnt.
+*  wa_fieldcatalog-no_out      = 'X'.
+  APPEND wa_fieldcatalog TO it_fieldcatalog.
+  CLEAR  wa_fieldcatalog.
+
+  ADD 1 TO cnt.
+  wa_fieldcatalog-fieldname   = 'MSME_NO' .
+  wa_fieldcatalog-seltext_m   = 'MSME Number'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
   APPEND wa_fieldcatalog TO it_fieldcatalog.
