@@ -227,7 +227,7 @@ METHOD if_ex_mb_document_badi~mb_document_before_update.
                 put_in_outbox              = 'X'
                 sender_address             = sender
                 sender_address_type        = send_adr_type
-                commit_work                = 'X'
+*                commit_work                = 'X'
               TABLES
                 packing_list               = it_packing_list
                 contents_txt               = g_objcont
