@@ -39,7 +39,8 @@ SELECT-OPTIONS: s_Lifnr FOR bseg-lifnr,
                 s_belnr FOR bkpf-belnr,
                 s_GJAHR FOR bkpf-gjahr no-EXTENSION no INTERVALS OBLIGATORY,
                 s_bldat FOR BSIS-bldat OBLIGATORY,
-                s_werks FOR BSIS-werks OBLIGATORY.
+                s_werks FOR BSIS-werks OBLIGATORY,
+                s_hkont FOR BSIS-HKONT no-display.
 SELECTION-SCREEN END OF BLOCK b1.
 
 "ALV variant
@@ -132,9 +133,33 @@ METHOD init_variant.
     ENDIF.
 ENDMETHOD.
 METHOD process.
+  get_data( ).
 
 ENDMETHOD.
 METHOD get_data.
+
+SELECT PARAM1
+From Z6MMA_PARAMS
+INTO TABLE @data(it_param)
+where progname = 'ZMM026'.
+
+
+LOOP AT it_param INTO data(wa_param).
+  s_hkont-option = 'I'.
+  s_hkont-sign = 'EQ'.
+  s_hkont-low = wa_param-param1.
+  APPEND s_hkont to s_hkont[].
+ENDLOOP.
+
+SELECT bukrs hkont belnr gjahr blart
+zuonr bldat xblnr shkzg dmbtr werks
+FROM BSIS into TABLE it_BSIS
+  WHERE bukrs in s_bukrs
+  AND belnr in s_belnr
+  AND hkont in s_hkont
+  AND bldat in s_bldat
+  AND gjahr in s_gjahr
+  AND werks in s_werks.
 
 ENDMETHOD.
 METHOD call_sf.
