@@ -158,8 +158,11 @@
       <item>zfkimg      TYPE z6sd038t_depo-zfkimg,</item>
       <item/>
       <item>ersda TYPE mchb-ersda, &quot; Loc Received Date - Added by CS on 30.12.2015</item>
-      <item>laeda TYPE  mchb-laeda. &quot; Last movement Date - Added by CS on 30.12.2015</item>
+      <item>laeda TYPE  mchb-laeda, &quot; Last movement Date - Added by CS on 30.12.2015</item>
       <item/>
+      <item>&quot; IHDK906667: MM: S_K: MB52: Enh: add batch purity values: KV/US: 25.5.20</item>
+      <item>purity1 type qamr-original_input,</item>
+      <item>purity2 type qamr-original_input.</item>
       <item/>
      </SOURCE>
     </ENH_HOOK_IMPL>
@@ -523,6 +526,39 @@
       <item>AND werks = bestand-werks</item>
       <item>and lgort = bestand-lgort.</item>
       <item/>
+      <item>&quot; IHDK906667 - MM: S_K: MB52: Enh: add batch purity values: KV/US: 25.5.20</item>
+      <item>data lt_bestand like standard table of bestand.</item>
+      <item/>
+      <item>lt_bestand = bestand[].</item>
+      <item>select max( a~prueflos ) as inspection_lot,</item>
+      <item>a~werk     as plant,</item>
+      <item>a~matnr    as material,</item>
+      <item>a~charg    as batch</item>
+      <item>from qals as a</item>
+      <item>inner join @lt_bestand as b</item>
+      <item>on  a~werk  = b~werks</item>
+      <item>and a~matnr = b~matnr</item>
+      <item>and b~charg = b~charg</item>
+      <item>group by a~werk, a~matnr, a~charg</item>
+      <item>into table @data(lt_inspection_lot).</item>
+      <item/>
+      <item>if lt_inspection_lot is not initial.</item>
+      <item>sort lt_inspection_lot by plant material batch.</item>
+      <item/>
+      <item>select a~prueflos as inspection_lot,</item>
+      <item>a~original_input as purity_result</item>
+      <item>from qamr as a</item>
+      <item>inner join qamv as b</item>
+      <item>on  a~prueflos = b~prueflos</item>
+      <item>and a~vorglfnr = b~vorglfnr</item>
+      <item>and a~merknr = b~merknr</item>
+      <item>for all entries in @lt_inspection_lot</item>
+      <item>where a~prueflos = @lt_inspection_lot-inspection_lot</item>
+      <item>and   b~verwmerkm in ( &apos;QN000006&apos;, &apos;QN000008&apos;, &apos;QN000018&apos; )</item>
+      <item>into table @data(lt_inspection_result).</item>
+      <item>endif.</item>
+      <item>&quot; End IHDK906667</item>
+      <item/>
       <item>SORT : it_mard  BY matnr</item>
       <item>werks</item>
       <item>lgort,</item>
@@ -735,6 +771,28 @@
       <item>bestand-laeda = wa_mchb-laeda.</item>
       <item/>
       <item>ENDIF.</item>
+      <item/>
+      <item>&quot; IHDK906667 - MM: S_K: MB52: Enh: add batch purity values: KV/US: 25.5.20</item>
+      <item>try.</item>
+      <item>data(ls_inspection_lot) = lt_inspection_lot[ plant = bestand-werks</item>
+      <item>material = bestand-matnr</item>
+      <item>batch = bestand-charg ].</item>
+      <item/>
+      <item>loop at lt_inspection_result into data(ls_result) where inspection_lot = ls_inspection_lot-inspection_lot.</item>
+      <item>if bestand-purity1 is initial.</item>
+      <item>bestand-purity1 = ls_result-purity_result.</item>
+      <item>continue.</item>
+      <item>endif.</item>
+      <item>if bestand-purity2 is initial.</item>
+      <item>bestand-purity2 = ls_result-purity_result.</item>
+      <item>continue.</item>
+      <item>endif.</item>
+      <item>clear ls_result.</item>
+      <item>endloop.</item>
+      <item/>
+      <item>catch cx_sy_itab_line_not_found ##no_handler.</item>
+      <item>endtry.</item>
+      <item>&quot; End IHDK906667</item>
       <item/>
       <item>MODIFY bestand.</item>
       <item>ENDLOOP.</item>
@@ -953,6 +1011,19 @@
       <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
       <item>APPEND fieldcat.</item>
       <item/>
+      <item>&quot; IHDK906667</item>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;PURITY1&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Purity1&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;PURITY2&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Purity2&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item>&quot; End IHDK906667</item>
      </SOURCE>
     </ENH_HOOK_IMPL>
     <ENH_HOOK_IMPL>
@@ -1146,6 +1217,20 @@
       <item>fieldcat-ref_tabname   = &apos;MCHB&apos;.</item>
       <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
       <item>APPEND fieldcat.</item>
+      <item/>
+      <item>&quot; IHDK906667</item>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;PURITY1&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Purity1&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;PURITY2&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Purity2&apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item>&quot; End IHDK906667</item>
       <item/>
      </SOURCE>
     </ENH_HOOK_IMPL>
@@ -1345,6 +1430,9 @@
       <item>8</item>
       <item>8</item>
       <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
       <item>0</item>
      </SPACES>
     </item>
@@ -1701,6 +1789,39 @@
       <item>6</item>
       <item>0</item>
       <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>4</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>11</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
       <item>21</item>
       <item>21</item>
       <item>9</item>
@@ -1914,6 +2035,28 @@
       <item>4</item>
       <item>0</item>
       <item>4</item>
+      <item>4</item>
+      <item>8</item>
+      <item>53</item>
+      <item>53</item>
+      <item>0</item>
+      <item>8</item>
+      <item>10</item>
+      <item>12</item>
+      <item>12</item>
+      <item>10</item>
+      <item>10</item>
+      <item>12</item>
+      <item>12</item>
+      <item>10</item>
+      <item>10</item>
+      <item>8</item>
+      <item>0</item>
+      <item>6</item>
+      <item>4</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
       <item>2</item>
       <item>0</item>
       <item>2</item>
@@ -2121,6 +2264,19 @@
       <item>0</item>
       <item>2</item>
       <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
      </SPACES>
     </item>
     <item>
@@ -2310,6 +2466,20 @@
       <item>2</item>
       <item>2</item>
       <item>0</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
       <item>2</item>
       <item>0</item>
      </SPACES>
