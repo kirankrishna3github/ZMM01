@@ -53,6 +53,16 @@ data: it_bsis  type table of ty_bsis,
       lt_final type table of ty_final,
       ls_final type ty_final.
 
+DATA: lo_table     TYPE REF TO cl_salv_table,
+      lo_functions TYPE REF TO cl_salv_functions_list,
+      lo_display   TYPE REF TO cl_salv_display_settings,
+      lo_columns   TYPE REF TO cl_salv_columns_table,
+      lo_column    TYPE REF TO cl_salv_column_table,
+      lo_layout    TYPE REF TO cl_salv_layout,
+      ls_key       TYPE salv_s_layout_key,
+      lo_selection TYPE REF TO cl_salv_selections,
+      lo_event     TYPE REF TO cl_salv_events_table.
+
 data : lv_save(1) type c,
        lv_exit(1) type c,
        ls_variant type disvariant,
@@ -249,6 +259,113 @@ class lcl_module implementation.
 
   endmethod.
   method display_alv.
+    TRY.
+        cl_salv_table=>factory(
+          EXPORTING
+            list_display   = if_salv_c_bool_sap=>false
+          IMPORTING
+            r_salv_table   = lo_table
+          CHANGING
+            t_table        = lt_final
+        ).
+
+        IF lo_table IS BOUND.
+
+          lo_table->set_screen_status(
+            EXPORTING
+              report        = 'ZMM_VEND_INV_AUTO_MAIL'
+              pfstatus      = 'STANDARD'
+              set_functions = lo_table->c_functions_all ).
+
+          lo_functions = lo_table->get_functions( ).
+          IF lo_functions IS BOUND.
+            lo_functions->set_all( value = if_salv_c_bool_sap=>true ).
+          ENDIF.
+
+          lo_display = lo_table->get_display_settings( ).
+          IF lo_display IS BOUND.
+            lo_display->set_striped_pattern( value = if_salv_c_bool_sap=>true ).
+          ENDIF.
+
+          lo_columns = lo_table->get_columns( ).
+          IF lo_columns IS BOUND.
+*            CLEAR: columnname, short, medium, long.
+            change_col_text( EXPORTING columnname = 'BUKRS' short      = 'Comp Code.'
+                             medium     = 'Company Code'
+                             long       = 'Company Code' ).
+            change_col_text( EXPORTING columnname = 'BELNR' short      = 'Docmnt.No'
+                             medium     = 'Document Number'
+                             long       = 'Document Number' ).
+            change_col_text( EXPORTING columnname = 'GJAHR' short      = 'FI Year'
+                             medium     = 'Fiscal Year'
+                             long       = 'Fiscal Year' ).
+            change_col_text( EXPORTING columnname = 'BLART' short      = 'Doc.Type'
+                             medium     = 'Document type'
+                             long       = 'Document type' ).
+            change_col_text( EXPORTING columnname = 'LIFNR' short      = 'Vendor'
+                             medium     = ' Vendor Code'
+                             long       = ' Vendor Code' ).
+            change_col_text( EXPORTING columnname = 'WERKS' short      = 'Plant'
+                             medium     = 'Plant'
+                             long       = 'Plant' ).
+            change_col_text( EXPORTING columnname = 'BLDAT' short      = 'Docmnt.Dt'
+                             medium     = 'Document Date'
+                             long       = 'Document Date' ).
+            change_col_text( EXPORTING columnname = 'XBLNR' short      = 'Referance'
+                             medium     = 'Referance Number'
+                             long       = 'Referance Numner' ).
+            change_col_text( EXPORTING columnname = 'ZUONR' short      = 'Assignment'
+                             medium     = 'Assignment'
+                             long       = 'Assignment' ).
+            change_col_text( EXPORTING columnname = 'MENGE' short      = 'Quantity'
+                             medium     = 'Quantity'
+                             long       = 'Quantity' ).
+            change_col_text( EXPORTING columnname = 'MEINS' short      = 'UOM'
+                             medium     = 'UOM'
+                             long       = 'UOM' ).
+            change_col_text( EXPORTING columnname = 'MATNR' short      = 'Material'
+                             medium     = 'Material'
+                             long       = 'Material' ).
+            change_col_text( EXPORTING columnname = 'MAKTX' short      = 'Mat.Descr.'
+                             medium     = 'Material Descr.'
+                             long       = 'Material Descr.' ).
+            change_col_text( EXPORTING columnname = 'EBELN' short      = 'PO Number'
+                             medium     = 'Purchase Order'
+                             long       = 'Purchase Order' ).
+            change_col_text( EXPORTING columnname = 'EBELP' short      = 'PO Item'
+                             medium     = 'Purchase Order line '
+                             long       = 'Purchase Order Line Item' ).
+            change_col_text( EXPORTING columnname = 'VEND_MAIL_ID' short      = 'Vendor ID'
+                             medium     = 'Vendor Mail ID'
+                             long       = 'Vendor Mail ID' ).
+            change_col_text( EXPORTING columnname = 'USER_MAIL_ID' short      = 'User ID'
+                             medium     = 'User Mail ID'
+                             long       = 'User Mail ID' ).
+          ENDIF.
+
+          lo_layout = lo_table->get_layout( ).
+          IF lo_layout IS BOUND.
+            ls_key-report = sy-cprog.
+
+            lo_layout->set_key( value = ls_key ).
+
+            lo_layout->set_save_restriction( value = if_salv_c_layout=>restrict_none ).
+          ENDIF.
+
+          lo_selection = lo_table->get_selections( ).
+          IF lo_selection IS BOUND.
+            lo_selection->set_selection_mode( value = if_salv_c_selection_mode=>row_column ).
+          ENDIF.
+
+          lo_event = lo_table->get_event( ).
+          IF lo_event IS BOUND.
+            SET HANDLER user_command FOR lo_event.
+          ENDIF.
+
+          lo_table->display( ).
+        ENDIF.
+      CATCH cx_salv_msg.
+    ENDTRY.
 
   endmethod.
   method send_mail.
