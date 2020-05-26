@@ -25,8 +25,23 @@ TYPES: BEGIN OF ty_BSIS,
         shkzg TYPE bsis-shkzg ,
         dmbtr TYPE bsis-dmbtr ,
         werks TYPE bsis-werks ,
-       END OF ty_BSIS.
-DATA: IT_BSIS TYPE TABLE OF ty_BSIS.
+       END OF ty_BSIS,
+       BEGIN OF ty_bseg ,
+        BUKRS TYPE BSEG-BUKRS,
+        BELNR TYPE BSEG-BELNR,
+        GJAHR TYPE BSEG-GJAHR,
+        ZUONR TYPE BSEG-ZUONR,
+        menge TYPE BSEG-menge,
+        meins TYPE BSEG-meins,
+        matnr TYPE BSEG-matnr,
+        ebeln TYPE BSEG-ebeln,
+        ebelp TYPE BSEG-ebelp,
+        lifnr TYPE BSEG-lifnr,
+        dmbtr TYPE BSEG-dmbtr,
+       end of ty_bseg.
+
+DATA: IT_BSIS TYPE TABLE OF ty_BSIS,
+      IT_BSEG TYPE TABLE OF ty_BSEG.
 
 DATA : lv_save(1) TYPE c,
        lv_exit(1) TYPE c,
@@ -162,6 +177,13 @@ FROM BSIS into TABLE it_BSIS
   AND werks in s_werks.
 IF it_BSIS IS NOT INITIAL .
 
+SELECT BUKRS BELNR GJAHR ZUONR menge meins matnr ebeln ebelp lifnr dmbtr
+  FROM BSEG INTO CORRESPONDING FIELDS OF TABLE It_BSEG
+  FOR ALL ENTRIES IN it_BSIS
+  WHERE bukrs = it_BSIS-bukrs
+  AND belnr = it_BSIS-belnr
+  AND gjahr = it_BSIS-gjahr
+  AND hkont in s_hkont.
 
 ENDIF.
 
