@@ -160,6 +160,11 @@ FROM BSIS into TABLE it_BSIS
   AND bldat in s_bldat
   AND gjahr in s_gjahr
   AND werks in s_werks.
+IF it_BSIS IS NOT INITIAL .
+
+
+ENDIF.
+
 
 ENDMETHOD.
 METHOD call_sf.
