@@ -65,8 +65,29 @@ DATA: lo_table     TYPE REF TO cl_salv_table,
 
 data : lv_save(1) type c,
        lv_exit(1) type c,
+       lv_fm       TYPE rs38l_fnam,
        ls_variant type disvariant,
        gs_variant type disvariant.
+
+DATA: control         TYPE ssfctrlop,
+      job_output_info TYPE ssfcrescl,
+      output_opt      TYPE ssfcompop,
+      lt_pdf          TYPE TABLE OF tline,
+      lt_doc          TYPE TABLE OF docs,
+      ls_content      TYPE xstring,
+      lt_solix        TYPE solix_tab.
+
+DATA: attachment  TYPE zfi_s_vp_attachment,
+      attachments TYPE TABLE OF zfi_s_vp_attachment,
+      header      TYPE string,
+      content     TYPE string,
+      body        TYPE soli_tab,
+      wa_body     LIKE LINE OF body,
+      subject     TYPE string,
+      sent        TYPE abap_bool,
+      recipient   TYPE zfi_s_vp_recipient,
+      recipients  LIKE STANDARD TABLE OF recipient.
+
 
 selection-screen begin of block b1 with frame title text-001.
 select-options: s_lifnr for bseg-lifnr,
@@ -256,6 +277,74 @@ class lcl_module implementation.
 
   endmethod.
   method call_sf.
+
+        "call smartform
+    CALL FUNCTION 'SSF_FUNCTION_MODULE_NAME'
+      EXPORTING
+        formname           = 'ZMMS_INFORM_VEND_INV_SUBMIT'
+*       VARIANT            = ' '
+*       DIRECT_CALL        = ' '
+      IMPORTING
+        fm_name            = lv_fm
+      EXCEPTIONS
+        no_form            = 1
+        no_function_module = 2
+        OTHERS             = 3.
+    IF sy-subrc <> 0.
+* Implement suitable error handling here
+    ENDIF.
+
+    control-no_dialog = 'X'.
+    control-getotf    = 'X'.
+
+*    control-no_dialog = ' '.
+*    control-preview   = 'X'.
+*    control-no_open   = 'X'.
+*    control-no_close  = 'X'.
+
+    CALL FUNCTION lv_fm
+      EXPORTING
+        control_parameters = control
+        output_options     = output_opt
+      IMPORTING
+        job_output_info    = job_output_info
+      TABLES
+        lt_final           = lt_final
+      EXCEPTIONS
+        formatting_error   = 1
+        internal_error     = 2
+        send_error         = 3
+        user_canceled      = 4
+        OTHERS             = 5.
+    IF sy-subrc EQ 0.
+      CALL FUNCTION 'CONVERT_OTF'
+        EXPORTING
+          format                = 'PDF'
+        TABLES
+          otf                   = job_output_info-otfdata
+          lines                 = lt_pdf
+        EXCEPTIONS
+          err_max_linewidth     = 1
+          err_format            = 2
+          err_conv_not_possible = 3
+          err_bad_otf           = 4
+          OTHERS                = 5.
+      IF sy-subrc EQ 0.
+        LOOP AT lt_pdf INTO DATA(ls_pdf).
+          ASSIGN ls_pdf TO <fs_x> CASTING.
+          CONCATENATE ls_content <fs_x> INTO ls_content IN BYTE MODE.
+        ENDLOOP.
+
+        CHECK ls_content IS NOT INITIAL.
+        attachment-att_type =  'BIN'.
+        attachment-att_subj = condense( |Indofil_Invoice_Submission({ ls_final-lifnr ALPHA = OUT })-{ ls_final-werks }.pdf| ).
+        attachment-att_solix = cl_bcs_convert=>xstring_to_solix( iv_xstring = ls_content ).
+        APPEND attachment TO attachments.
+        CLEAR attachment.
+      ENDIF.
+    ENDIF.
+
+
 
   endmethod.
   method display_alv.
