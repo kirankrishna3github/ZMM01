@@ -368,12 +368,23 @@ class lcl_module implementation.
     ENDTRY.
 
   endmethod.
+METHOD change_col_text .
+    TRY.
+        lo_column ?= lo_columns->get_column( columnname = columnname ).
+        lo_column->set_short_text( value = short ).
+        lo_column->set_medium_text( value = medium ).
+        lo_column->set_long_text( value = long ).
+
+        IF columnname CS 'MAIL_ID'.
+          lo_column->set_output_length( value = '35' ).
+        ENDIF.
+      CATCH cx_salv_not_found.
+    ENDTRY.
+  ENDMETHOD.
   method send_mail.
 
   endmethod.
-  method change_col_text.
 
-  endmethod.
   method user_command.
 
   endmethod.
