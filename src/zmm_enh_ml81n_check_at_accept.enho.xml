@@ -39,6 +39,20 @@
       <item>message &apos;Posting date cannot be less than document date&apos; type &apos;E&apos;.</item>
       <item>endif.</item>
       <item/>
+      <item>select single bsart</item>
+      <item>from ekko</item>
+      <item>where ebeln = @essr-ebeln</item>
+      <item>into @data(lv_po_type).</item>
+      <item/>
+      <item>data lrt_po_type type range of bsart.</item>
+      <item/>
+      <item>select &apos;I&apos; as sign, &apos;EQ&apos; as option, param1 as low</item>
+      <item>from z6mma_params</item>
+      <item>where progname = &apos;MM_DT_VAL_PO_TYPE&apos;</item>
+      <item>into table @lrt_po_type.</item>
+      <item/>
+      <item>&quot; only applicable to specific po types</item>
+      <item>if lrt_po_type is not initial and lv_po_type in lrt_po_type[].</item>
       <item>&quot; Document date cannot be more tha 60 days in the past</item>
       <item>select single @abap_true</item>
       <item>from z6mma_params</item>
@@ -50,6 +64,7 @@
       <item>data(lv_60_days_back) = conv sy-datum( sy-datum - 60 ).</item>
       <item>if essr-bldat &lt; lv_60_days_back.</item>
       <item>message &apos;Document date cannot be more than 60 days in the past&apos; type &apos;E&apos;.</item>
+      <item>endif.</item>
       <item>endif.</item>
       <item>endif.</item>
       <item>endif.</item>
@@ -82,15 +97,30 @@
       <item>4</item>
       <item>0</item>
       <item>4</item>
-      <item>4</item>
-      <item>6</item>
       <item>6</item>
       <item>6</item>
       <item>6</item>
       <item>0</item>
       <item>4</item>
+      <item>0</item>
+      <item>4</item>
       <item>6</item>
       <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
+      <item>0</item>
+      <item>6</item>
+      <item>8</item>
+      <item>8</item>
+      <item>10</item>
       <item>8</item>
       <item>6</item>
       <item>4</item>

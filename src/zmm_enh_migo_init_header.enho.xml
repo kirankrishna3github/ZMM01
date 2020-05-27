@@ -31,11 +31,24 @@
       <item>and s_control-action = &apos;A01&apos;</item>
       <item>and s_control-refdoc = &apos;R01&apos;</item>
       <item>and s_control-vgart = &apos;WE&apos;</item>
-      <item>and s_defaults-bwart = &apos;101&apos;</item>
+      <item>and ( s_defaults-bwart = &apos;101&apos; or s_defaults-bwart = &apos;102&apos; )</item>
       <item>and godynpro-po_number is not initial.</item>
       <item/>
-      <item>clear ps_gohead-bldat.</item>
+      <item>select single bsart</item>
+      <item>from ekko</item>
+      <item>where ebeln = @godynpro-po_number</item>
+      <item>into @data(lv_po_type).</item>
       <item/>
+      <item>data lrt_po_type type range of bsart.</item>
+      <item/>
+      <item>select &apos;I&apos; as sign, &apos;EQ&apos; as option, param1 as low</item>
+      <item>from z6mma_params</item>
+      <item>where progname = &apos;MM_DT_VAL_PO_TYPE&apos;</item>
+      <item>into table @lrt_po_type.</item>
+      <item/>
+      <item>if lrt_po_type is not initial and lv_po_type in lrt_po_type[].</item>
+      <item>clear ps_gohead-bldat.</item>
+      <item>endif.</item>
       <item>endif.</item>
      </SOURCE>
     </ENH_HOOK_IMPL>
@@ -60,7 +73,20 @@
       <item>4</item>
       <item>0</item>
       <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
       <item>0</item>
+      <item>4</item>
+      <item>0</item>
+      <item>4</item>
+      <item>6</item>
+      <item>6</item>
+      <item>6</item>
+      <item>0</item>
+      <item>4</item>
+      <item>6</item>
+      <item>4</item>
       <item>2</item>
      </SPACES>
     </item>
