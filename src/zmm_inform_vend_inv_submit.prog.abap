@@ -273,7 +273,7 @@ class lcl_module implementation.
 
           lo_table->set_screen_status(
             EXPORTING
-              report        = 'ZMM_VEND_INV_AUTO_MAIL'
+              report        = 'ZMM_INFORM_VEND_INV_SUBMIT'
               pfstatus      = 'STANDARD'
               set_functions = lo_table->c_functions_all ).
 
