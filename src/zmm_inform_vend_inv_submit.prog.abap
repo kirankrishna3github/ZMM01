@@ -281,6 +281,9 @@ class lcl_module implementation.
         select single smtp_addr from adr6 into ls_final-vend_mail_id where addrnumber = zadrnr  .
       endif.
 
+      SELECT SINGLE paramval FROM Z6MMA_PARAMS INTO ls_final-user_mail_id WHERE progname = 'ZMM026' AND param1 = ls_final-ekgrp.
+
+
       append ls_final to lt_final.
 
     endloop.

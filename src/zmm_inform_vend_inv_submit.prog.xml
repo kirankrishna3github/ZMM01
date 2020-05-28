@@ -475,6 +475,16 @@
       <PATH>A</PATH>
      </RSMPE_FUNT>
      <RSMPE_FUNT>
+      <CODE>MAIL</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_MAIL</TEXT_NAME>
+      <ICON_ID>@1S@</ICON_ID>
+      <FUN_TEXT>SEND MAIL</FUN_TEXT>
+      <ICON_TEXT>Send Mail</ICON_TEXT>
+      <INFO_TEXT>Send Mail</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
       <CODE>P+</CODE>
       <TEXTNO>001</TEXTNO>
       <TEXT_TYPE>S</TEXT_TYPE>
@@ -1248,193 +1258,193 @@
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
       <NO>02</NO>
-      <PFNO>37</PFNO>
+      <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
       <NO>03</NO>
-      <PFNO>S</PFNO>
-     </RSMPE_BUT>
-     <RSMPE_BUT>
-      <PFK_CODE>000003</PFK_CODE>
-      <CODE>0001</CODE>
-      <NO>04</NO>
       <PFNO>05</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>05</NO>
+      <NO>04</NO>
       <PFNO>06</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>06</NO>
+      <NO>05</NO>
       <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>07</NO>
+      <NO>06</NO>
       <PFNO>28</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>08</NO>
+      <NO>07</NO>
       <PFNO>40</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>09</NO>
+      <NO>08</NO>
       <PFNO>29</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>10</NO>
+      <NO>09</NO>
       <PFNO>38</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>11</NO>
+      <NO>10</NO>
       <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>12</NO>
+      <NO>11</NO>
       <PFNO>30</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>13</NO>
+      <NO>12</NO>
       <PFNO>42</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>14</NO>
+      <NO>13</NO>
       <PFNO>35</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>15</NO>
+      <NO>14</NO>
       <PFNO>47</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>16</NO>
+      <NO>15</NO>
       <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>17</NO>
+      <NO>16</NO>
       <PFNO>43</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>18</NO>
+      <NO>17</NO>
       <PFNO>44</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>19</NO>
+      <NO>18</NO>
       <PFNO>45</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>20</NO>
+      <NO>19</NO>
       <PFNO>31</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>21</NO>
+      <NO>20</NO>
       <PFNO>25</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>22</NO>
+      <NO>21</NO>
       <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>23</NO>
+      <NO>22</NO>
       <PFNO>32</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>24</NO>
+      <NO>23</NO>
       <PFNO>33</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>25</NO>
+      <NO>24</NO>
       <PFNO>34</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>26</NO>
+      <NO>25</NO>
       <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>27</NO>
+      <NO>26</NO>
       <PFNO>41</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>28</NO>
+      <NO>27</NO>
       <PFNO>07</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>29</NO>
+      <NO>28</NO>
       <PFNO>S</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>30</NO>
+      <NO>29</NO>
       <PFNO>18</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>31</NO>
+      <NO>30</NO>
       <PFNO>26</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>32</NO>
+      <NO>31</NO>
       <PFNO>27</PFNO>
      </RSMPE_BUT>
      <RSMPE_BUT>
       <PFK_CODE>000003</PFK_CODE>
       <CODE>0001</CODE>
-      <NO>33</NO>
+      <NO>32</NO>
       <PFNO>19</PFNO>
+     </RSMPE_BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000003</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>33</NO>
+      <PFNO>20</PFNO>
      </RSMPE_BUT>
     </BUT>
     <PFK>
@@ -1502,6 +1512,12 @@
       <CODE>000003</CODE>
       <PFNO>19</PFNO>
       <FUNCODE>&amp;CRE</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000003</CODE>
+      <PFNO>20</PFNO>
+      <FUNCODE>MAIL</FUNCODE>
       <FUNNO>001</FUNNO>
      </RSMPE_PFK>
      <RSMPE_PFK>
@@ -2025,6 +2041,10 @@
      <RSMPE_STAF>
       <STATUS>STANDARD</STATUS>
       <FUNCTION>KOMP</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>STANDARD</STATUS>
+      <FUNCTION>MAIL</FUNCTION>
      </RSMPE_STAF>
      <RSMPE_STAF>
       <STATUS>STANDARD</STATUS>
