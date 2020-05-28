@@ -505,13 +505,14 @@ class lcl_module implementation.
     "vendor's mail id
     clear recipient.
     refresh recipients.
-    recipient-recipient = ls_final-vend_mail_id.
+
+    recipient-recipient = ls_final1-vend_mail_id.
     recipient-copy = abap_false.
     append recipient to recipients.
 
     "user mail id
-    recipient-recipient = ls_final-user_mail_id.
-    recipient-copy = abap_false.
+    recipient-recipient = ls_final1-user_mail_id.
+    recipient-copy = abap_true.
     append recipient to recipients.
 
     if subject is not initial and recipients is not initial.
