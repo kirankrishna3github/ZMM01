@@ -261,7 +261,7 @@ class lcl_module implementation.
       ls_final-ebeln = ls_bseg-ebeln.
       ls_final-ebelp = ls_bseg-ebelp.
       ls_final-dmbtr = ls_bseg-dmbtr.
-
+      ls_final-ekgrp = ls_bseg-ekgrp.
       select single maktx from makt into ls_final-maktx where matnr = ls_bseg-matnr.
 
       read table it_bsis into ls_bsis with key bukrs = ls_bseg-bukrs belnr = ls_bseg-belnr gjahr = ls_bseg-gjahr .
@@ -275,7 +275,7 @@ class lcl_module implementation.
         ls_final-werks = ls_bsis-werks.
       endif.
 
-      select single name1 ,adrnr from lfa1 into ( @data(zadrnr) , @data(zname1) ) where lifnr = @ls_bseg-lifnr.
+      select single name1 ,adrnr from lfa1 into (  @ls_final-name1 , @data(zadrnr) ) where lifnr = @ls_bseg-lifnr.
       if zadrnr is not initial.
 
         select single smtp_addr from adr6 into ls_final-vend_mail_id where addrnumber = zadrnr  .
