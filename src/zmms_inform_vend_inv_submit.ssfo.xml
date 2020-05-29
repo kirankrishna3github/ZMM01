@@ -575,8 +575,9 @@
                      <U_FHEIGHT>CM</U_FHEIGHT>
                      <PATTERN>
                       <PATTNUM>0000</PATTNUM>
-                      <FRAME>0.00</FRAME>
-                      <U_FRAME>PT</U_FRAME>
+                      <BORDER>X</BORDER>
+                      <FRAME>15.00</FRAME>
+                      <U_FRAME>TW</U_FRAME>
                      </PATTERN>
                      <USEBORDER>X</USEBORDER>
                      <WIDTH>19.90</WIDTH>
@@ -592,50 +593,59 @@
                        <DEFAULTVAL>X</DEFAULTVAL>
                        <SHADING>000</SHADING>
                       </item>
+                      <item>
+                       <NAME>%LTYPE2</NAME>
+                       <SHADING>000</SHADING>
+                      </item>
                      </DYNLINES>
                      <CELLS>
                       <item>
                        <NAME>%LTYPE1</NAME>
                        <COLUMNNR>001</COLUMNNR>
-                       <CWIDTH>2.40</CWIDTH>
+                       <CWIDTH>4.00</CWIDTH>
                        <U_CWIDTH>CM</U_CWIDTH>
                        <SHADING>000</SHADING>
                        <BORDERS>
                         <item>
                          <IDX>001</IDX>
-                         <INTENSITY>000</INTENSITY>
-                         <LLEFT>0.00</LLEFT>
-                         <LLEFT_U>MM</LLEFT_U>
-                         <LTOP>0.00</LTOP>
-                         <LTOP_U>MM</LTOP_U>
-                         <LRIGHT>0.00</LRIGHT>
-                         <LRIGHT_U>MM</LRIGHT_U>
-                         <LBOTTOM>0.00</LBOTTOM>
-                         <LBOTTOM_U>MM</LBOTTOM_U>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>15.00</LTOP>
+                         <LTOP_U>TW</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
                          <FILLCOLOR>
-                          <RED>000</RED>
-                          <GREEN>000</GREEN>
-                          <BLUE>000</BLUE>
+                          <RED>067</RED>
+                          <GREEN>183</GREEN>
+                          <BLUE>186</BLUE>
+                          <USED>X</USED>
                          </FILLCOLOR>
                          <CLEFT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CLEFT>
                          <CTOP>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CTOP>
                          <CRIGHT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CRIGHT>
                          <CBOTTOM>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CBOTTOM>
                         </item>
                        </BORDERS>
@@ -643,45 +653,50 @@
                       <item>
                        <NAME>%LTYPE1</NAME>
                        <COLUMNNR>002</COLUMNNR>
-                       <CWIDTH>2.60</CWIDTH>
+                       <CWIDTH>4.00</CWIDTH>
                        <U_CWIDTH>CM</U_CWIDTH>
                        <SHADING>000</SHADING>
                        <BORDERS>
                         <item>
                          <IDX>001</IDX>
-                         <INTENSITY>000</INTENSITY>
-                         <LLEFT>0.00</LLEFT>
-                         <LLEFT_U>MM</LLEFT_U>
-                         <LTOP>0.00</LTOP>
-                         <LTOP_U>MM</LTOP_U>
-                         <LRIGHT>0.00</LRIGHT>
-                         <LRIGHT_U>MM</LRIGHT_U>
-                         <LBOTTOM>0.00</LBOTTOM>
-                         <LBOTTOM_U>MM</LBOTTOM_U>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>15.00</LTOP>
+                         <LTOP_U>TW</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
                          <FILLCOLOR>
-                          <RED>000</RED>
-                          <GREEN>000</GREEN>
-                          <BLUE>000</BLUE>
+                          <RED>067</RED>
+                          <GREEN>183</GREEN>
+                          <BLUE>186</BLUE>
+                          <USED>X</USED>
                          </FILLCOLOR>
                          <CLEFT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CLEFT>
                          <CTOP>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CTOP>
                          <CRIGHT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CRIGHT>
                          <CBOTTOM>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CBOTTOM>
                         </item>
                        </BORDERS>
@@ -689,45 +704,50 @@
                       <item>
                        <NAME>%LTYPE1</NAME>
                        <COLUMNNR>003</COLUMNNR>
-                       <CWIDTH>2.40</CWIDTH>
+                       <CWIDTH>2.00</CWIDTH>
                        <U_CWIDTH>CM</U_CWIDTH>
                        <SHADING>000</SHADING>
                        <BORDERS>
                         <item>
                          <IDX>001</IDX>
-                         <INTENSITY>000</INTENSITY>
-                         <LLEFT>0.00</LLEFT>
-                         <LLEFT_U>MM</LLEFT_U>
-                         <LTOP>0.00</LTOP>
-                         <LTOP_U>MM</LTOP_U>
-                         <LRIGHT>0.00</LRIGHT>
-                         <LRIGHT_U>MM</LRIGHT_U>
-                         <LBOTTOM>0.00</LBOTTOM>
-                         <LBOTTOM_U>MM</LBOTTOM_U>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>15.00</LTOP>
+                         <LTOP_U>TW</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
                          <FILLCOLOR>
-                          <RED>000</RED>
-                          <GREEN>000</GREEN>
-                          <BLUE>000</BLUE>
+                          <RED>067</RED>
+                          <GREEN>183</GREEN>
+                          <BLUE>186</BLUE>
+                          <USED>X</USED>
                          </FILLCOLOR>
                          <CLEFT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CLEFT>
                          <CTOP>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CTOP>
                          <CRIGHT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CRIGHT>
                          <CBOTTOM>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CBOTTOM>
                         </item>
                        </BORDERS>
@@ -735,45 +755,50 @@
                       <item>
                        <NAME>%LTYPE1</NAME>
                        <COLUMNNR>004</COLUMNNR>
-                       <CWIDTH>2.60</CWIDTH>
+                       <CWIDTH>1.00</CWIDTH>
                        <U_CWIDTH>CM</U_CWIDTH>
                        <SHADING>000</SHADING>
                        <BORDERS>
                         <item>
                          <IDX>001</IDX>
-                         <INTENSITY>000</INTENSITY>
-                         <LLEFT>0.00</LLEFT>
-                         <LLEFT_U>MM</LLEFT_U>
-                         <LTOP>0.00</LTOP>
-                         <LTOP_U>MM</LTOP_U>
-                         <LRIGHT>0.00</LRIGHT>
-                         <LRIGHT_U>MM</LRIGHT_U>
-                         <LBOTTOM>0.00</LBOTTOM>
-                         <LBOTTOM_U>MM</LBOTTOM_U>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>15.00</LTOP>
+                         <LTOP_U>TW</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
                          <FILLCOLOR>
-                          <RED>000</RED>
-                          <GREEN>000</GREEN>
-                          <BLUE>000</BLUE>
+                          <RED>067</RED>
+                          <GREEN>183</GREEN>
+                          <BLUE>186</BLUE>
+                          <USED>X</USED>
                          </FILLCOLOR>
                          <CLEFT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CLEFT>
                          <CTOP>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CTOP>
                          <CRIGHT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CRIGHT>
                          <CBOTTOM>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CBOTTOM>
                         </item>
                        </BORDERS>
@@ -781,45 +806,50 @@
                       <item>
                        <NAME>%LTYPE1</NAME>
                        <COLUMNNR>005</COLUMNNR>
-                       <CWIDTH>1.90</CWIDTH>
+                       <CWIDTH>2.90</CWIDTH>
                        <U_CWIDTH>CM</U_CWIDTH>
                        <SHADING>000</SHADING>
                        <BORDERS>
                         <item>
                          <IDX>001</IDX>
-                         <INTENSITY>000</INTENSITY>
-                         <LLEFT>0.00</LLEFT>
-                         <LLEFT_U>MM</LLEFT_U>
-                         <LTOP>0.00</LTOP>
-                         <LTOP_U>MM</LTOP_U>
-                         <LRIGHT>0.00</LRIGHT>
-                         <LRIGHT_U>MM</LRIGHT_U>
-                         <LBOTTOM>0.00</LBOTTOM>
-                         <LBOTTOM_U>MM</LBOTTOM_U>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>15.00</LTOP>
+                         <LTOP_U>TW</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
                          <FILLCOLOR>
-                          <RED>000</RED>
-                          <GREEN>000</GREEN>
-                          <BLUE>000</BLUE>
+                          <RED>067</RED>
+                          <GREEN>183</GREEN>
+                          <BLUE>186</BLUE>
+                          <USED>X</USED>
                          </FILLCOLOR>
                          <CLEFT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CLEFT>
                          <CTOP>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CTOP>
                          <CRIGHT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CRIGHT>
                          <CBOTTOM>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CBOTTOM>
                         </item>
                        </BORDERS>
@@ -827,30 +857,83 @@
                       <item>
                        <NAME>%LTYPE1</NAME>
                        <COLUMNNR>006</COLUMNNR>
-                       <CWIDTH>8.00</CWIDTH>
+                       <CWIDTH>6.00</CWIDTH>
                        <U_CWIDTH>CM</U_CWIDTH>
                        <SHADING>000</SHADING>
                        <BORDERS>
                         <item>
                          <IDX>001</IDX>
-                         <INTENSITY>000</INTENSITY>
-                         <LLEFT>0.00</LLEFT>
-                         <LLEFT_U>MM</LLEFT_U>
-                         <LTOP>0.00</LTOP>
-                         <LTOP_U>MM</LTOP_U>
-                         <LRIGHT>0.00</LRIGHT>
-                         <LRIGHT_U>MM</LRIGHT_U>
-                         <LBOTTOM>0.00</LBOTTOM>
-                         <LBOTTOM_U>MM</LBOTTOM_U>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>15.00</LTOP>
+                         <LTOP_U>TW</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
                          <FILLCOLOR>
-                          <RED>000</RED>
-                          <GREEN>000</GREEN>
-                          <BLUE>000</BLUE>
+                          <RED>067</RED>
+                          <GREEN>183</GREEN>
+                          <BLUE>186</BLUE>
+                          <USED>X</USED>
                          </FILLCOLOR>
                          <CLEFT>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CLEFT>
+                         <CTOP>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CTOP>
+                         <CRIGHT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CRIGHT>
+                         <CBOTTOM>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CBOTTOM>
+                        </item>
+                       </BORDERS>
+                      </item>
+                      <item>
+                       <NAME>%LTYPE2</NAME>
+                       <COLUMNNR>001</COLUMNNR>
+                       <CWIDTH>4.00</CWIDTH>
+                       <U_CWIDTH>CM</U_CWIDTH>
+                       <SHADING>000</SHADING>
+                       <BORDERS>
+                        <item>
+                         <IDX>001</IDX>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>0.00</LTOP>
+                         <LTOP_U>MM</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
+                         <FILLCOLOR>
+                          <RED>255</RED>
+                          <GREEN>255</GREEN>
+                          <BLUE>255</BLUE>
+                          <USED>X</USED>
+                         </FILLCOLOR>
+                         <CLEFT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CLEFT>
                          <CTOP>
                           <RED>000</RED>
@@ -861,11 +944,263 @@
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CRIGHT>
                          <CBOTTOM>
                           <RED>000</RED>
                           <GREEN>000</GREEN>
                           <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CBOTTOM>
+                        </item>
+                       </BORDERS>
+                      </item>
+                      <item>
+                       <NAME>%LTYPE2</NAME>
+                       <COLUMNNR>002</COLUMNNR>
+                       <CWIDTH>4.00</CWIDTH>
+                       <U_CWIDTH>CM</U_CWIDTH>
+                       <SHADING>000</SHADING>
+                       <BORDERS>
+                        <item>
+                         <IDX>001</IDX>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>0.00</LTOP>
+                         <LTOP_U>MM</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
+                         <FILLCOLOR>
+                          <RED>255</RED>
+                          <GREEN>255</GREEN>
+                          <BLUE>255</BLUE>
+                          <USED>X</USED>
+                         </FILLCOLOR>
+                         <CLEFT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CLEFT>
+                         <CTOP>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                         </CTOP>
+                         <CRIGHT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CRIGHT>
+                         <CBOTTOM>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CBOTTOM>
+                        </item>
+                       </BORDERS>
+                      </item>
+                      <item>
+                       <NAME>%LTYPE2</NAME>
+                       <COLUMNNR>003</COLUMNNR>
+                       <CWIDTH>2.00</CWIDTH>
+                       <U_CWIDTH>CM</U_CWIDTH>
+                       <SHADING>000</SHADING>
+                       <BORDERS>
+                        <item>
+                         <IDX>001</IDX>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>0.00</LTOP>
+                         <LTOP_U>MM</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
+                         <FILLCOLOR>
+                          <RED>255</RED>
+                          <GREEN>255</GREEN>
+                          <BLUE>255</BLUE>
+                          <USED>X</USED>
+                         </FILLCOLOR>
+                         <CLEFT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CLEFT>
+                         <CTOP>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                         </CTOP>
+                         <CRIGHT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CRIGHT>
+                         <CBOTTOM>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CBOTTOM>
+                        </item>
+                       </BORDERS>
+                      </item>
+                      <item>
+                       <NAME>%LTYPE2</NAME>
+                       <COLUMNNR>004</COLUMNNR>
+                       <CWIDTH>1.00</CWIDTH>
+                       <U_CWIDTH>CM</U_CWIDTH>
+                       <SHADING>000</SHADING>
+                       <BORDERS>
+                        <item>
+                         <IDX>001</IDX>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>0.00</LTOP>
+                         <LTOP_U>MM</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
+                         <FILLCOLOR>
+                          <RED>255</RED>
+                          <GREEN>255</GREEN>
+                          <BLUE>255</BLUE>
+                          <USED>X</USED>
+                         </FILLCOLOR>
+                         <CLEFT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CLEFT>
+                         <CTOP>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                         </CTOP>
+                         <CRIGHT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CRIGHT>
+                         <CBOTTOM>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CBOTTOM>
+                        </item>
+                       </BORDERS>
+                      </item>
+                      <item>
+                       <NAME>%LTYPE2</NAME>
+                       <COLUMNNR>005</COLUMNNR>
+                       <CWIDTH>2.90</CWIDTH>
+                       <U_CWIDTH>CM</U_CWIDTH>
+                       <SHADING>000</SHADING>
+                       <BORDERS>
+                        <item>
+                         <IDX>001</IDX>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>0.00</LTOP>
+                         <LTOP_U>MM</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
+                         <FILLCOLOR>
+                          <RED>255</RED>
+                          <GREEN>255</GREEN>
+                          <BLUE>255</BLUE>
+                          <USED>X</USED>
+                         </FILLCOLOR>
+                         <CLEFT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CLEFT>
+                         <CTOP>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                         </CTOP>
+                         <CRIGHT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CRIGHT>
+                         <CBOTTOM>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CBOTTOM>
+                        </item>
+                       </BORDERS>
+                      </item>
+                      <item>
+                       <NAME>%LTYPE2</NAME>
+                       <COLUMNNR>006</COLUMNNR>
+                       <CWIDTH>6.00</CWIDTH>
+                       <U_CWIDTH>CM</U_CWIDTH>
+                       <SHADING>000</SHADING>
+                       <BORDERS>
+                        <item>
+                         <IDX>001</IDX>
+                         <INTENSITY>100</INTENSITY>
+                         <LLEFT>15.00</LLEFT>
+                         <LLEFT_U>TW</LLEFT_U>
+                         <LTOP>0.00</LTOP>
+                         <LTOP_U>MM</LTOP_U>
+                         <LRIGHT>15.00</LRIGHT>
+                         <LRIGHT_U>TW</LRIGHT_U>
+                         <LBOTTOM>15.00</LBOTTOM>
+                         <LBOTTOM_U>TW</LBOTTOM_U>
+                         <FILLCOLOR>
+                          <RED>255</RED>
+                          <GREEN>255</GREEN>
+                          <BLUE>255</BLUE>
+                          <USED>X</USED>
+                         </FILLCOLOR>
+                         <CLEFT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CLEFT>
+                         <CTOP>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                         </CTOP>
+                         <CRIGHT>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
+                         </CRIGHT>
+                         <CBOTTOM>
+                          <RED>000</RED>
+                          <GREEN>000</GREEN>
+                          <BLUE>000</BLUE>
+                          <USED>X</USED>
                          </CBOTTOM>
                         </item>
                        </BORDERS>
@@ -904,7 +1239,1047 @@
                         </T_CAPTION>
                        </sf:EVENT>
                       </sf:OBJ>
-                      <sf:SUCC/>
+                      <sf:SUCC>
+                       <sf:item>
+                        <sf:NODE>
+                         <NODETYPE>SE</NODETYPE>
+                         <sf:OBJ>
+                          <sf:SECTION>
+                           <NAME>
+                            <INAME>%ROW1</INAME>
+                           </NAME>
+                           <CAPTION>New Line 1</CAPTION>
+                           <SECTTYPE>R</SECTTYPE>
+                           <U_FHEIGHT>CM</U_FHEIGHT>
+                           <PATTERN>
+                            <PATTNUM>0000</PATTNUM>
+                            <FRAME>0.00</FRAME>
+                            <U_FRAME>PT</U_FRAME>
+                           </PATTERN>
+                           <U_WIDTH>CM</U_WIDTH>
+                           <U_LEFT>CM</U_LEFT>
+                           <U_TOP>CM</U_TOP>
+                           <U_SB>CM</U_SB>
+                           <U_SA>CM</U_SA>
+                           <T_CAPTION>
+                            <item>
+                             <LANGU>E</LANGU>
+                             <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                             <OBJTYPE>SE</OBJTYPE>
+                             <INAME>%ROW1</INAME>
+                             <CAPTION>New Line 1</CAPTION>
+                            </item>
+                           </T_CAPTION>
+                          </sf:SECTION>
+                         </sf:OBJ>
+                         <sf:OUTATTR>
+                          <sf:OUTATTR>
+                           <NAME>
+                            <INAME>%OUTATTRIB2</INAME>
+                           </NAME>
+                           <T_LINETYPE>%LTYPE1</T_LINETYPE>
+                           <U_WFRAME>PT</U_WFRAME>
+                           <U_WBOXV>CM</U_WBOXV>
+                           <U_WBOXH>CM</U_WBOXH>
+                           <U_WLEFT>CM</U_WLEFT>
+                           <U_WWIDTH>CM</U_WWIDTH>
+                           <U_WTOP>CM</U_WTOP>
+                           <U_WHEIGHT>CM</U_WHEIGHT>
+                           <BORDER>
+                            <LEFTATTR>
+                             <THICKNESS>0.00</THICKNESS>
+                             <THICKNESSU>PT</THICKNESSU>
+                             <DISTANCE>0.00</DISTANCE>
+                             <DISTANCEU>CM</DISTANCEU>
+                             <COLOR>
+                              <RED>000</RED>
+                              <GREEN>000</GREEN>
+                              <BLUE>000</BLUE>
+                              <TRANS>000</TRANS>
+                             </COLOR>
+                            </LEFTATTR>
+                            <TOPATTR>
+                             <THICKNESS>0.00</THICKNESS>
+                             <THICKNESSU>PT</THICKNESSU>
+                             <DISTANCE>0.00</DISTANCE>
+                             <DISTANCEU>CM</DISTANCEU>
+                             <COLOR>
+                              <RED>000</RED>
+                              <GREEN>000</GREEN>
+                              <BLUE>000</BLUE>
+                              <TRANS>000</TRANS>
+                             </COLOR>
+                            </TOPATTR>
+                            <RIGHTATTR>
+                             <THICKNESS>0.00</THICKNESS>
+                             <THICKNESSU>PT</THICKNESSU>
+                             <DISTANCE>0.00</DISTANCE>
+                             <DISTANCEU>CM</DISTANCEU>
+                             <COLOR>
+                              <RED>000</RED>
+                              <GREEN>000</GREEN>
+                              <BLUE>000</BLUE>
+                              <TRANS>000</TRANS>
+                             </COLOR>
+                            </RIGHTATTR>
+                            <BOTTOMATTR>
+                             <THICKNESS>0.00</THICKNESS>
+                             <THICKNESSU>PT</THICKNESSU>
+                             <DISTANCE>0.00</DISTANCE>
+                             <DISTANCEU>CM</DISTANCEU>
+                             <COLOR>
+                              <RED>000</RED>
+                              <GREEN>000</GREEN>
+                              <BLUE>000</BLUE>
+                              <TRANS>000</TRANS>
+                             </COLOR>
+                            </BOTTOMATTR>
+                           </BORDER>
+                           <T_CAPTION>
+                            <item>
+                             <LANGU>E</LANGU>
+                             <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                             <OBJTYPE>OA</OBJTYPE>
+                             <INAME>%OUTATTRIB2</INAME>
+                            </item>
+                           </T_CAPTION>
+                          </sf:OUTATTR>
+                         </sf:OUTATTR>
+                         <sf:SUCC>
+                          <sf:item>
+                           <sf:NODE>
+                            <NODETYPE>SE</NODETYPE>
+                            <sf:OBJ>
+                             <sf:SECTION>
+                              <NAME>
+                               <INAME>%CELL1</INAME>
+                              </NAME>
+                              <CAPTION>New Column 1</CAPTION>
+                              <SECTTYPE>E</SECTTYPE>
+                              <U_FHEIGHT>CM</U_FHEIGHT>
+                              <PATTERN>
+                               <PATTNUM>0000</PATTNUM>
+                               <FRAME>0.00</FRAME>
+                               <U_FRAME>PT</U_FRAME>
+                              </PATTERN>
+                              <U_WIDTH>CM</U_WIDTH>
+                              <U_LEFT>CM</U_LEFT>
+                              <U_TOP>CM</U_TOP>
+                              <U_SB>CM</U_SB>
+                              <U_SA>CM</U_SA>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>SE</OBJTYPE>
+                                <INAME>%CELL1</INAME>
+                                <CAPTION>New Column 1</CAPTION>
+                               </item>
+                              </T_CAPTION>
+                             </sf:SECTION>
+                            </sf:OBJ>
+                            <sf:OUTATTR>
+                             <sf:OUTATTR>
+                              <NAME>
+                               <INAME>%OUTATTRIB3</INAME>
+                              </NAME>
+                              <U_WFRAME>PT</U_WFRAME>
+                              <U_WBOXV>CM</U_WBOXV>
+                              <U_WBOXH>CM</U_WBOXH>
+                              <U_WLEFT>CM</U_WLEFT>
+                              <U_WWIDTH>CM</U_WWIDTH>
+                              <U_WTOP>CM</U_WTOP>
+                              <U_WHEIGHT>CM</U_WHEIGHT>
+                              <BORDER>
+                               <LEFTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </LEFTATTR>
+                               <TOPATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </TOPATTR>
+                               <RIGHTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </RIGHTATTR>
+                               <BOTTOMATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </BOTTOMATTR>
+                              </BORDER>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>OA</OBJTYPE>
+                                <INAME>%OUTATTRIB3</INAME>
+                               </item>
+                              </T_CAPTION>
+                             </sf:OUTATTR>
+                            </sf:OUTATTR>
+                            <sf:SUCC>
+                             <sf:item>
+                              <sf:NODE>
+                               <NODETYPE>TI</NODETYPE>
+                               <sf:OBJ>
+                                <sf:TEXT>
+                                 <NAME>
+                                  <INAME>%TEXT1</INAME>
+                                 </NAME>
+                                 <CAPTION>New Text 1</CAPTION>
+                                 <APPMODE>P</APPMODE>
+                                 <TEXT>
+                                  <item>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Purchasing Document</TDLINE>
+                                  </item>
+                                 </TEXT>
+                                 <STYLE_NAME>ZSD_PUR_RETURN</STYLE_NAME>
+                                 <TEXT_AREA>
+                                  <ENABLED>F</ENABLED>
+                                  <NCOLS>0</NCOLS>
+                                  <NROWS>0</NROWS>
+                                 </TEXT_AREA>
+                                 <T_CAPTION>
+                                  <item>
+                                   <LANGU>E</LANGU>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <OBJTYPE>TI</OBJTYPE>
+                                   <INAME>%TEXT1</INAME>
+                                   <CAPTION>New Text 1</CAPTION>
+                                  </item>
+                                 </T_CAPTION>
+                                 <T_TEXT>
+                                  <item>
+                                   <SPRAS>E</SPRAS>
+                                   <TXTYPE>F</TXTYPE>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <INAME>%TEXT1</INAME>
+                                   <LINENR>000001</LINENR>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Purchasing Document</TDLINE>
+                                  </item>
+                                 </T_TEXT>
+                                </sf:TEXT>
+                               </sf:OBJ>
+                               <sf:SUCC/>
+                              </sf:NODE>
+                             </sf:item>
+                            </sf:SUCC>
+                           </sf:NODE>
+                          </sf:item>
+                          <sf:item>
+                           <sf:NODE>
+                            <NODETYPE>SE</NODETYPE>
+                            <sf:OBJ>
+                             <sf:SECTION>
+                              <NAME>
+                               <INAME>%CELL2</INAME>
+                              </NAME>
+                              <CAPTION>New Column 2</CAPTION>
+                              <SECTTYPE>E</SECTTYPE>
+                              <U_FHEIGHT>CM</U_FHEIGHT>
+                              <PATTERN>
+                               <PATTNUM>0000</PATTNUM>
+                               <FRAME>0.00</FRAME>
+                               <U_FRAME>PT</U_FRAME>
+                              </PATTERN>
+                              <U_WIDTH>CM</U_WIDTH>
+                              <U_LEFT>CM</U_LEFT>
+                              <U_TOP>CM</U_TOP>
+                              <U_SB>CM</U_SB>
+                              <U_SA>CM</U_SA>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>SE</OBJTYPE>
+                                <INAME>%CELL2</INAME>
+                                <CAPTION>New Column 2</CAPTION>
+                               </item>
+                              </T_CAPTION>
+                             </sf:SECTION>
+                            </sf:OBJ>
+                            <sf:OUTATTR>
+                             <sf:OUTATTR>
+                              <NAME>
+                               <INAME>%OUTATTRIB4</INAME>
+                              </NAME>
+                              <U_WFRAME>PT</U_WFRAME>
+                              <U_WBOXV>CM</U_WBOXV>
+                              <U_WBOXH>CM</U_WBOXH>
+                              <U_WLEFT>CM</U_WLEFT>
+                              <U_WWIDTH>CM</U_WWIDTH>
+                              <U_WTOP>CM</U_WTOP>
+                              <U_WHEIGHT>CM</U_WHEIGHT>
+                              <BORDER>
+                               <LEFTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </LEFTATTR>
+                               <TOPATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </TOPATTR>
+                               <RIGHTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </RIGHTATTR>
+                               <BOTTOMATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </BOTTOMATTR>
+                              </BORDER>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>OA</OBJTYPE>
+                                <INAME>%OUTATTRIB4</INAME>
+                               </item>
+                              </T_CAPTION>
+                             </sf:OUTATTR>
+                            </sf:OUTATTR>
+                            <sf:SUCC>
+                             <sf:item>
+                              <sf:NODE>
+                               <NODETYPE>TI</NODETYPE>
+                               <sf:OBJ>
+                                <sf:TEXT>
+                                 <NAME>
+                                  <INAME>%TEXT2</INAME>
+                                 </NAME>
+                                 <CAPTION>New Text 2</CAPTION>
+                                 <APPMODE>P</APPMODE>
+                                 <TEXT>
+                                  <item>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Reference</TDLINE>
+                                  </item>
+                                 </TEXT>
+                                 <STYLE_NAME>ZSD_PUR_RETURN</STYLE_NAME>
+                                 <TEXT_AREA>
+                                  <ENABLED>F</ENABLED>
+                                  <NCOLS>0</NCOLS>
+                                  <NROWS>0</NROWS>
+                                 </TEXT_AREA>
+                                 <T_CAPTION>
+                                  <item>
+                                   <LANGU>E</LANGU>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <OBJTYPE>TI</OBJTYPE>
+                                   <INAME>%TEXT2</INAME>
+                                   <CAPTION>New Text 2</CAPTION>
+                                  </item>
+                                 </T_CAPTION>
+                                 <T_TEXT>
+                                  <item>
+                                   <SPRAS>E</SPRAS>
+                                   <TXTYPE>F</TXTYPE>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <INAME>%TEXT2</INAME>
+                                   <LINENR>000001</LINENR>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Reference</TDLINE>
+                                  </item>
+                                 </T_TEXT>
+                                </sf:TEXT>
+                               </sf:OBJ>
+                               <sf:SUCC/>
+                              </sf:NODE>
+                             </sf:item>
+                            </sf:SUCC>
+                           </sf:NODE>
+                          </sf:item>
+                          <sf:item>
+                           <sf:NODE>
+                            <NODETYPE>SE</NODETYPE>
+                            <sf:OBJ>
+                             <sf:SECTION>
+                              <NAME>
+                               <INAME>%CELL3</INAME>
+                              </NAME>
+                              <CAPTION>New Column 3</CAPTION>
+                              <SECTTYPE>E</SECTTYPE>
+                              <U_FHEIGHT>CM</U_FHEIGHT>
+                              <PATTERN>
+                               <PATTNUM>0000</PATTNUM>
+                               <FRAME>0.00</FRAME>
+                               <U_FRAME>PT</U_FRAME>
+                              </PATTERN>
+                              <U_WIDTH>CM</U_WIDTH>
+                              <U_LEFT>CM</U_LEFT>
+                              <U_TOP>CM</U_TOP>
+                              <U_SB>CM</U_SB>
+                              <U_SA>CM</U_SA>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>SE</OBJTYPE>
+                                <INAME>%CELL3</INAME>
+                                <CAPTION>New Column 3</CAPTION>
+                               </item>
+                              </T_CAPTION>
+                             </sf:SECTION>
+                            </sf:OBJ>
+                            <sf:OUTATTR>
+                             <sf:OUTATTR>
+                              <NAME>
+                               <INAME>%OUTATTRIB5</INAME>
+                              </NAME>
+                              <U_WFRAME>PT</U_WFRAME>
+                              <U_WBOXV>CM</U_WBOXV>
+                              <U_WBOXH>CM</U_WBOXH>
+                              <U_WLEFT>CM</U_WLEFT>
+                              <U_WWIDTH>CM</U_WWIDTH>
+                              <U_WTOP>CM</U_WTOP>
+                              <U_WHEIGHT>CM</U_WHEIGHT>
+                              <BORDER>
+                               <LEFTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </LEFTATTR>
+                               <TOPATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </TOPATTR>
+                               <RIGHTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </RIGHTATTR>
+                               <BOTTOMATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </BOTTOMATTR>
+                              </BORDER>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>OA</OBJTYPE>
+                                <INAME>%OUTATTRIB5</INAME>
+                               </item>
+                              </T_CAPTION>
+                             </sf:OUTATTR>
+                            </sf:OUTATTR>
+                            <sf:SUCC>
+                             <sf:item>
+                              <sf:NODE>
+                               <NODETYPE>TI</NODETYPE>
+                               <sf:OBJ>
+                                <sf:TEXT>
+                                 <NAME>
+                                  <INAME>%TEXT3</INAME>
+                                 </NAME>
+                                 <CAPTION>New Text 3</CAPTION>
+                                 <APPMODE>P</APPMODE>
+                                 <TEXT>
+                                  <item>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Document  Date</TDLINE>
+                                  </item>
+                                 </TEXT>
+                                 <STYLE_NAME>ZSD_PUR_RETURN</STYLE_NAME>
+                                 <TEXT_AREA>
+                                  <ENABLED>F</ENABLED>
+                                  <NCOLS>0</NCOLS>
+                                  <NROWS>0</NROWS>
+                                 </TEXT_AREA>
+                                 <T_CAPTION>
+                                  <item>
+                                   <LANGU>E</LANGU>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <OBJTYPE>TI</OBJTYPE>
+                                   <INAME>%TEXT3</INAME>
+                                   <CAPTION>New Text 3</CAPTION>
+                                  </item>
+                                 </T_CAPTION>
+                                 <T_TEXT>
+                                  <item>
+                                   <SPRAS>E</SPRAS>
+                                   <TXTYPE>F</TXTYPE>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <INAME>%TEXT3</INAME>
+                                   <LINENR>000001</LINENR>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Document  Date</TDLINE>
+                                  </item>
+                                 </T_TEXT>
+                                </sf:TEXT>
+                               </sf:OBJ>
+                               <sf:SUCC/>
+                              </sf:NODE>
+                             </sf:item>
+                            </sf:SUCC>
+                           </sf:NODE>
+                          </sf:item>
+                          <sf:item>
+                           <sf:NODE>
+                            <NODETYPE>SE</NODETYPE>
+                            <sf:OBJ>
+                             <sf:SECTION>
+                              <NAME>
+                               <INAME>%CELL4</INAME>
+                              </NAME>
+                              <CAPTION>New Column 4</CAPTION>
+                              <SECTTYPE>E</SECTTYPE>
+                              <U_FHEIGHT>CM</U_FHEIGHT>
+                              <PATTERN>
+                               <PATTNUM>0000</PATTNUM>
+                               <FRAME>0.00</FRAME>
+                               <U_FRAME>PT</U_FRAME>
+                              </PATTERN>
+                              <U_WIDTH>CM</U_WIDTH>
+                              <U_LEFT>CM</U_LEFT>
+                              <U_TOP>CM</U_TOP>
+                              <U_SB>CM</U_SB>
+                              <U_SA>CM</U_SA>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>SE</OBJTYPE>
+                                <INAME>%CELL4</INAME>
+                                <CAPTION>New Column 4</CAPTION>
+                               </item>
+                              </T_CAPTION>
+                             </sf:SECTION>
+                            </sf:OBJ>
+                            <sf:OUTATTR>
+                             <sf:OUTATTR>
+                              <NAME>
+                               <INAME>%OUTATTRIB6</INAME>
+                              </NAME>
+                              <U_WFRAME>PT</U_WFRAME>
+                              <U_WBOXV>CM</U_WBOXV>
+                              <U_WBOXH>CM</U_WBOXH>
+                              <U_WLEFT>CM</U_WLEFT>
+                              <U_WWIDTH>CM</U_WWIDTH>
+                              <U_WTOP>CM</U_WTOP>
+                              <U_WHEIGHT>CM</U_WHEIGHT>
+                              <BORDER>
+                               <LEFTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </LEFTATTR>
+                               <TOPATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </TOPATTR>
+                               <RIGHTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </RIGHTATTR>
+                               <BOTTOMATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </BOTTOMATTR>
+                              </BORDER>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>OA</OBJTYPE>
+                                <INAME>%OUTATTRIB6</INAME>
+                               </item>
+                              </T_CAPTION>
+                             </sf:OUTATTR>
+                            </sf:OUTATTR>
+                            <sf:SUCC>
+                             <sf:item>
+                              <sf:NODE>
+                               <NODETYPE>TI</NODETYPE>
+                               <sf:OBJ>
+                                <sf:TEXT>
+                                 <NAME>
+                                  <INAME>%TEXT4</INAME>
+                                 </NAME>
+                                 <CAPTION>New Text 4</CAPTION>
+                                 <APPMODE>P</APPMODE>
+                                 <TEXT>
+                                  <item>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Base Unit of Measeure</TDLINE>
+                                  </item>
+                                 </TEXT>
+                                 <STYLE_NAME>ZSD_PUR_RETURN</STYLE_NAME>
+                                 <TEXT_AREA>
+                                  <ENABLED>F</ENABLED>
+                                  <NCOLS>0</NCOLS>
+                                  <NROWS>0</NROWS>
+                                 </TEXT_AREA>
+                                 <T_CAPTION>
+                                  <item>
+                                   <LANGU>E</LANGU>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <OBJTYPE>TI</OBJTYPE>
+                                   <INAME>%TEXT4</INAME>
+                                   <CAPTION>New Text 4</CAPTION>
+                                  </item>
+                                 </T_CAPTION>
+                                 <T_TEXT>
+                                  <item>
+                                   <SPRAS>E</SPRAS>
+                                   <TXTYPE>F</TXTYPE>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <INAME>%TEXT4</INAME>
+                                   <LINENR>000001</LINENR>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Base Unit of Measeure</TDLINE>
+                                  </item>
+                                 </T_TEXT>
+                                </sf:TEXT>
+                               </sf:OBJ>
+                               <sf:SUCC/>
+                              </sf:NODE>
+                             </sf:item>
+                            </sf:SUCC>
+                           </sf:NODE>
+                          </sf:item>
+                          <sf:item>
+                           <sf:NODE>
+                            <NODETYPE>SE</NODETYPE>
+                            <sf:OBJ>
+                             <sf:SECTION>
+                              <NAME>
+                               <INAME>%CELL5</INAME>
+                              </NAME>
+                              <CAPTION>New Column 5</CAPTION>
+                              <SECTTYPE>E</SECTTYPE>
+                              <U_FHEIGHT>CM</U_FHEIGHT>
+                              <PATTERN>
+                               <PATTNUM>0000</PATTNUM>
+                               <FRAME>0.00</FRAME>
+                               <U_FRAME>PT</U_FRAME>
+                              </PATTERN>
+                              <U_WIDTH>CM</U_WIDTH>
+                              <U_LEFT>CM</U_LEFT>
+                              <U_TOP>CM</U_TOP>
+                              <U_SB>CM</U_SB>
+                              <U_SA>CM</U_SA>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>SE</OBJTYPE>
+                                <INAME>%CELL5</INAME>
+                                <CAPTION>New Column 5</CAPTION>
+                               </item>
+                              </T_CAPTION>
+                             </sf:SECTION>
+                            </sf:OBJ>
+                            <sf:OUTATTR>
+                             <sf:OUTATTR>
+                              <NAME>
+                               <INAME>%OUTATTRIB7</INAME>
+                              </NAME>
+                              <U_WFRAME>PT</U_WFRAME>
+                              <U_WBOXV>CM</U_WBOXV>
+                              <U_WBOXH>CM</U_WBOXH>
+                              <U_WLEFT>CM</U_WLEFT>
+                              <U_WWIDTH>CM</U_WWIDTH>
+                              <U_WTOP>CM</U_WTOP>
+                              <U_WHEIGHT>CM</U_WHEIGHT>
+                              <BORDER>
+                               <LEFTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </LEFTATTR>
+                               <TOPATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </TOPATTR>
+                               <RIGHTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </RIGHTATTR>
+                               <BOTTOMATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </BOTTOMATTR>
+                              </BORDER>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>OA</OBJTYPE>
+                                <INAME>%OUTATTRIB7</INAME>
+                               </item>
+                              </T_CAPTION>
+                             </sf:OUTATTR>
+                            </sf:OUTATTR>
+                            <sf:SUCC>
+                             <sf:item>
+                              <sf:NODE>
+                               <NODETYPE>TI</NODETYPE>
+                               <sf:OBJ>
+                                <sf:TEXT>
+                                 <NAME>
+                                  <INAME>%TEXT5</INAME>
+                                 </NAME>
+                                 <CAPTION>New Text 5</CAPTION>
+                                 <APPMODE>P</APPMODE>
+                                 <TEXT>
+                                  <item>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Quantity</TDLINE>
+                                  </item>
+                                 </TEXT>
+                                 <STYLE_NAME>ZSD_PUR_RETURN</STYLE_NAME>
+                                 <TEXT_AREA>
+                                  <ENABLED>F</ENABLED>
+                                  <NCOLS>0</NCOLS>
+                                  <NROWS>0</NROWS>
+                                 </TEXT_AREA>
+                                 <T_CAPTION>
+                                  <item>
+                                   <LANGU>E</LANGU>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <OBJTYPE>TI</OBJTYPE>
+                                   <INAME>%TEXT5</INAME>
+                                   <CAPTION>New Text 5</CAPTION>
+                                  </item>
+                                 </T_CAPTION>
+                                 <T_TEXT>
+                                  <item>
+                                   <SPRAS>E</SPRAS>
+                                   <TXTYPE>F</TXTYPE>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <INAME>%TEXT5</INAME>
+                                   <LINENR>000001</LINENR>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Quantity</TDLINE>
+                                  </item>
+                                 </T_TEXT>
+                                </sf:TEXT>
+                               </sf:OBJ>
+                               <sf:SUCC/>
+                              </sf:NODE>
+                             </sf:item>
+                            </sf:SUCC>
+                           </sf:NODE>
+                          </sf:item>
+                          <sf:item>
+                           <sf:NODE>
+                            <NODETYPE>SE</NODETYPE>
+                            <sf:OBJ>
+                             <sf:SECTION>
+                              <NAME>
+                               <INAME>%CELL6</INAME>
+                              </NAME>
+                              <CAPTION>New Column 6</CAPTION>
+                              <SECTTYPE>E</SECTTYPE>
+                              <U_FHEIGHT>CM</U_FHEIGHT>
+                              <PATTERN>
+                               <PATTNUM>0000</PATTNUM>
+                               <FRAME>0.00</FRAME>
+                               <U_FRAME>PT</U_FRAME>
+                              </PATTERN>
+                              <U_WIDTH>CM</U_WIDTH>
+                              <U_LEFT>CM</U_LEFT>
+                              <U_TOP>CM</U_TOP>
+                              <U_SB>CM</U_SB>
+                              <U_SA>CM</U_SA>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>SE</OBJTYPE>
+                                <INAME>%CELL6</INAME>
+                                <CAPTION>New Column 6</CAPTION>
+                               </item>
+                              </T_CAPTION>
+                             </sf:SECTION>
+                            </sf:OBJ>
+                            <sf:OUTATTR>
+                             <sf:OUTATTR>
+                              <NAME>
+                               <INAME>%OUTATTRIB8</INAME>
+                              </NAME>
+                              <U_WFRAME>PT</U_WFRAME>
+                              <U_WBOXV>CM</U_WBOXV>
+                              <U_WBOXH>CM</U_WBOXH>
+                              <U_WLEFT>CM</U_WLEFT>
+                              <U_WWIDTH>CM</U_WWIDTH>
+                              <U_WTOP>CM</U_WTOP>
+                              <U_WHEIGHT>CM</U_WHEIGHT>
+                              <BORDER>
+                               <LEFTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </LEFTATTR>
+                               <TOPATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </TOPATTR>
+                               <RIGHTATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </RIGHTATTR>
+                               <BOTTOMATTR>
+                                <THICKNESS>0.00</THICKNESS>
+                                <THICKNESSU>PT</THICKNESSU>
+                                <DISTANCE>0.00</DISTANCE>
+                                <DISTANCEU>CM</DISTANCEU>
+                                <COLOR>
+                                 <RED>000</RED>
+                                 <GREEN>000</GREEN>
+                                 <BLUE>000</BLUE>
+                                 <TRANS>000</TRANS>
+                                </COLOR>
+                               </BOTTOMATTR>
+                              </BORDER>
+                              <T_CAPTION>
+                               <item>
+                                <LANGU>E</LANGU>
+                                <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                <OBJTYPE>OA</OBJTYPE>
+                                <INAME>%OUTATTRIB8</INAME>
+                               </item>
+                              </T_CAPTION>
+                             </sf:OUTATTR>
+                            </sf:OUTATTR>
+                            <sf:SUCC>
+                             <sf:item>
+                              <sf:NODE>
+                               <NODETYPE>TI</NODETYPE>
+                               <sf:OBJ>
+                                <sf:TEXT>
+                                 <NAME>
+                                  <INAME>%TEXT6</INAME>
+                                 </NAME>
+                                 <CAPTION>New Text 6</CAPTION>
+                                 <APPMODE>P</APPMODE>
+                                 <TEXT>
+                                  <item>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Material Description</TDLINE>
+                                  </item>
+                                 </TEXT>
+                                 <STYLE_NAME>ZSD_PUR_RETURN</STYLE_NAME>
+                                 <TEXT_AREA>
+                                  <ENABLED>F</ENABLED>
+                                  <NCOLS>0</NCOLS>
+                                  <NROWS>0</NROWS>
+                                 </TEXT_AREA>
+                                 <T_CAPTION>
+                                  <item>
+                                   <LANGU>E</LANGU>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <OBJTYPE>TI</OBJTYPE>
+                                   <INAME>%TEXT6</INAME>
+                                   <CAPTION>New Text 6</CAPTION>
+                                  </item>
+                                 </T_CAPTION>
+                                 <T_TEXT>
+                                  <item>
+                                   <SPRAS>E</SPRAS>
+                                   <TXTYPE>F</TXTYPE>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <INAME>%TEXT6</INAME>
+                                   <LINENR>000001</LINENR>
+                                   <TDFORMAT>A3</TDFORMAT>
+                                   <TDLINE>Material Description</TDLINE>
+                                  </item>
+                                 </T_TEXT>
+                                </sf:TEXT>
+                               </sf:OBJ>
+                               <sf:SUCC/>
+                              </sf:NODE>
+                             </sf:item>
+                            </sf:SUCC>
+                           </sf:NODE>
+                          </sf:item>
+                         </sf:SUCC>
+                        </sf:NODE>
+                       </sf:item>
+                      </sf:SUCC>
                      </sf:NODE>
                     </sf:item>
                     <sf:item>
