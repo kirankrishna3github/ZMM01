@@ -334,17 +334,19 @@
    </item>
   </GPLIST>
   <GCODING>
-   <item>SELECT SINGLE name1,adrnr</item>
-   <item>  INTO ( @lv_vend_name,@lv_adrnr )</item>
-   <item>  FROM lfa1</item>
-   <item>  WHERE lifnr EQ @ls_final-lifnr.</item>
-   <item>IF lv_adrnr IS NOT INITIAL.</item>
-   <item>  SELECT SINGLE str_suppl1,str_suppl2,post_code1</item>
-   <item>  INTO ( @lv_street1, @lv_street2, @lv_post )</item>
-   <item>         FROM adrc</item>
-   <item>         WHERE addrnumber EQ @lv_adrnr.</item>
+   <item>READ TABLE lt_final INTO ls_final INDEX 1.</item>
+   <item>IF sy-subrc EQ 0.</item>
+   <item>  SELECT SINGLE name1,adrnr</item>
+   <item>    INTO ( @lv_vend_name,@lv_adrnr )</item>
+   <item>    FROM lfa1</item>
+   <item>    WHERE lifnr EQ @ls_final-lifnr.</item>
+   <item>  IF lv_adrnr IS NOT INITIAL.</item>
+   <item>    SELECT SINGLE str_suppl1,str_suppl2,post_code1</item>
+   <item>    INTO ( @lv_street1, @lv_street2, @lv_post )</item>
+   <item>           FROM adrc</item>
+   <item>           WHERE addrnumber EQ @lv_adrnr.</item>
+   <item>  ENDIF.</item>
    <item>ENDIF.</item>
-   <item/>
    <item/>
    <item/>
    <item/>
