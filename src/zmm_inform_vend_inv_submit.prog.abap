@@ -3,8 +3,8 @@
 *&---------------------------------------------------------------------*
 *&
 *&---------------------------------------------------------------------*
-report zmm_inform_vend_inv_submit.
-tables:bkpf , bseg ,bsis .
+REPORT zmm_inform_vend_inv_submit.
+TABLES:bkpf , bseg ,bsis .
 
 
 ****Company code – BSIS-BUKRS
@@ -13,245 +13,245 @@ tables:bkpf , bseg ,bsis .
 ****Document date – BSIS-BLDAT
 ****Plant – BSIS-WERKS
 
-types: begin of ty_bsis,
-         bukrs type bsis-bukrs,
-         hkont type bsis-hkont,
-         belnr type bsis-belnr,
-         gjahr type bsis-gjahr,
-         zuonr type bsis-zuonr,
-         blart type bsis-blart,
-         bldat type bsis-bldat,
-         xblnr type bsis-xblnr,
-         shkzg type bsis-shkzg,
-         dmbtr type bsis-dmbtr,
-         werks type bsis-werks,
-       end of ty_bsis,
-       begin of ty_bseg ,
-         bukrs type bseg-bukrs,
-         belnr type bseg-belnr,
-         gjahr type bseg-gjahr,
-         zuonr type bseg-zuonr,
-         menge type bseg-menge,
-         meins type bseg-meins,
-         matnr type bseg-matnr,
-         ebeln type bseg-ebeln,
-         ebelp type bseg-ebelp,
-         lifnr type bseg-lifnr,
-         dmbtr type bseg-dmbtr,
+TYPES: BEGIN OF ty_bsis,
+         bukrs TYPE bsis-bukrs,
+         hkont TYPE bsis-hkont,
+         belnr TYPE bsis-belnr,
+         gjahr TYPE bsis-gjahr,
+         zuonr TYPE bsis-zuonr,
+         blart TYPE bsis-blart,
+         bldat TYPE bsis-bldat,
+         xblnr TYPE bsis-xblnr,
+         shkzg TYPE bsis-shkzg,
+         dmbtr TYPE bsis-dmbtr,
+         werks TYPE bsis-werks,
+       END OF ty_bsis,
+       BEGIN OF ty_bseg ,
+         bukrs TYPE bseg-bukrs,
+         belnr TYPE bseg-belnr,
+         gjahr TYPE bseg-gjahr,
+         zuonr TYPE bseg-zuonr,
+         menge TYPE bseg-menge,
+         meins TYPE bseg-meins,
+         matnr TYPE bseg-matnr,
+         ebeln TYPE bseg-ebeln,
+         ebelp TYPE bseg-ebelp,
+         lifnr TYPE bseg-lifnr,
+         dmbtr TYPE bseg-dmbtr,
          ekgrp TYPE ekko-ekgrp,
-       end of ty_bseg.
+       END OF ty_bseg.
 
-types: begin of ty_final.
-         include type zstr_vend_inv.
+TYPES: BEGIN OF ty_final.
+    INCLUDE TYPE zstr_vend_inv.
 *types : vend_mail_id type adr6-smtp_addr,
 *        user_mail_id type adr6-smtp_addr,
- types: end of ty_final.
+TYPES: END OF ty_final.
 
-data: it_bsis   type table of ty_bsis,
-      ls_bsis   type ty_bsis,
-      it_bseg   type table of ty_bseg,
-      ls_bseg   type ty_bseg,
-      lt_final  type table of ty_final,
-      lt_final1 type table of ty_final,
-      ls_final1 type ty_final,
-      ls_final  type ty_final.
+DATA: it_bsis   TYPE TABLE OF ty_bsis,
+      ls_bsis   TYPE ty_bsis,
+      it_bseg   TYPE TABLE OF ty_bseg,
+      ls_bseg   TYPE ty_bseg,
+      lt_final  TYPE TABLE OF ty_final,
+      lt_final1 TYPE TABLE OF ty_final,
+      ls_final1 TYPE ty_final,
+      ls_final  TYPE ty_final.
 
-data: lo_table     type ref to cl_salv_table,
-      lo_functions type ref to cl_salv_functions_list,
-      lo_display   type ref to cl_salv_display_settings,
-      lo_columns   type ref to cl_salv_columns_table,
-      lo_column    type ref to cl_salv_column_table,
-      lo_layout    type ref to cl_salv_layout,
-      ls_key       type salv_s_layout_key,
-      lo_selection type ref to cl_salv_selections,
-      lo_event     type ref to cl_salv_events_table.
+DATA: lo_table     TYPE REF TO cl_salv_table,
+      lo_functions TYPE REF TO cl_salv_functions_list,
+      lo_display   TYPE REF TO cl_salv_display_settings,
+      lo_columns   TYPE REF TO cl_salv_columns_table,
+      lo_column    TYPE REF TO cl_salv_column_table,
+      lo_layout    TYPE REF TO cl_salv_layout,
+      ls_key       TYPE salv_s_layout_key,
+      lo_selection TYPE REF TO cl_salv_selections,
+      lo_event     TYPE REF TO cl_salv_events_table.
 
-data : lv_save(1) type c,
-       lv_exit(1) type c,
-       lv_fm      type rs38l_fnam,
-       ls_variant type disvariant,
-       gs_variant type disvariant.
+DATA : lv_save(1) TYPE c,
+       lv_exit(1) TYPE c,
+       lv_fm      TYPE rs38l_fnam,
+       ls_variant TYPE disvariant,
+       gs_variant TYPE disvariant.
 
-data: control         type ssfctrlop,
-      job_output_info type ssfcrescl,
-      output_opt      type ssfcompop,
-      lt_pdf          type table of tline,
-      lt_doc          type table of docs,
-      ls_content      type xstring,
-      lt_solix        type solix_tab.
+DATA: control         TYPE ssfctrlop,
+      job_output_info TYPE ssfcrescl,
+      output_opt      TYPE ssfcompop,
+      lt_pdf          TYPE TABLE OF tline,
+      lt_doc          TYPE TABLE OF docs,
+      ls_content      TYPE xstring,
+      lt_solix        TYPE solix_tab.
 
-data: attachment  type zfi_s_vp_attachment,
-      attachments type table of zfi_s_vp_attachment,
-      header      type string,
-      content     type string,
-      body        type soli_tab,
-      wa_body     like line of body,
-      subject     type string,
-      sent        type abap_bool,
-      recipient   type zfi_s_vp_recipient,
-      recipients  like standard table of recipient.
+DATA: attachment  TYPE zfi_s_vp_attachment,
+      attachments TYPE TABLE OF zfi_s_vp_attachment,
+      header      TYPE string,
+      content     TYPE string,
+      body        TYPE soli_tab,
+      wa_body     LIKE LINE OF body,
+      subject     TYPE string,
+      sent        TYPE abap_bool,
+      recipient   TYPE zfi_s_vp_recipient,
+      recipients  LIKE STANDARD TABLE OF recipient.
 
 
-selection-screen begin of block b1 with frame title text-001.
-select-options: s_lifnr for bseg-lifnr,
-                s_bukrs for bkpf-bukrs no-extension no intervals obligatory,
-                s_belnr for bkpf-belnr,
-                s_gjahr for bkpf-gjahr no-extension no intervals obligatory,
-                s_bldat for bsis-bldat obligatory,
-                s_werks for bsis-werks ,
-                s_hkont for bsis-hkont no-display.
-selection-screen end of block b1.
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
+SELECT-OPTIONS: s_lifnr FOR bseg-lifnr,
+                s_bukrs FOR bkpf-bukrs NO-EXTENSION NO INTERVALS OBLIGATORY,
+                s_belnr FOR bkpf-belnr,
+                s_gjahr FOR bkpf-gjahr NO-EXTENSION NO INTERVALS OBLIGATORY,
+                s_bldat FOR bsis-bldat OBLIGATORY,
+                s_werks FOR bsis-werks ,
+                s_hkont FOR bsis-hkont NO-DISPLAY.
+SELECTION-SCREEN END OF BLOCK b1.
 
 "ALV variant
-selection-screen begin of block b2 with frame title text-002.
-parameters p_vari type disvariant-variant.
-selection-screen end of block b2.
+SELECTION-SCREEN BEGIN OF BLOCK b2 WITH FRAME TITLE TEXT-002.
+PARAMETERS p_vari TYPE disvariant-variant.
+SELECTION-SCREEN END OF BLOCK b2.
 
 
 *&------------------------------------------------------------&*
 *&                Field symbols Declaration
 *&------------------------------------------------------------&*
-field-symbols <fs_x> type x.
+FIELD-SYMBOLS <fs_x> TYPE x.
 
-class lcl_module definition.
-  public section.
-    methods: process, get_data , process_data , f4_variant,variant_exist,init_variant , call_sf, display_alv, send_mail ,
-      change_col_text importing columnname type lvc_fname
-                                short      type scrtext_s
-                                medium     type scrtext_m
-                                long       type scrtext_l,
-      user_command for event added_function of cl_salv_events
-        importing e_salv_function.
-endclass.
+CLASS lcl_module DEFINITION.
+  PUBLIC SECTION.
+    METHODS: process, get_data , process_data , f4_variant,variant_exist,init_variant , call_sf, display_alv, send_mail ,
+      change_col_text IMPORTING columnname TYPE lvc_fname
+                                short      TYPE scrtext_s
+                                medium     TYPE scrtext_m
+                                long       TYPE scrtext_l,
+      user_command FOR EVENT added_function OF cl_salv_events
+        IMPORTING e_salv_function.
+ENDCLASS.
 
-class lcl_module implementation.
-  method f4_variant.
+CLASS lcl_module IMPLEMENTATION.
+  METHOD f4_variant.
 
     lv_save = 'A'.
     ls_variant-report = sy-repid.
 
-    call function 'REUSE_ALV_VARIANT_F4'
-      exporting
+    CALL FUNCTION 'REUSE_ALV_VARIANT_F4'
+      EXPORTING
         is_variant = ls_variant
         i_save     = lv_save
-      importing
+      IMPORTING
         e_exit     = lv_exit
         es_variant = gs_variant
-      exceptions
+      EXCEPTIONS
         not_found  = 2.
 
-    if sy-subrc eq 2.
-      message id sy-msgid type 'S' number sy-msgno
-            with sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-    else.
-      if lv_exit eq space.
+    IF sy-subrc EQ 2.
+      MESSAGE ID sy-msgid TYPE 'S' NUMBER sy-msgno
+            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ELSE.
+      IF lv_exit EQ space.
         p_vari = gs_variant-variant.
-      endif.
-    endif.
-  endmethod.
-  method variant_exist.
-    data : lv_save(1) type c.
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.
+  METHOD variant_exist.
+    DATA : lv_save(1) TYPE c.
 
-    if not p_vari is initial.
+    IF NOT p_vari IS INITIAL.
 
-      move p_vari to gs_variant-variant.
+      MOVE p_vari TO gs_variant-variant.
 
       lv_save = 'A'.
       gs_variant-report = sy-repid.
-      call function 'REUSE_ALV_VARIANT_EXISTENCE'
-        exporting
+      CALL FUNCTION 'REUSE_ALV_VARIANT_EXISTENCE'
+        EXPORTING
           i_save     = lv_save
-        changing
+        CHANGING
           cs_variant = gs_variant.
 
-    else.
+    ELSE.
       init_variant( ).
-    endif.
-  endmethod.
-  method init_variant.
-    data : lv_save(1) type c.
+    ENDIF.
+  ENDMETHOD.
+  METHOD init_variant.
+    DATA : lv_save(1) TYPE c.
 
-    clear : gs_variant.
+    CLEAR : gs_variant.
 
     lv_save = 'A'.
     gs_variant-report = sy-repid.
 
-    call function 'REUSE_ALV_VARIANT_DEFAULT_GET'
-      exporting
+    CALL FUNCTION 'REUSE_ALV_VARIANT_DEFAULT_GET'
+      EXPORTING
         i_save        = lv_save
-      changing
+      CHANGING
         cs_variant    = gs_variant
-      exceptions
+      EXCEPTIONS
         wrong_input   = 1
         not_found     = 2
         program_error = 3
-        others        = 4.
+        OTHERS        = 4.
 
-    if sy-subrc eq 0.
+    IF sy-subrc EQ 0.
       p_vari = gs_variant-variant.
-    endif.
-  endmethod.
-  method process.
+    ENDIF.
+  ENDMETHOD.
+  METHOD process.
     get_data( ).
     process_data( ).
 
-    check lt_final[] is not initial.
+    CHECK lt_final[] IS NOT INITIAL.
 
-    sort lt_final[] by lifnr werks.
+    SORT lt_final[] BY lifnr werks.
 
     display_alv( ).
 
-  endmethod.
-  method get_data.
+  ENDMETHOD.
+  METHOD get_data.
 
-    select param1
-    from z6mma_params
-    into table @data(it_param)
-    where progname = 'ZMM026'.
+    SELECT param1
+    FROM z6mma_params
+    INTO TABLE @DATA(it_param)
+    WHERE progname = 'ZMM026'.
 
 
-    loop at it_param into data(wa_param).
+    LOOP AT it_param INTO DATA(wa_param).
       s_hkont-option = 'EQ'.
       s_hkont-sign = 'I'.
       s_hkont-low = wa_param-param1.
-      append s_hkont to s_hkont[].
-    endloop.
+      APPEND s_hkont TO s_hkont[].
+    ENDLOOP.
 
-    if s_hkont is not initial.
-      select bukrs hkont belnr gjahr blart
+    IF s_hkont IS NOT INITIAL.
+      SELECT bukrs hkont belnr gjahr blart
       zuonr bldat xblnr shkzg dmbtr werks
-      from bsis into table it_bsis
-        where bukrs in s_bukrs
-        and belnr in s_belnr
-        and hkont in s_hkont
-        and bldat in s_bldat
-        and gjahr in s_gjahr
-        and werks in s_werks
-        and blart = 'WE'.
-      if it_bsis is not initial .
+      FROM bsis INTO TABLE it_bsis
+        WHERE bukrs IN s_bukrs
+        AND belnr IN s_belnr
+        AND hkont IN s_hkont
+        AND bldat IN s_bldat
+        AND gjahr IN s_gjahr
+        AND werks IN s_werks
+        AND blart = 'WE'.
+      IF it_bsis IS NOT INITIAL .
 
-        select a~bukrs a~belnr a~gjahr a~zuonr a~menge a~meins
+        SELECT a~bukrs a~belnr a~gjahr a~zuonr a~menge a~meins
                a~matnr a~ebeln a~ebelp a~lifnr a~dmbtr b~ekgrp
-          from bseg as a
-          JOIN ekko as b
-          on a~ebeln = b~ebeln
-          into corresponding fields of table it_bseg
-          for all entries in it_bsis
-          where a~bukrs = it_bsis-bukrs
-          and a~belnr = it_bsis-belnr
-          and a~gjahr = it_bsis-gjahr
-          and a~hkont in s_hkont.
+          FROM bseg AS a
+          JOIN ekko AS b
+          ON a~ebeln = b~ebeln
+          INTO CORRESPONDING FIELDS OF TABLE it_bseg
+          FOR ALL ENTRIES IN it_bsis
+          WHERE a~bukrs = it_bsis-bukrs
+          AND a~belnr = it_bsis-belnr
+          AND a~gjahr = it_bsis-gjahr
+          AND a~hkont IN s_hkont.
 
-      else.
-        message 'No Data Found' type 'E'.
+      ELSE.
+        MESSAGE 'No Data Found' TYPE 'E'.
 
-      endif.
-    endif.
+      ENDIF.
+    ENDIF.
 
-  endmethod.
-  method process_data.
+  ENDMETHOD.
+  METHOD process_data.
 
-    loop at it_bseg into ls_bseg  .
+    LOOP AT it_bseg INTO ls_bseg  .
 
       ls_final-lifnr = ls_bseg-lifnr.
       ls_final-zuonr = ls_bseg-zuonr.
@@ -262,10 +262,10 @@ class lcl_module implementation.
       ls_final-ebelp = ls_bseg-ebelp.
       ls_final-dmbtr = ls_bseg-dmbtr.
       ls_final-ekgrp = ls_bseg-ekgrp.
-      select single maktx from makt into ls_final-maktx where matnr = ls_bseg-matnr.
+      SELECT SINGLE maktx FROM makt INTO ls_final-maktx WHERE matnr = ls_bseg-matnr.
 
-      read table it_bsis into ls_bsis with key bukrs = ls_bseg-bukrs belnr = ls_bseg-belnr gjahr = ls_bseg-gjahr .
-      if sy-subrc = 0.
+      READ TABLE it_bsis INTO ls_bsis WITH KEY bukrs = ls_bseg-bukrs belnr = ls_bseg-belnr gjahr = ls_bseg-gjahr .
+      IF sy-subrc = 0.
         ls_final-bukrs = ls_bsis-bukrs.
         ls_final-belnr = ls_bsis-belnr.
         ls_final-gjahr = ls_bsis-gjahr.
@@ -273,40 +273,40 @@ class lcl_module implementation.
         ls_final-xblnr = ls_bsis-xblnr.
         ls_final-blart = ls_bsis-blart.
         ls_final-werks = ls_bsis-werks.
-      endif.
+      ENDIF.
 
-      select single name1 ,adrnr from lfa1 into (  @ls_final-name1 , @data(zadrnr) ) where lifnr = @ls_bseg-lifnr.
-      if zadrnr is not initial.
+      SELECT SINGLE name1 ,adrnr FROM lfa1 INTO (  @ls_final-name1 , @DATA(zadrnr) ) WHERE lifnr = @ls_bseg-lifnr.
+      IF zadrnr IS NOT INITIAL.
 
-        select single smtp_addr from adr6 into ls_final-vend_mail_id where addrnumber = zadrnr  .
-      endif.
+        SELECT SINGLE smtp_addr FROM adr6 INTO ls_final-vend_mail_id WHERE addrnumber = zadrnr  .
+      ENDIF.
 
-      SELECT SINGLE paramval FROM Z6MMA_PARAMS INTO ls_final-user_mail_id WHERE progname = 'ZMM026' AND param1 = ls_final-ekgrp.
-
-
-      append ls_final to lt_final.
-
-    endloop.
+      SELECT SINGLE paramval FROM z6mma_params INTO ls_final-user_mail_id WHERE progname = 'ZMM026' AND param1 = ls_final-ekgrp.
 
 
-  endmethod.
-  method call_sf.
+      APPEND ls_final TO lt_final.
+
+    ENDLOOP.
+
+
+  ENDMETHOD.
+  METHOD call_sf.
 
     "call smartform
-    call function 'SSF_FUNCTION_MODULE_NAME'
-      exporting
+    CALL FUNCTION 'SSF_FUNCTION_MODULE_NAME'
+      EXPORTING
         formname           = 'ZMMS_INFORM_VEND_INV_SUBMIT'
 *       VARIANT            = ' '
 *       DIRECT_CALL        = ' '
-      importing
+      IMPORTING
         fm_name            = lv_fm
-      exceptions
+      EXCEPTIONS
         no_form            = 1
         no_function_module = 2
-        others             = 3.
-    if sy-subrc <> 0.
+        OTHERS             = 3.
+    IF sy-subrc <> 0.
 * Implement suitable error handling here
-    endif.
+    ENDIF.
 
     control-no_dialog = 'X'.
     control-getotf    = 'X'.
@@ -316,208 +316,214 @@ class lcl_module implementation.
 *    control-no_open   = 'X'.
 *    control-no_close  = 'X'.
 
-    call function lv_fm
-      exporting
+    CALL FUNCTION lv_fm
+      EXPORTING
         control_parameters = control
         output_options     = output_opt
-      importing
+      IMPORTING
         job_output_info    = job_output_info
-      tables
+      TABLES
         lt_final           = lt_final1
-      exceptions
+      EXCEPTIONS
         formatting_error   = 1
         internal_error     = 2
         send_error         = 3
         user_canceled      = 4
-        others             = 5.
-    if sy-subrc eq 0.
-      call function 'CONVERT_OTF'
-        exporting
+        OTHERS             = 5.
+    IF sy-subrc EQ 0.
+      CALL FUNCTION 'CONVERT_OTF'
+        EXPORTING
           format                = 'PDF'
-        tables
+        TABLES
           otf                   = job_output_info-otfdata
           lines                 = lt_pdf
-        exceptions
+        EXCEPTIONS
           err_max_linewidth     = 1
           err_format            = 2
           err_conv_not_possible = 3
           err_bad_otf           = 4
-          others                = 5.
-      if sy-subrc eq 0.
-        loop at lt_pdf into data(ls_pdf).
-          assign ls_pdf to <fs_x> casting.
-          concatenate ls_content <fs_x> into ls_content in byte mode.
-        endloop.
+          OTHERS                = 5.
+      IF sy-subrc EQ 0.
+        LOOP AT lt_pdf INTO DATA(ls_pdf).
+          ASSIGN ls_pdf TO <fs_x> CASTING.
+          CONCATENATE ls_content <fs_x> INTO ls_content IN BYTE MODE.
+        ENDLOOP.
 
-        check ls_content is not initial.
+        CHECK ls_content IS NOT INITIAL.
         attachment-att_type =  'BIN'.
-        attachment-att_subj = condense( |Indofil_Invoice_Submission({ ls_final-lifnr alpha = out })-{ ls_final-werks }.pdf| ).
+        attachment-att_subj = condense( |Indofil_Invoice_Submission({ ls_final-lifnr ALPHA = OUT })-{ ls_final-werks }.pdf| ).
         attachment-att_solix = cl_bcs_convert=>xstring_to_solix( iv_xstring = ls_content ).
-        append attachment to attachments.
-        clear attachment.
-      endif.
-    endif.
+        APPEND attachment TO attachments.
+        CLEAR attachment.
+      ENDIF.
+    ENDIF.
 
-
-
-  endmethod.
-  method display_alv.
-    try.
+  ENDMETHOD.
+  METHOD display_alv.
+    TRY.
         cl_salv_table=>factory(
-          exporting
+          EXPORTING
             list_display   = if_salv_c_bool_sap=>false
-          importing
+          IMPORTING
             r_salv_table   = lo_table
-          changing
+          CHANGING
             t_table        = lt_final
         ).
 
-        if lo_table is bound.
+        IF lo_table IS BOUND.
 
           lo_table->set_screen_status(
-            exporting
+            EXPORTING
               report        = 'ZMM_INFORM_VEND_INV_SUBMIT'
               pfstatus      = 'STANDARD'
               set_functions = lo_table->c_functions_all ).
 
           lo_functions = lo_table->get_functions( ).
-          if lo_functions is bound.
+          IF lo_functions IS BOUND.
             lo_functions->set_all( value = if_salv_c_bool_sap=>true ).
-          endif.
+          ENDIF.
 
           lo_display = lo_table->get_display_settings( ).
-          if lo_display is bound.
+          IF lo_display IS BOUND.
             lo_display->set_striped_pattern( value = if_salv_c_bool_sap=>true ).
-          endif.
+          ENDIF.
 
           lo_columns = lo_table->get_columns( ).
-          if lo_columns is bound.
+          IF lo_columns IS BOUND.
 *            CLEAR: columnname, short, medium, long.
-            change_col_text( exporting columnname = 'BUKRS' short      = 'Comp Code.'
+            change_col_text( EXPORTING columnname = 'BUKRS' short      = 'Comp Code.'
                              medium     = 'Company Code'
                              long       = 'Company Code' ).
-            change_col_text( exporting columnname = 'BELNR' short      = 'Docmnt.No'
+            change_col_text( EXPORTING columnname = 'BELNR' short      = 'Docmnt.No'
                              medium     = 'Document Number'
                              long       = 'Document Number' ).
-            change_col_text( exporting columnname = 'GJAHR' short      = 'FI Year'
+            change_col_text( EXPORTING columnname = 'GJAHR' short      = 'FI Year'
                              medium     = 'Fiscal Year'
                              long       = 'Fiscal Year' ).
-            change_col_text( exporting columnname = 'BLART' short      = 'Doc.Type'
+            change_col_text( EXPORTING columnname = 'BLART' short      = 'Doc.Type'
                              medium     = 'Document type'
                              long       = 'Document type' ).
-            change_col_text( exporting columnname = 'LIFNR' short      = 'Vendor'
+            change_col_text( EXPORTING columnname = 'LIFNR' short      = 'Vendor'
                              medium     = ' Vendor Code'
                              long       = ' Vendor Code' ).
-            change_col_text( exporting columnname = 'WERKS' short      = 'Plant'
+            change_col_text( EXPORTING columnname = 'WERKS' short      = 'Plant'
                              medium     = 'Plant'
                              long       = 'Plant' ).
-            change_col_text( exporting columnname = 'BLDAT' short      = 'Docmnt.Dt'
+            change_col_text( EXPORTING columnname = 'BLDAT' short      = 'Docmnt.Dt'
                              medium     = 'Document Date'
                              long       = 'Document Date' ).
-            change_col_text( exporting columnname = 'XBLNR' short      = 'Referance'
+            change_col_text( EXPORTING columnname = 'XBLNR' short      = 'Referance'
                              medium     = 'Referance Number'
                              long       = 'Referance Numner' ).
-            change_col_text( exporting columnname = 'ZUONR' short      = 'Assignment'
+            change_col_text( EXPORTING columnname = 'ZUONR' short      = 'Assignment'
                              medium     = 'Assignment'
                              long       = 'Assignment' ).
-            change_col_text( exporting columnname = 'MENGE' short      = 'Quantity'
+            change_col_text( EXPORTING columnname = 'MENGE' short      = 'Quantity'
                              medium     = 'Quantity'
                              long       = 'Quantity' ).
-            change_col_text( exporting columnname = 'MEINS' short      = 'UOM'
+            change_col_text( EXPORTING columnname = 'MEINS' short      = 'UOM'
                              medium     = 'UOM'
                              long       = 'UOM' ).
-            change_col_text( exporting columnname = 'MATNR' short      = 'Material'
+            change_col_text( EXPORTING columnname = 'MATNR' short      = 'Material'
                              medium     = 'Material'
                              long       = 'Material' ).
-            change_col_text( exporting columnname = 'MAKTX' short      = 'Mat.Descr.'
+            change_col_text( EXPORTING columnname = 'MAKTX' short      = 'Mat.Descr.'
                              medium     = 'Material Descr.'
                              long       = 'Material Descr.' ).
-            change_col_text( exporting columnname = 'EBELN' short      = 'PO Number'
+            change_col_text( EXPORTING columnname = 'EBELN' short      = 'PO Number'
                              medium     = 'Purchase Order'
                              long       = 'Purchase Order' ).
-            change_col_text( exporting columnname = 'EBELP' short      = 'PO Item'
+            change_col_text( EXPORTING columnname = 'EBELP' short      = 'PO Item'
                              medium     = 'Purchase Order line '
                              long       = 'Purchase Order Line Item' ).
-            change_col_text( exporting columnname = 'VEND_MAIL_ID' short      = 'Vendor ID'
+            change_col_text( EXPORTING columnname = 'VEND_MAIL_ID' short      = 'Vendor ID'
                              medium     = 'Vendor Mail ID'
                              long       = 'Vendor Mail ID' ).
-            change_col_text( exporting columnname = 'USER_MAIL_ID' short      = 'User ID'
+            change_col_text( EXPORTING columnname = 'USER_MAIL_ID' short      = 'User ID'
                              medium     = 'User Mail ID'
                              long       = 'User Mail ID' ).
-          endif.
+          ENDIF.
 
           lo_layout = lo_table->get_layout( ).
-          if lo_layout is bound.
+          IF lo_layout IS BOUND.
             ls_key-report = sy-cprog.
 
             lo_layout->set_key( value = ls_key ).
 
             lo_layout->set_save_restriction( value = if_salv_c_layout=>restrict_none ).
-          endif.
+          ENDIF.
 
           lo_selection = lo_table->get_selections( ).
-          if lo_selection is bound.
+          IF lo_selection IS BOUND.
             lo_selection->set_selection_mode( value = if_salv_c_selection_mode=>row_column ).
-          endif.
+          ENDIF.
 
           lo_event = lo_table->get_event( ).
-          if lo_event is bound.
-            set handler user_command for lo_event.
-          endif.
+          IF lo_event IS BOUND.
+            SET HANDLER user_command FOR lo_event.
+          ENDIF.
 
           lo_table->display( ).
-        endif.
-      catch cx_salv_msg.
-    endtry.
+        ENDIF.
+      CATCH cx_salv_msg.
+    ENDTRY.
 
-  endmethod.
-  method change_col_text .
-    try.
+  ENDMETHOD.
+  METHOD change_col_text .
+    TRY.
         lo_column ?= lo_columns->get_column( columnname = columnname ).
         lo_column->set_short_text( value = short ).
         lo_column->set_medium_text( value = medium ).
         lo_column->set_long_text( value = long ).
 
-        if columnname cs 'MAIL_ID'.
+        IF columnname CS 'MAIL_ID'.
           lo_column->set_output_length( value = '35' ).
-        endif.
-      catch cx_salv_not_found.
-    endtry.
-  endmethod.
-  method send_mail.
+        ENDIF.
+      CATCH cx_salv_not_found.
+    ENDTRY.
+  ENDMETHOD.
+  METHOD send_mail.
     "mail body
-    refresh body.
-    clear wa_body.
+    REFRESH body.
+    CLEAR wa_body.
     wa_body-line = 'Dear Business Partner'.
-    append wa_body to body.
-    append initial line to body.
+    APPEND wa_body TO body.
+    APPEND INITIAL LINE TO body.
 
-    clear wa_body.
+    CLEAR wa_body.
     wa_body-line = 'Please find attached details of Invoice Submission'.
-    append wa_body to body.
-    append initial line to body.
+    APPEND wa_body TO body.
+    APPEND INITIAL LINE TO body.
 
     "subject
-    clear subject.
-    subject = condense( |Indofil Invoice Submission({ ls_final-lifnr alpha = out })| ).
+    CLEAR subject.
+    subject = condense( |Indofil Invoice Submission({ ls_final-lifnr ALPHA = OUT })| ).
 
     "add receipients
     "vendor's mail id
-    clear recipient.
-    refresh recipients.
+    CLEAR recipient.
+    REFRESH recipients.
 
-    recipient-recipient = ls_final1-vend_mail_id.
+    recipient-recipient = ls_final-vend_mail_id.
     recipient-copy = abap_false.
-    append recipient to recipients.
+    APPEND recipient TO recipients.
 
     "user mail id
-    recipient-recipient = ls_final1-user_mail_id.
-    recipient-copy = abap_true.
-    append recipient to recipients.
+    DATA(lt_mail_cc) = lt_final[].
+    DELETE lt_mail_cc[] WHERE lifnr NE ls_final-lifnr.
+    SORT lt_mail_cc[] BY ekgrp.
+    DELETE ADJACENT DUPLICATES FROM lt_mail_cc[] COMPARING ekgrp.
 
-    if subject is not initial and recipients is not initial.
-      clear sent.
-      new zcl_email( )->send_email( exporting subject = subject
+    LOOP AT lt_mail_cc INTO DATA(ls_mail_cc).
+      CLEAR recipient.
+      recipient-recipient = ls_mail_cc-user_mail_id.
+      recipient-copy = abap_true.
+      APPEND recipient TO recipients.
+    ENDLOOP.
+
+    IF subject IS NOT INITIAL AND recipients IS NOT INITIAL.
+      CLEAR sent.
+      NEW zcl_email( )->send_email( EXPORTING subject = subject
                                               sender         = 'sapautomail@indofil.com'
                                               body           = body
                                               body_obj_type  = 'RAW'
@@ -528,72 +534,85 @@ class lcl_module implementation.
 *                                                                     att_subj = |Returns_of_indofil.pdf|
 *                                                                     att_solix =
 *                                                                     cl_bcs_convert=>xstring_to_solix( iv_xstring = ls_content ) ) )
-                                    importing
+                                    IMPORTING
                                               sent           = sent ).
 
-      message cond #( when sent eq abap_true then 'Email sent successfully' else 'Email sending failed' ) type 'S'.
-    endif.
-  endmethod.
+      MESSAGE COND #( WHEN sent EQ abap_true THEN 'Email sent successfully' ELSE 'Email sending failed' ) TYPE 'S'.
+    ENDIF.
+  ENDMETHOD.
 
-  method user_command.
-    types: begin of ty_lifnr,
-             lifnr type lfa1-lifnr,
-           end of ty_lifnr.
-    data :lt_select type salv_t_row,
-          lrt_lifnr type table of ty_lifnr.
-    if e_salv_function eq 'MAIL'.
-      clear ls_final.
-      refresh: lt_final1[],attachments[],lt_select,lrt_lifnr.
+  METHOD user_command.
+    TYPES: BEGIN OF ty_lifnr,
+             lifnr TYPE lfa1-lifnr,
+           END OF ty_lifnr.
+    DATA :lt_select TYPE salv_t_row,
+          lrt_lifnr TYPE TABLE OF ty_lifnr.
+    IF e_salv_function EQ 'MAIL'.
+      CLEAR ls_final.
+      REFRESH: lt_final1[],attachments[],lt_select,lrt_lifnr.
 
       lt_select = lo_selection->get_selected_rows( ).
-      if lt_select is initial.
-        message 'Please select a Vendor to send mail' type 'E'.
-      endif.
+      IF lt_select IS INITIAL.
+        MESSAGE 'Please select a Vendor to send mail' TYPE 'E'.
+      ENDIF.
 
-      loop at lt_select into data(ls_select).
-        try.
-            append value #( lifnr = lt_final[ ls_select ]-lifnr ) to lrt_lifnr.
-          catch cx_sy_itab_line_not_found.
-        endtry.
-      endloop.
+      CLEAR ls_final.
+      LOOP AT lt_select INTO DATA(ls_select).
+        TRY.
+            ls_final =  lt_final[ ls_select ] .
 
-      sort lrt_lifnr[] by lifnr.
-      delete adjacent duplicates from lrt_lifnr[] comparing lifnr.
+            REFRESH lt_final1[].
+            lt_final1[] = lt_final[].
+            DELETE lt_final1[] WHERE lifnr NE ls_final-lifnr.
+            IF lt_final1[] IS NOT INITIAL.
+              call_sf( ).
+              IF attachments[] IS NOT INITIAL.
+                send_mail( ).
+                REFRESH: attachments[],lt_final1[].
+              ENDIF.
+            ENDIF.
+          CATCH cx_sy_itab_line_not_found.
+        ENDTRY.
+      ENDLOOP.
 
-      sort lt_final[] by lifnr.
+*      SORT lrt_lifnr[] BY lifnr.
+*      DELETE ADJACENT DUPLICATES FROM lrt_lifnr[] COMPARING lifnr.
+*
+*      SORT lt_final[] BY lifnr.
 
-      loop at lt_final into ls_final.
-        ls_final1 = ls_final.
-        if line_exists( lrt_lifnr[ lifnr = ls_final-lifnr ] ).
-          append ls_final to lt_final1.
-          at end of werks.
-            call_sf( ).
-          endat.
-          at end of lifnr.
-            if attachments[] is not initial.
-              send_mail( ).
-              refresh: attachments[],lt_final1[].
-            endif.
-          endat.
-        endif.
-      endloop.
-    endif.
+*      LOOP AT lt_final INTO ls_final.
+*        ls_final1 = ls_final.
+*        IF line_exists( lrt_lifnr[ lifnr = ls_final-lifnr ] ).
+*          APPEND ls_final TO lt_final1.
+*          at end of werks.
+*            call_sf( ).
+*          endat.
+*          AT END OF lifnr.
+*            call_sf( ).
+*            IF attachments[] IS NOT INITIAL.
+*              send_mail( ).
+*              REFRESH: attachments[],lt_final1[].
+*            ENDIF.
+*          ENDAT.
+*        ENDIF.
+*      ENDLOOP.
+    ENDIF.
 
-  endmethod.
-endclass.
+  ENDMETHOD.
+ENDCLASS.
 
-load-of-program.
-  data lo_mod type ref to lcl_module.
-  lo_mod = new #( ).
+LOAD-OF-PROGRAM.
+  DATA lo_mod TYPE REF TO lcl_module.
+  lo_mod = NEW #( ).
 
-start-of-selection.
+START-OF-SELECTION.
 
-  if lo_mod is bound.
+  IF lo_mod IS BOUND.
     lo_mod->process( ).
-  endif.
+  ENDIF.
 
-at selection-screen on value-request for p_vari.
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
   lo_mod->f4_variant( ).
 
-at selection-screen.
+AT SELECTION-SCREEN.
   lo_mod->variant_exist( ).
