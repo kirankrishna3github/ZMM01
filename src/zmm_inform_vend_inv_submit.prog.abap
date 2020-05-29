@@ -39,7 +39,11 @@ TYPES: BEGIN OF ty_bsis,
          lifnr TYPE bseg-lifnr,
          dmbtr TYPE bseg-dmbtr,
          ekgrp TYPE ekko-ekgrp,
-       END OF ty_bseg.
+       END OF ty_bseg,
+       BEGIN OF ty_param,
+         param1   TYPE z6mma_params-param1,
+         paramval TYPE z6mma_params-paramval,
+       END OF ty_param.
 
 TYPES: BEGIN OF ty_final.
     INCLUDE TYPE zstr_vend_inv.
@@ -55,6 +59,8 @@ DATA: it_bsis   TYPE TABLE OF ty_bsis,
       lt_final1 TYPE TABLE OF ty_final,
       ls_final1 TYPE ty_final,
       ls_final  TYPE ty_final.
+
+DATA: it_param TYPE TABLE OF ty_param.
 
 DATA: lo_table     TYPE REF TO cl_salv_table,
       lo_functions TYPE REF TO cl_salv_functions_list,
@@ -204,9 +210,9 @@ CLASS lcl_module IMPLEMENTATION.
   ENDMETHOD.
   METHOD get_data.
 
-    SELECT param1
+    SELECT param1,paramval
     FROM z6mma_params
-    INTO TABLE @DATA(it_param)
+    INTO TABLE @it_param
     WHERE progname = 'ZMM026'.
 
 
@@ -516,9 +522,12 @@ CLASS lcl_module IMPLEMENTATION.
 
     LOOP AT lt_mail_cc INTO DATA(ls_mail_cc).
       CLEAR recipient.
-      recipient-recipient = ls_mail_cc-user_mail_id.
-      recipient-copy = abap_true.
-      APPEND recipient TO recipients.
+      TRY.
+          recipient-recipient = it_param[ param1 = ls_mail_cc-ekgrp ]-paramval."ls_mail_cc-user_mail_id.
+          recipient-copy = abap_true.
+          APPEND recipient TO recipients.
+        CATCH cx_sy_itab_line_not_found.
+      ENDTRY.
     ENDLOOP.
 
     IF subject IS NOT INITIAL AND recipients IS NOT INITIAL.
