@@ -291,7 +291,7 @@ CLASS lcl_module IMPLEMENTATION.
 
 
       APPEND ls_final TO lt_final.
-
+      CLEAR: Ls_FINAL.
     ENDLOOP.
 
 
