@@ -284,11 +284,15 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
               if lv_bupla_gstin+0(2) = lv_vendor_gstin+0(2).  " business place and vendor belong to the same state
                 " prevent selection of igst tax code
                 select single @abap_true
-                  from t007s
-                  where spras = @sy-langu
-                  and   kalsm = 'ZTXINN'    " GST tax procedure
-                  and   mwskz = @l_items_header-mwskz
-                  and   text1 like '%Input%IGST%'
+                  from t007s as a
+                  inner join t007a as b
+                  on  a~kalsm = b~kalsm
+                  and a~mwskz = b~mwskz
+                  where a~spras = @sy-langu
+                  and   a~kalsm = 'ZTXINN'    " GST tax procedure
+                  and   a~mwskz = @l_items_header-mwskz
+                  and   a~text1 like '%Input%IGST%'
+                  and   b~mwart = 'V'   " Input tax code
                   into @data(lv_igst_tax_code).
 
                 if lv_igst_tax_code = abap_true.
