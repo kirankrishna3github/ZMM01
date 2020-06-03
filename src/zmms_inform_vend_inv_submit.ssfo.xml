@@ -260,6 +260,11 @@
     <TYPING>TYPE</TYPING>
     <TYPENAME>ADRC-STR_SUPPL2</TYPENAME>
    </item>
+   <item>
+    <NAME>ZBUKRS</NAME>
+    <TYPING>TYPE</TYPING>
+    <TYPENAME>BUKRS</TYPENAME>
+   </item>
   </GDATA>
   <GPLIST>
    <item>
@@ -1116,7 +1121,6 @@
                           <BLUE>000</BLUE>
                           <USED>X</USED>
                          </CBOTTOM>
-                         <HIGHLIGHTD>X</HIGHLIGHTD>
                         </item>
                        </BORDERS>
                       </item>
@@ -2582,6 +2586,65 @@
                             <sf:SUCC>
                              <sf:item>
                               <sf:NODE>
+                               <NODETYPE>CO</NODETYPE>
+                               <sf:OBJ>
+                                <sf:CODE>
+                                 <NAME>
+                                  <INAME>%CODE1</INAME>
+                                 </NAME>
+                                 <CAPTION>New Program Lines 1</CAPTION>
+                                 <PLIST>
+                                  <item>
+                                   <OPD>LS_FINAL</OPD>
+                                   <OUTIN>I</OUTIN>
+                                  </item>
+                                  <item>
+                                   <OPD>ZBUKRS</OPD>
+                                   <OUTIN>O</OUTIN>
+                                  </item>
+                                 </PLIST>
+                                 <CODE>
+                                  <item>ZBUKRS = LS_FINAL-bukrs.</item>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                  <item/>
+                                 </CODE>
+                                 <T_CAPTION>
+                                  <item>
+                                   <LANGU>E</LANGU>
+                                   <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                                   <OBJTYPE>CO</OBJTYPE>
+                                   <INAME>%CODE1</INAME>
+                                   <CAPTION>New Program Lines 1</CAPTION>
+                                  </item>
+                                 </T_CAPTION>
+                                </sf:CODE>
+                               </sf:OBJ>
+                               <sf:SUCC/>
+                              </sf:NODE>
+                             </sf:item>
+                             <sf:item>
+                              <sf:NODE>
                                <NODETYPE>TI</NODETYPE>
                                <sf:OBJ>
                                 <sf:TEXT>
@@ -3410,10 +3473,38 @@
                       </item>
                       <item>
                        <TDFORMAT>*</TDFORMAT>
-                       <TDLINE>Thanking you</TDLINE>
+                       <TDLINE>  Thanking you</TDLINE>
                       </item>
                       <item>
-                       <TDFORMAT>B5</TDFORMAT>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Rajesh Khubchandani</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Indofil Industries Ltd</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Plot No Z-8</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Dahej SEZ Ltd,Tal Vagra</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Dist Bharuch PIN 392 130</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>  Gujarat</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>  (M) 95120 33952</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>*</TDFORMAT>
                       </item>
                      </TEXT>
                      <STYLE_NAME>ZSD_PUR_RETURN</STYLE_NAME>
@@ -3488,7 +3579,7 @@
                        <INAME>%TEXT42</INAME>
                        <LINENR>000007</LINENR>
                        <TDFORMAT>*</TDFORMAT>
-                       <TDLINE>Thanking you</TDLINE>
+                       <TDLINE>  Thanking you</TDLINE>
                       </item>
                       <item>
                        <SPRAS>E</SPRAS>
@@ -3496,11 +3587,117 @@
                        <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
                        <INAME>%TEXT42</INAME>
                        <LINENR>000008</LINENR>
-                       <TDFORMAT>B5</TDFORMAT>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Rajesh Khubchandani</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                       <INAME>%TEXT42</INAME>
+                       <LINENR>000009</LINENR>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Indofil Industries Ltd</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                       <INAME>%TEXT42</INAME>
+                       <LINENR>000010</LINENR>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Plot No Z-8</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                       <INAME>%TEXT42</INAME>
+                       <LINENR>000011</LINENR>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Dahej SEZ Ltd,Tal Vagra</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                       <INAME>%TEXT42</INAME>
+                       <LINENR>000012</LINENR>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>   Dist Bharuch PIN 392 130</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                       <INAME>%TEXT42</INAME>
+                       <LINENR>000013</LINENR>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>  Gujarat</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                       <INAME>%TEXT42</INAME>
+                       <LINENR>000014</LINENR>
+                       <TDFORMAT>*</TDFORMAT>
+                       <TDLINE>  (M) 95120 33952</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                       <INAME>%TEXT42</INAME>
+                       <LINENR>000015</LINENR>
+                       <TDFORMAT>*</TDFORMAT>
                       </item>
                      </T_TEXT>
                     </sf:TEXT>
                    </sf:OBJ>
+                   <sf:COND>
+                    <sf:CONDITION>
+                     <NAME>
+                      <INAME>%CONDITION1</INAME>
+                     </NAME>
+                     <CAPTION>New Alternative 1</CAPTION>
+                     <COND>
+                      <item>
+                       <COP>EQ</COP>
+                       <OP1>ZBUKRS</OP1>
+                       <OP2>&apos;1000&apos;</OP2>
+                       <ICON>@20\QSelect: Equal to@</ICON>
+                      </item>
+                      <item>
+                       <LOP>OR</LOP>
+                      </item>
+                      <item>
+                       <COP>EQ</COP>
+                       <OP1>ZBUKRS</OP1>
+                       <OP2>&apos;2000&apos;</OP2>
+                       <ICON>@20\QSelect: Equal to@</ICON>
+                      </item>
+                      <item>
+                       <LOP>OR</LOP>
+                      </item>
+                      <item>
+                       <COP>EQ</COP>
+                       <OP1>ZBUKRS</OP1>
+                       <OP2>&apos;2050&apos;</OP2>
+                       <ICON>@20\QSelect: Equal to@</ICON>
+                      </item>
+                     </COND>
+                     <T_CAPTION>
+                      <item>
+                       <LANGU>E</LANGU>
+                       <FORMNAME>ZMMS_INFORM_VEND_INV_SUBMIT</FORMNAME>
+                       <OBJTYPE>CD</OBJTYPE>
+                       <INAME>%CONDITION1</INAME>
+                       <CAPTION>New Alternative 1</CAPTION>
+                      </item>
+                     </T_CAPTION>
+                    </sf:CONDITION>
+                   </sf:COND>
                    <sf:SUCC/>
                   </sf:NODE>
                  </sf:item>
