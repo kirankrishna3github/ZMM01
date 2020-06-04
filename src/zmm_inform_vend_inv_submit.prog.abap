@@ -100,9 +100,9 @@ DATA: attachment  TYPE zfi_s_vp_attachment,
 
 SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
 SELECT-OPTIONS: s_lifnr FOR bseg-lifnr,
-                s_bukrs FOR bkpf-bukrs NO-EXTENSION NO INTERVALS OBLIGATORY,
+                s_bukrs FOR bkpf-bukrs OBLIGATORY,
                 s_belnr FOR bkpf-belnr,
-                s_gjahr FOR bkpf-gjahr NO-EXTENSION NO INTERVALS OBLIGATORY,
+                s_gjahr FOR bkpf-gjahr OBLIGATORY,
                 s_bldat FOR bsis-bldat OBLIGATORY,
                 s_werks FOR bsis-werks ,
                 s_hkont FOR bsis-hkont NO-DISPLAY.
@@ -357,7 +357,7 @@ CLASS lcl_module IMPLEMENTATION.
 
         CHECK ls_content IS NOT INITIAL.
         attachment-att_type =  'BIN'.
-        attachment-att_subj = condense( |Indofil_Invoice_Submission({ ls_final-lifnr ALPHA = OUT })-{ ls_final-werks }.pdf| ).
+        attachment-att_subj = condense( |Indofil_Invoice_Submission({ ls_final-lifnr ALPHA = OUT }).pdf| )."-{ ls_final-werks }
         attachment-att_solix = cl_bcs_convert=>xstring_to_solix( iv_xstring = ls_content ).
         APPEND attachment TO attachments.
         CLEAR attachment.
