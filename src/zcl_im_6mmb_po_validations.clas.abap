@@ -1924,23 +1924,28 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
         try.
             zcl_bupa_utilities=>validate_gst_number(
               exporting
-                iv_entity = conv char10( zlifnr ) "ls_header-lifnr
-              receiving
-                rv_valid      = data(lv_gst_valid)
-            ).
+                iv_entity = conv char10( zlifnr ) ).
 
           catch zcx_generic into data(lox). " Generic Exception Class
             message lox->get_text( ) type 'E'.
         endtry.
+
         try .
             zcl_bupa_utilities=>validate_postal_code(
               exporting
-                iv_entity      = conv char10( zlifnr ) "ls_header-lifnr
-              receiving
-                rv_valid       = data(lv_post_code_valid)
-            ).
-          catch zcx_generic into data(lox1). " Generic Exception Class
-            message lox1->get_text( ) type 'E'.
+                iv_entity      = conv char10( zlifnr ) ).
+          catch zcx_generic into lox. " Generic Exception Class
+            message lox->get_text( ) type 'E'.
+        endtry.
+
+        " IHDK905932 - Friday, June 05, 2020 01:19:36
+        " Subject: RE: PAN validation | From: Prajay Bhansali [mailto:pbhansali@indofil.com] | Sent: Monday, June 1, 2020 17:09
+        try .
+            zcl_bupa_utilities=>validate_pan_number(
+              exporting
+                iv_entity      = conv char10( zlifnr ) ).
+          catch zcx_generic into lox. " Generic Exception Class
+            message lox->get_text( ) type 'E'.
         endtry.
       endif.
 **********************************************************************
