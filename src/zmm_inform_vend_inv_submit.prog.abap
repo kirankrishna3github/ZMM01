@@ -291,7 +291,7 @@ CLASS lcl_module IMPLEMENTATION.
 
 
       APPEND ls_final TO lt_final.
-      CLEAR: Ls_FINAL.
+      CLEAR: ls_final.
     ENDLOOP.
 
 
@@ -568,21 +568,43 @@ CLASS lcl_module IMPLEMENTATION.
       CLEAR ls_final.
       LOOP AT lt_select INTO DATA(ls_select).
         TRY.
-            ls_final =  lt_final[ ls_select ] .
-
-            REFRESH lt_final1[].
-            lt_final1[] = lt_final[].
-            DELETE lt_final1[] WHERE lifnr NE ls_final-lifnr.
-            IF lt_final1[] IS NOT INITIAL.
-              call_sf( ).
-              IF attachments[] IS NOT INITIAL.
-                send_mail( ).
-                REFRESH: attachments[],lt_final1[].
-              ENDIF.
-            ENDIF.
+            APPEND VALUE #( lifnr = lt_final[ ls_select ]-lifnr )
+            TO lrt_lifnr[].
           CATCH cx_sy_itab_line_not_found.
         ENDTRY.
       ENDLOOP.
+      SORT lrt_lifnr[] BY lifnr.
+      DELETE ADJACENT DUPLICATES FROM lrt_lifnr[] COMPARING lifnr.
+
+      LOOP AT lrt_lifnr[] INTO DATA(lrs_lifnr).
+        REFRESH lt_final1[].
+        lt_final1[] = lt_final[].
+        CLEAR ls_final.
+        READ TABLE lt_final INTO ls_final WITH KEY lifnr = lrs_lifnr-lifnr.
+        DELETE lt_final1[] WHERE lifnr NE ls_final-lifnr.
+        IF lt_final1[] IS NOT INITIAL.
+          call_sf( ).
+          IF attachments[] IS NOT INITIAL.
+            send_mail( ).
+            REFRESH: attachments[],lt_final1[].
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+*      TRY.
+*            ls_final =  lt_final[ ls_select ] .
+*
+*            REFRESH lt_final1[].
+*            lt_final1[] = lt_final[].
+*            DELETE lt_final1[] WHERE lifnr NE ls_final-lifnr.
+*            IF lt_final1[] IS NOT INITIAL.
+*              call_sf( ).
+*              IF attachments[] IS NOT INITIAL.
+*                send_mail( ).
+*                REFRESH: attachments[],lt_final1[].
+*              ENDIF.
+*            ENDIF.
+*          CATCH cx_sy_itab_line_not_found.
+*        ENDTRY.
 
 *      SORT lrt_lifnr[] BY lifnr.
 *      DELETE ADJACENT DUPLICATES FROM lrt_lifnr[] COMPARING lifnr.
