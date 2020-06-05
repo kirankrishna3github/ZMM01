@@ -18,6 +18,7 @@ TYPES: BEGIN OF ty_bsis,
          hkont TYPE bsis-hkont,
          belnr TYPE bsis-belnr,
          gjahr TYPE bsis-gjahr,
+         BUZEI TYPE bsis-BUZEI,
          zuonr TYPE bsis-zuonr,
          blart TYPE bsis-blart,
          bldat TYPE bsis-bldat,
@@ -224,7 +225,7 @@ CLASS lcl_module IMPLEMENTATION.
     ENDLOOP.
 
     IF s_hkont IS NOT INITIAL.
-      SELECT bukrs hkont belnr gjahr blart
+      SELECT bukrs hkont belnr gjahr BUZEI blart
       zuonr bldat xblnr shkzg dmbtr werks
       FROM bsis INTO TABLE it_bsis
         WHERE bukrs IN s_bukrs
@@ -246,6 +247,7 @@ CLASS lcl_module IMPLEMENTATION.
           WHERE a~bukrs = it_bsis-bukrs
           AND a~belnr = it_bsis-belnr
           AND a~gjahr = it_bsis-gjahr
+          AND a~BUZEI = it_bsis-BUZEI
           AND a~hkont IN s_hkont.
 
       ELSE.
