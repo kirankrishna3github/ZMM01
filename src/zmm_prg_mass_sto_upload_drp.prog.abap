@@ -40,6 +40,13 @@
 *& Rev. Request#              : IRDK932987
 *& Rev. Description           : MM: S_K: ZMM085: Add mat. desc. to output: 1.8.18
 *&---------------------------------------------------------------------*
+*& Revision #                 : 04
+*& Rev. Date                  : Saturday, June 06, 2020 02:36:00
+*& Rev. Author                : 6010859
+*& Rev. Requested/Approved By : Narayan Kunder
+*& Rev. Request#              : IHDK906868
+*& Rev. Description           : MM: S_K: ZMM085: Add val type and zstr: 6.6.20
+*&---------------------------------------------------------------------*
 report zmm_prg_mass_sto_upload_drp.
 *&---------------------------------------------------------------------*
 *---<< S/4HANA >>---*
@@ -98,47 +105,53 @@ class lcl_application definition final.
   private section.
     types: excelcell(50) type c.
     data: begin of excel_line,
-            id      type excelcell,
-            reswk   type excelcell, " supplying plant
-            matnr   type excelcell, " material
-            bstmg   type excelcell, " quantity
-            eeind   type excelcell, " delivery date
-            ewerk   type excelcell, " dest plant
-            versart type excelcell, " ship. type
-            text    type excelcell, " item text
+            id         type excelcell,
+            reswk      type excelcell, " supplying plant
+            matnr      type excelcell, " material
+            bstmg      type excelcell, " quantity
+            eeind      type excelcell, " delivery date
+            ewerk      type excelcell, " dest plant
+            versart    type excelcell, " ship. type
+            text       type excelcell, " item text
+            bwtar      type excelcell, " valuation type
+            zstr_kbetr type excelcell, " zstr rate
           end of excel_line,
           excel like standard table of excel_line,
 
           begin of data,
-            id      type i,
-            reswk   type reswk,
-            matnr   type matnr,
-            bstmg   type bstmg,
-            eeind   type eeind,
-            ewerk   type ewerk,
-            versart type versart,
-            text    type tdline,
+            id         type i,
+            reswk      type reswk,
+            matnr      type matnr,
+            bstmg      type bstmg,
+            eeind      type eeind,
+            ewerk      type ewerk,
+            versart    type versart,
+            text       type tdline,
+            bwtar      type bwtar_d,
+            zstr_kbetr type kbetr,
           end of data,
           data_tab like standard table of data,
 
           begin of out,
-            icon    type icon_d,  " signal
-            id      type i,
-            bsart   type bsart,
-            bukrs   type bukrs,
-            ekorg   type ekorg,
-            ekgrp   type ekgrp,
-            reswk   type reswk,
-            matnr   type matnr,
-            maktx   type maktx,
-            bstmg   type bstmg,
-            eeind   type eeind,
-            ewerk   type ewerk,
-            versart type versart,
-            text    type tdline,
-            ebeln   type ebeln,
-            status  type char20,
-            messg   type bapi_msg,
+            icon       type icon_d,  " signal
+            id         type i,
+            bsart      type bsart,
+            bukrs      type bukrs,
+            ekorg      type ekorg,
+            ekgrp      type ekgrp,
+            reswk      type reswk,
+            matnr      type matnr,
+            maktx      type maktx,
+            bstmg      type bstmg,
+            eeind      type eeind,
+            ewerk      type ewerk,
+            versart    type versart,
+            text       type tdline,
+            bwtar      type bwtar_d,
+            zstr_kbetr type kbetr,
+            ebeln      type ebeln,
+            status     type char20,
+            messg      type bapi_msg,
           end of out,
           outtab like standard table of out.
 
@@ -432,6 +445,10 @@ class lcl_application implementation.
     data wa_poitem        like line of poitem.
     data poitemx          type standard table of bapimepoitemx.
     data wa_poitemx       like line of poitemx.
+    data pocond           type standard table of bapimepocond.
+    data wa_pocond        like line of pocond.
+    data pocondx          type standard table of bapimepocondx.
+    data wa_pocondx       like line of pocondx.
     data poschedule       type standard table of bapimeposchedule.
     data wa_poschedule    like line of poschedule.
     data poschedulex      type standard table of bapimeposchedulx.
@@ -485,6 +502,7 @@ class lcl_application implementation.
         wa_poitem-plant    = data-ewerk.
         wa_poitem-quantity = data-bstmg.
         wa_poitem-shiptype = data-versart.
+        wa_poitem-val_type = data-bwtar.
 
         " Fill poitemx
         fill_bapix(
@@ -494,6 +512,26 @@ class lcl_application implementation.
           bapix = wa_poitemx ).
 
         wa_poitemx-po_itemx = abap_true.
+
+        " fill pocond
+        if data-zstr_kbetr is not initial.
+          wa_pocond-itm_number = item.
+          wa_pocond-cond_type  = 'ZSTR'.
+          wa_pocond-cond_value = data-zstr_kbetr.
+          wa_pocond-currency   = 'INR'.
+          wa_pocond-change_id  = 'U'.
+
+          " fill pocondx
+          fill_bapix(
+          exporting
+            bapi = wa_pocond
+          changing
+            bapix = wa_pocondx ).
+
+          append:
+            wa_pocond to pocond,
+            wa_pocondx to pocondx.
+        endif.
 
         " fill poschedule
         wa_poschedule-po_item = wa_poitem-po_item.
@@ -524,7 +562,8 @@ class lcl_application implementation.
                 wa_poschedulex to poschedulex,
                 wa_potextitem to potextitem,
                 out to outtab.
-        clear: wa_poitem, wa_poitemx, wa_poschedule, wa_poschedulex, wa_potextitem.
+
+        clear: wa_poitem, wa_poitemx, wa_pocond, wa_pocondx, wa_poschedule, wa_poschedulex, wa_potextitem.
         clear data.
       endloop.
 
@@ -540,6 +579,8 @@ class lcl_application implementation.
             return           = return
             poitem           = poitem
             poitemx          = poitemx
+            pocond           = pocond
+            pocondx          = pocondx
             poschedule       = poschedule
             poschedulex      = poschedulex
             potextitem       = potextitem.
@@ -553,7 +594,8 @@ class lcl_application implementation.
           msg = wa_return-message.
         endif.
 
-        " since the above bapi could not update the ship type field for some reason(we have raised this to SAP), we are using bdc here as a post update work-around
+        " since the above bapi could not update the ship type field for some reason(we have raised this to SAP),
+        " we are using bdc here as a post update work-around
         call function 'ZFM_DRP_STO_VSART_UPDATE_BDC'  " IRDK932879
           exporting
             exppurchaseorder = exppurchaseorder
@@ -791,6 +833,12 @@ class lcl_application implementation.
             o_column->set_long_text( value = 'PO Item Text' ).
             o_column->set_medium_text( value = 'PO Item Text' ).
             o_column->set_short_text( value = 'Item Text' ).
+
+            free o_column.
+            o_column ?= o_columns->get_column( columnname = 'ZSTR_KBETR' ).
+            o_column->set_long_text( value = 'ZSTR - Base For PO' ).
+            o_column->set_medium_text( value = 'ZSTR - Base For PO' ).
+            o_column->set_short_text( value = 'ZSTR Base' ).
 
             free o_column.
             o_column ?= o_columns->get_column( columnname = 'MESSG' ).
