@@ -443,7 +443,7 @@ class lcl_application implementation.
       endif.
     endif.
 
-    refresh msg_logs.
+    clear msg_logs.
     check excel is not initial.
 
     clear: excel_line, lv_index.
@@ -482,48 +482,111 @@ class lcl_application implementation.
       if gv_comp is initial.
         gv_comp = no_data.
       endif.
-      select single name1 from lfa1 into output_line-name1
-        where lifnr = gv_vendor.
-      if gv_vendor is initial.
+
+*--------------------------------------------------------------------*
+  " Vendor level validations - No update if any of these fails
+*--------------------------------------------------------------------*
+      select single * from lfa1 where lifnr = @gv_vendor into @data(ls_lfa1).
+
+      output_line-name1 = ls_lfa1-name1.
+
+      if gv_vendor is initial or gv_vendor = no_data or sy-subrc <> 0.
         output_line-icon = icon_red_light.
         output_line-msg = 'Err - Invalid vendor code supplied'.
         data(lv_lifnr_err) = abap_true.
       endif.
 
-      select single smtp_addr from adr6 into @data(lv_email)
-          where addrnumber = ( select adrnr from lfa1 where lifnr = @gv_vendor ).
-      select single tel_number from adr2 into @data(lv_mobile)
-        where addrnumber = ( select adrnr from lfa1 where lifnr = @gv_vendor )
+      select single smtp_addr
+        from adr6
+        into @data(lv_email)
+        where addrnumber = @ls_lfa1-adrnr.
+
+      select single tel_number
+        from adr2
+        into @data(lv_mobile)
+        where addrnumber = @ls_lfa1-adrnr
         and   r3_user = '3'.
 
-      select single stcd3 from lfa1 where lifnr = @gv_vendor into @data(lv_stcd3).
-
       " mobile no and email are mandatory; IRDK932865
-      if ( lv_email is initial and excel_line-email is initial ) or ( lv_mobile is initial and excel_line-mobil is initial )
-        or ( lv_stcd3 is initial and excel_line-gstno is initial ).
+      if ( lv_email is initial and excel_line-email is initial ).
         output_line-icon = icon_red_light.
-        output_line-msg = output_line-msg && ` ` && 'Err - Mobile Number and/or Email ID and/or GST No. not supplied/not mainained'.
+        output_line-msg = output_line-msg && ` ` && 'Err - Email ID not supplied/not maintained'.
         lv_lifnr_err = abap_true.
         data(lv_m1_err) = abap_true.
       endif.
 
-      select single * from lfa1 where lifnr = @gv_vendor into @data(ls_lfa1).
+      if ( lv_mobile is initial and excel_line-mobil is initial ).
+        output_line-icon = icon_red_light.
+        output_line-msg = output_line-msg && ` ` && 'Err - Mobile Number not supplied/not maintained'.
+        lv_lifnr_err = abap_true.
+        lv_m1_err = abap_true.
+      endif.
+
+      if ( ls_lfa1-stcd3 is initial and excel_line-gstno is initial ).
+        output_line-icon = icon_red_light.
+        output_line-msg = output_line-msg && ` ` && 'Err - GST No. not supplied/not mainained'.
+        lv_lifnr_err = abap_true.
+        lv_m1_err = abap_true.
+      endif.
+
+      " validate gst number
       try.
           zcl_bupa_utilities=>validate_gst_number(
             exporting
+              iv_entity      = gv_vendor
               iv_state       = cond #( when m1-regio is not initial
                                        then m1-regio
                                        else ls_lfa1-regio ) " Region (State, Province, County)
               iv_gst_number  = cond #( when m2-gstno is not initial
                                        then m2-gstno
-                                       else ls_lfa1-stcd3 ) ). " Postal Code
+                                       else ls_lfa1-stcd3 ) ). " GST Number
         catch zcx_generic into data(lox_generic). " Generic Exception Class
           output_line-icon = icon_red_light.
           output_line-msg = output_line-msg && ` ` && |Err - { lox_generic->get_text( ) }|.
           lv_lifnr_err = abap_true.
+          lv_m1_err = cond #( when m1-regio is not initial then abap_true else lv_m1_err ).
+          data(lv_m2_err) = cond #( when m2-gstno is not initial then abap_true ).
       endtry.
 
+      " validate postal code
       clear lox_generic.
+      try.
+          zcl_bupa_utilities=>validate_postal_code(
+            exporting
+              iv_entity      = gv_vendor
+              iv_state       = cond #( when m1-regio is not initial
+                                       then m1-regio
+                                       else ls_lfa1-regio ) " Region (State, Province, County)
+              iv_country     = ls_lfa1-land1
+              iv_postal_code = cond #( when m1-pstlz is not initial
+                                       then m1-pstlz
+                                       else ls_lfa1-pstlz ) ). " Postal Code
+        catch zcx_generic into lox_generic. " Generic Exception Class
+          output_line-icon = icon_red_light.
+          output_line-msg = output_line-msg && ` ` && |Err - { lox_generic->get_text( ) }|.
+          lv_lifnr_err = abap_true.
+          lv_m1_err = cond #( when m1-regio is not initial or m1-pstlz is not initial then abap_true else lv_m1_err ).
+      endtry.
+
+      " validate pan number - IHDK905932 - Friday, June 05, 2020 22:53:22
+      " Subject: RE: PAN validation | From: Prajay Bhansali [mailto:pbhansali@indofil.com] | Sent: Monday, June 1, 2020 17:09
+      clear lox_generic.
+      try.
+          zcl_bupa_utilities=>validate_pan_number(
+            exporting
+              iv_entity      = gv_vendor
+              iv_pan_number  = cond #( when m2-panno is not initial
+                                       then m2-panno
+                                       else ls_lfa1-j_1ipanno ) " PAN Number
+              iv_first_name  = ls_lfa1-name1
+              iv_last_name   = ls_lfa1-name2 ).
+        catch zcx_generic into lox_generic. " Generic Exception Class
+          output_line-icon = icon_red_light.
+          output_line-msg = output_line-msg && ` ` && |Err - { lox_generic->get_text( ) }|.
+          lv_lifnr_err = abap_true.
+          lv_m2_err = cond #( when m2-panno is not initial then abap_true else lv_m2_err ).
+      endtry.
+*--------------------------------------------------------------------*
 
       if lv_lifnr_err eq abap_false.  " error in vendor, no further processing
         " M1
@@ -541,7 +604,7 @@ class lcl_application implementation.
           if gv_comp is initial or gv_comp eq no_data.
             output_line-icon = icon_red_light.
             output_line-msg = output_line-msg && ` ` && 'M2:Err - Company code is mandatory for tax details'.
-            data(lv_m2_err) = abap_true.
+            lv_m2_err = abap_true.
           endif.
           select single * from usrm0 into @data(lv_cin_check) where uname eq @sy-uname.
           if lv_cin_check is initial.
@@ -663,8 +726,9 @@ class lcl_application implementation.
         " Similarly for M8 and so on
       endif.
       append output_line to output.
-      clear: excel_line, lv_email, lv_mobile, lv_stcd3,
-        lv_lifnr_err, lv_m1_err, lv_m2_err, lv_m3_err, lv_m4_err, lv_m5_err, lv_m7_err.
+      clear:
+        excel_line, lv_email, lv_mobile, lv_lifnr_err, lv_m1_err,
+        lv_m2_err, lv_m3_err, lv_m4_err, lv_m5_err, lv_m7_err.
     endloop.
   endmethod.
 
