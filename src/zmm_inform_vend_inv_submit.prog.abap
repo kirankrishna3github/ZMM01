@@ -228,7 +228,7 @@ CLASS lcl_module IMPLEMENTATION.
     IF s_hkont IS NOT INITIAL.
       SELECT bukrs hkont belnr gjahr BUZEI blart
       zuonr bldat xblnr shkzg dmbtr werks
-      FROM bsis INTO TABLE it_bsis
+      FROM bsis INTO CORRESPONDING FIELDS OF TABLE it_bsis
         WHERE bukrs IN s_bukrs
         AND belnr IN s_belnr
         AND hkont IN s_hkont
