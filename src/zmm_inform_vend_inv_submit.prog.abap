@@ -294,6 +294,9 @@ CLASS lcl_module IMPLEMENTATION.
       CLEAR: ls_final.
     ENDLOOP.
 
+  if s_lifnr is NOT INITIAL .
+    delete lt_final WHERE lifnr NOT in s_lifnr.
+  endif.
 
   ENDMETHOD.
   METHOD call_sf.
