@@ -31,6 +31,7 @@ TYPES: BEGIN OF ty_bsis,
          bukrs TYPE bseg-bukrs,
          belnr TYPE bseg-belnr,
          gjahr TYPE bseg-gjahr,
+         BUZEI TYPE bsis-BUZEI,
          zuonr TYPE bseg-zuonr,
          menge TYPE bseg-menge,
          meins TYPE bseg-meins,
@@ -237,7 +238,7 @@ CLASS lcl_module IMPLEMENTATION.
         AND blart = 'WE'.
       IF it_bsis IS NOT INITIAL .
 
-        SELECT a~bukrs a~belnr a~gjahr a~zuonr a~menge a~meins
+        SELECT a~bukrs a~belnr a~gjahr a~buzei a~zuonr a~menge a~meins
                a~matnr a~ebeln a~ebelp a~lifnr a~dmbtr b~ekgrp
           FROM bseg AS a
           JOIN ekko AS b
