@@ -12,124 +12,124 @@
 *   REASON FOR CHANGE: Added new column and Acct. Grp - PLNT validation
 *   REQUEST #:IRDK928560
 * ---------------------------------------------------------------------*
-REPORT  zvendor_master_details.
+report  zvendor_master_details.
 
-TYPE-POOLS:slis.
+type-pools:slis.
 
-TABLES : lfa1,lfb1,lfm1.
+tables : lfa1,lfb1,lfm1.
 
 *ALV DATA DECLARATIONS
-DATA: it_fieldcatalog TYPE  slis_t_fieldcat_alv,
-      wa_fieldcatalog TYPE  slis_fieldcat_alv,
-      gd_layout       TYPE slis_layout_alv,
-      g_variant       LIKE disvariant,
-      gt_events       TYPE slis_t_event,
-      gd_prntparams   TYPE slis_print_alv.
-DATA : g_save(1)  TYPE c,
-       g_exit(1)  TYPE c,
-       gx_variant LIKE disvariant,
-       gv_sr      TYPE i.
+data: it_fieldcatalog type  slis_t_fieldcat_alv,
+      wa_fieldcatalog type  slis_fieldcat_alv,
+      gd_layout       type slis_layout_alv,
+      g_variant       like disvariant,
+      gt_events       type slis_t_event,
+      gd_prntparams   type slis_print_alv.
+data : g_save(1)  type c,
+       g_exit(1)  type c,
+       gx_variant like disvariant,
+       gv_sr      type i.
 
-TYPES : BEGIN OF ty_adrc,
-          addrnumber TYPE adrc-addrnumber,
-          name1      TYPE adrc-name1,
-          name2      TYPE adrc-name2,
-          name3      TYPE adrc-name3,
-          name4      TYPE adrc-name4,
-          name_co    TYPE adrc-name_co, " added by NK
-          city1      TYPE adrc-city1,
-          city2      TYPE adrc-city2,
-          city_code  TYPE adrc-city_code,
-          cityp_code TYPE adrc-cityp_code,
-          home_city  TYPE adrc-home_city,
-          post_code1 TYPE adrc-post_code1,
-          post_code2 TYPE adrc-post_code2,
-          po_box     TYPE adrc-po_box,
-          street     TYPE adrc-street,
-          streetcode TYPE adrc-streetcode,
-          str_suppl1 TYPE adrc-str_suppl1,
-          str_suppl2 TYPE adrc-str_suppl2,
-          str_suppl3 TYPE adrc-str_suppl3,
-          location   TYPE adrc-location,
-          building   TYPE adrc-building,
-          floor      TYPE adrc-floor,
-          country    TYPE adrc-country,
-          region     TYPE adrc-region,
-        END OF ty_adrc.
+types : begin of ty_adrc,
+          addrnumber type adrc-addrnumber,
+          name1      type adrc-name1,
+          name2      type adrc-name2,
+          name3      type adrc-name3,
+          name4      type adrc-name4,
+          name_co    type adrc-name_co, " added by NK
+          city1      type adrc-city1,
+          city2      type adrc-city2,
+          city_code  type adrc-city_code,
+          cityp_code type adrc-cityp_code,
+          home_city  type adrc-home_city,
+          post_code1 type adrc-post_code1,
+          post_code2 type adrc-post_code2,
+          po_box     type adrc-po_box,
+          street     type adrc-street,
+          streetcode type adrc-streetcode,
+          str_suppl1 type adrc-str_suppl1,
+          str_suppl2 type adrc-str_suppl2,
+          str_suppl3 type adrc-str_suppl3,
+          location   type adrc-location,
+          building   type adrc-building,
+          floor      type adrc-floor,
+          country    type adrc-country,
+          region     type adrc-region,
+        end of ty_adrc.
 
-TYPES : BEGIN OF ty_lfb1,
-          lifnr TYPE lfb1-lifnr,
-          bukrs TYPE lfb1-bukrs,
-          pernr TYPE lfb1-pernr,
-          akont TYPE lfb1-akont,
-          zterm TYPE lfb1-zterm,
-          frgrp TYPE lfb1-frgrp,
-        END OF ty_lfb1.
+types : begin of ty_lfb1,
+          lifnr type lfb1-lifnr,
+          bukrs type lfb1-bukrs,
+          pernr type lfb1-pernr,
+          akont type lfb1-akont,
+          zterm type lfb1-zterm,
+          frgrp type lfb1-frgrp,
+        end of ty_lfb1.
 
-TYPES : BEGIN OF ty_lfm1,
-          lifnr TYPE lfm1-lifnr,
-          ekorg TYPE lfm1-ekorg,
-          telf1 TYPE lfm1-telf1,
-          zterm TYPE lfm1-zterm,
-          inco1 TYPE lfm1-inco1,
-          inco2 TYPE lfm1-inco2,
-          kalsk TYPE lfm1-kalsk,
-          webre TYPE lfm1-webre,
-          lebre TYPE lfm1-lebre,
-        END OF ty_lfm1.
+types : begin of ty_lfm1,
+          lifnr type lfm1-lifnr,
+          ekorg type lfm1-ekorg,
+          telf1 type lfm1-telf1,
+          zterm type lfm1-zterm,
+          inco1 type lfm1-inco1,
+          inco2 type lfm1-inco2,
+          kalsk type lfm1-kalsk,
+          webre type lfm1-webre,
+          lebre type lfm1-lebre,
+        end of ty_lfm1.
 "---------mod1----------------"
-TYPES : BEGIN OF ts_cvi_vend_link,
-          partner_guid TYPE cvi_vend_link-partner_guid,
-          vendor       TYPE cvi_vend_link-vendor,
-        END OF ts_cvi_vend_link.
+types : begin of ts_cvi_vend_link,
+          partner_guid type cvi_vend_link-partner_guid,
+          vendor       type cvi_vend_link-vendor,
+        end of ts_cvi_vend_link.
 
-TYPES: BEGIN OF ts_but000,
-         partner      TYPE but000-partner,
-         partner_guid TYPE but000-partner_guid,
-         bpkind       TYPE but000-bpkind,
-       END OF ts_but000.
+types: begin of ts_but000,
+         partner      type but000-partner,
+         partner_guid type but000-partner_guid,
+         bpkind       type but000-bpkind,
+       end of ts_but000.
 
 
 "----------end-----------------"
-TYPES : BEGIN OF ty_final,
-          partner        TYPE but000-partner, "mod1
-          lifnr          TYPE lfa1-lifnr,
-          name1          TYPE lfa1-name1,
-          name2          TYPE lfa1-name2,
-          name_co        TYPE adrc-name_co,
-          adrnr          TYPE lfa1-adrnr,
-          bukrs          TYPE lfb1-bukrs,
-          ekorg          TYPE lfm1-ekorg,
-          str_suppl1     TYPE adrc-str_suppl1,
-          str_suppl2     TYPE adrc-str_suppl2,
-          street         TYPE adrc-street,
-          str_suppl3     TYPE adrc-str_suppl3,
-          location       TYPE adrc-location,
-          ort02          TYPE  kna1-ort02,  """district
-          city1          TYPE  adrc-city1,
-          post_code1     TYPE adrc-post_code1,
-          regio          TYPE lfa1-regio,
-          bezei          TYPE t005u-bezei,   """region desc.
-          country        TYPE adrc-country,   """country
-          telf1          TYPE lfa1-telf1,
-          telf2          TYPE lfa1-telf2,
-          tel_number     TYPE adr2-tel_number, ""tel number
-          telnr_call     TYPE adr2-telnr_call , """mob no
-          telfx          TYPE lfa1-telfx,    """fax number
-          smtp_addr      TYPE adr6-smtp_addr, """E-Mail Address
-          ktokk          TYPE lfa1-ktokk, ""account group
-          kunnr          TYPE lfa1-kunnr, "customer - added by NK
-          werks          TYPE lfa1-werks, "plant - added by NK
+types : begin of ty_final,
+          partner        type but000-partner, "mod1
+          lifnr          type lfa1-lifnr,
+          name1          type lfa1-name1,
+          name2          type lfa1-name2,
+          name_co        type adrc-name_co,
+          adrnr          type lfa1-adrnr,
+          bukrs          type lfb1-bukrs,
+          ekorg          type lfm1-ekorg,
+          str_suppl1     type adrc-str_suppl1,
+          str_suppl2     type adrc-str_suppl2,
+          street         type adrc-street,
+          str_suppl3     type adrc-str_suppl3,
+          location       type adrc-location,
+          ort02          type  kna1-ort02,  """district
+          city1          type  adrc-city1,
+          post_code1     type adrc-post_code1,
+          regio          type lfa1-regio,
+          bezei          type t005u-bezei,   """region desc.
+          country        type adrc-country,   """country
+          telf1          type lfa1-telf1,
+          telf2          type lfa1-telf2,
+          tel_number     type adr2-tel_number, ""tel number
+          telnr_call     type adr2-telnr_call , """mob no
+          telfx          type lfa1-telfx,    """fax number
+          smtp_addr      type adr6-smtp_addr, """E-Mail Address
+          ktokk          type lfa1-ktokk, ""account group
+          kunnr          type lfa1-kunnr, "customer - added by NK
+          werks          type lfa1-werks, "plant - added by NK
           """""table BNKA (bank master record table)
-          bankl          TYPE lfbk-bankl, ""bank key
-          banka          TYPE bnka-banka, "" bank name
-          stras          TYPE bnka-stras, ""bank address
-          ort01          TYPE bnka-ort01, ""bank city
-          brnch          TYPE bnka-brnch, ""bank branch name
-          swift          TYPE bnka-swift, ""swift code
-          bankn          TYPE lfbk-bankn, "" bank name
-          koinh          TYPE lfbk-koinh, ""Account holder
-          ebpp_accname   TYPE lfbk-ebpp_accname, "acc holder name
+          bankl          type lfbk-bankl, ""bank key
+          banka          type bnka-banka, "" bank name
+          stras          type bnka-stras, ""bank address
+          ort01          type bnka-ort01, ""bank city
+          brnch          type bnka-brnch, ""bank branch name
+          swift          type bnka-swift, ""swift code
+          bankn          type lfbk-bankn, "" bank name
+          koinh          type lfbk-koinh, ""Account holder
+          ebpp_accname   type lfbk-ebpp_accname, "acc holder name
 *{   REPLACE        SBXK900270                                        1
 *\          j_1iexcd       TYPE j_1imovend-j_1iexcd,  """ECC No.
 *\          j_1iexrn       TYPE j_1imovend-j_1iexrn,  """Excise Reg. No.
@@ -149,219 +149,221 @@ TYPES : BEGIN OF ty_final,
 * Solution   - Replace Table LFA1 from J_1IMOVEND
 * TR         - SBXK900270 - BM:Replace Table Excise to General Master Data:14.11.2018
 *--------------------------------------------------------------------*
-          j_1iexcd       TYPE lfa1-j_1iexcd,  """ECC No.
-          j_1iexrn       TYPE lfa1-j_1iexrn,  """Excise Reg. No.
-          j_1iexrg       TYPE lfa1-j_1iexrg,  """Excise Range
-          j_1iexdi       TYPE lfa1-j_1iexdi,   """Excise Division
-          j_1iexco       TYPE lfa1-j_1iexco,   """Commissionerate
-          j_1icstno      TYPE lfa1-j_1icstno,  """CST no.
-          j_1ilstno      TYPE lfa1-j_1ilstno,   """LST no.
-          j_1ipanno      TYPE lfa1-j_1ipanno,   """PAN
-          j_1iexcive     TYPE lfa1-j_1iexcive,  """Exc.Ind.Vendor
+          j_1iexcd       type lfa1-j_1iexcd,  """ECC No.
+          j_1iexrn       type lfa1-j_1iexrn,  """Excise Reg. No.
+          j_1iexrg       type lfa1-j_1iexrg,  """Excise Range
+          j_1iexdi       type lfa1-j_1iexdi,   """Excise Division
+          j_1iexco       type lfa1-j_1iexco,   """Commissionerate
+          j_1icstno      type lfa1-j_1icstno,  """CST no.
+          j_1ilstno      type lfa1-j_1ilstno,   """LST no.
+          j_1ipanno      type lfa1-j_1ipanno,   """PAN
+          j_1iexcive     type lfa1-j_1iexcive,  """Exc.Ind.Vendor
 *}   REPLACE
-          indi_desc(30)  TYPE c,     """"" Exc.Ind.Vendor description
+          indi_desc(30)  type c,     """"" Exc.Ind.Vendor description
 *{   REPLACE        SBXK900270                                        2
 *\          j_1ivtyp       TYPE j_1imovend-j_1ivtyp,   """Type of Vendor
-          j_1ivtyp       TYPE lfa1-j_1ivtyp,   """Type of Vendor
+          j_1ivtyp       type lfa1-j_1ivtyp,   """Type of Vendor
 *}   REPLACE
-          typ_ven_desc   TYPE dd07d-ddtext, """"type of vendor description
+          typ_ven_desc   type dd07d-ddtext, """"type of vendor description
 *{   REPLACE        SBXK900270                                        3
 *\          j_1isern       TYPE j_1imovend-j_1isern, """"Service Tax Regn.No.
-          j_1isern       TYPE lfa1-j_1isern, """"Service Tax Regn.No.
+          j_1isern       type lfa1-j_1isern, """"Service Tax Regn.No.
 *}   REPLACE
-          konzs          TYPE lfa1-konzs,
-          city_ort01     TYPE lfa1-ort01 ,  """city
+          konzs          type lfa1-konzs,
+          city_ort01     type lfa1-ort01 ,  """city
 *        ORT02  type lfa1-ort02,   """district
-          namev          TYPE knvk-namev,
-          name_second    TYPE knvk-name1,
-          zterm          TYPE lfm1-zterm,
-          inco1          TYPE lfm1-inco1,
-          inco2          TYPE lfm1-inco2,
-          kalsk          TYPE lfm1-kalsk,
-          webre          TYPE lfm1-webre,
-          lebre          TYPE lfm1-lebre,
-          zterm_act      TYPE lfb1-zterm,
-          text1_desc_act TYPE t052u-text1,
-          text1_desc_pur TYPE t052u-text1,
-          indi(3)        TYPE c,
-          indi1(3)       TYPE c,
-          sperq          TYPE lfa1-sperq,
-          sdesc          TYPE tq04s-kurztext,
-          frgrp          TYPE lfb1-frgrp,
-          frgrt          TYPE vbwf07-frgrt,
-          akont          TYPE lfb1-akont,
-          txt50          TYPE skat-txt50,
+          namev          type knvk-namev,
+          name_second    type knvk-name1,
+          zterm          type lfm1-zterm,
+          inco1          type lfm1-inco1,
+          inco2          type lfm1-inco2,
+          kalsk          type lfm1-kalsk,
+          webre          type lfm1-webre,
+          lebre          type lfm1-lebre,
+          zterm_act      type lfb1-zterm,
+          text1_desc_act type t052u-text1,
+          text1_desc_pur type t052u-text1,
+          indi(3)        type c,
+          indi1(3)       type c,
+          sperq          type lfa1-sperq,
+          sdesc          type tq04s-kurztext,
+          frgrp          type lfb1-frgrp,
+          frgrt          type vbwf07-frgrt,
+          akont          type lfb1-akont,
+          txt50          type skat-txt50,
 ***        added GSTN & Tax Indicator by NK on 05.07.2017
-          stcd3          TYPE lfa1-stcd3,
-          erdat          TYPE lfa1-erdat,
+          stcd3          type lfa1-stcd3,
+          erdat          type lfa1-erdat,
 *{   REPLACE        SBXK900270                                        4
 *\          ven_class      TYPE j_1imovend-ven_class,
-          ven_class      TYPE lfa1-ven_class,
+          ven_class      type lfa1-ven_class,
 *}   REPLACE
-          bptype         TYPE but000-bpkind,
+          bptype         type but000-bpkind,
           "Added by varun on 12.11.19
-          gst_regio      TYPE z6mma_params-param2,
+          gst_regio      type z6mma_params-param2,
           "Added by varun on 07.01.2020 for gst no and postal code validation
-          check_gst_no   TYPE char30,
-          check_postal   TYPE char30,
-          color          TYPE slis_t_specialcol_alv, "for row color
+          check_gst_no   type char30,
+          check_postal   type char30,
+          check_pan_no   type char30,
+          color          type slis_t_specialcol_alv, "for row color
           "added by varun on 22.05.2020
-          esic_no        TYPE but0id-idnumber,
-          msme_no        TYPE but0id-idnumber,
-        END OF ty_final.
+          esic_no        type but0id-idnumber,
+          msme_no        type but0id-idnumber,
+        end of ty_final.
 
-TYPES : BEGIN OF ty_knvk,
-          parnr TYPE knvk-parnr,
-          kunnr TYPE knvk-kunnr,
-          namev TYPE knvk-namev,
-          name1 TYPE knvk-name1,
-        END OF ty_knvk,
+types : begin of ty_knvk,
+          parnr type knvk-parnr,
+          kunnr type knvk-kunnr,
+          namev type knvk-namev,
+          name1 type knvk-name1,
+        end of ty_knvk,
 
-        BEGIN OF ty_tq04s,
-          sperrfkt TYPE tq04s-sperrfkt,
-          kurztext TYPE tq04s-kurztext,
-        END OF ty_tq04s,
+        begin of ty_tq04s,
+          sperrfkt type tq04s-sperrfkt,
+          kurztext type tq04s-kurztext,
+        end of ty_tq04s,
 
-        BEGIN OF ty_vbwf07,
+        begin of ty_vbwf07,
 *        spras TYPE vbwf07-spras,
-          frgrp TYPE vbwf07-frgrp,
-          frgrt TYPE vbwf07-frgrt,
-        END OF ty_vbwf07,
+          frgrp type vbwf07-frgrp,
+          frgrt type vbwf07-frgrt,
+        end of ty_vbwf07,
 
 *        begin of ty_J_1IMOVEND,
 *        lifnr type lifnr,
 *        ven_class type J_1IGTAKLD,"J_1IMOVEND-ven_class
 *        end of ty_J_1IMOVEND,
 
-        BEGIN OF ty_skat,
+        begin of ty_skat,
 *        spras TYPE skat-spras,
-          saknr TYPE skat-saknr,
-          txt50 TYPE skat-txt50,
-        END OF ty_skat.
+          saknr type skat-saknr,
+          txt50 type skat-txt50,
+        end of ty_skat.
 
 
-DATA : it_final  TYPE STANDARD TABLE OF ty_final,
-       wa_final  TYPE ty_final,
-       it_lfa1   TYPE STANDARD TABLE OF lfa1,
-       wa_lfa1   TYPE lfa1,
+data : it_final  type standard table of ty_final,
+       wa_final  type ty_final,
+       it_lfa1   type standard table of lfa1,
+       wa_lfa1   type lfa1,
 *       it_J_1IMOVEND type standard table of ty_J_1IMOVEND,
 *       wa_J_1IMOVEND type ty_J_1IMOVEND,
-       it_lfb1   TYPE STANDARD TABLE OF ty_lfb1,
-       wa_lfb1   TYPE ty_lfb1,
-       it_vbwf07 TYPE STANDARD TABLE OF ty_vbwf07,
-       wa_vbwf07 TYPE ty_vbwf07,
-       it_skat   TYPE STANDARD TABLE OF ty_skat,
-       wa_skat   TYPE ty_skat,
-       it_lfm1   TYPE STANDARD TABLE OF ty_lfm1,
-       wa_lfm1   TYPE ty_lfm1,
-       it_adrc   TYPE STANDARD TABLE OF ty_adrc,
-       wa_adrc   TYPE ty_adrc,
-       it_adr2   TYPE STANDARD TABLE OF adr2,
-       it_knvk   TYPE STANDARD TABLE OF ty_knvk,
-       wa_knvk   TYPE ty_knvk,
-       wa_adr2   TYPE adr2,
+       it_lfb1   type standard table of ty_lfb1,
+       wa_lfb1   type ty_lfb1,
+       it_vbwf07 type standard table of ty_vbwf07,
+       wa_vbwf07 type ty_vbwf07,
+       it_skat   type standard table of ty_skat,
+       wa_skat   type ty_skat,
+       it_lfm1   type standard table of ty_lfm1,
+       wa_lfm1   type ty_lfm1,
+       it_adrc   type standard table of ty_adrc,
+       wa_adrc   type ty_adrc,
+       it_adr2   type standard table of adr2,
+       it_knvk   type standard table of ty_knvk,
+       wa_knvk   type ty_knvk,
+       wa_adr2   type adr2,
 *{   DELETE         SBXK900270                                        5
 *\       it_j_1imovend TYPE STANDARD TABLE OF j_1imovend,
 *\       wa_j_1imovend TYPE j_1imovend,
 *}   DELETE
-       it_adr6   TYPE STANDARD TABLE OF adr6,
-       wa_adr6   TYPE adr6,
-       it_lfbk   TYPE STANDARD TABLE OF lfbk,
-       wa_lfbk   TYPE lfbk,
-       it_bnka   TYPE STANDARD TABLE OF bnka,
-       wa_bnka   TYPE bnka,
-       it_tq04s  TYPE TABLE OF ty_tq04s,
-       wa_tq04s  TYPE ty_tq04s.
+       it_adr6   type standard table of adr6,
+       wa_adr6   type adr6,
+       it_lfbk   type standard table of lfbk,
+       wa_lfbk   type lfbk,
+       it_bnka   type standard table of bnka,
+       wa_bnka   type bnka,
+       it_tq04s  type table of ty_tq04s,
+       wa_tq04s  type ty_tq04s.
 
-TYPES : BEGIN OF ty_ddfixvalue,
-          low        TYPE ddfixvalue-low,
-          high       TYPE ddfixvalue-high,
-          option     TYPE ddfixvalue-option,
-          ddlanguage TYPE ddfixvalue-ddlanguage,
-          ddtext     TYPE ddfixvalue-ddtext,
-        END OF ty_ddfixvalue.
+types : begin of ty_ddfixvalue,
+          low        type ddfixvalue-low,
+          high       type ddfixvalue-high,
+          option     type ddfixvalue-option,
+          ddlanguage type ddfixvalue-ddlanguage,
+          ddtext     type ddfixvalue-ddtext,
+        end of ty_ddfixvalue.
 
 
-DATA : wa_t005u        TYPE t005u-bezei,
-       wa_j_1iinddes   TYPE j_1itaxind-j_1iinddes,
-       it_fixed_values TYPE STANDARD TABLE OF  ty_ddfixvalue,
-       gv_text1_pur    TYPE t052u-text1,
-       gv_text1_act    TYPE t052u-text1,
-       wa_fixed_values TYPE ty_ddfixvalue.
+data : wa_t005u        type t005u-bezei,
+       wa_j_1iinddes   type j_1itaxind-j_1iinddes,
+       it_fixed_values type standard table of  ty_ddfixvalue,
+       gv_text1_pur    type t052u-text1,
+       gv_text1_act    type t052u-text1,
+       wa_fixed_values type ty_ddfixvalue.
 
-TYPES : BEGIN OF ty_purorg,
-          sign(1)   TYPE c,
-          option(2) TYPE c,
-          low(4)    TYPE c,
-          high(4)   TYPE c,
-        END OF ty_purorg.
+types : begin of ty_purorg,
+          sign(1)   type c,
+          option(2) type c,
+          low(4)    type c,
+          high(4)   type c,
+        end of ty_purorg.
 
-TYPES : BEGIN OF ty_bukrs,
-          sign(1)   TYPE c,
-          option(2) TYPE c,
-          low(4)    TYPE c,
-          high(4)   TYPE c,
-        END OF ty_bukrs.
+types : begin of ty_bukrs,
+          sign(1)   type c,
+          option(2) type c,
+          low(4)    type c,
+          high(4)   type c,
+        end of ty_bukrs.
 
-DATA : select_purorg    TYPE STANDARD TABLE OF ty_purorg,
-       wa_select_purorg TYPE ty_purorg,
-       select_bukrs     TYPE STANDARD TABLE OF ty_bukrs,
-       wa_select_bukrs  TYPE ty_bukrs.
+data : select_purorg    type standard table of ty_purorg,
+       wa_select_purorg type ty_purorg,
+       select_bukrs     type standard table of ty_bukrs,
+       wa_select_bukrs  type ty_bukrs.
 
-DATA : flag_a(1) TYPE c,
-       flag_b(1) TYPE c,
-       flag_c(1) TYPE c,
-       flag_d(1) TYPE c.
+data : flag_a(1) type c,
+       flag_b(1) type c,
+       flag_c(1) type c,
+       flag_d(1) type c.
 
 "-------------------Mod1--------------"
-DATA : it_link    TYPE TABLE OF ts_cvi_vend_link,
-       wa_link    TYPE ts_cvi_vend_link,
-       it_partner TYPE TABLE OF ts_but000,
-       wa_partner TYPE ts_but000.
+data : it_link    type table of ts_cvi_vend_link,
+       wa_link    type ts_cvi_vend_link,
+       it_partner type table of ts_but000,
+       wa_partner type ts_but000.
 "----------------end-----------------"
 "added by varun on 22.05.2020
-TYPES: BEGIN OF ty_but0id,
-         partner  TYPE but0id-partner,
-         type     TYPE but0id-type,
-         idnumber TYPE but0id-idnumber,
-       END OF ty_but0id.
-DATA: lt_but0id TYPE TABLE OF ty_but0id.
+types: begin of ty_but0id,
+         partner  type but0id-partner,
+         type     type but0id-type,
+         idnumber type but0id-idnumber,
+       end of ty_but0id.
+data: lt_but0id type table of ty_but0id.
 
-DATA: lv_incrt_gst    TYPE flag,  "added by varun on 07.01.2020 for gst and postal code validation
-      lv_incrt_postal TYPE flag,
-      ls_color        TYPE slis_specialcol_alv.
+data: lv_incrt_gst    type flag,  "added by varun on 07.01.2020 for gst and postal code validation
+      lv_incrt_postal type flag,
+      lv_incrt_pan    type flag,
+      ls_color        type slis_specialcol_alv.
 
-SELECTION-SCREEN BEGIN OF BLOCK blk1 WITH FRAME TITLE TEXT-001.
-SELECT-OPTIONS: s_lifnr FOR lfa1-lifnr , """vendor
-                s_bukrs FOR lfb1-bukrs OBLIGATORY,   """company code
-                s_accgr FOR lfa1-ktokk , """account group
-                s_purorg FOR lfm1-ekorg,"""Purchasing Org.
-                s_pan FOR lfa1-j_1ipanno ,
-                s_gst FOR lfa1-stcd3 ,
-                s_erdat FOR lfa1-erdat.
-SELECTION-SCREEN END OF BLOCK blk1   .
+selection-screen begin of block blk1 with frame title text-001.
+select-options: s_lifnr for lfa1-lifnr , """vendor
+                s_bukrs for lfb1-bukrs obligatory,   """company code
+                s_accgr for lfa1-ktokk , """account group
+                s_purorg for lfm1-ekorg,"""Purchasing Org.
+                s_pan for lfa1-j_1ipanno ,
+                s_gst for lfa1-stcd3 ,
+                s_erdat for lfa1-erdat.
+selection-screen end of block blk1   .
 
-SELECTION-SCREEN BEGIN OF BLOCK layout WITH FRAME TITLE TEXT-002.
-PARAMETERS: p_vari LIKE disvariant-variant. " ALV Variant
-SELECTION-SCREEN END OF BLOCK layout.
+selection-screen begin of block layout with frame title text-002.
+parameters: p_vari like disvariant-variant. " ALV Variant
+selection-screen end of block layout.
 
-INITIALIZATION.
-  PERFORM initialize_variant  .
+initialization.
+  perform initialize_variant  .
 
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_vari.
-  PERFORM f4_for_variant.
+at selection-screen on value-request for p_vari.
+  perform f4_for_variant.
 
 *----------------------------------------------------------------------*
 *         :   Start of Selection                                       *
 *----------------------------------------------------------------------*
-START-OF-SELECTION.
-  PERFORM fetch_data.
+start-of-selection.
+  perform fetch_data.
 
-  PERFORM display_data.
+  perform display_data.
 
-END-OF-SELECTION.
-  PERFORM alv_fieldcatlog.
-  PERFORM display_alv_output.
+end-of-selection.
+  perform alv_fieldcatlog.
+  perform display_alv_output.
 
 *&---------------------------------------------------------------------*
 *&      Form  INITIALIZE_VARIANT
@@ -371,30 +373,30 @@ END-OF-SELECTION.
 *  -->  p1        text
 *  <--  p2        text
 *----------------------------------------------------------------------*
-FORM initialize_variant .
+form initialize_variant .
   g_save = 'A'.
-  CLEAR g_variant.
+  clear g_variant.
   g_variant-report = sy-repid.
 *  g_variant-variant = p_vari.
   gx_variant = g_variant.
 
-  CALL FUNCTION 'REUSE_ALV_VARIANT_DEFAULT_GET'
-    EXPORTING
+  call function 'REUSE_ALV_VARIANT_DEFAULT_GET'
+    exporting
       i_save        = g_save
-    CHANGING
+    changing
       cs_variant    = gx_variant
-    EXCEPTIONS
+    exceptions
       wrong_input   = 1
       not_found     = 2
       program_error = 3
-      OTHERS        = 4.
+      others        = 4.
 *  IF sy-subrc <> 0.
 *    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
 *            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-  IF sy-subrc = 0.
+  if sy-subrc = 0.
     p_vari = gx_variant-variant.
-  ENDIF.
-ENDFORM.                    " INITIALIZE_VARIANT
+  endif.
+endform.                    " INITIALIZE_VARIANT
 *&---------------------------------------------------------------------*
 *&      Form  F4_FOR_VARIANT
 *&---------------------------------------------------------------------*
@@ -403,28 +405,28 @@ ENDFORM.                    " INITIALIZE_VARIANT
 *  -->  p1        text
 *  <--  p2        text
 *----------------------------------------------------------------------*
-FORM f4_for_variant .
+form f4_for_variant .
   g_save = 'A'.
   g_variant-report = sy-repid.
 
-  CALL FUNCTION 'REUSE_ALV_VARIANT_F4'
-    EXPORTING
+  call function 'REUSE_ALV_VARIANT_F4'
+    exporting
       is_variant = g_variant
       i_save     = g_save
-    IMPORTING
+    importing
       e_exit     = g_exit
       es_variant = gx_variant
-    EXCEPTIONS
+    exceptions
       not_found  = 2.
-  IF sy-subrc = 2.
-    MESSAGE ID sy-msgid TYPE 'S'      NUMBER sy-msgno
-            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-  ELSE.
-    IF g_exit = space.
+  if sy-subrc = 2.
+    message id sy-msgid type 'S'      number sy-msgno
+            with sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+  else.
+    if g_exit = space.
       p_vari = gx_variant-variant.
-    ENDIF.
-  ENDIF.
-ENDFORM.                    " F4_FOR_VARIANT
+    endif.
+  endif.
+endform.                    " F4_FOR_VARIANT
 *&---------------------------------------------------------------------*
 *&      Form  FETCH_DATA
 *&---------------------------------------------------------------------*
@@ -433,7 +435,7 @@ ENDFORM.                    " F4_FOR_VARIANT
 *  -->  p1        text
 *  <--  p2        text
 *----------------------------------------------------------------------*
-FORM fetch_data .
+form fetch_data .
 *  break ibm_ams.
 
 *  AUTHORITY-CHECK OBJECT 'M_BEST_EKO'
@@ -460,74 +462,74 @@ FORM fetch_data .
 *MESSAGE 'No Authorization' TYPE 'E'.
 *endif.
 
-  SELECT *
-  FROM lfa1
-  INTO TABLE it_lfa1
-  WHERE lifnr IN s_lifnr
-  AND   ktokk IN s_accgr
-  AND   j_1ipanno IN s_pan
-  AND   stcd3 IN s_gst
-  AND   erdat IN s_erdat       .
+  select *
+  from lfa1
+  into table it_lfa1
+  where lifnr in s_lifnr
+  and   ktokk in s_accgr
+  and   j_1ipanno in s_pan
+  and   stcd3 in s_gst
+  and   erdat in s_erdat       .
 
 
-  IF NOT it_lfa1[] IS INITIAL ."and not s_bukrs is initial.
+  if not it_lfa1[] is initial ."and not s_bukrs is initial.
 
 
     "----------------mod1------------------------"
-    SELECT partner_guid vendor FROM cvi_vend_link
-       INTO TABLE it_link
-       FOR ALL ENTRIES IN it_lfa1 WHERE vendor = it_lfa1-lifnr.
-    IF it_link[] IS NOT INITIAL.
-      SELECT partner partner_guid bpkind FROM but000
-        INTO TABLE it_partner
-        FOR ALL ENTRIES IN  it_link WHERE partner_guid = it_link-partner_guid.
+    select partner_guid vendor from cvi_vend_link
+       into table it_link
+       for all entries in it_lfa1 where vendor = it_lfa1-lifnr.
+    if it_link[] is not initial.
+      select partner partner_guid bpkind from but000
+        into table it_partner
+        for all entries in  it_link where partner_guid = it_link-partner_guid.
       "added by varun on 22.05.2020
-      IF sy-subrc EQ 0.
-        SELECT partner,type,idnumber FROM but0id INTO TABLE @lt_but0id
-                                     FOR ALL ENTRIES IN @it_partner
-                                     WHERE partner EQ @it_partner-partner
-                                     AND   type IN ( 'ZESIC', 'ZMSME' ).
-      ENDIF.
-    ENDIF.
+      if sy-subrc eq 0.
+        select partner,type,idnumber from but0id into table @lt_but0id
+                                     for all entries in @it_partner
+                                     where partner eq @it_partner-partner
+                                     and   type in ( 'ZESIC', 'ZMSME' ).
+      endif.
+    endif.
     "----------------end------------------------"
 
 
 
 
-    SELECT sperrfkt kurztext FROM tq04s INTO TABLE
-       it_tq04s FOR ALL ENTRIES IN it_lfa1 WHERE sperrfkt EQ it_lfa1-sperq
-                                           AND sprache = 'E'.
+    select sperrfkt kurztext from tq04s into table
+       it_tq04s for all entries in it_lfa1 where sperrfkt eq it_lfa1-sperq
+                                           and sprache = 'E'.
 
-    SELECT lifnr
+    select lifnr
            bukrs
            pernr
            akont
            zterm
            frgrp
-    FROM lfb1
-    INTO TABLE it_lfb1
-    FOR ALL ENTRIES IN it_lfa1
-    WHERE lifnr = it_lfa1-lifnr
-    AND   bukrs IN s_bukrs.
+    from lfb1
+    into table it_lfb1
+    for all entries in it_lfa1
+    where lifnr = it_lfa1-lifnr
+    and   bukrs in s_bukrs.
 
-    IF it_lfa1[] IS INITIAL OR it_lfb1[] IS INITIAL.
-      MESSAGE 'Data does not exits' TYPE 'I'.
-      STOP.
-    ENDIF.
+    if it_lfa1[] is initial or it_lfb1[] is initial.
+      message 'Data does not exits' type 'I'.
+      stop.
+    endif.
 
-    IF it_lfb1 IS NOT INITIAL.
+    if it_lfb1 is not initial.
 
-      SELECT frgrp frgrt FROM vbwf07 INTO TABLE it_vbwf07 FOR ALL ENTRIES IN it_lfb1
-                                                          WHERE frgrp = it_lfb1-frgrp
-                                                          AND spras = 'E'.
+      select frgrp frgrt from vbwf07 into table it_vbwf07 for all entries in it_lfb1
+                                                          where frgrp = it_lfb1-frgrp
+                                                          and spras = 'E'.
 
-      SELECT saknr txt50 FROM skat INTO TABLE it_skat FOR ALL ENTRIES IN it_lfb1 "IT_SKAT
-                                                      WHERE saknr = it_lfb1-akont
-                                                      AND   spras = 'E'.
-    ENDIF.
+      select saknr txt50 from skat into table it_skat for all entries in it_lfb1 "IT_SKAT
+                                                      where saknr = it_lfb1-akont
+                                                      and   spras = 'E'.
+    endif.
 
 
-    SELECT addrnumber
+    select addrnumber
            name1
            name2
            name3
@@ -552,15 +554,15 @@ FORM fetch_data .
            country
            region
 
-    FROM adrc
-    INTO TABLE it_adrc
-    FOR ALL ENTRIES IN it_lfa1
-    WHERE addrnumber = it_lfa1-adrnr .
+    from adrc
+    into table it_adrc
+    for all entries in it_lfa1
+    where addrnumber = it_lfa1-adrnr .
 
-  ENDIF.
+  endif.
 
-  IF NOT it_lfa1[] IS INITIAL."and not s_purorg is initial.
-    SELECT lifnr
+  if not it_lfa1[] is initial."and not s_purorg is initial.
+    select lifnr
            ekorg
            telf1
            zterm
@@ -570,11 +572,11 @@ FORM fetch_data .
            webre
            lebre
 
-    FROM lfm1
-    INTO TABLE it_lfm1
-    FOR ALL ENTRIES IN it_lfa1
-    WHERE lifnr = it_lfa1-lifnr
-    AND   ekorg IN s_purorg.
+    from lfm1
+    into table it_lfm1
+    for all entries in it_lfa1
+    where lifnr = it_lfa1-lifnr
+    and   ekorg in s_purorg.
 
 *select  PARNR
 *        KUNNR
@@ -585,13 +587,13 @@ FORM fetch_data .
 *for all entries in it_lfb1
 *where PARNR = it_lfb1-PeRNR.
 
-  ENDIF.
+  endif.
 
-  IF NOT it_lfa1[] IS INITIAL.
-    SELECT *
-    FROM lfbk INTO TABLE it_lfbk
-    FOR ALL ENTRIES IN it_lfa1
-    WHERE lifnr = it_lfa1-lifnr .
+  if not it_lfa1[] is initial.
+    select *
+    from lfbk into table it_lfbk
+    for all entries in it_lfa1
+    where lifnr = it_lfa1-lifnr .
 
 *{   DELETE         SBXK900270                                        1
 *\    SELECT *
@@ -601,36 +603,36 @@ FORM fetch_data .
 *\    WHERE lifnr = it_lfa1-lifnr .
 *}   DELETE
 
-    SELECT *
-    FROM adr6
-    INTO TABLE it_adr6
-    FOR ALL ENTRIES IN it_lfa1
-    WHERE addrnumber = it_lfa1-adrnr.
+    select *
+    from adr6
+    into table it_adr6
+    for all entries in it_lfa1
+    where addrnumber = it_lfa1-adrnr.
 
-    SELECT *
-    FROM adr2
-    INTO TABLE it_adr2
-    FOR ALL ENTRIES IN it_lfa1
-    WHERE addrnumber = it_lfa1-adrnr
-    AND   dft_receiv = 'X'.
+    select *
+    from adr2
+    into table it_adr2
+    for all entries in it_lfa1
+    where addrnumber = it_lfa1-adrnr
+    and   dft_receiv = 'X'.
 
-    SELECT *
-    FROM lfbk
-    INTO TABLE it_lfbk
-    FOR ALL ENTRIES IN it_lfa1
-    WHERE lifnr = it_lfa1-lifnr.
+    select *
+    from lfbk
+    into table it_lfbk
+    for all entries in it_lfa1
+    where lifnr = it_lfa1-lifnr.
 
-  ENDIF.
+  endif.
 
-  IF NOT it_lfbk[] IS INITIAL.
-    SELECT *
-    FROM bnka
-    INTO TABLE it_bnka
-    FOR ALL ENTRIES IN it_lfbk
-    WHERE banks = it_lfbk-banks
-    AND   bankl = it_lfbk-bankl.
-  ENDIF.
-ENDFORM.                    " FETCH_DATA
+  if not it_lfbk[] is initial.
+    select *
+    from bnka
+    into table it_bnka
+    for all entries in it_lfbk
+    where banks = it_lfbk-banks
+    and   bankl = it_lfbk-bankl.
+  endif.
+endform.                    " FETCH_DATA
 *&---------------------------------------------------------------------*
 *&      Form  DISPLAY_DATA
 *&---------------------------------------------------------------------*
@@ -639,51 +641,73 @@ ENDFORM.                    " FETCH_DATA
 *  -->  p1        text
 *  <--  p2        text
 *----------------------------------------------------------------------*
-FORM display_data .
+form display_data .
 
-  LOOP AT it_lfa1 INTO wa_lfa1.
+  loop at it_lfa1 into wa_lfa1.
     wa_final-lifnr = wa_lfa1-lifnr.
 
 ******start of addition made by varun on 07.01.2020 as said by punam on mail
-    CLEAR: lv_incrt_postal,lv_incrt_gst.
-    TRY.
+    clear: lv_incrt_postal, lv_incrt_gst, lv_incrt_pan.
+    try.
         zcl_bupa_utilities=>validate_postal_code(
-          EXPORTING
+          exporting
             iv_entity      = wa_final-lifnr " Customer/Vendor
-          RECEIVING
+          receiving
             rv_valid       = lv_incrt_postal   " 'X' = Valid/'' = Invalid
         ).
         wa_final-check_postal = 'Valid Postal Code'.
-      CATCH zcx_generic. " Generic Exception Class
+      catch zcx_generic. " Generic Exception Class
         wa_final-check_postal = 'Incorrect Postal Code'.
-    ENDTRY.
-    CLEAR ls_color.
+    endtry.
+    clear ls_color.
     ls_color-fieldname = 'CHECK_POSTAL'.
-    ls_color-color-col = COND #( WHEN lv_incrt_postal IS INITIAL
-                                 THEN 6 ELSE 5 ).
+    ls_color-color-col = cond #( when lv_incrt_postal is initial
+                                 then 6 else 5 ).
     ls_color-color-int = 1.
     ls_color-color-inv = 0.
-    APPEND ls_color TO wa_final-color.
+    append ls_color to wa_final-color.
 
-    TRY.
+    try.
         zcl_bupa_utilities=>validate_gst_number(
-          EXPORTING
+          exporting
             iv_entity     = wa_final-lifnr " Customer/Vendor
-          RECEIVING
+          receiving
             rv_valid      = lv_incrt_gst " 'X' = Valid/'' = Invalid
         ).
         wa_final-check_gst_no = 'Valid GST Number'.
-      CATCH zcx_generic. " Generic Exception Class
+      catch zcx_generic. " Generic Exception Class
         wa_final-check_gst_no = 'Incorrect GST Number'.
-    ENDTRY.
+    endtry.
 
-    CLEAR ls_color.
+    clear ls_color.
     ls_color-fieldname = 'CHECK_GST_NO'.
-    ls_color-color-col = COND #( WHEN lv_incrt_gst IS INITIAL
-                                 THEN 6 ELSE 5 ).
+    ls_color-color-col = cond #( when lv_incrt_gst is initial
+                                 then 6 else 5 ).
     ls_color-color-int = 1.
     ls_color-color-inv = 0.
-    APPEND ls_color TO wa_final-color.
+    append ls_color to wa_final-color.
+
+    " PAN check - IHDK905932 - Friday, June 05, 2020 23:23:10
+    " Subject: RE: PAN validation | From: Prajay Bhansali [mailto:pbhansali@indofil.com] | Sent: Monday, June 1, 2020 17:09
+    try.
+        zcl_bupa_utilities=>validate_gst_number(
+          exporting
+            iv_entity     = wa_final-lifnr " Customer/Vendor
+          receiving
+            rv_valid      = lv_incrt_pan " 'X' = Valid/'' = Invalid
+        ).
+        wa_final-check_pan_no = 'Valid PAN Number'.
+      catch zcx_generic. " Generic Exception Class
+        wa_final-check_pan_no = 'Incorrect PAN Number'.
+    endtry.
+
+    clear ls_color.
+    ls_color-fieldname = 'CHECK_PAN_NO'.
+    ls_color-color-col = cond #( when lv_incrt_pan is initial
+                                 then 6 else 5 ).
+    ls_color-color-int = 1.
+    ls_color-color-inv = 0.
+    append ls_color to wa_final-color.
 
 ******End of addition made by varun on 07.01.2020 as said by punam on mail
 
@@ -695,11 +719,11 @@ FORM display_data .
     wa_final-ort02 = wa_lfa1-ort02.
     wa_final-regio = wa_lfa1-regio.
     "start of addition by varun on 12.11.19 as said by punam on mail
-    IF wa_final-regio IS NOT INITIAL.
-      SELECT SINGLE param2 FROM z6mma_params INTO wa_final-gst_regio
-                                             WHERE progname EQ 'STATE_MAP'
-                                             AND   param1   EQ wa_final-regio.
-    ENDIF.
+    if wa_final-regio is not initial.
+      select single param2 from z6mma_params into wa_final-gst_regio
+                                             where progname eq 'STATE_MAP'
+                                             and   param1   eq wa_final-regio.
+    endif.
     "end of addition by varun
     wa_final-telf1 = wa_lfa1-telf1. """phone
     wa_final-telf2 = wa_lfa1-telf2. """mobile
@@ -714,71 +738,71 @@ FORM display_data .
 
 
     "------------------mod1------------------------------"
-    READ TABLE it_link INTO wa_link WITH KEY vendor = wa_lfa1-lifnr.
-    IF sy-subrc = 0.
-      READ TABLE it_partner INTO wa_partner WITH KEY partner_guid = wa_link-partner_guid.
-      IF sy-subrc = 0.
+    read table it_link into wa_link with key vendor = wa_lfa1-lifnr.
+    if sy-subrc = 0.
+      read table it_partner into wa_partner with key partner_guid = wa_link-partner_guid.
+      if sy-subrc = 0.
         wa_final-partner = wa_partner-partner.
         wa_final-bptype = wa_partner-bpkind.
 
-        LOOP AT lt_but0id INTO DATA(ls_but0id) WHERE partner = wa_final-partner.
-          IF ls_but0id-type EQ 'ZMSME'.
+        loop at lt_but0id into data(ls_but0id) where partner = wa_final-partner.
+          if ls_but0id-type eq 'ZMSME'.
             wa_final-msme_no = ls_but0id-idnumber.
-          ELSEIF ls_but0id-type EQ 'ZESIC'.
+          elseif ls_but0id-type eq 'ZESIC'.
             wa_final-esic_no = ls_but0id-idnumber.
-          ENDIF.
-        ENDLOOP.
-      ENDIF.
-    ENDIF.
+          endif.
+        endloop.
+      endif.
+    endif.
     "------------------end------------------------------"
 
-    READ TABLE it_tq04s INTO wa_tq04s WITH KEY sperrfkt = wa_lfa1-sperq.
+    read table it_tq04s into wa_tq04s with key sperrfkt = wa_lfa1-sperq.
 
-    IF sy-subrc = 0.
+    if sy-subrc = 0.
       wa_final-sdesc = wa_tq04s-kurztext.
-    ENDIF.
+    endif.
 
-    SELECT SINGLE bezei FROM t005u
-    INTO wa_t005u
-    WHERE spras = 'EN'
-    AND land1 = 'IN'
-    AND bland = wa_final-regio.
+    select single bezei from t005u
+    into wa_t005u
+    where spras = 'EN'
+    and land1 = 'IN'
+    and bland = wa_final-regio.
 
     wa_final-bezei  =   wa_t005u.
 
-    READ TABLE it_lfb1 INTO wa_lfb1 WITH KEY lifnr = wa_lfa1-lifnr.
+    read table it_lfb1 into wa_lfb1 with key lifnr = wa_lfa1-lifnr.
 *                                         bukrs in s_bukrs.
-    IF sy-subrc = 0 .
+    if sy-subrc = 0 .
       wa_final-bukrs = wa_lfb1-bukrs.
       wa_final-zterm_act = wa_lfb1-zterm.
-      SELECT SINGLE text1 FROM t052u
-      INTO gv_text1_act
-      WHERE spras = 'EN'
-      AND   zterm = wa_final-zterm_act.
+      select single text1 from t052u
+      into gv_text1_act
+      where spras = 'EN'
+      and   zterm = wa_final-zterm_act.
       wa_final-text1_desc_act = gv_text1_act .
 
 
       wa_final-frgrp = wa_lfb1-frgrp.
       wa_final-akont = wa_lfb1-akont.
 
-      READ TABLE it_vbwf07 INTO wa_vbwf07 WITH KEY frgrp = wa_lfb1-frgrp.
-      IF sy-subrc = 0.
+      read table it_vbwf07 into wa_vbwf07 with key frgrp = wa_lfb1-frgrp.
+      if sy-subrc = 0.
         wa_final-frgrt = wa_vbwf07-frgrt.
-      ENDIF.
+      endif.
 
-      READ TABLE it_skat INTO wa_skat WITH KEY saknr = wa_lfb1-akont.
-      IF sy-subrc = 0.
+      read table it_skat into wa_skat with key saknr = wa_lfb1-akont.
+      if sy-subrc = 0.
         wa_final-txt50 = wa_skat-txt50.
-      ENDIF.
+      endif.
 
-    ENDIF.
-
-
+    endif.
 
 
 
-    READ TABLE it_lfm1 INTO wa_lfm1 WITH KEY lifnr = wa_lfa1-lifnr.
-    IF sy-subrc = 0.
+
+
+    read table it_lfm1 into wa_lfm1 with key lifnr = wa_lfa1-lifnr.
+    if sy-subrc = 0.
       wa_final-ekorg = wa_lfm1-ekorg.
       wa_final-zterm = wa_lfm1-zterm.
       wa_final-inco1 = wa_lfm1-inco1.
@@ -786,27 +810,27 @@ FORM display_data .
       wa_final-kalsk = wa_lfm1-kalsk.
       wa_final-webre = wa_lfm1-webre.
 
-      IF wa_final-webre EQ 'X'.
+      if wa_final-webre eq 'X'.
         wa_final-indi = 'YES'.
-      ELSE.
+      else.
         wa_final-indi = 'NO'.
-      ENDIF.
+      endif.
 
       wa_final-lebre = wa_lfm1-lebre.
 
-      IF wa_final-webre EQ 'X'.
+      if wa_final-webre eq 'X'.
         wa_final-indi1 = 'YES'.
-      ELSE.
+      else.
         wa_final-indi1 = 'NO'.
-      ENDIF.
-      SELECT SINGLE text1 FROM t052u
-      INTO gv_text1_pur
-      WHERE spras = 'EN'
-     AND   zterm = wa_final-zterm.
+      endif.
+      select single text1 from t052u
+      into gv_text1_pur
+      where spras = 'EN'
+     and   zterm = wa_final-zterm.
       wa_final-text1_desc_pur = gv_text1_pur .
-    ENDIF.
-    READ TABLE it_adrc INTO wa_adrc WITH KEY addrnumber = wa_lfa1-adrnr.
-    IF sy-subrc = 0.
+    endif.
+    read table it_adrc into wa_adrc with key addrnumber = wa_lfa1-adrnr.
+    if sy-subrc = 0.
       wa_final-name_co    = wa_adrc-name_co.
       wa_final-str_suppl1 = wa_adrc-str_suppl1.
       wa_final-str_suppl2 = wa_adrc-str_suppl2.
@@ -815,35 +839,35 @@ FORM display_data .
       wa_final-location   = wa_adrc-location.
       wa_final-post_code1 = wa_adrc-post_code1.
       wa_final-country = wa_adrc-country.
-    ENDIF.
-    READ TABLE it_adr6 INTO wa_adr6 WITH KEY addrnumber = wa_lfa1-adrnr.
-    IF sy-subrc = 0 .
+    endif.
+    read table it_adr6 into wa_adr6 with key addrnumber = wa_lfa1-adrnr.
+    if sy-subrc = 0 .
       wa_final-smtp_addr  = wa_adr6-smtp_addr.
-    ENDIF.
-    READ TABLE it_adr2 INTO wa_adr2 WITH KEY addrnumber = wa_lfa1-adrnr.
-    IF sy-subrc = 0 .
+    endif.
+    read table it_adr2 into wa_adr2 with key addrnumber = wa_lfa1-adrnr.
+    if sy-subrc = 0 .
       wa_final-tel_number = wa_adr2-tel_number.
       wa_final-telnr_call = wa_adr2-telnr_call.
-    ENDIF.
-    READ TABLE it_lfbk INTO wa_lfbk WITH KEY lifnr = wa_lfa1-lifnr.
-    IF sy-subrc = 0 .
+    endif.
+    read table it_lfbk into wa_lfbk with key lifnr = wa_lfa1-lifnr.
+    if sy-subrc = 0 .
       wa_final-bankl        = wa_lfbk-bankl.
       wa_final-bankn        = wa_lfbk-bankn.
       wa_final-koinh        = wa_lfbk-koinh .
       wa_final-ebpp_accname = wa_lfbk-ebpp_accname.
 
 
-      READ TABLE it_bnka INTO wa_bnka WITH KEY banks = wa_lfbk-banks
+      read table it_bnka into wa_bnka with key banks = wa_lfbk-banks
                                                bankl = wa_lfbk-bankl.
-      IF sy-subrc = 0 .
+      if sy-subrc = 0 .
 
         wa_final-banka = wa_bnka-banka.
         wa_final-stras = wa_bnka-stras.
         wa_final-ort01 = wa_bnka-ort01.
         wa_final-brnch = wa_bnka-brnch.
         wa_final-swift = wa_bnka-swift.
-      ENDIF.
-    ENDIF.
+      endif.
+    endif.
 
 *{   DELETE         SBXK900270                                        1
 *\    READ TABLE it_j_1imovend INTO wa_j_1imovend WITH KEY lifnr = wa_lfa1-lifnr.
@@ -912,81 +936,81 @@ FORM display_data .
     wa_final-j_1iexcive =  wa_lfa1-j_1iexcive.
     wa_final-ven_class  =  wa_lfa1-ven_class.
 
-    SELECT SINGLE j_1iinddes
-             FROM j_1itaxind
-             INTO wa_j_1iinddes
-            WHERE j_1iindtax EQ wa_final-j_1iexcive.
+    select single j_1iinddes
+             from j_1itaxind
+             into wa_j_1iinddes
+            where j_1iindtax eq wa_final-j_1iexcive.
 
     wa_final-indi_desc = wa_j_1iinddes.
 
-    CALL FUNCTION 'DDIF_FIELDINFO_GET'
-      EXPORTING
+    call function 'DDIF_FIELDINFO_GET'
+      exporting
         tabname        = 'LFA1'
         fieldname      = 'J_1IVTYP'
         langu          = sy-langu
         lfieldname     = 'J_1IVTYP'
-      TABLES
+      tables
         fixed_values   = it_fixed_values
-      EXCEPTIONS
+      exceptions
         not_found      = 1
         internal_error = 2
-        OTHERS         = 3.
-    IF sy-subrc <> 0.
-      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-              WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-    ENDIF.
+        others         = 3.
+    if sy-subrc <> 0.
+      message id sy-msgid type sy-msgty number sy-msgno
+              with sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    endif.
 
-    READ TABLE it_fixed_values INTO wa_fixed_values WITH KEY low = wa_final-j_1ivtyp.
-    IF sy-subrc = 0 .
+    read table it_fixed_values into wa_fixed_values with key low = wa_final-j_1ivtyp.
+    if sy-subrc = 0 .
       wa_final-typ_ven_desc = wa_fixed_values-ddtext.
-    ENDIF.
+    endif.
 
 *}   INSERT
-    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
-      EXPORTING
+    call function 'CONVERSION_EXIT_ALPHA_OUTPUT'
+      exporting
         input  = wa_final-lifnr
-      IMPORTING
+      importing
         output = wa_final-lifnr.
 
-    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
-      EXPORTING
+    call function 'CONVERSION_EXIT_ALPHA_OUTPUT'
+      exporting
         input  = wa_final-adrnr
-      IMPORTING
+      importing
         output = wa_final-adrnr.
 
-    AUTHORITY-CHECK OBJECT 'M_BEST_EKO'
-    ID 'EKORG' FIELD wa_final-ekorg.
-    IF sy-subrc = 0.
-      AUTHORITY-CHECK OBJECT 'F_LFA1_BUK'
-      ID 'BUKRS' FIELD wa_final-bukrs.
-      IF sy-subrc = 0 .
-        APPEND wa_final TO it_final.
-      ENDIF.
-    ENDIF.
+    authority-check object 'M_BEST_EKO'
+    id 'EKORG' field wa_final-ekorg.
+    if sy-subrc = 0.
+      authority-check object 'F_LFA1_BUK'
+      id 'BUKRS' field wa_final-bukrs.
+      if sy-subrc = 0 .
+        append wa_final to it_final.
+      endif.
+    endif.
 *{   REPLACE        SBXK900270                                        3
 *\    CLEAR : wa_final,wa_lfa1,wa_lfb1, wa_skat, wa_vbwf07,lfm1,wa_adrc,wa_adr2,wa_adr6,wa_lfbk,wa_bnka,wa_t005u,wa_j_1imovend,wa_fixed_values,wa_j_1iinddes,gv_text1_pur,gv_text1_act.
-    CLEAR : wa_final,wa_lfa1,wa_lfb1, wa_skat, wa_vbwf07,lfm1,wa_adrc,wa_adr2,wa_adr6,wa_lfbk,wa_bnka,wa_t005u,
+    clear : wa_final,wa_lfa1,wa_lfb1, wa_skat, wa_vbwf07,lfm1,wa_adrc,wa_adr2,wa_adr6,wa_lfbk,wa_bnka,wa_t005u,
             wa_fixed_values,wa_j_1iinddes,gv_text1_pur,gv_text1_act.
 *}   REPLACE
 
-  ENDLOOP.
+  endloop.
 
-  IF  it_final[] IS INITIAL  .
-    MESSAGE 'No Authorization' TYPE 'E'.
-  ENDIF.
+  if  it_final[] is initial  .
+    message 'No Authorization' type 'E'.
+  endif.
 
-  IF NOT s_bukrs IS INITIAL.
-    DELETE it_final WHERE bukrs NOT IN s_bukrs .
-  ENDIF.
+  if not s_bukrs is initial.
+    delete it_final where bukrs not in s_bukrs .
+  endif.
 
 *  IF NOT s_purorg IS INITIAL.                              " Finance vendors for which purchase org is not maintained is not displaying in output
 *    DELETE it_final WHERE ekorg NOT IN s_purorg .          " as suggested by Mr.Venu this validation is removed - Pradeep K
 *  ENDIF.
 
-  IF it_final[] IS INITIAL.
-    MESSAGE 'Data Does not Exits' TYPE 'I'.
-    STOP.
-  ENDIF.
+  if it_final[] is initial.
+    message 'Data Does not Exits' type 'I'.
+    stop.
+  endif.
 
 **  AUTHORITY-CHECK OBJECT 'M_BEST_EKO'
 **  ID 'EKORG' FIELD s_purorg-low.
@@ -1025,7 +1049,7 @@ FORM display_data .
 *    MESSAGE 'No Authorization' TYPE 'E'.
 *  ENDIF.
 
-ENDFORM.                    " DISPLAY_DATA
+endform.                    " DISPLAY_DATA
 *&---------------------------------------------------------------------*
 *&      Form  ALV_FIELDCATLOG
 *&---------------------------------------------------------------------*
@@ -1034,159 +1058,159 @@ ENDFORM.                    " DISPLAY_DATA
 *  -->  p1        text
 *  <--  p2        text
 *----------------------------------------------------------------------*
-FORM alv_fieldcatlog .
-  DATA : cnt TYPE sy-index.
-  CLEAR : wa_fieldcatalog,
+form alv_fieldcatlog .
+  data : cnt type sy-index.
+  clear : wa_fieldcatalog,
           it_fieldcatalog[].
 
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'PARTNER'.
   wa_fieldcatalog-seltext_m   = 'Partner'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'LIFNR'.
   wa_fieldcatalog-seltext_m   = 'Vendor'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'NAME1'.
   wa_fieldcatalog-seltext_m   = 'NAME1'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'NAME2'.
   wa_fieldcatalog-seltext_m   = 'NAME2'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'NAME_CO'.
   wa_fieldcatalog-seltext_m   = 'C/o Name'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'ADRNR'.
   wa_fieldcatalog-seltext_m   = 'Address Key'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'BUKRS'.
   wa_fieldcatalog-seltext_m   = 'Company Code'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'EKORG'.
   wa_fieldcatalog-seltext_m   = 'Purchse Organization'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'STR_SUPPL1'.
   wa_fieldcatalog-seltext_m   = 'Street 1'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'STR_SUPPL2'.
   wa_fieldcatalog-seltext_m   = 'Street 2'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'STREET'.
   wa_fieldcatalog-seltext_m   = 'Street'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'STR_SUPPL3'.
   wa_fieldcatalog-seltext_m   = 'Street4'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'LOCATION'.
   wa_fieldcatalog-seltext_m   = 'Street 5'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'ORT02'.
   wa_fieldcatalog-seltext_m   = 'District'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'CITY_ORT01'.
   wa_fieldcatalog-seltext_m   = 'City'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'POST_CODE1'.
   wa_fieldcatalog-seltext_m   = 'Postl Code'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'CHECK_POSTAL'.
   wa_fieldcatalog-seltext_m   = 'Postal Code Log'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'REGIO'.
   wa_fieldcatalog-seltext_m   = 'Region'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'BEZEI'.
   wa_fieldcatalog-seltext_m   = 'Region'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'GST_REGIO'.
   wa_fieldcatalog-seltext_m   = 'GST Region'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'COUNTRY'.
   wa_fieldcatalog-seltext_m   = 'country'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
 *  add 1 to cnt.
 *  wa_fieldcatalog-fieldname   = 'TEL_NUMBER'.
@@ -1202,400 +1226,407 @@ FORM alv_fieldcatlog .
 *  append wa_fieldcatalog to it_fieldcatalog.
 *  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'TELF1'.
   wa_fieldcatalog-seltext_m   = 'Telephone'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'TELF2'.
   wa_fieldcatalog-seltext_m   = 'Mobile Phone'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'SMTP_ADDR'.
   wa_fieldcatalog-seltext_m   = 'E-Mail Address'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'TELFX'.
   wa_fieldcatalog-seltext_m   = 'FAX Number'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'KTOKK'.
   wa_fieldcatalog-seltext_m   = 'Group'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'KUNNR'.
   wa_fieldcatalog-seltext_m   = 'Customer'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'WERKS'.
   wa_fieldcatalog-seltext_m   = 'Plant'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'BANKL'.
   wa_fieldcatalog-seltext_m   = 'Bank Key'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'BANKA'.
   wa_fieldcatalog-seltext_m   = 'Bank name'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'STRAS'.
   wa_fieldcatalog-seltext_m   = 'Bank address'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'ORT01'.
   wa_fieldcatalog-seltext_m   = 'Bank city'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'BRNCH'.
   wa_fieldcatalog-seltext_m   = 'Bank Banch name'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'SWIFT'.
   wa_fieldcatalog-seltext_m   = 'Swift code'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'BANKN'.
   wa_fieldcatalog-seltext_m   = 'Bank name'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'KOINH'.
   wa_fieldcatalog-seltext_m   = 'Account holder'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'EBPP_ACCNAME'.
   wa_fieldcatalog-seltext_m   = 'Account holder name'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1IEXCD'.
   wa_fieldcatalog-seltext_m   = 'ECC No.'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1IEXRN'.
   wa_fieldcatalog-seltext_m   = 'Excise Reg. No.'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1IEXRG' .
   wa_fieldcatalog-seltext_m   = 'Excise Range'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1IEXDI'.
   wa_fieldcatalog-seltext_m   = 'Excise Division'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1IEXCO'.
   wa_fieldcatalog-seltext_m   = 'Excise Commissionerate'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1ICSTNO' .
   wa_fieldcatalog-seltext_m   = 'CST No'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1ILSTNO' .
   wa_fieldcatalog-seltext_m   = 'LST No'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1IPANNO'.
   wa_fieldcatalog-seltext_m   = 'PAN No.'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1IEXCIVE' .
   wa_fieldcatalog-seltext_m   = 'Excise Indicator'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'INDI_DESC' .
   wa_fieldcatalog-seltext_m   = 'Exc.Ind.desc.'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1IVTYP'.
   wa_fieldcatalog-seltext_m   = 'Type of Vendor'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'TYP_VEN_DESC' .
   wa_fieldcatalog-seltext_m   = 'Type Desc.'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'J_1ISERN' .
   wa_fieldcatalog-seltext_m   = 'Service Tax Reg.No.'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'KONZS' .
   wa_fieldcatalog-seltext_m   = 'Corporate Group'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'INCO1' .
   wa_fieldcatalog-seltext_m   = 'Incoterms'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'INCO2' .
   wa_fieldcatalog-seltext_m   = 'Incoterms Desc.'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'KALSK' .
   wa_fieldcatalog-seltext_m   = 'Vendor schema'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'INDI' .
   wa_fieldcatalog-seltext_m   = 'GR-Base'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'INDI1' .
   wa_fieldcatalog-seltext_m   = 'Service-Base'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'ZTERM' .
   wa_fieldcatalog-seltext_m   = 'Terms of Pay.(Purchase)'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'TEXT1_DESC_PUR' .
   wa_fieldcatalog-seltext_m   = 'Terms of Pay.Pur.desc.'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'ZTERM_ACT' .
   wa_fieldcatalog-seltext_m   = 'Payt Terms(ACT)'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'TEXT1_DESC_ACT' .
   wa_fieldcatalog-seltext_m   = 'Payt Terms(ACT) Desc.'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'SPERQ' .
   wa_fieldcatalog-seltext_m   = 'Block Function'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'SDESC' .
   wa_fieldcatalog-seltext_m   = 'Block Function Desc.'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
 *--
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'AKONT' .
   wa_fieldcatalog-seltext_m   = 'Recon Account.'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'TXT50' .
   wa_fieldcatalog-seltext_m   = 'Recon A/c Descrition.'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
   wa_fieldcatalog-outputlen = 50.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'FRGRP' .
   wa_fieldcatalog-seltext_m   = 'Release group'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'FRGRT' .
   wa_fieldcatalog-seltext_m   = 'Release group Desc.'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
 ** added by NK on 05.07.2017
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'STCD3' .
   wa_fieldcatalog-seltext_s   = 'GST No.'.
   wa_fieldcatalog-seltext_m   = 'Tax Number 3 '.
   wa_fieldcatalog-seltext_l   = 'GST No. Tax Number 3'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'CHECK_GST_NO'.
   wa_fieldcatalog-seltext_m   = 'GST No. Log'.
   wa_fieldcatalog-col_pos     = cnt.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
+  wa_fieldcatalog-fieldname   = 'CHECK_PAN_NO'.
+  wa_fieldcatalog-seltext_m   = 'PAN No. Log'.
+  wa_fieldcatalog-col_pos     = cnt.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
+
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'VEN_CLASS' .
   wa_fieldcatalog-seltext_m   = 'GST Ven Class.'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'BPTYPE' .
   wa_fieldcatalog-seltext_m   = 'BP Type'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'ERDAT' .
   wa_fieldcatalog-seltext_m   = 'Creation Date'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'ESIC_NO' .
   wa_fieldcatalog-seltext_m   = 'ESIC Number'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-  ADD 1 TO cnt.
+  add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'MSME_NO' .
   wa_fieldcatalog-seltext_m   = 'MSME Number'.
   wa_fieldcatalog-col_pos     = cnt.
 *  wa_fieldcatalog-no_out      = 'X'.
-  APPEND wa_fieldcatalog TO it_fieldcatalog.
-  CLEAR  wa_fieldcatalog.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
 
-ENDFORM.                    " ALV_FIELDCATLOG
+endform.                    " ALV_FIELDCATLOG
 *&---------------------------------------------------------------------*
 *&      Form  DISPLAY_ALV_OUTPUT
 *&---------------------------------------------------------------------*
@@ -1604,16 +1635,16 @@ ENDFORM.                    " ALV_FIELDCATLOG
 *  -->  p1        text
 *  <--  p2        text
 *----------------------------------------------------------------------*
-FORM display_alv_output .
+form display_alv_output .
 
-  IF NOT it_final[] IS INITIAL.
+  if not it_final[] is initial.
 
     gd_layout-zebra = 'X'.
     gd_layout-colwidth_optimize = 'X'.
     gd_layout-coltab_fieldname = 'COLOR'.
 
-    CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
-      EXPORTING
+    call function 'REUSE_ALV_GRID_DISPLAY'
+      exporting
 *       I_INTERFACE_CHECK  = ' '
 *       I_BYPASSING_BUFFER = ' '
 *       I_BUFFER_ACTIVE    = ' '
@@ -1655,14 +1686,14 @@ FORM display_alv_output .
 * IMPORTING
 *       E_EXIT_CAUSED_BY_CALLER           =
 *       ES_EXIT_CAUSED_BY_USER            =
-      TABLES
+      tables
         t_outtab           = it_final[]
-      EXCEPTIONS
+      exceptions
         program_error      = 1
-        OTHERS             = 2.
-    IF sy-subrc <> 0.
-      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-              WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-    ENDIF.
-  ENDIF.
-ENDFORM.                    " DISPLAY_ALV_OUTPUT
+        others             = 2.
+    if sy-subrc <> 0.
+      message id sy-msgid type sy-msgty number sy-msgno
+              with sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    endif.
+  endif.
+endform.                    " DISPLAY_ALV_OUTPUT
