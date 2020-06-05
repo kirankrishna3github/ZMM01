@@ -2776,29 +2776,6 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
 *ENDIF.
 
 **********************************************************************
-    "GST Validation for vendor added by varun on 09.12.2019
-    IF sy-tcode = 'ME21N' OR sy-tcode = 'ME22N' OR sy-tcode = 'ME23N' OR sy-tcode = 'ME29N'.
-      TRY.
-          zcl_bupa_utilities=>validate_gst_number(
-            EXPORTING
-              iv_entity = ls_header-lifnr
-            RECEIVING
-              rv_valid      = DATA(lv_gst_valid)
-          ).
-        CATCH zcx_generic INTO DATA(lox). " Generic Exception Class
-          MESSAGE lox->get_text( ) TYPE 'E'.
-      ENDTRY.
-      TRY .
-          zcl_bupa_utilities=>validate_postal_code(
-            EXPORTING
-              iv_entity      = ls_header-lifnr
-            RECEIVING
-              rv_valid       = DATA(lv_post_code_valid)
-          ).
-        CATCH zcx_generic INTO DATA(lox1). " Generic Exception Class
-          MESSAGE lox1->get_text( ) TYPE 'E'.
-      ENDTRY.
-    ENDIF.
 **********************************************************************
 
 * Vendor Tagging - Check if Vendor Plant has been maintained or not
