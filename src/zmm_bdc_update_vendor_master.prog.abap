@@ -146,6 +146,7 @@ class lcl_application definition.
             p_zterm   type excelcell,   " Purchasing Payment Terms
             bptype    type excelcell,   " BP Type
             qland     type excelcell,   " W/H Tax Country
+            webre     type excelcell,   " Indicator: GR-Based Invoice Verification
             " Additional fields here...
           end of excel_line,
           excel like standard table of excel_line.
@@ -187,7 +188,8 @@ class lcl_application definition.
 
           " structure corresponding to meth4 bdc
           begin of m4,
-            p_zterm type lfb1-zterm,     " Purchasing Payment Terms
+            p_zterm type lfm1-zterm,     " Purchasing Payment Terms
+            webre   type lfm1-webre,     " Indicator: GR-Based Invoice Verification
           end of m4,
           m4_tab like standard table of m4,
 
@@ -969,6 +971,7 @@ class lcl_application implementation.
     bdc_field(  exporting fnam    = 'BDC_OKCODE' fval   = '=UPDA' ).
 
     bdc_field(  exporting fnam    = 'LFM1-ZTERM' fval   =  m4-p_zterm ).
+    bdc_field(  exporting fnam    = 'LFM1-WEBRE' fval   =  m4-webre ).
 
     call_bdc( exporting iv_tcode = 'XK02' m_name = 'M4' index = index ).
 
@@ -1487,10 +1490,16 @@ class lcl_application implementation.
             o_column->set_short_text( value = 'BP Type' ).
 
             free o_column.
-            o_column ?= o_columns->get_column( columnname = 'BPTYPE' ).
+            o_column ?= o_columns->get_column( columnname = 'QLAND' ).
             o_column->set_long_text( value = 'WTax Country' ).
             o_column->set_medium_text( value = 'WTax Country' ).
             o_column->set_short_text( value = 'WTax Cty' ).
+
+            free o_column.
+            o_column ?= o_columns->get_column( columnname = 'WEBRE' ).
+            o_column->set_long_text( value = 'GR Based Invoice Verification' ).
+            o_column->set_medium_text( value = 'GR Inv. Verif.' ).
+            o_column->set_short_text( value = 'GR Inv Ver' ).
 
             " Add fcat for your fields here
 
