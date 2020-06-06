@@ -579,7 +579,8 @@ class lcl_application implementation.
                                        then m2-panno
                                        else ls_lfa1-j_1ipanno ) " PAN Number
               iv_first_name  = ls_lfa1-name1
-              iv_last_name   = ls_lfa1-name2 ).
+              iv_last_name   = ls_lfa1-name2
+              iv_title       = ls_lfa1-anred ).
         catch zcx_generic into lox_generic. " Generic Exception Class
           output_line-icon = icon_red_light.
           output_line-msg = output_line-msg && ` ` && |Err - { lox_generic->get_text( ) }|.
