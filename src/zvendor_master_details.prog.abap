@@ -690,7 +690,7 @@ form display_data .
     " PAN check - IHDK905932 - Friday, June 05, 2020 23:23:10
     " Subject: RE: PAN validation | From: Prajay Bhansali [mailto:pbhansali@indofil.com] | Sent: Monday, June 1, 2020 17:09
     try.
-        zcl_bupa_utilities=>validate_gst_number(
+        zcl_bupa_utilities=>validate_pan_number(
           exporting
             iv_entity     = wa_final-lifnr " Customer/Vendor
           receiving
