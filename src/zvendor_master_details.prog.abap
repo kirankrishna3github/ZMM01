@@ -94,6 +94,7 @@ types: begin of ts_but000,
 types : begin of ty_final,
           partner        type but000-partner, "mod1
           lifnr          type lfa1-lifnr,
+          anred          type lfa1-anred,
           name1          type lfa1-name1,
           name2          type lfa1-name2,
           name_co        type adrc-name_co,
@@ -646,6 +647,8 @@ form display_data .
   loop at it_lfa1 into wa_lfa1.
     wa_final-lifnr = wa_lfa1-lifnr.
 
+    wa_final-anred = wa_lfa1-anred.
+
 ******start of addition made by varun on 07.01.2020 as said by punam on mail
     clear: lv_incrt_postal, lv_incrt_gst, lv_incrt_pan.
     try.
@@ -1074,6 +1077,13 @@ form alv_fieldcatlog .
   add 1 to cnt.
   wa_fieldcatalog-fieldname   = 'LIFNR'.
   wa_fieldcatalog-seltext_m   = 'Vendor'.
+  wa_fieldcatalog-col_pos     = cnt.
+  append wa_fieldcatalog to it_fieldcatalog.
+  clear  wa_fieldcatalog.
+
+  add 1 to cnt.
+  wa_fieldcatalog-fieldname   = 'ANRED'.
+  wa_fieldcatalog-seltext_m   = 'TITLE'.
   wa_fieldcatalog-col_pos     = cnt.
   append wa_fieldcatalog to it_fieldcatalog.
   clear  wa_fieldcatalog.
