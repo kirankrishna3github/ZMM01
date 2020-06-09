@@ -204,7 +204,7 @@ types : begin of ty_final,
           "Added by varun on 07.01.2020 for gst no and postal code validation
           check_gst_no   type char30,
           check_postal   type char30,
-          check_pan_no   type char30,
+          check_pan_no   type char100,
           color          type slis_t_specialcol_alv, "for row color
           "added by varun on 22.05.2020
           esic_no        type but0id-idnumber,
@@ -697,8 +697,8 @@ form display_data .
             rv_valid      = lv_incrt_pan " 'X' = Valid/'' = Invalid
         ).
         wa_final-check_pan_no = 'Valid PAN Number'.
-      catch zcx_generic. " Generic Exception Class
-        wa_final-check_pan_no = 'Incorrect PAN Number'.
+      catch zcx_generic into data(lox_generic). " Generic Exception Class
+        wa_final-check_pan_no = |Incorrect PAN Number - { lox_generic->get_text( ) }|.
     endtry.
 
     clear ls_color.
