@@ -105,7 +105,7 @@ SELECT-OPTIONS: s_lifnr FOR bseg-lifnr,
                 s_bukrs FOR bkpf-bukrs OBLIGATORY,
                 s_belnr FOR bkpf-belnr,
                 s_gjahr FOR bkpf-gjahr OBLIGATORY,
-                s_bldat FOR bsis-bldat OBLIGATORY,
+                s_bldat FOR bsis-bldat ,"OBLIGATORY,
                 s_werks FOR bsis-werks ,
                 s_hkont FOR bsis-hkont NO-DISPLAY.
 SELECTION-SCREEN END OF BLOCK b1.
