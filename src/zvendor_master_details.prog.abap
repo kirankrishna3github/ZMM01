@@ -1002,9 +1002,9 @@ form display_data .
 
   endloop.
 
-  if  it_final[] is initial  .
-    message 'No Authorization' type 'E'.
-  endif.
+*  if  it_final[] is initial  .
+*    message 'No Authorization' type 'E'.
+*  endif.
 
   if not s_bukrs is initial.
     delete it_final where bukrs not in s_bukrs .
@@ -1015,7 +1015,10 @@ form display_data .
 *  ENDIF.
 
   if it_final[] is initial.
-    message 'Data Does not Exits' type 'I'.
+    message 'No data found' type 'I'.
+    if lv_auth_failed = abap_true.
+      message 'Missing authorization. Check SU53.' type 'W'.
+    endif.
     stop.
   endif.
 
