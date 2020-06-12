@@ -988,7 +988,11 @@ form display_data .
       id 'BUKRS' field wa_final-bukrs.
       if sy-subrc = 0 .
         append wa_final to it_final.
+      else.
+        data(lv_auth_failed) = abap_true.
       endif.
+    else.
+      lv_auth_failed = abap_true.
     endif.
 *{   REPLACE        SBXK900270                                        3
 *\    CLEAR : wa_final,wa_lfa1,wa_lfb1, wa_skat, wa_vbwf07,lfm1,wa_adrc,wa_adr2,wa_adr6,wa_lfbk,wa_bnka,wa_t005u,wa_j_1imovend,wa_fixed_values,wa_j_1iinddes,gv_text1_pur,gv_text1_act.
