@@ -648,6 +648,10 @@ class lcl_mm implementation.
                                       when line_exists( lt_plant[ werks = <fs> ] )
                                         then abap_false
                                       else abap_true ).
+
+              if <fs> = '1000'.
+                lv_not_a_plant = abap_true.
+              endif.
             catch cx_sy_itab_line_not_found.            "#EC NO_HANDLER
           endtry.
         else.
@@ -666,7 +670,7 @@ class lcl_mm implementation.
         case abap_true.
           when lv_not_a_plant.
             if <fs_log> is assigned.
-              <fs_log> = |{ <fs> } plant does not exist|.
+              <fs_log> = |{ <fs> } plant does not exist/invalid plant|.
             endif.
           when lv_plant_empty.
             if <fs_log> is assigned.
