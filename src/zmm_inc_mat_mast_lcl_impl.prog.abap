@@ -649,6 +649,7 @@ class lcl_mm implementation.
                                         then abap_false
                                       else abap_true ).
 
+              " IHDK906991
               if <fs> = '1000'.
                 lv_not_a_plant = abap_true.
               endif.
@@ -1917,7 +1918,8 @@ class lcl_extend_helper implementation.
       from marc
       into table it_marc
       for all entries in <fs_tab>
-      where (l_str).
+      where (l_str)
+      and   werks <> '1000'.  " IHDK906991
 
     loop at <fs_tab> assigning <fs_wa>.
       unassign: <fs>, <fs_werks>.

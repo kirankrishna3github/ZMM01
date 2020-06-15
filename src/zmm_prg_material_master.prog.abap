@@ -272,6 +272,13 @@
 *& Rev. Request#              : IHDK906383
 *& Rev. Description           : 1. MM: S_K: ZMAT01: Add acc assign grp for RAW/PKG: 8.5.20
 *&---------------------------------------------------------------------*
+*& Revision #                 : 30    # Rev 30
+*& Rev. Date                  : Tuesday, June 16, 2020 00:04:57
+*& Rev. Author                : 6010859 - SaurabhK
+*& Rev. Requested/Approved By : VG
+*& Rev. Request#              : IHDK906991
+*& Rev. Description           : 1. MM: S_K: ZMAT01: Do not process 1000 plant: 15.6.20
+*&---------------------------------------------------------------------*
 program zmm_prg_material_master message-id zmm.
 
 include zmm_inc_mat_mast_top.       " Global Data
