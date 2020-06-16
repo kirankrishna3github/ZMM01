@@ -1918,8 +1918,7 @@ class lcl_extend_helper implementation.
       from marc
       into table it_marc
       for all entries in <fs_tab>
-      where (l_str)
-      and   werks <> '1000'.  " IHDK906991
+      where (l_str).
 
     loop at <fs_tab> assigning <fs_wa>.
       unassign: <fs>, <fs_werks>.
@@ -1998,7 +1997,8 @@ class lcl_extend_helper implementation.
                   into table it_marc
                   for all entries in lt_plant
                   where matnr eq <fs>
-                  and   werks eq lt_plant-bwkey.
+                  and   werks eq lt_plant-bwkey
+                  and   werks <> '1000'.
               endif.
 
               if it_marc is not initial.
@@ -2037,7 +2037,8 @@ class lcl_extend_helper implementation.
                        into table it_marc
                        for all entries in lt_plant
                        where matnr eq <fs>
-                       and   werks eq lt_plant-bwkey.
+                       and   werks eq lt_plant-bwkey
+                       and   werks <> '1000'.
                     endif.
                   endif.
 
