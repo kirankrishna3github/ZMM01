@@ -1374,23 +1374,33 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
         if ls_header-bsart eq 'ZIMP' or ls_header-bsart eq 'YIMP'.
         IF sy-datum >= '20200618'.
 
+          DATA: zzmatnr TYPE EKPO-matnr.
+
+          call function 'CONVERSION_EXIT_ALPHA_OUTPUT'
+            exporting
+              input         = l_items_header-matnr
+           IMPORTING
+             OUTPUT         = zzmatnr
+                    .
+
+
           if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
             if l_items_header-bstae <> '0004'.
 
               concatenate 'Please select Confirmation Control Key-004 for Item :'
                 l_items_header-ebelp
                ',Material:'
-               l_items_header-matnr
+               zzmatnr "l_items_header-matnr
                into msg1 separated by space.
               message msg1 type 'E'.
 
             endif.
             IF l_items_header-weora <> 'X'.
 
-              concatenate 'Please select Acceptance At Origin for Item :'
+                concatenate 'Pl select ‘Origin Accept.’ From “Delivery” TAB for Item :'
                 l_items_header-ebelp
                ',Material:'
-               l_items_header-matnr
+               zzmatnr "l_items_header-matnr
                into msg1 separated by space.
               message msg1 type 'E'.
 
