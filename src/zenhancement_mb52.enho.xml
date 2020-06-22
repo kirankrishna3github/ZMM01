@@ -260,6 +260,7 @@
       <item>matnr TYPE mara-matnr,</item>
       <item>spart TYPE tspat-spart,</item>
       <item>vtext TYPE tspat-vtext,</item>
+      <item>extwg TYPE mara-extwg, &quot;added by varun</item>
       <item>END OF wa_div_desc,</item>
       <item>it_div_desc LIKE STANDARD TABLE OF wa_div_desc,</item>
       <item/>
@@ -371,7 +372,7 @@
       <item>WHERE matnr = bestand-matnr.</item>
       <item/>
       <item>REFRESH it_div_desc[].</item>
-      <item>SELECT a~matnr a~spart b~vtext</item>
+      <item>SELECT a~matnr a~spart b~vtext a~extwg</item>
       <item>FROM mara AS a</item>
       <item>JOIN tspat AS b</item>
       <item>ON a~spart = b~spart</item>
@@ -821,6 +822,43 @@
       <item>it_t188t[],</item>
       <item>it_ausp2[],</item>
       <item>it_tvm5t[].</item>
+      <item/>
+      <item>&quot;added by varun on 22.06.2020</item>
+      <item>&quot;Get sales district and external material group</item>
+      <item>BREAK abap01.</item>
+      <item>SELECT * FROM ZPP_BZIRK_VKBUR INTO TABLE @DATA(lt_sales_dis)</item>
+      <item>FOR ALL ENTRIES IN @bestand</item>
+      <item>WHERE vkbur eq @bestand-werks</item>
+      <item>AND   spart eq @bestand-spart.</item>
+      <item>IF sy-subrc eq 0.</item>
+      <item>SELECT * FROM T171t INTO TABLE @DATA(lt_T171t)</item>
+      <item>FOR ALL ENTRIES IN @lt_sales_dis</item>
+      <item>WHERE BZIRK eq @lt_sales_dis-BZIRK</item>
+      <item>AND   spras eq &apos;E&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>IF it_div_desc[] IS NOT INITIAL.</item>
+      <item>SELECT * FROM TWEWt INTO TABLE @DATA(lt_TWEWt)</item>
+      <item>FOR ALL ENTRIES IN @it_div_desc</item>
+      <item>WHERE EXTWG eq @it_div_desc-EXTWG</item>
+      <item>AND   SPRAS eq &apos;E&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>LOOP AT bestand ASSIGNING FIELD-SYMBOL(&lt;fs_bestand&gt;).</item>
+      <item>READ TABLE lt_sales_dis INTO DATA(ls_sales_dis)</item>
+      <item>with KEY vkbur = &lt;fs_bestand&gt;-werks</item>
+      <item>spart = &lt;fs_bestand&gt;-spart.</item>
+      <item>IF sy-subrc eq 0.</item>
+      <item>READ TABLE lt_t171t INTO DATA(ls_t171t) with KEY bzirk = ls_sales_dis-bzirk.</item>
+      <item>&lt;fs_bestand&gt;-sales_dist = |{ ls_sales_dis-bzirk }({ ls_t171t-bztxt })|.</item>
+      <item>ENDIF.</item>
+      <item>READ TABLE it_div_desc INTO DATA(ls_div) with KEY matnr = &lt;fs_bestand&gt;-matnr.</item>
+      <item>IF sy-subrc eq 0.</item>
+      <item/>
+      <item>READ TABLE lt_TWEWt INTO DATA(ls_TWEWt) with KEY extwg = ls_div-extwg.</item>
+      <item>&lt;fs_bestand&gt;-ext_mat_grp = |{ ls_div-extwg }({ ls_twewt-ewbez })|.</item>
+      <item>ENDIF.</item>
+      <item>ENDLOOP.</item>
       <item/>
       <item>ENDIF.</item>
       <item/>
@@ -1525,6 +1563,7 @@
       <item>10</item>
       <item>10</item>
       <item>10</item>
+      <item>10</item>
       <item>8</item>
       <item>8</item>
       <item>0</item>
@@ -2086,6 +2125,43 @@
       <item>9</item>
       <item>9</item>
       <item>9</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>11</item>
+      <item>11</item>
+      <item>11</item>
+      <item>4</item>
+      <item>6</item>
+      <item>15</item>
+      <item>15</item>
+      <item>15</item>
+      <item>4</item>
+      <item>0</item>
+      <item>3</item>
+      <item>5</item>
+      <item>14</item>
+      <item>14</item>
+      <item>14</item>
+      <item>3</item>
+      <item>0</item>
+      <item>3</item>
+      <item>5</item>
+      <item>16</item>
+      <item>25</item>
+      <item>5</item>
+      <item>7</item>
+      <item>7</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>0</item>
+      <item>5</item>
+      <item>7</item>
+      <item>5</item>
+      <item>3</item>
       <item>0</item>
       <item>0</item>
       <item>0</item>
