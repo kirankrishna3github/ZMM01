@@ -371,7 +371,6 @@
       <item>FOR ALL ENTRIES IN bestand</item>
       <item>WHERE matnr = bestand-matnr.</item>
       <item/>
-      <item>BREAK abap01.</item>
       <item>REFRESH it_div_desc[].</item>
       <item>SELECT a~matnr a~spart b~vtext a~extwg</item>
       <item>FROM mara AS a</item>
@@ -826,7 +825,6 @@
       <item/>
       <item>&quot;added by varun on 22.06.2020</item>
       <item>&quot;Get sales district and external material group</item>
-      <item>BREAK abap01.</item>
       <item>SELECT * FROM ZPP_BZIRK_VKBUR INTO TABLE @DATA(lt_sales_dis)</item>
       <item>FOR ALL ENTRIES IN @bestand</item>
       <item>WHERE vkbur eq @bestand-werks</item>
@@ -1718,7 +1716,6 @@
       <item>0</item>
       <item>4</item>
       <item>4</item>
-      <item>4</item>
       <item>6</item>
       <item>6</item>
       <item>6</item>
@@ -2169,7 +2166,6 @@
       <item>9</item>
       <item>9</item>
       <item>0</item>
-      <item>2</item>
       <item>2</item>
       <item>2</item>
       <item>2</item>
