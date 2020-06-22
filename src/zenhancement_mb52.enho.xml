@@ -162,7 +162,10 @@
       <item/>
       <item>&quot; IHDK906667: MM: S_K: MB52: Enh: add batch purity values: KV/US: 25.5.20</item>
       <item>purity1 type qamr-original_input,</item>
-      <item>purity2 type qamr-original_input.</item>
+      <item>purity2 type qamr-original_input,</item>
+      <item>&quot;added by varun on 22.06.2020</item>
+      <item>sales_dist TYPE char50,</item>
+      <item>ext_mat_grp TYPE char50.</item>
       <item/>
      </SOURCE>
     </ENH_HOOK_IMPL>
@@ -1430,6 +1433,9 @@
       <item>8</item>
       <item>8</item>
       <item>0</item>
+      <item>8</item>
+      <item>8</item>
+      <item>8</item>
       <item>8</item>
       <item>8</item>
       <item>8</item>
