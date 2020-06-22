@@ -371,6 +371,7 @@
       <item>FOR ALL ENTRIES IN bestand</item>
       <item>WHERE matnr = bestand-matnr.</item>
       <item/>
+      <item>BREAK abap01.</item>
       <item>REFRESH it_div_desc[].</item>
       <item>SELECT a~matnr a~spart b~vtext a~extwg</item>
       <item>FROM mara AS a</item>
@@ -853,8 +854,7 @@
       <item>&lt;fs_bestand&gt;-sales_dist = |{ ls_sales_dis-bzirk }({ ls_t171t-bztxt })|.</item>
       <item>ENDIF.</item>
       <item>READ TABLE it_div_desc INTO DATA(ls_div) with KEY matnr = &lt;fs_bestand&gt;-matnr.</item>
-      <item>IF sy-subrc eq 0.</item>
-      <item/>
+      <item>IF sy-subrc eq 0 and ls_div-extwg IS NOT INITIAL.</item>
       <item>READ TABLE lt_TWEWt INTO DATA(ls_TWEWt) with KEY extwg = ls_div-extwg.</item>
       <item>&lt;fs_bestand&gt;-ext_mat_grp = |{ ls_div-extwg }({ ls_twewt-ewbez })|.</item>
       <item>ENDIF.</item>
@@ -1065,6 +1065,25 @@
       <item>fieldcat-seltext_m     = &apos;Purity2&apos;.</item>
       <item>APPEND fieldcat.</item>
       <item>&quot; End IHDK906667</item>
+      <item/>
+      <item>&quot;added by varun</item>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;SALES_DIST&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales Dis&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales District&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales District&apos;.</item>
+      <item>fieldcat-no_out = &apos; &apos;.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;EXT_MAT_GRP&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_s     = &apos;Ext.Mat Grp&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;External Material Grp&apos;.</item>
+      <item>fieldcat-seltext_l     = &apos;External Material Group&apos;.</item>
+      <item>fieldcat-no_out = &apos; &apos;.</item>
+      <item>APPEND fieldcat.</item>
      </SOURCE>
     </ENH_HOOK_IMPL>
     <ENH_HOOK_IMPL>
@@ -1120,6 +1139,29 @@
       <item>*    fieldcat-no_out        = &apos;X&apos;.</item>
       <item>*  FIELDCAT-OUTPUTLEN     = 22.</item>
       <item>fieldcat-col_pos       = 31.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>&quot;added by varun</item>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;SALES_DIST&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales Dis&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales District&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;Sales District&apos;.</item>
+      <item>fieldcat-no_out = &apos; &apos;.</item>
+      <item>fieldcat-col_pos       = 32.</item>
+      <item>fieldcat-outputlen     = 40.</item>
+      <item>APPEND fieldcat.</item>
+      <item/>
+      <item>CLEAR fieldcat.</item>
+      <item>fieldcat-fieldname     = &apos;EXT_MAT_GRP&apos;.</item>
+      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>fieldcat-seltext_s     = &apos;Ext.Mat Grp&apos;.</item>
+      <item>fieldcat-seltext_m     = &apos;External Material Grp&apos;.</item>
+      <item>fieldcat-seltext_l     = &apos;External Material Group&apos;.</item>
+      <item>fieldcat-no_out = &apos; &apos;.</item>
+      <item>fieldcat-col_pos       = 33.</item>
+      <item>fieldcat-outputlen     = 40.</item>
       <item>APPEND fieldcat.</item>
       <item/>
       <item>CLEAR fieldcat.</item>
@@ -1676,6 +1718,7 @@
       <item>0</item>
       <item>4</item>
       <item>4</item>
+      <item>4</item>
       <item>6</item>
       <item>6</item>
       <item>6</item>
@@ -2157,7 +2200,6 @@
       <item>5</item>
       <item>5</item>
       <item>5</item>
-      <item>0</item>
       <item>5</item>
       <item>7</item>
       <item>5</item>
@@ -2359,6 +2401,25 @@
       <item>2</item>
       <item>2</item>
       <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>3</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
      </SPACES>
     </item>
     <item>
@@ -2410,6 +2471,29 @@
       <item>2</item>
       <item>0</item>
       <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>3</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
+      <item>2</item>
       <item>2</item>
       <item>2</item>
       <item>0</item>
