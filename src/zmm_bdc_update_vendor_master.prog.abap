@@ -531,6 +531,8 @@ class lcl_application implementation.
         lv_m1_err = abap_true.
       endif.
 
+      m1 = corresponding #( excel_line ).
+      m2 = corresponding #( excel_line ).
       " validate gst number
       try.
           zcl_bupa_utilities=>validate_gst_number(
@@ -590,6 +592,10 @@ class lcl_application implementation.
           lv_m2_err = cond #( when m2-panno is not initial then abap_true else lv_m2_err ).
       endtry.
 *--------------------------------------------------------------------*
+
+      clear:
+        m1,
+        m2.
 
       if lv_lifnr_err eq abap_false.  " error in vendor, no further processing
         " M1
