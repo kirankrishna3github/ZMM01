@@ -19,7 +19,7 @@
      <ENHMODE>S</ENHMODE>
      <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_04\EI</FULL_NAME>
      <SOURCE>
-      <item>BREAK 10106.</item>
+      <item>*BREAK 10106.</item>
       <item>DATA: VALUE_DISPLAY(10).</item>
       <item>*below code written to control Show/hide values in MB52 std tcode</item>
       <item>* but later on we decided to call std program from Z tcodes hence no need of below code</item>
@@ -69,7 +69,7 @@
      <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_05\EI</FULL_NAME>
      <SOURCE>
       <item/>
-      <item>BREAK 010106.</item>
+      <item>*BREAK 010106.</item>
      </SOURCE>
     </ENH_HOOK_IMPL>
     <ENH_HOOK_IMPL>
@@ -78,7 +78,7 @@
      <ENHMODE>D</ENHMODE>
      <FULL_NAME>\PR:RM07MLBS\EX:RM07MLBS_07\EI</FULL_NAME>
      <SOURCE>
-      <item>BREAK 10106.</item>
+      <item>*BREAK 10106.</item>
       <item>*DATA: VALUE_DISPLAY2(10).</item>
       <item>*** based on authorisation display/ hide values in MB52 ,</item>
       <item>***if in SU01,  parameter ZMB52_VALUE maintained with value &apos;X&apos; , display value related columns in Report MB52</item>
@@ -228,7 +228,7 @@
      <ENHMODE>D</ENHMODE>
      <FULL_NAME>\PR:RM07MLBS\FO:DATA_SELECTION_NEW\SE:END\EI</FULL_NAME>
      <SOURCE>
-      <item>BREAK 10106.</item>
+      <item>*BREAK 10106.</item>
       <item>IF bestand[] IS NOT INITIAL.</item>
       <item/>
       <item>DATA: it_a605 TYPE TABLE OF a605,</item>
@@ -1072,6 +1072,7 @@
       <item>fieldcat-seltext_m     = &apos;Sales District&apos;.</item>
       <item>fieldcat-seltext_m     = &apos;Sales District&apos;.</item>
       <item>fieldcat-no_out = &apos; &apos;.</item>
+      <item>fieldcat-outputlen     = 40.</item>
       <item>APPEND fieldcat.</item>
       <item/>
       <item>CLEAR fieldcat.</item>
@@ -1081,6 +1082,7 @@
       <item>fieldcat-seltext_m     = &apos;External Material Grp&apos;.</item>
       <item>fieldcat-seltext_l     = &apos;External Material Group&apos;.</item>
       <item>fieldcat-no_out = &apos; &apos;.</item>
+      <item>fieldcat-outputlen     = 40.</item>
       <item>APPEND fieldcat.</item>
      </SOURCE>
     </ENH_HOOK_IMPL>
@@ -1335,7 +1337,7 @@
      <ENHMODE>S</ENHMODE>
      <FULL_NAME>\PR:RM07MLBS\EX:EHP604_RM07MLBS_28\EI</FULL_NAME>
      <SOURCE>
-      <item>BREAK 10106.</item>
+      <item>*BREAK 10106.</item>
       <item>if  VALUE_DISPLAY = &apos;ZMB52&apos;.</item>
       <item/>
       <item>repid = &apos;ZRM07MLBS&apos;.</item>
@@ -2407,7 +2409,9 @@
       <item>2</item>
       <item>2</item>
       <item>2</item>
+      <item>2</item>
       <item>0</item>
+      <item>2</item>
       <item>2</item>
       <item>2</item>
       <item>2</item>
