@@ -1387,7 +1387,7 @@ CLASS ZCL_IM_6MMB_PO_VALIDATIONS IMPLEMENTATION.
           if sy-tcode = 'ME21N' or sy-tcode = 'ME22N' or sy-tcode = 'ME23N' or sy-tcode = 'ME29N'.
             if l_items_header-bstae <> '0004'.
 
-              concatenate 'Please select Confirmation Control Key-004 for Item :'
+              concatenate 'Please select Confirmation Control Key-0004 for Item :'
                 l_items_header-ebelp
                ',Material:'
                zzmatnr "l_items_header-matnr
