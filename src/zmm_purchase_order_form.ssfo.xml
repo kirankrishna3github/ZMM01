@@ -12008,7 +12008,7 @@
                      <TEXT>
                       <item>
                        <TDFORMAT>F1</TDFORMAT>
-                       <TDLINE> &lt;C1&gt;Important Instructions :&lt;/&gt;</TDLINE>
+                       <TDLINE>&lt;C1&gt;Important Instructions :&lt;/&gt;</TDLINE>
                       </item>
                       <item>
                        <TDFORMAT>F1</TDFORMAT>
@@ -12094,7 +12094,7 @@
                        <INAME>TERMS</INAME>
                        <LINENR>000001</LINENR>
                        <TDFORMAT>F1</TDFORMAT>
-                       <TDLINE> &lt;C1&gt;Important Instructions :&lt;/&gt;</TDLINE>
+                       <TDLINE>&lt;C1&gt;Important Instructions :&lt;/&gt;</TDLINE>
                       </item>
                       <item>
                        <SPRAS>E</SPRAS>
@@ -12260,13 +12260,13 @@
               <U_WFRAME>PT</U_WFRAME>
               <U_WBOXV>CM</U_WBOXV>
               <U_WBOXH>CM</U_WBOXH>
-              <WLEFT>0.47</WLEFT>
+              <WLEFT>0.45</WLEFT>
               <U_WLEFT>CM</U_WLEFT>
               <WWIDTH>19.93</WWIDTH>
               <U_WWIDTH>CM</U_WWIDTH>
-              <WTOP>9.40</WTOP>
+              <WTOP>9.25</WTOP>
               <U_WTOP>CM</U_WTOP>
-              <WHEIGHT>2.50</WHEIGHT>
+              <WHEIGHT>2.65</WHEIGHT>
               <U_WHEIGHT>CM</U_WHEIGHT>
               <BORDER>
                <LEFTATTR>
