@@ -1131,11 +1131,18 @@
    </item>
    <item>
     <NAME>GV_JIIG_PERT</NAME>
+    <TYPING>TYPE</TYPING>
+    <TYPENAME>CHAR1</TYPENAME>
    </item>
    <item>
     <NAME>SHIP_ADRC</NAME>
     <TYPING>TYPE</TYPING>
     <TYPENAME>ADRC</TYPENAME>
+   </item>
+   <item>
+    <NAME>SHIP_STATE</NAME>
+    <TYPING>TYPE</TYPING>
+    <TYPENAME>CHAR20</TYPENAME>
    </item>
   </GDATA>
   <GPLIST>
@@ -8186,6 +8193,17 @@
                        <OPD>X_EKPO</OPD>
                        <OUTIN>I</OUTIN>
                       </item>
+                      <item>
+                       <OUTIN>I</OUTIN>
+                      </item>
+                      <item>
+                       <OPD>SHIP_ADRC</OPD>
+                       <OUTIN>O</OUTIN>
+                      </item>
+                      <item>
+                       <OPD>SHIP_STATE</OPD>
+                       <OUTIN>O</OUTIN>
+                      </item>
                      </PLIST>
                      <CODE>
                       <item>BREAK 10106.</item>
@@ -8195,18 +8213,34 @@
                       <item>** mail Subject Quality server testing of plant 1108</item>
                       <item>****************-storgae location -3009</item>
                       <item/>
+                      <item>DATA: Ship_adrnr TYPE TWLAD-ADRNR.</item>
                       <item/>
+                      <item>SELECT SINGLE ADRNR</item>
+                      <item>  FROM TWLAD</item>
+                      <item>  INTO ship_adrnr</item>
+                      <item>  WHERE werks = x_ekpo-werks</item>
+                      <item>  AND lgort = x_ekpo-lgort</item>
+                      <item>  AND lfdnr = &apos;001&apos;.</item>
+                      <item>  IF sy-subrc = 0.</item>
+                      <item>   SELECT SINGLE * FROM ADRC INTO ship_adrc</item>
+                      <item>     WHERE ADDRNUMBER = ship_adrnr.</item>
+                      <item>  ENDIF.</item>
                       <item/>
+                      <item>SELECT SINGLE param2 , paramval</item>
+                      <item>  FROM Z6MMA_PARAMS</item>
+                      <item>  INTO ( @data(Zparam2) , @data(zparamval) )</item>
+                      <item>  WHERE PROGNAME = &apos;STATE_MAP&apos;</item>
+                      <item>  AND PARAM1 = @ship_adrc-region.</item>
+                      <item>CONDENSE: Zparam2 , zparamval.</item>
+                      <item>CONCATENATE &apos;State:&apos; zparamval &apos;(&apos; Zparam2 &apos;)&apos;</item>
+                      <item>into SHIP_STATE.</item>
                       <item/>
-                      <item/>
-                      <item/>
-                      <item/>
-                      <item/>
-                      <item/>
-                      <item/>
-                      <item/>
-                      <item/>
-                      <item/>
+                      <item>*ship_adrc-name1</item>
+                      <item>*ship_adrc-street , ship_adrc-mc_city1</item>
+                      <item>*ship_adrc-MC_street</item>
+                      <item>*ship_adrc-city1 , ship_adrc-post_code1</item>
+                      <item>*ship_adrc-region</item>
+                      <item>*ship_adrc-REMARK</item>
                       <item/>
                       <item/>
                       <item/>
