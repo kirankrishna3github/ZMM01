@@ -8804,6 +8804,115 @@
                      </T_TEXT>
                     </sf:TEXT>
                    </sf:OBJ>
+                   <sf:COND>
+                    <sf:CONDITION>
+                     <NAME>
+                      <INAME>%CONDITION116</INAME>
+                     </NAME>
+                     <CAPTION>New Alternative 116</CAPTION>
+                     <COND>
+                      <item>
+                       <COP>NE</COP>
+                       <OP1>X_EKPO-WERKS</OP1>
+                       <OP2>&apos;1108&apos;</OP2>
+                       <ICON>@21\QSelect: Not equal to@</ICON>
+                      </item>
+                      <item>
+                       <LOP>AND</LOP>
+                       <COP>NE</COP>
+                       <OP1>X_EKPO-LGORT</OP1>
+                       <OP2>&apos;3009&apos;</OP2>
+                       <ICON>@21\QSelect: Not equal to@</ICON>
+                      </item>
+                     </COND>
+                     <T_CAPTION>
+                      <item>
+                       <LANGU>E</LANGU>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <OBJTYPE>CD</OBJTYPE>
+                       <INAME>%CONDITION116</INAME>
+                       <CAPTION>New Alternative 116</CAPTION>
+                      </item>
+                     </T_CAPTION>
+                    </sf:CONDITION>
+                   </sf:COND>
+                   <sf:SUCC/>
+                  </sf:NODE>
+                 </sf:item>
+                 <sf:item>
+                  <sf:NODE>
+                   <NODETYPE>TI</NODETYPE>
+                   <sf:OBJ>
+                    <sf:TEXT>
+                     <NAME>
+                      <INAME>%TEXT118</INAME>
+                     </NAME>
+                     <APPMODE>P</APPMODE>
+                     <TEXT>
+                      <item>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;BILL TO:&lt;/&gt;</TDLINE>
+                      </item>
+                     </TEXT>
+                     <STYLE_NAME>Z6MM001S_STYLE_SF</STYLE_NAME>
+                     <TEXT_AREA>
+                      <ENABLED>F</ENABLED>
+                      <NCOLS>0</NCOLS>
+                      <NROWS>0</NROWS>
+                     </TEXT_AREA>
+                     <T_CAPTION>
+                      <item>
+                       <LANGU>E</LANGU>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <OBJTYPE>TI</OBJTYPE>
+                       <INAME>%TEXT118</INAME>
+                      </item>
+                     </T_CAPTION>
+                     <T_TEXT>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>%TEXT118</INAME>
+                       <LINENR>000001</LINENR>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;BILL TO:&lt;/&gt;</TDLINE>
+                      </item>
+                     </T_TEXT>
+                    </sf:TEXT>
+                   </sf:OBJ>
+                   <sf:COND>
+                    <sf:CONDITION>
+                     <NAME>
+                      <INAME>%CONDITION117</INAME>
+                     </NAME>
+                     <CAPTION>New Alternative 116</CAPTION>
+                     <COND>
+                      <item>
+                       <COP>EQ</COP>
+                       <OP1>X_EKPO-WERKS</OP1>
+                       <OP2>&apos;1108&apos;</OP2>
+                       <ICON>@20\QSelect: Equal to@</ICON>
+                      </item>
+                      <item>
+                       <LOP>AND</LOP>
+                       <COP>EQ</COP>
+                       <OP1>X_EKPO-LGORT</OP1>
+                       <OP2>&apos;3009&apos;</OP2>
+                       <ICON>@20\QSelect: Equal to@</ICON>
+                      </item>
+                     </COND>
+                     <T_CAPTION>
+                      <item>
+                       <LANGU>E</LANGU>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <OBJTYPE>CD</OBJTYPE>
+                       <INAME>%CONDITION117</INAME>
+                       <CAPTION>New Alternative 116</CAPTION>
+                      </item>
+                     </T_CAPTION>
+                    </sf:CONDITION>
+                   </sf:COND>
                    <sf:SUCC/>
                   </sf:NODE>
                  </sf:item>
@@ -10320,6 +10429,143 @@
                      </T_TEXT>
                     </sf:TEXT>
                    </sf:OBJ>
+                   <sf:COND>
+                    <sf:CONDITION>
+                     <NAME>
+                      <INAME>%CONDITION181</INAME>
+                     </NAME>
+                     <CAPTION>New Alternative 181</CAPTION>
+                     <COND>
+                      <item>
+                       <COP>NE</COP>
+                       <OP1>X_EKPO-WERKS</OP1>
+                       <OP2>&apos;1108&apos;</OP2>
+                       <ICON>@21\QSelect: Not equal to@</ICON>
+                      </item>
+                      <item>
+                       <LOP>AND</LOP>
+                       <COP>NE</COP>
+                       <OP1>X_EKPO-LGORT</OP1>
+                       <OP2>&apos;3009&apos;</OP2>
+                       <ICON>@21\QSelect: Not equal to@</ICON>
+                      </item>
+                     </COND>
+                     <T_CAPTION>
+                      <item>
+                       <LANGU>E</LANGU>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <OBJTYPE>CD</OBJTYPE>
+                       <INAME>%CONDITION181</INAME>
+                       <CAPTION>New Alternative 181</CAPTION>
+                      </item>
+                     </T_CAPTION>
+                    </sf:CONDITION>
+                   </sf:COND>
+                   <sf:SUCC/>
+                  </sf:NODE>
+                 </sf:item>
+                 <sf:item>
+                  <sf:NODE>
+                   <NODETYPE>TI</NODETYPE>
+                   <sf:OBJ>
+                    <sf:TEXT>
+                     <NAME>
+                      <INAME>PLANT_LOCATION_SPECIFIC</INAME>
+                     </NAME>
+                     <CAPTION>New Text 2</CAPTION>
+                     <APPMODE>P</APPMODE>
+                     <TEXT>
+                      <item>
+                       <TDFORMAT>L1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;Term of Delivery: &lt;/&gt; &quot;As per Ship To&quot;</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>L1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;Term&lt;/&gt; &lt;C1&gt;of Payment:&lt;/&gt; &amp;W_ZTERM_TXT&amp;</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>L1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;Document Currency&lt;/&gt;: &amp;X_EKKO-WAERS&amp;</TDLINE>
+                      </item>
+                     </TEXT>
+                     <STYLE_NAME>Z6MM001S_STYLE_SF</STYLE_NAME>
+                     <TEXT_AREA>
+                      <ENABLED>F</ENABLED>
+                      <NCOLS>0</NCOLS>
+                      <NROWS>0</NROWS>
+                     </TEXT_AREA>
+                     <T_CAPTION>
+                      <item>
+                       <LANGU>E</LANGU>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <OBJTYPE>TI</OBJTYPE>
+                       <INAME>PLANT_LOCATION_SPECIFIC</INAME>
+                       <CAPTION>New Text 2</CAPTION>
+                      </item>
+                     </T_CAPTION>
+                     <T_TEXT>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>PLANT_LOCATION_SPECIFIC</INAME>
+                       <LINENR>000001</LINENR>
+                       <TDFORMAT>L1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;Term of Delivery: &lt;/&gt; &quot;As per Ship To&quot;</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>PLANT_LOCATION_SPECIFIC</INAME>
+                       <LINENR>000002</LINENR>
+                       <TDFORMAT>L1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;Term&lt;/&gt; &lt;C1&gt;of Payment:&lt;/&gt; &amp;W_ZTERM_TXT&amp;</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>PLANT_LOCATION_SPECIFIC</INAME>
+                       <LINENR>000003</LINENR>
+                       <TDFORMAT>L1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;Document Currency&lt;/&gt;: &amp;X_EKKO-WAERS&amp;</TDLINE>
+                      </item>
+                     </T_TEXT>
+                    </sf:TEXT>
+                   </sf:OBJ>
+                   <sf:COND>
+                    <sf:CONDITION>
+                     <NAME>
+                      <INAME>%CONDITION180</INAME>
+                     </NAME>
+                     <CAPTION>New Alternative 180</CAPTION>
+                     <COND>
+                      <item>
+                       <COP>EQ</COP>
+                       <OP1>X_EKPO-WERKS</OP1>
+                       <OP2>&apos;1108&apos;</OP2>
+                       <ICON>@20\QSelect: Equal to@</ICON>
+                      </item>
+                      <item>
+                       <LOP>AND</LOP>
+                       <COP>EQ</COP>
+                       <OP1>X_EKPO-LGORT</OP1>
+                       <OP2>&apos;3009&apos;</OP2>
+                       <ICON>@20\QSelect: Equal to@</ICON>
+                      </item>
+                     </COND>
+                     <T_CAPTION>
+                      <item>
+                       <LANGU>E</LANGU>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <OBJTYPE>CD</OBJTYPE>
+                       <INAME>%CONDITION180</INAME>
+                       <CAPTION>New Alternative 180</CAPTION>
+                      </item>
+                     </T_CAPTION>
+                    </sf:CONDITION>
+                   </sf:COND>
                    <sf:SUCC/>
                   </sf:NODE>
                  </sf:item>
@@ -11655,13 +11901,13 @@
               <U_WFRAME>PT</U_WFRAME>
               <U_WBOXV>CM</U_WBOXV>
               <U_WBOXH>CM</U_WBOXH>
-              <WLEFT>0.63</WLEFT>
+              <WLEFT>0.65</WLEFT>
               <U_WLEFT>CM</U_WLEFT>
               <WWIDTH>18.93</WWIDTH>
               <U_WWIDTH>CM</U_WWIDTH>
-              <WTOP>11.66</WTOP>
+              <WTOP>11.85</WTOP>
               <U_WTOP>CM</U_WTOP>
-              <WHEIGHT>1.40</WHEIGHT>
+              <WHEIGHT>1.45</WHEIGHT>
               <U_WHEIGHT>CM</U_WHEIGHT>
               <BORDER>
                <LEFTATTR>
@@ -11802,17 +12048,27 @@
                       </item>
                       <item>
                        <TDFORMAT>F1</TDFORMAT>
-                       <TDLINE>6. In case of any mismatch occuring in the posting of GST credit, due</TDLINE>
+                       <TDLINE>6. In case of any mismatch occurring in the posting of GST credit, due</TDLINE>
                       </item>
                       <item>
-                       <TDLINE>tosystems at your end, the differential amount will be duly adjusted</TDLINE>
+                       <TDLINE>to systems at your end, the differential amount will be duly adjusted</TDLINE>
                       </item>
                       <item>
-                       <TDLINE>aganist the payment with</TDLINE>
+                       <TDLINE>against the payment with</TDLINE>
                       </item>
                       <item>
                        <TDFORMAT>/</TDFORMAT>
                        <TDLINE>   proper intimations</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>7. In case of ‘ship To’ is different from ‘Bill To’ Your  Supply must be</TDLINE>
+                      </item>
+                      <item>
+                       <TDLINE>reflected in GSTR2A of ‘Bill To’ GSTN.</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>F1</TDFORMAT>
                       </item>
                      </TEXT>
                      <STYLE_NAME>Z6MM001S_STYLE_SF</STYLE_NAME>
@@ -11933,7 +12189,7 @@
                        <INAME>TERMS</INAME>
                        <LINENR>000012</LINENR>
                        <TDFORMAT>F1</TDFORMAT>
-                       <TDLINE>6. In case of any mismatch occuring in the posting of GST credit, due</TDLINE>
+                       <TDLINE>6. In case of any mismatch occurring in the posting of GST credit, due</TDLINE>
                       </item>
                       <item>
                        <SPRAS>E</SPRAS>
@@ -11941,7 +12197,7 @@
                        <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
                        <INAME>TERMS</INAME>
                        <LINENR>000013</LINENR>
-                       <TDLINE>tosystems at your end, the differential amount will be duly adjusted</TDLINE>
+                       <TDLINE>to systems at your end, the differential amount will be duly adjusted</TDLINE>
                       </item>
                       <item>
                        <SPRAS>E</SPRAS>
@@ -11949,7 +12205,7 @@
                        <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
                        <INAME>TERMS</INAME>
                        <LINENR>000014</LINENR>
-                       <TDLINE>aganist the payment with</TDLINE>
+                       <TDLINE>against the payment with</TDLINE>
                       </item>
                       <item>
                        <SPRAS>E</SPRAS>
@@ -11959,6 +12215,31 @@
                        <LINENR>000015</LINENR>
                        <TDFORMAT>/</TDFORMAT>
                        <TDLINE>   proper intimations</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>TERMS</INAME>
+                       <LINENR>000016</LINENR>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>7. In case of ‘ship To’ is different from ‘Bill To’ Your  Supply must be</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>TERMS</INAME>
+                       <LINENR>000017</LINENR>
+                       <TDLINE>reflected in GSTR2A of ‘Bill To’ GSTN.</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>TERMS</INAME>
+                       <LINENR>000018</LINENR>
+                       <TDFORMAT>F1</TDFORMAT>
                       </item>
                      </T_TEXT>
                     </sf:TEXT>
@@ -11981,7 +12262,7 @@
               <U_WBOXH>CM</U_WBOXH>
               <WLEFT>0.47</WLEFT>
               <U_WLEFT>CM</U_WLEFT>
-              <WWIDTH>20.53</WWIDTH>
+              <WWIDTH>19.93</WWIDTH>
               <U_WWIDTH>CM</U_WWIDTH>
               <WTOP>9.40</WTOP>
               <U_WTOP>CM</U_WTOP>
