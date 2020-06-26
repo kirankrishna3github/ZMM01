@@ -8,7 +8,6 @@
    <LANGVECTOR>*</LANGVECTOR>
    <DEVCLASS></DEVCLASS>
    <VERSION>00001</VERSION>
-   <STATUS>I</STATUS>
    <FIRSTUSER>DUMMY</FIRSTUSER>
    <FIRSTDATE>2017-06-19</FIRSTDATE>
    <FIRSTTIME>18:52:15</FIRSTTIME>
@@ -1143,6 +1142,11 @@
     <NAME>SHIP_STATE</NAME>
     <TYPING>TYPE</TYPING>
     <TYPENAME>CHAR20</TYPENAME>
+   </item>
+   <item>
+    <NAME>SHIP_GSTN</NAME>
+    <TYPING>TYPE</TYPING>
+    <TYPENAME>ADRCT-REMARK</TYPENAME>
    </item>
   </GDATA>
   <GPLIST>
@@ -8204,6 +8208,10 @@
                        <OPD>SHIP_STATE</OPD>
                        <OUTIN>O</OUTIN>
                       </item>
+                      <item>
+                       <OPD>SHIP_GSTN</OPD>
+                       <OUTIN>O</OUTIN>
+                      </item>
                      </PLIST>
                      <CODE>
                       <item>BREAK 10106.</item>
@@ -8235,14 +8243,15 @@
                       <item>CONCATENATE &apos;State:&apos; zparamval &apos;(&apos; Zparam2 &apos;)&apos;</item>
                       <item>into SHIP_STATE.</item>
                       <item/>
+                      <item>SELECT SINGLE remark FROM adrct INTO SHIP_GSTN</item>
+                      <item>  WHERE ADDRNUMBER = ship_adrnr.</item>
+                      <item/>
+                      <item>CONDENSE : ship_adrc-street , ship_adrc-city1.</item>
                       <item>*ship_adrc-name1</item>
-                      <item>*ship_adrc-street , ship_adrc-mc_city1</item>
-                      <item>*ship_adrc-MC_street</item>
+                      <item>*ship_adrc-street ,</item>
                       <item>*ship_adrc-city1 , ship_adrc-post_code1</item>
                       <item>*ship_adrc-region</item>
-                      <item>*ship_adrc-REMARK</item>
-                      <item/>
-                      <item/>
+                      <item>*ship_GSTN</item>
                       <item/>
                       <item/>
                       <item/>
@@ -8276,10 +8285,27 @@
                      <TEXT>
                       <item>
                        <TDFORMAT>F1</TDFORMAT>
-                       <TDLINE>Ship-TO:</TDLINE>
+                       <TDLINE>&lt;C1&gt;Ship-TO:&lt;/&gt;</TDLINE>
                       </item>
                       <item>
                        <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&amp;ship_adrc-name1&amp;</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&amp;ship_adrc-street(C)&amp;&lt;(&gt;,&lt;)&gt;&amp;ship_adrc-city1(CIZ)&amp;&lt;(&gt;</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>=</TDFORMAT>
+                       <TDLINE>,&lt;)&gt;&amp;ship_adrc-post_code1&amp; &lt;(&gt;,&lt;)&gt;</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&amp;ship_state&amp;.</TDLINE>
+                      </item>
+                      <item>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;&amp;SHIP_GSTN&amp;&lt;/&gt;</TDLINE>
                       </item>
                      </TEXT>
                      <STYLE_NAME>Z6MM001S_STYLE_SF</STYLE_NAME>
@@ -8304,7 +8330,7 @@
                        <INAME>%TEXT4</INAME>
                        <LINENR>000001</LINENR>
                        <TDFORMAT>F1</TDFORMAT>
-                       <TDLINE>Ship-TO:</TDLINE>
+                       <TDLINE>&lt;C1&gt;Ship-TO:&lt;/&gt;</TDLINE>
                       </item>
                       <item>
                        <SPRAS>E</SPRAS>
@@ -8313,6 +8339,43 @@
                        <INAME>%TEXT4</INAME>
                        <LINENR>000002</LINENR>
                        <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&amp;ship_adrc-name1&amp;</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>%TEXT4</INAME>
+                       <LINENR>000003</LINENR>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&amp;ship_adrc-street(C)&amp;&lt;(&gt;,&lt;)&gt;&amp;ship_adrc-city1(CIZ)&amp;&lt;(&gt;</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>%TEXT4</INAME>
+                       <LINENR>000004</LINENR>
+                       <TDFORMAT>=</TDFORMAT>
+                       <TDLINE>,&lt;)&gt;&amp;ship_adrc-post_code1&amp; &lt;(&gt;,&lt;)&gt;</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>%TEXT4</INAME>
+                       <LINENR>000005</LINENR>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&amp;ship_state&amp;.</TDLINE>
+                      </item>
+                      <item>
+                       <SPRAS>E</SPRAS>
+                       <TXTYPE>F</TXTYPE>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <INAME>%TEXT4</INAME>
+                       <LINENR>000006</LINENR>
+                       <TDFORMAT>F1</TDFORMAT>
+                       <TDLINE>&lt;C1&gt;&amp;SHIP_GSTN&amp;&lt;/&gt;</TDLINE>
                       </item>
                      </T_TEXT>
                     </sf:TEXT>
@@ -22353,7 +22416,7 @@
                                  <CODE>
                                   <item>*Logic to add the line item conditions to be shown at footer</item>
                                   <item>CLEAR : W_NETWR, W_NETPR.</item>
-                                  <item>break 10106.</item>
+                                  <item>*break 10106.</item>
                                   <item>LOOP AT x_konv INTO wa_konv WHERE  ( NOT kbetr IS INITIAL ) AND</item>
                                   <item>KPOSN+1(5) EQ WA_EKPO-EBELP.</item>
                                   <item>*---&lt;&lt; S/4HANA &gt;&gt;---*</item>
@@ -22674,7 +22737,7 @@
                                   <item>**break ibmabap01.</item>
                                   <item>**W_NETPR = W_CONDITION_AMT / WA_EKPO-MENGE.</item>
                                   <item>*</item>
-                                  <item>BREAK 10106.</item>
+                                  <item>*BREAK 10106.</item>
                                   <item>DATA : W_NETPR  type p DECIMALS 2.</item>
                                   <item>W_NETPR = W_NETWR / WA_EKPO-MENGE.</item>
                                   <item/>
@@ -22686,7 +22749,6 @@
                                   <item>*              WHERE land1 = land1.</item>
                                   <item>WRITE w_netpr currency x_ekko-waers TO W_NETPR1.</item>
                                   <item>CONDENSE w_netpr1.</item>
-                                  <item/>
                                   <item/>
                                   <item/>
                                   <item/>
@@ -22892,7 +22954,7 @@
                                   <item>*ELSE.</item>
                                   <item>*W_NETWR = WA_EKPO-NETWR.</item>
                                   <item>*ENDIF.</item>
-                                  <item>BREAK 10106.</item>
+                                  <item>*BREAK 10106.</item>
                                   <item/>
                                   <item>READ TABLE X_EKKO INDEX 1.</item>
                                   <item/>
@@ -22902,7 +22964,6 @@
                                   <item/>
                                   <item>WRITE w_netwr2 currency x_ekko-waers TO W_NETWR1.</item>
                                   <item>CONDENSE w_netwr1.</item>
-                                  <item/>
                                   <item/>
                                   <item/>
                                   <item/>
@@ -29078,7 +29139,7 @@
                                     </PLIST>
                                     <CODE>
                                      <item>DATA: wa_cond_amt2 TYPE p DECIMALS 2.</item>
-                                     <item>BREAK 10106.</item>
+                                     <item>*BREAK 10106.</item>
                                      <item>clear s_wa_cond_rate.</item>
                                      <item>CLEAR wa_cond_rate.</item>
                                      <item>*data : wa_cond_rate(3) type n.</item>
@@ -29101,7 +29162,6 @@
                                      <item/>
                                      <item>WRITE wa_cond_amt2 currency x_ekko-waers TO wa_cond_amt1.</item>
                                      <item>CONDENSE wa_cond_amt1.</item>
-                                     <item/>
                                      <item/>
                                      <item/>
                                      <item/>
