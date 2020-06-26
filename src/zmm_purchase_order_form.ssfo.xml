@@ -8,6 +8,7 @@
    <LANGVECTOR>*</LANGVECTOR>
    <DEVCLASS></DEVCLASS>
    <VERSION>00001</VERSION>
+   <STATUS>I</STATUS>
    <FIRSTUSER>DUMMY</FIRSTUSER>
    <FIRSTDATE>2017-06-19</FIRSTDATE>
    <FIRSTTIME>18:52:15</FIRSTTIME>
@@ -1130,6 +1131,11 @@
    </item>
    <item>
     <NAME>GV_JIIG_PERT</NAME>
+   </item>
+   <item>
+    <NAME>SHIP_ADRC</NAME>
+    <TYPING>TYPE</TYPING>
+    <TYPENAME>ADRC</TYPENAME>
    </item>
   </GDATA>
   <GPLIST>
@@ -8168,6 +8174,64 @@
                 <sf:SUCC>
                  <sf:item>
                   <sf:NODE>
+                   <NODETYPE>CO</NODETYPE>
+                   <sf:OBJ>
+                    <sf:CODE>
+                     <NAME>
+                      <INAME>%CODE2</INAME>
+                     </NAME>
+                     <CAPTION>New Program Lines 2</CAPTION>
+                     <PLIST>
+                      <item>
+                       <OPD>X_EKPO</OPD>
+                       <OUTIN>I</OUTIN>
+                      </item>
+                     </PLIST>
+                     <CODE>
+                      <item>BREAK 10106.</item>
+                      <item>** Show Ship to address of storage location 3009</item>
+                      <item>** only for PO created for 1108 and location 3009</item>
+                      <item>** as instructed by Adoni sir / venu on 26.6.2020</item>
+                      <item>** mail Subject Quality server testing of plant 1108</item>
+                      <item>****************-storgae location -3009</item>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                      <item/>
+                     </CODE>
+                     <T_CAPTION>
+                      <item>
+                       <LANGU>E</LANGU>
+                       <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
+                       <OBJTYPE>CO</OBJTYPE>
+                       <INAME>%CODE2</INAME>
+                       <CAPTION>New Program Lines 2</CAPTION>
+                      </item>
+                     </T_CAPTION>
+                    </sf:CODE>
+                   </sf:OBJ>
+                   <sf:SUCC/>
+                  </sf:NODE>
+                 </sf:item>
+                 <sf:item>
+                  <sf:NODE>
                    <NODETYPE>TI</NODETYPE>
                    <sf:OBJ>
                     <sf:TEXT>
@@ -8378,14 +8442,21 @@
             <sf:COND>
              <sf:CONDITION>
               <NAME>
-               <INAME>%CONDITION138</INAME>
+               <INAME>%CONDITION53</INAME>
               </NAME>
-              <CAPTION>New Alternative 138</CAPTION>
+              <CAPTION>New Alternative 53</CAPTION>
               <COND>
                <item>
                 <COP>EQ</COP>
-                <OP1>1</OP1>
-                <OP2>2</OP2>
+                <OP1>X_EKPO-WERKS</OP1>
+                <OP2>&apos;1108&apos;</OP2>
+                <ICON>@20\QSelect: Equal to@</ICON>
+               </item>
+               <item>
+                <LOP>AND</LOP>
+                <COP>EQ</COP>
+                <OP1>X_EKPO-LGORT</OP1>
+                <OP2>&apos;3009&apos;</OP2>
                 <ICON>@20\QSelect: Equal to@</ICON>
                </item>
               </COND>
@@ -8394,8 +8465,8 @@
                 <LANGU>E</LANGU>
                 <FORMNAME>ZMM_PURCHASE_ORDER_FORM</FORMNAME>
                 <OBJTYPE>CD</OBJTYPE>
-                <INAME>%CONDITION138</INAME>
-                <CAPTION>New Alternative 138</CAPTION>
+                <INAME>%CONDITION53</INAME>
+                <CAPTION>New Alternative 53</CAPTION>
                </item>
               </T_CAPTION>
              </sf:CONDITION>
@@ -8496,7 +8567,7 @@
                       </item>
                      </PLIST>
                      <CODE>
-                      <item>break ibmsupport.</item>
+                      <item>*break ibmsupport.</item>
                       <item>DATA : L_ADRNR TYPE KNA1-ADRNR,</item>
                       <item>LS_T001W TYPE T001W.</item>
                       <item>data : wa_t001w type t001w.</item>
@@ -8574,7 +8645,6 @@
                       <item>  into lv_stcd3_2 where lifnr = X_EKKO-LIFNR.</item>
                       <item>  endif.</item>
                       <item>endif.</item>
-                      <item/>
                       <item/>
                       <item/>
                       <item/>
