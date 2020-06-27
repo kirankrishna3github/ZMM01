@@ -146,7 +146,6 @@ class lcl_application definition.
             p_zterm   type excelcell,   " Purchasing Payment Terms
             bptype    type excelcell,   " BP Type
             qland     type excelcell,   " W/H Tax Country
-            webre     type excelcell,   " Indicator: GR-Based Invoice Verification
             " Additional fields here...
           end of excel_line,
           excel like standard table of excel_line.
@@ -190,6 +189,7 @@ class lcl_application definition.
           begin of m4,
             p_zterm type lfm1-zterm,     " Purchasing Payment Terms
             webre   type lfm1-webre,     " Indicator: GR-Based Invoice Verification
+            lebre   type lfm1-lebre,     " Indicator for Service-Based Invoice Verification
           end of m4,
           m4_tab like standard table of m4,
 
@@ -451,7 +451,7 @@ class lcl_application implementation.
     clear: excel_line, lv_index.
     loop at excel into excel_line.
       lv_index = lv_index + 1.
-      clear: output_line, gv_vendor, gv_comp, gv_ekorg, m1, m2, m3.
+      clear: output_line, gv_vendor, gv_comp, gv_ekorg, m1, m2, m3, m4, m5, m6, m7.
       move-corresponding excel_line to output_line. " prepare log
 
       loop at lt_comp into data(ls_comp).
@@ -682,6 +682,10 @@ class lcl_application implementation.
 
         " M4
         move-corresponding excel_line to m4.
+        if gv_ekorg is not initial.
+          m4-webre = abap_true.
+          m4-lebre = abap_true.
+        endif.
         if m4 is not initial.
           if gv_ekorg is initial.
             output_line-icon = icon_red_light.
@@ -977,7 +981,8 @@ class lcl_application implementation.
     bdc_field(  exporting fnam    = 'BDC_OKCODE' fval   = '=UPDA' ).
 
     bdc_field(  exporting fnam    = 'LFM1-ZTERM' fval   =  m4-p_zterm ).
-    bdc_field(  exporting fnam    = 'LFM1-WEBRE' fval   =  m4-webre ).
+    bdc_field(  exporting fnam    = 'LFM1-WEBRE' fval   =  m4-webre ). " IHDK907191
+    bdc_field(  exporting fnam    = 'LFM1-LEBRE' fval   =  m4-lebre ). " IHDK907191
 
     call_bdc( exporting iv_tcode = 'XK02' m_name = 'M4' index = index ).
 
@@ -1500,12 +1505,6 @@ class lcl_application implementation.
             o_column->set_long_text( value = 'WTax Country' ).
             o_column->set_medium_text( value = 'WTax Country' ).
             o_column->set_short_text( value = 'WTax Cty' ).
-
-            free o_column.
-            o_column ?= o_columns->get_column( columnname = 'WEBRE' ).
-            o_column->set_long_text( value = 'GR Based Invoice Verification' ).
-            o_column->set_medium_text( value = 'GR Inv. Verif.' ).
-            o_column->set_short_text( value = 'GR Inv Ver' ).
 
             " Add fcat for your fields here
 
