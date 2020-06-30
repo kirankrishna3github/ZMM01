@@ -849,12 +849,20 @@
       <item>spart = &lt;fs_bestand&gt;-spart.</item>
       <item>IF sy-subrc eq 0.</item>
       <item>READ TABLE lt_t171t INTO DATA(ls_t171t) with KEY bzirk = ls_sales_dis-bzirk.</item>
+      <item>if sy-subrc eq 0.</item>
       <item>&lt;fs_bestand&gt;-sales_dist = |{ ls_sales_dis-bzirk }({ ls_t171t-bztxt })|.</item>
+      <item>else.</item>
+      <item>&lt;fs_bestand&gt;-sales_dist = ls_sales_dis-bzirk.</item>
+      <item>endif.</item>
       <item>ENDIF.</item>
       <item>READ TABLE it_div_desc INTO DATA(ls_div) with KEY matnr = &lt;fs_bestand&gt;-matnr.</item>
       <item>IF sy-subrc eq 0 and ls_div-extwg IS NOT INITIAL.</item>
       <item>READ TABLE lt_TWEWt INTO DATA(ls_TWEWt) with KEY extwg = ls_div-extwg.</item>
+      <item>if sy-subrc eq 0.</item>
       <item>&lt;fs_bestand&gt;-ext_mat_grp = |{ ls_div-extwg }({ ls_twewt-ewbez })|.</item>
+      <item>else.</item>
+      <item>&lt;fs_bestand&gt;-ext_mat_grp = ls_div-extwg.</item>
+      <item>ENDIF.</item>
       <item>ENDIF.</item>
       <item>ENDLOOP.</item>
       <item/>
@@ -2195,10 +2203,18 @@
       <item>5</item>
       <item>7</item>
       <item>7</item>
+      <item>7</item>
+      <item>7</item>
+      <item>9</item>
+      <item>7</item>
       <item>5</item>
       <item>5</item>
       <item>5</item>
       <item>5</item>
+      <item>7</item>
+      <item>7</item>
+      <item>7</item>
+      <item>9</item>
       <item>7</item>
       <item>5</item>
       <item>3</item>
