@@ -646,6 +646,7 @@ class lcl_application implementation.
               endif.
 
               " IHDK900384
+              m2-ven_class = excel_line-ven_class.  " IHDK907214
               if m2-ven_class is not initial and m2-ven_class ne no_data. " IHDK902779
                 if to_upper( m2-ven_class ) eq 'X'.
                   clear m2-ven_class.
