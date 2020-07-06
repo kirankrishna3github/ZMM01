@@ -591,6 +591,29 @@
       <item>lgort</item>
       <item>charg.</item>
       <item/>
+      <item/>
+      <item>&quot;added by varun on 22.06.2020</item>
+      <item>&quot;Get sales district and external material group</item>
+      <item>SELECT * FROM ZPP_BZIRK_VKBUR INTO TABLE @DATA(lt_sales_dis)</item>
+      <item>FOR ALL ENTRIES IN @bestand</item>
+      <item>WHERE vkbur eq @bestand-werks</item>
+      <item>AND   spart eq @bestand-spart.</item>
+      <item>IF sy-subrc eq 0.</item>
+      <item>SELECT * FROM T171t INTO TABLE @DATA(lt_T171t)</item>
+      <item>FOR ALL ENTRIES IN @lt_sales_dis</item>
+      <item>WHERE BZIRK eq @lt_sales_dis-BZIRK</item>
+      <item>AND   spras eq &apos;E&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item>IF it_div_desc[] IS NOT INITIAL.</item>
+      <item>SELECT * FROM TWEWt INTO TABLE @DATA(lt_TWEWt)</item>
+      <item>FOR ALL ENTRIES IN @it_div_desc</item>
+      <item>WHERE EXTWG eq @it_div_desc-EXTWG</item>
+      <item>AND   SPRAS eq &apos;E&apos;.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item/>
+      <item/>
       <item>LOOP AT bestand.</item>
       <item>CLEAR wa_mard.</item>
       <item>READ TABLE it_mard INTO wa_mard WITH KEY matnr = bestand-matnr</item>
@@ -798,6 +821,38 @@
       <item>endtry.</item>
       <item>&quot; End IHDK906667</item>
       <item/>
+      <item>**** add new columns EXTWG and BZIRK as per Manas A requiremnet in MB52</item>
+      <item>IF bestand-werks BETWEEN &apos;1403&apos; AND &apos;1499&apos;.</item>
+      <item/>
+      <item>READ TABLE lt_sales_dis INTO DATA(ls_sales_dis)</item>
+      <item>with KEY vkbur = bestand-werks</item>
+      <item>spart = bestand-spart.</item>
+      <item>IF sy-subrc eq 0.</item>
+      <item>READ TABLE lt_t171t INTO DATA(ls_t171t) with KEY bzirk = ls_sales_dis-bzirk.</item>
+      <item>if sy-subrc eq 0.</item>
+      <item/>
+      <item>*       &lt;fs_bestand&gt;-sales_dist = |{ ls_sales_dis-bzirk }({ ls_t171t-bztxt })|. &quot; commenting as mail from manas on 6.7.2020 to show only text ,  no code</item>
+      <item>bestand-sales_dist = ls_t171t-bztxt.</item>
+      <item>else.</item>
+      <item>bestand-sales_dist = ls_sales_dis-bzirk.</item>
+      <item>endif.</item>
+      <item>ENDIF.</item>
+      <item>else.</item>
+      <item>bestand-sales_dist = &apos;Mfg.&apos;.</item>
+      <item>endif.</item>
+      <item>*     ----------------------------</item>
+      <item>READ TABLE it_div_desc INTO DATA(ls_div) with KEY matnr = bestand-matnr.</item>
+      <item>IF sy-subrc eq 0 and ls_div-extwg IS NOT INITIAL.</item>
+      <item>READ TABLE lt_TWEWt INTO DATA(ls_TWEWt) with KEY extwg = ls_div-extwg.</item>
+      <item>if sy-subrc eq 0.</item>
+      <item>*       &lt;fs_bestand&gt;-ext_mat_grp = |{ ls_div-extwg }({ ls_twewt-ewbez })|. &quot; commenting as mail from manas on 6.7.2020 to show only text ,  no code</item>
+      <item>bestand-ext_mat_grp = ls_twewt-ewbez.</item>
+      <item>else.</item>
+      <item>bestand-ext_mat_grp = ls_div-extwg.</item>
+      <item>ENDIF.</item>
+      <item>ENDIF.</item>
+      <item/>
+      <item/>
       <item>MODIFY bestand.</item>
       <item>ENDLOOP.</item>
       <item/>
@@ -823,48 +878,51 @@
       <item>it_ausp2[],</item>
       <item>it_tvm5t[].</item>
       <item/>
-      <item>&quot;added by varun on 22.06.2020</item>
-      <item>&quot;Get sales district and external material group</item>
-      <item>SELECT * FROM ZPP_BZIRK_VKBUR INTO TABLE @DATA(lt_sales_dis)</item>
-      <item>FOR ALL ENTRIES IN @bestand</item>
-      <item>WHERE vkbur eq @bestand-werks</item>
-      <item>AND   spart eq @bestand-spart.</item>
-      <item>IF sy-subrc eq 0.</item>
-      <item>SELECT * FROM T171t INTO TABLE @DATA(lt_T171t)</item>
-      <item>FOR ALL ENTRIES IN @lt_sales_dis</item>
-      <item>WHERE BZIRK eq @lt_sales_dis-BZIRK</item>
-      <item>AND   spras eq &apos;E&apos;.</item>
-      <item>ENDIF.</item>
+      <item>*  &quot;added by varun on 22.06.2020</item>
+      <item>*  &quot;Get sales district and external material group</item>
+      <item>*  SELECT * FROM ZPP_BZIRK_VKBUR INTO TABLE @DATA(lt_sales_dis)</item>
+      <item>*           FOR ALL ENTRIES IN @bestand</item>
+      <item>*           WHERE vkbur eq @bestand-werks</item>
+      <item>*           AND   spart eq @bestand-spart.</item>
+      <item>*    IF sy-subrc eq 0.</item>
+      <item>*      SELECT * FROM T171t INTO TABLE @DATA(lt_T171t)</item>
+      <item>*               FOR ALL ENTRIES IN @lt_sales_dis</item>
+      <item>*               WHERE BZIRK eq @lt_sales_dis-BZIRK</item>
+      <item>*               AND   spras eq &apos;E&apos;.</item>
+      <item>*    ENDIF.</item>
+      <item>*</item>
+      <item>*   IF it_div_desc[] IS NOT INITIAL.</item>
+      <item>*     SELECT * FROM TWEWt INTO TABLE @DATA(lt_TWEWt)</item>
+      <item>*              FOR ALL ENTRIES IN @it_div_desc</item>
+      <item>*              WHERE EXTWG eq @it_div_desc-EXTWG</item>
+      <item>*              AND   SPRAS eq &apos;E&apos;.</item>
+      <item>*   ENDIF.</item>
       <item/>
-      <item>IF it_div_desc[] IS NOT INITIAL.</item>
-      <item>SELECT * FROM TWEWt INTO TABLE @DATA(lt_TWEWt)</item>
-      <item>FOR ALL ENTRIES IN @it_div_desc</item>
-      <item>WHERE EXTWG eq @it_div_desc-EXTWG</item>
-      <item>AND   SPRAS eq &apos;E&apos;.</item>
-      <item>ENDIF.</item>
-      <item/>
-      <item>LOOP AT bestand ASSIGNING FIELD-SYMBOL(&lt;fs_bestand&gt;).</item>
-      <item>READ TABLE lt_sales_dis INTO DATA(ls_sales_dis)</item>
-      <item>with KEY vkbur = &lt;fs_bestand&gt;-werks</item>
-      <item>spart = &lt;fs_bestand&gt;-spart.</item>
-      <item>IF sy-subrc eq 0.</item>
-      <item>READ TABLE lt_t171t INTO DATA(ls_t171t) with KEY bzirk = ls_sales_dis-bzirk.</item>
-      <item>if sy-subrc eq 0.</item>
-      <item>&lt;fs_bestand&gt;-sales_dist = |{ ls_sales_dis-bzirk }({ ls_t171t-bztxt })|.</item>
-      <item>else.</item>
-      <item>&lt;fs_bestand&gt;-sales_dist = ls_sales_dis-bzirk.</item>
-      <item>endif.</item>
-      <item>ENDIF.</item>
-      <item>READ TABLE it_div_desc INTO DATA(ls_div) with KEY matnr = &lt;fs_bestand&gt;-matnr.</item>
-      <item>IF sy-subrc eq 0 and ls_div-extwg IS NOT INITIAL.</item>
-      <item>READ TABLE lt_TWEWt INTO DATA(ls_TWEWt) with KEY extwg = ls_div-extwg.</item>
-      <item>if sy-subrc eq 0.</item>
-      <item>&lt;fs_bestand&gt;-ext_mat_grp = |{ ls_div-extwg }({ ls_twewt-ewbez })|.</item>
-      <item>else.</item>
-      <item>&lt;fs_bestand&gt;-ext_mat_grp = ls_div-extwg.</item>
-      <item>ENDIF.</item>
-      <item>ENDIF.</item>
-      <item>ENDLOOP.</item>
+      <item>*   LOOP AT bestand ASSIGNING FIELD-SYMBOL(&lt;fs_bestand&gt;).</item>
+      <item>*     READ TABLE lt_sales_dis INTO DATA(ls_sales_dis)</item>
+      <item>*                with KEY vkbur = &lt;fs_bestand&gt;-werks</item>
+      <item>*                         spart = &lt;fs_bestand&gt;-spart.</item>
+      <item>*     IF sy-subrc eq 0.</item>
+      <item>*       READ TABLE lt_t171t INTO DATA(ls_t171t) with KEY bzirk = ls_sales_dis-bzirk.</item>
+      <item>*       if sy-subrc eq 0.</item>
+      <item>*</item>
+      <item>**       &lt;fs_bestand&gt;-sales_dist = |{ ls_sales_dis-bzirk }({ ls_t171t-bztxt })|. &quot; commenting as mail from manas on 6.7.2020 to show only text ,  no code</item>
+      <item>*        &lt;fs_bestand&gt;-sales_dist = ls_t171t-bztxt.</item>
+      <item>*       else.</item>
+      <item>*         &lt;fs_bestand&gt;-sales_dist = ls_sales_dis-bzirk.</item>
+      <item>*       endif.</item>
+      <item>*     ENDIF.</item>
+      <item>*     READ TABLE it_div_desc INTO DATA(ls_div) with KEY matnr = &lt;fs_bestand&gt;-matnr.</item>
+      <item>*     IF sy-subrc eq 0 and ls_div-extwg IS NOT INITIAL.</item>
+      <item>*     READ TABLE lt_TWEWt INTO DATA(ls_TWEWt) with KEY extwg = ls_div-extwg.</item>
+      <item>*       if sy-subrc eq 0.</item>
+      <item>**       &lt;fs_bestand&gt;-ext_mat_grp = |{ ls_div-extwg }({ ls_twewt-ewbez })|. &quot; commenting as mail from manas on 6.7.2020 to show only text ,  no code</item>
+      <item>*        &lt;fs_bestand&gt;-ext_mat_grp = ls_twewt-ewbez.</item>
+      <item>*       else.</item>
+      <item>*         &lt;fs_bestand&gt;-ext_mat_grp = ls_div-extwg.</item>
+      <item>*       ENDIF.</item>
+      <item>*     ENDIF.</item>
+      <item>*   ENDLOOP.</item>
       <item/>
       <item>ENDIF.</item>
       <item/>
@@ -970,19 +1028,19 @@
       <item>APPEND fieldcat.</item>
       <item/>
       <item/>
-      <item>CLEAR fieldcat.</item>
-      <item>fieldcat-fieldname     = &apos;CITYC&apos;.</item>
-      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
-      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
-      <item>fieldcat-seltext_m     = &apos;Sales Dist.&apos;.</item>
-      <item>APPEND fieldcat.</item>
-      <item/>
-      <item>CLEAR fieldcat.</item>
-      <item>fieldcat-fieldname     = &apos;BEZEI&apos;.</item>
-      <item>fieldcat-tabname       = &apos;BESTAND&apos;.</item>
-      <item>*  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
-      <item>fieldcat-seltext_m     = &apos;Sales Dist.Text&apos;.</item>
-      <item>APPEND fieldcat.</item>
+      <item>*  CLEAR fieldcat.</item>
+      <item>*  fieldcat-fieldname     = &apos;CITYC&apos;.</item>
+      <item>*  fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>**  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>*  fieldcat-seltext_m     = &apos;Sales Dist.&apos;.</item>
+      <item>*  APPEND fieldcat.</item>
+      <item>*</item>
+      <item>*  CLEAR fieldcat.</item>
+      <item>*  fieldcat-fieldname     = &apos;BEZEI&apos;.</item>
+      <item>*  fieldcat-tabname       = &apos;BESTAND&apos;.</item>
+      <item>**  fieldcat-ref_tabname   = &apos;T001W&apos;.</item>
+      <item>*  fieldcat-seltext_m     = &apos;Sales Dist.Text&apos;.</item>
+      <item>*  APPEND fieldcat.</item>
       <item/>
       <item>CLEAR fieldcat.</item>
       <item>fieldcat-fieldname     = &apos;KONDA&apos;.</item>
@@ -1945,6 +2003,29 @@
       <item>21</item>
       <item>0</item>
       <item>0</item>
+      <item>0</item>
+      <item>2</item>
+      <item>2</item>
+      <item>11</item>
+      <item>11</item>
+      <item>11</item>
+      <item>4</item>
+      <item>6</item>
+      <item>15</item>
+      <item>15</item>
+      <item>15</item>
+      <item>4</item>
+      <item>0</item>
+      <item>3</item>
+      <item>5</item>
+      <item>14</item>
+      <item>14</item>
+      <item>14</item>
+      <item>3</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
       <item>4</item>
       <item>4</item>
       <item>45</item>
@@ -2151,73 +2232,108 @@
       <item>4</item>
       <item>4</item>
       <item>0</item>
-      <item>4</item>
-      <item>2</item>
       <item>0</item>
-      <item>2</item>
-      <item>4</item>
-      <item>6</item>
-      <item>4</item>
-      <item>2</item>
-      <item>0</item>
-      <item>2</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>9</item>
-      <item>0</item>
-      <item>2</item>
-      <item>2</item>
-      <item>2</item>
-      <item>11</item>
-      <item>11</item>
-      <item>11</item>
-      <item>4</item>
-      <item>6</item>
-      <item>15</item>
-      <item>15</item>
-      <item>15</item>
       <item>4</item>
       <item>0</item>
-      <item>3</item>
-      <item>5</item>
-      <item>14</item>
-      <item>14</item>
-      <item>14</item>
-      <item>3</item>
-      <item>0</item>
-      <item>3</item>
       <item>5</item>
       <item>16</item>
       <item>25</item>
       <item>5</item>
       <item>7</item>
       <item>7</item>
-      <item>7</item>
-      <item>7</item>
-      <item>9</item>
-      <item>7</item>
-      <item>5</item>
-      <item>5</item>
-      <item>5</item>
-      <item>5</item>
-      <item>7</item>
-      <item>7</item>
+      <item>0</item>
+      <item>0</item>
+      <item>8</item>
       <item>7</item>
       <item>9</item>
       <item>7</item>
       <item>5</item>
-      <item>3</item>
+      <item>5</item>
+      <item>7</item>
+      <item>5</item>
+      <item>0</item>
+      <item>5</item>
+      <item>5</item>
+      <item>5</item>
+      <item>7</item>
+      <item>0</item>
+      <item>8</item>
+      <item>7</item>
+      <item>9</item>
+      <item>7</item>
+      <item>5</item>
+      <item>0</item>
+      <item>0</item>
+      <item>4</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>4</item>
+      <item>6</item>
+      <item>4</item>
+      <item>2</item>
+      <item>0</item>
+      <item>2</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>9</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
       <item>0</item>
       <item>0</item>
       <item>0</item>
@@ -2314,19 +2430,19 @@
       <item>2</item>
       <item>0</item>
       <item>0</item>
-      <item>2</item>
-      <item>2</item>
-      <item>2</item>
       <item>0</item>
-      <item>2</item>
-      <item>2</item>
       <item>0</item>
-      <item>2</item>
-      <item>2</item>
-      <item>2</item>
       <item>0</item>
-      <item>2</item>
-      <item>2</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
+      <item>0</item>
       <item>0</item>
       <item>2</item>
       <item>2</item>
