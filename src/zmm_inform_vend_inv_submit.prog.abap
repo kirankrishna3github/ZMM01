@@ -4,7 +4,7 @@
 *&
 *&---------------------------------------------------------------------*
 REPORT zmm_inform_vend_inv_submit.
-TABLES:bkpf , bseg ,bsis .
+TABLES:bkpf , bseg ,bsis , adr6 .
 
 
 ****Company code – BSIS-BUKRS
@@ -111,7 +111,7 @@ SELECT-OPTIONS: s_lifnr FOR bseg-lifnr,
 SELECTION-SCREEN END OF BLOCK b1.
 
 SELECTION-SCREEN BEGIN OF BLOCK B3 WITH FRAME TITLE text-003.
-
+SELECT-OPTIONS: P_email FOR adr6-smtp_addr no INTERVALS.
 
 SELECTION-SCREEN END OF BLOCK B3.
 "ALV variant
@@ -539,6 +539,16 @@ CLASS lcl_module IMPLEMENTATION.
         CATCH cx_sy_itab_line_not_found.
       ENDTRY.
     ENDLOOP.
+
+    LOOP AT P_email INTO DATA(w_email).
+      if w_email-low IS NOT INITIAL.
+      recipient-recipient = w_email-low.
+      recipient-copy = abap_true.
+      APPEND recipient TO recipients.
+      CLEAR: recipient.
+      endif.
+    ENDLOOP.
+
 
     IF subject IS NOT INITIAL AND recipients IS NOT INITIAL.
       CLEAR sent.
