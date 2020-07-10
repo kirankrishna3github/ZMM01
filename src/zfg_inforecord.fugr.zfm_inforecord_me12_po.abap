@@ -1,4 +1,4 @@
-FUNCTION ZFM_INFORECORD_ME12_PO.
+function zfm_inforecord_me12_po.
 *"----------------------------------------------------------------------
 *"*"Local Interface:
 *"  IMPORTING
@@ -24,72 +24,78 @@ FUNCTION ZFM_INFORECORD_ME12_PO.
 *"      MESSTAB STRUCTURE  BDCMSGCOLL OPTIONAL
 *"----------------------------------------------------------------------
 
-subrc = 0.
+  subrc = 0.
 
-  PERFORM bdc_nodata      USING nodata.
+  perform bdc_nodata      using nodata.
 
-  PERFORM open_group      USING group user keep holddate ctu.
+  perform open_group      using group user keep holddate ctu.
 
-  PERFORM bdc_dynpro      USING 'SAPMM06I' '0100'.
-  PERFORM bdc_field       USING 'BDC_CURSOR'
+  perform bdc_dynpro      using 'SAPMM06I' '0100'.
+  perform bdc_field       using 'BDC_CURSOR'
                                 'EINA-LIFNR'.
-  PERFORM bdc_field       USING 'BDC_OKCODE'
+  perform bdc_field       using 'BDC_OKCODE'
                                 '/00'.
-  PERFORM bdc_field       USING 'EINA-LIFNR'
+  perform bdc_field       using 'EINA-LIFNR'
                                 lifnr_001.
-  PERFORM bdc_field       USING 'EINA-MATNR'
+  perform bdc_field       using 'EINA-MATNR'
                                 matnr_002.
-  PERFORM bdc_field       USING 'EINE-EKORG'
+  perform bdc_field       using 'EINE-EKORG'
                                 ekorg_003.
-  PERFORM bdc_field       USING 'EINE-WERKS'
+  perform bdc_field       using 'EINE-WERKS'
                                 werks_004.
-  PERFORM bdc_field       USING 'RM06I-NORMB'
+  perform bdc_field       using 'RM06I-NORMB'
                                 normb_005.
-  PERFORM bdc_field       USING 'EINA-INFNR'
+  perform bdc_field       using 'EINA-INFNR'
                                 infnr_015.
 
-  PERFORM bdc_dynpro      USING 'SAPMM06I' '0101'.
-  PERFORM bdc_field       USING 'BDC_CURSOR'
+  perform bdc_dynpro      using 'SAPMM06I' '0101'.
+  perform bdc_field       using 'BDC_CURSOR'
                                 'EINA-MAHN1'.
-  PERFORM bdc_field       USING 'BDC_OKCODE'
+  perform bdc_field       using 'BDC_OKCODE'
                                 '/00'.
 
 
-  PERFORM bdc_dynpro      USING 'SAPMM06I' '0102'.
-  PERFORM bdc_field       USING 'BDC_CURSOR'
+  perform bdc_dynpro      using 'SAPMM06I' '0102'.
+  perform bdc_field       using 'BDC_CURSOR'
                                 'EINE-MWSKZ'.
-  PERFORM bdc_field       USING 'BDC_OKCODE'
+  perform bdc_field       using 'BDC_OKCODE'
                                 '/00'.
-  PERFORM bdc_field       USING 'EINE-EKGRP'
+  perform bdc_field       using 'EINE-EKGRP'
                                 ekgrp_011.
-  PERFORM bdc_field       USING 'EINE-MWSKZ'
+  perform bdc_field       using 'EINE-MWSKZ'
                                 mwskz_012.
 
-  PERFORM bdc_dynpro      USING 'SAPMM06I' '0105'.
-  PERFORM bdc_field       USING 'BDC_CURSOR'
+  perform bdc_dynpro      using 'SAPMM06I' '0105'.
+  perform bdc_field       using 'BDC_CURSOR'
                                 'EINE-ANGNR'.
-  PERFORM bdc_field       USING 'BDC_OKCODE'
+  perform bdc_field       using 'BDC_OKCODE'
                                 '/00'.
 
-  PERFORM bdc_dynpro      USING 'SAPMM06I' '0103'.
-  PERFORM bdc_field       USING 'BDC_CURSOR'
+  perform bdc_dynpro      using 'SAPMM06I' '0103'.
+  perform bdc_field       using 'BDC_CURSOR'
                                 'RM06I-LTEX1(01)'.
-  PERFORM bdc_field       USING 'BDC_OKCODE'
+  perform bdc_field       using 'BDC_OKCODE'
                                 '/00'.
 
-  PERFORM bdc_dynpro      USING 'SAPLSPO1' '0100'.
-  PERFORM bdc_field       USING 'BDC_OKCODE'
+  perform bdc_dynpro      using 'SAPLSPO1' '0100'.
+  perform bdc_field       using 'BDC_OKCODE'
                                 '=YES'.
-  PERFORM bdc_transaction TABLES messtab
-  USING                         'ME12'
-                                ctu
-                                mode
-                                update.
-  IF sy-subrc <> 0.
-    subrc = sy-subrc.
-    EXIT.
-  ENDIF.
 
-  PERFORM close_group USING     ctu.
-ENDFUNCTION.
+  data(ls_options) = value ctu_params( dismode = mode
+                                       updmode = update
+                                       racommit = abap_true ).
+
+  perform bdc_transaction tables messtab
+  using                          'ME12'
+                                 ctu
+                                 mode
+                                 update
+                                 ls_options.
+  if sy-subrc <> 0.
+    subrc = sy-subrc.
+    exit.
+  endif.
+
+  perform close_group using     ctu.
+endfunction.
 *INCLUDE bdcrecxy .

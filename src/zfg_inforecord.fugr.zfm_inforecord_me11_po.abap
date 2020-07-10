@@ -128,11 +128,17 @@ function zfm_inforecord_me11_po.
   perform bdc_dynpro      using 'SAPLSPO1' '0100'.
   perform bdc_field       using 'BDC_OKCODE'
                                 '=YES'.
+
+  data(ls_options) = value ctu_params( dismode = mode
+                                       updmode = update
+                                       racommit = abap_true ).
+
   perform bdc_transaction tables messtab
-  using                         'ME11'
-                                ctu
-                                mode
-                                update.
+  using                          'ME11'
+                                 ctu
+                                 mode
+                                 update
+                                 ls_options.
   if sy-subrc <> 0.
     subrc = sy-subrc.
     exit.
@@ -140,4 +146,4 @@ function zfm_inforecord_me11_po.
 
   perform close_group using     ctu.
 endfunction.
-include bdcrecxy .
+include zbdcrecxy.
